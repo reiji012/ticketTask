@@ -8,21 +8,29 @@
 
 /* Begin PBXBuildFile section */
 		2BF5B74D22814521007D0266 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF5B74C22814521007D0266 /* AppDelegate.swift */; };
-		2BF5B74F22814521007D0266 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF5B74E22814521007D0266 /* ViewController.swift */; };
+		2BF5B74F22814521007D0266 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF5B74E22814521007D0266 /* MainViewController.swift */; };
 		2BF5B75222814521007D0266 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2BF5B75022814521007D0266 /* Main.storyboard */; };
 		2BF5B75422814521007D0266 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2BF5B75322814521007D0266 /* Assets.xcassets */; };
 		2BF5B75722814521007D0266 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2BF5B75522814521007D0266 /* LaunchScreen.storyboard */; };
+		2BF5B76322814974007D0266 /* TaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF5B76222814974007D0266 /* TaskViewModel.swift */; };
+		2BF5B7652281498F007D0266 /* TaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF5B7642281498F007D0266 /* TaskModel.swift */; };
+		2BF5B767228155EC007D0266 /* TaskView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2BF5B766228155EC007D0266 /* TaskView.xib */; };
+		2BF5B7692281562D007D0266 /* TaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF5B7682281562D007D0266 /* TaskView.swift */; };
 		B101601FF534DC3B8EE3D6CD /* Pods_TicketTask.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9175C5698A5BEEEE5CF1DB20 /* Pods_TicketTask.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		2BF5B74922814521007D0266 /* TicketTask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TicketTask.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BF5B74C22814521007D0266 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		2BF5B74E22814521007D0266 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		2BF5B74E22814521007D0266 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		2BF5B75122814521007D0266 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2BF5B75322814521007D0266 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2BF5B75622814521007D0266 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2BF5B75822814521007D0266 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2BF5B76222814974007D0266 /* TaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TaskViewModel.swift; path = ViewModel/TaskViewModel.swift; sourceTree = "<group>"; };
+		2BF5B7642281498F007D0266 /* TaskModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskModel.swift; sourceTree = "<group>"; };
+		2BF5B766228155EC007D0266 /* TaskView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = TaskView.xib; path = View/TaskView.xib; sourceTree = "<group>"; };
+		2BF5B7682281562D007D0266 /* TaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TaskView.swift; path = View/TaskView.swift; sourceTree = "<group>"; };
 		37CFDF9363A1FC7BF7495C74 /* Pods-TicketTask.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TicketTask.release.xcconfig"; path = "Target Support Files/Pods-TicketTask/Pods-TicketTask.release.xcconfig"; sourceTree = "<group>"; };
 		9175C5698A5BEEEE5CF1DB20 /* Pods_TicketTask.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TicketTask.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3E7EA07422E788A8A52AC14 /* Pods-TicketTask.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TicketTask.debug.xcconfig"; path = "Target Support Files/Pods-TicketTask/Pods-TicketTask.debug.xcconfig"; sourceTree = "<group>"; };
@@ -61,14 +69,50 @@
 		2BF5B74B22814521007D0266 /* TicketTask */ = {
 			isa = PBXGroup;
 			children = (
+				2BF5B7612281467E007D0266 /* Model */,
+				2BF5B7602281466B007D0266 /* ViewModel */,
+				2BF5B75F22814662007D0266 /* Controller */,
+				2BF5B75E22814657007D0266 /* View */,
 				2BF5B74C22814521007D0266 /* AppDelegate.swift */,
-				2BF5B74E22814521007D0266 /* ViewController.swift */,
-				2BF5B75022814521007D0266 /* Main.storyboard */,
 				2BF5B75322814521007D0266 /* Assets.xcassets */,
-				2BF5B75522814521007D0266 /* LaunchScreen.storyboard */,
 				2BF5B75822814521007D0266 /* Info.plist */,
 			);
 			path = TicketTask;
+			sourceTree = "<group>";
+		};
+		2BF5B75E22814657007D0266 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2BF5B75522814521007D0266 /* LaunchScreen.storyboard */,
+				2BF5B75022814521007D0266 /* Main.storyboard */,
+				2BF5B766228155EC007D0266 /* TaskView.xib */,
+				2BF5B7682281562D007D0266 /* TaskView.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		2BF5B75F22814662007D0266 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2BF5B74E22814521007D0266 /* MainViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		2BF5B7602281466B007D0266 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				2BF5B76222814974007D0266 /* TaskViewModel.swift */,
+			);
+			name = ViewModel;
+			sourceTree = "<group>";
+		};
+		2BF5B7612281467E007D0266 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2BF5B7642281498F007D0266 /* TaskModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		3A10CA04D3E8C7641925AEE6 /* Frameworks */ = {
@@ -85,7 +129,6 @@
 				C3E7EA07422E788A8A52AC14 /* Pods-TicketTask.debug.xcconfig */,
 				37CFDF9363A1FC7BF7495C74 /* Pods-TicketTask.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -152,6 +195,7 @@
 				2BF5B75722814521007D0266 /* LaunchScreen.storyboard in Resources */,
 				2BF5B75422814521007D0266 /* Assets.xcassets in Resources */,
 				2BF5B75222814521007D0266 /* Main.storyboard in Resources */,
+				2BF5B767228155EC007D0266 /* TaskView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -213,7 +257,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2BF5B74F22814521007D0266 /* ViewController.swift in Sources */,
+				2BF5B74F22814521007D0266 /* MainViewController.swift in Sources */,
+				2BF5B76322814974007D0266 /* TaskViewModel.swift in Sources */,
+				2BF5B7652281498F007D0266 /* TaskModel.swift in Sources */,
+				2BF5B7692281562D007D0266 /* TaskView.swift in Sources */,
 				2BF5B74D22814521007D0266 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
