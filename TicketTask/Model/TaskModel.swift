@@ -20,7 +20,7 @@ class TaskModel {
         for i in 0..<10 {
             let taskTitle = "task\(i)"
             let attri = i % 2 == 0 ? "a" : "b"
-            let tickets = i % 2 == 0 ? ["banana","tomato","apple"] : ["bread","milk"]
+            let tickets = i % 2 == 0 ? ["banana":false,"tomato":true,"apple":true] : ["bread":false,"milk":false]
             array["title"] = taskTitle
             array["attri"] = attri
             array["tickets"] = tickets

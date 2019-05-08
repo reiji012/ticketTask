@@ -60,18 +60,36 @@ class TaskView: UIView {
         
         self.addSubview(gesturView)
     }
+
+    func changeViewSize() {
+        let myBoundWidht: CGFloat = UIScreen.main.bounds.size.width
+        let currentWidth = (self.frame.size.width - myBoundWidht)/2
+        if isShowDetail {
+            self.frame = CGRect(x:self.defoultX!,y:self.defoultY!,width:self.defoultWidth!,height:self.defoultHeight!)
+            self.layer.cornerRadius = 30
+            self.isShowDetail = false
+        } else {
+            self.frame.size.height = (self.parent?.frame.size.height)! + 50
+            self.frame.size.width = (self.parent?.parent?.frame.size.width)!
+            self.frame = CGRect(x:self.frame.origin.x + currentWidth,y:0,width:self.frame.size.width,height:self.frame.size.height)
+            self.layer.cornerRadius = 0
+            self.isShowDetail = true
+        }
+    }
+
+    
     
     // フリック時の拡大縮小
     @objc func panGesture(sender:UIPanGestureRecognizer) {
         
         // 左に寄せる分の幅を取得
-
+        
         var tapEndPosX:CGFloat = 0
         var tapEndPosY:CGFloat = 0
         
         // 指が離れた時（sender.state = .ended）だけ処理をする
         UIView.animate(withDuration: 0.5, animations: {
-    
+            
             //拡大縮小の処理
             
             switch sender.state {
@@ -95,7 +113,7 @@ class TaskView: UIView {
                     if tapEndPosY > -tapEndPosX {
                         panDirection = "up"
                         print("上フリック")
-                       
+                        
                     } else if tapEndPosY < tapEndPosX {
                         panDirection = "down"
                         print("下フリック")
@@ -112,23 +130,7 @@ class TaskView: UIView {
         })
         
     }
-
-    func changeViewSize() {
-        let myBoundWidht: CGFloat = UIScreen.main.bounds.size.width
-        let currentWidth = (self.frame.size.width - myBoundWidht)/2
-        if isShowDetail {
-            self.frame = CGRect(x:self.defoultX!,y:self.defoultY!,width:self.defoultWidth!,height:self.defoultHeight!)
-            self.layer.cornerRadius = 30
-            self.isShowDetail = false
-        } else {
-            self.frame.size.height = (self.parent?.frame.size.height)! + 50
-            self.frame.size.width = (self.parent?.parent?.frame.size.width)!
-            self.frame = CGRect(x:self.frame.origin.x + currentWidth,y:0,width:self.frame.size.width,height:self.frame.size.height)
-            self.layer.cornerRadius = 0
-            self.isShowDetail = true
-        }
-    }
-
+    
     // 親ビュー (parent) に対して上下左右マージンゼロの指定をする
     func applyAutoLayoutMatchParent(parent: UIView, margin: CGFloat = 0) {
         self.translatesAutoresizingMaskIntoConstraints = false
