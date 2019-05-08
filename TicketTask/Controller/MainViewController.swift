@@ -11,7 +11,7 @@ import RxSwift
 import RxRelay
 import RxCocoa
 
-class MainViewController: UIViewController,UIScrollViewDelegate {
+class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDelegate {
     
     var isShowDetail: Bool?
 
@@ -28,8 +28,8 @@ class MainViewController: UIViewController,UIScrollViewDelegate {
     func bindUI() {
         
         //グラデーションの作成
-        let topColor = UIColor(red:0.57, green:0.63, blue:0.96, alpha:1)
-        let bottomColor = UIColor(red:0.54, green:0.74, blue:0.74, alpha:1)
+        let topColor = UIColor(red:0.47, green:0.73, blue:0.96, alpha:1)
+        let bottomColor = UIColor(red:0.34, green:0.54, blue:0.94, alpha:1)
         let gradientColors: [CGColor] = [topColor.cgColor, bottomColor.cgColor]
         let gradientLayer: CAGradientLayer = CAGradientLayer()
         gradientLayer.colors = gradientColors
