@@ -14,7 +14,7 @@ class TaskViewModel: NSObject {
     var tasks = [Any]()
     var taskName: String?
     var attri: String?
-    var tickets: [String]?
+    var tickets: [String:Bool]?
     var task: Dictionary<String, Any>?
     
     override init() {
@@ -28,7 +28,7 @@ class TaskViewModel: NSObject {
         task = taskModel?.getTask(taskName: taskName)
         self.taskName = (task!["title"] as! String)
         self.attri = (task!["attri"] as! String)
-        self.tickets = (task!["tickets"] as! [String])
+        self.tickets = (task!["tickets"] as! [String:Bool])
     }
     
 }

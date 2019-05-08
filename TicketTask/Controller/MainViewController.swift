@@ -12,6 +12,8 @@ import RxRelay
 import RxCocoa
 
 class MainViewController: UIViewController,UIScrollViewDelegate {
+    
+    var isShowDetail: Bool?
 
     @IBOutlet weak var scrollView: UIScrollView!
     weak var taskView: TaskView!
