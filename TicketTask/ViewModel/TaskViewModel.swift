@@ -9,22 +9,26 @@
 import UIKit
 
 class TaskViewModel: NSObject {
-
-    var tasks: [ String:String] = [:]
-    var taskName: String?
-    var taskNames: [String] = []
-    var attris: [String] = []
     
-    var taskModel = TaskModel()
+    var taskModel: TaskModel?
+    var tasks = [Any]()
+    var taskName: String?
+    var attri: String?
+    var tickets: [String]?
+    var task: Dictionary<String, Any>?
     
     override init() {
-        taskModel.createArray()
-        tasks = taskModel.tasks
-        
-        for task in tasks {
-            taskNames.append(task.key)
-            attris.append(task.value)
-            print(taskNames)
-        }
+        taskModel = TaskModel.sharedManager
+        tasks = taskModel!.tasks
     }
+    
+    // タスクのModelを取得する
+    init(taskName: String) {
+        taskModel = TaskModel.sharedManager
+        task = taskModel?.getTask(taskName: taskName)
+        self.taskName = (task!["title"] as! String)
+        self.attri = (task!["attri"] as! String)
+        self.tickets = (task!["tickets"] as! [String])
+    }
+    
 }

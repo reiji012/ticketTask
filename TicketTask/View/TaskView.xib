@@ -29,7 +29,7 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="vrp-1Z-85c" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="50" id="0ch-3x-IB2"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="vrp-1Z-85c" secondAttribute="bottom" constant="50" id="qcP-82-22Q"/>
+                <constraint firstItem="vrp-1Z-85c" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="132" id="a0X-89-oB4"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
