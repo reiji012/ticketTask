@@ -16,9 +16,9 @@ class TaskModel {
         return TaskModel()
     }()
     private init() {
-        var array = ["title":"","attri":"","tasks":[]] as [String : Any]
+        var array = ["title":"","attri":"","tickets":[]] as [String : Any]
         for i in 0..<10 {
-            let taskTitle = "task\(i)"
+            let taskTitle = "task\(i + 1)"
             let attri = i % 2 == 0 ? "a" : "b"
             let tickets = i % 2 == 0 ? ["banana":false,"tomato":true,"apple":true] : ["bread":false,"milk":false]
             array["title"] = taskTitle

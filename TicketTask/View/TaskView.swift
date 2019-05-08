@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class TaskView: UIView, UITableViewDelegate,UITableViewDataSource{
+class TaskView: UIView{
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var backButton: UIButton!
@@ -52,7 +52,7 @@ class TaskView: UIView, UITableViewDelegate,UITableViewDataSource{
     
     func setLayout() {
         
-        setTableView()
+//        setTableView()
         
         // 初期状態では戻るボタンを非表示にする
         backButton.isHidden = true
@@ -106,6 +106,9 @@ class TaskView: UIView, UITableViewDelegate,UITableViewDataSource{
                 self.frame.size.width = (self.parent?.parent?.frame.size.width)!
                 self.frame = CGRect(x:self.frame.origin.x + currentWidth,y:0,width:self.frame.size.width,height:self.frame.size.height)
                 self.layer.cornerRadius = 0
+                let indexPath = IndexPath(row: 0, section: 0)
+                self.ticketTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+
                 self.backButton.isHidden = false
                 self.isShowDetail = true
             }
@@ -122,23 +125,9 @@ class TaskView: UIView, UITableViewDelegate,UITableViewDataSource{
             }
             self.tableViewArray.append(ticketTableViewCell)
         }
+        
     }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return tableViewArray.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let tableViewCell = self.tableViewArray[indexPath.row]
-        
-        if tableViewCell is TichketTableViewCell {
-            return tableViewCell
-        }
-        
-        return UITableViewCell()
-    }
     
     
     // フリック時の拡大縮小
