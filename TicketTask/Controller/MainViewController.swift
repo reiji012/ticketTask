@@ -17,7 +17,6 @@ class MainViewController: UIViewController,UIScrollViewDelegate {
     weak var taskView: TaskView!
     
     var taskViewModel = TaskViewModel()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -25,7 +24,24 @@ class MainViewController: UIViewController,UIScrollViewDelegate {
     }
     
     func bindUI() {
+        //グラデーションの開始色
+        let topColor = UIColor(red:0.57, green:0.63, blue:0.96, alpha:1)
+        //グラデーションの開始色
+        let bottomColor = UIColor(red:0.54, green:0.74, blue:0.74, alpha:1)
         
+        //グラデーションの色を配列で管理
+        let gradientColors: [CGColor] = [topColor.cgColor, bottomColor.cgColor]
+        
+        //グラデーションレイヤーを作成
+        let gradientLayer: CAGradientLayer = CAGradientLayer()
+        
+        //グラデーションの色をレイヤーに割り当てる
+        gradientLayer.colors = gradientColors
+        //グラデーションレイヤーをスクリーンサイズにする
+        gradientLayer.frame = self.view.bounds
+        
+        //グラデーションレイヤーをビューの一番下に配置
+        self.view.layer.insertSublayer(gradientLayer, at: 0)
     }
 
     //一度だけメニュー作成をするためのフラグ
@@ -50,16 +66,8 @@ class MainViewController: UIViewController,UIScrollViewDelegate {
         //scrollViewのDelegateを指定
         scrollView.delegate = self
         
-        //タブのタイトル
-        guard let titles: [String] = taskViewModel.taskNames else {
-            // タスクが取得できない時はアラートを表示する
-            let dialog = UIAlertController(title: "エラー", message: "タスクが取得できません", preferredStyle: .alert)
-
-            dialog.addAction(UIAlertAction(title: "とじる", style: .default, handler: nil))
-            // 生成したダイアログを実際に表示します
-            self.present(dialog, animated: true, completion: nil)
-            return
-        } //タブのタイトル
+//        タブのタイトル
+        let tasks = taskViewModel.tasks
         
         //タブの縦幅(UIScrollViewと一緒にします)
         let tabLabelHeight:CGFloat = scrollView.frame.height
@@ -75,12 +83,11 @@ class MainViewController: UIViewController,UIScrollViewDelegate {
         //ダミーLabel分，はじめからずらしてあげましょう．
         var originX:CGFloat = dummyLabelWidth
         //titlesで定義したタブを1つずつ用意していく
-        for (index, title) in titles.enumerated() {
+        for (index, task) in tasks.enumerated() {
             //タブになるUIVIewを作る
             taskView = UINib(nibName: "TaskView", bundle: Bundle.main).instantiate(withOwner: self, options: nil).first as? TaskView
-            taskView.backgroundColor = .yellow
             taskView.frame = CGRect.init(x: originX + 75, y: 400, width: 350.0, height: 300.0)
-            taskView.setLabelText(title: title)
+            taskView.setViewModel(task: task as! Dictionary<String, Any>)
 
             taskView.tag = index
             //scrollViewにぺたっとする

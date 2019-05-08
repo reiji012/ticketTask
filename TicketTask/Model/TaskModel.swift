@@ -8,15 +8,35 @@
 
 import UIKit
 
-class TaskModel: NSObject {
+class TaskModel {
 
-    var tasks :[ String:String] = [:]
+    var tasks = [Any]()
     
-    func createArray() {
+    static var sharedManager: TaskModel = {
+        return TaskModel()
+    }()
+    private init() {
+        var array = ["title":"","attri":"","tasks":[]] as [String : Any]
         for i in 0..<10 {
+            let taskTitle = "task\(i)"
             let attri = i % 2 == 0 ? "a" : "b"
-            tasks["title\(i)"] = attri
-            print(self.tasks as Any)
+            let tickets = i % 2 == 0 ? ["banana","tomato","apple"] : ["bread","milk"]
+            array["title"] = taskTitle
+            array["attri"] = attri
+            array["tickets"] = tickets
+            
+            tasks.append(array)
         }
+    }
+    
+    func getTask(taskName: String) -> Dictionary<String, Any> {
+        var currentTask: Dictionary<String, Any> = [:]
+        for task in tasks {
+            var tmpTask = task as! Dictionary<String, Any>
+            if tmpTask["title"] as! String == taskName {
+                currentTask = tmpTask
+            }
+        }
+        return currentTask
     }
 }
