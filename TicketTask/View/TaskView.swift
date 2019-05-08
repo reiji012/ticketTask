@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class TaskView: UIView {
 
@@ -25,6 +27,17 @@ class TaskView: UIView {
         let taskName = (task["title"] as! String)
         // taskViewModelの取得
         taskViewModel = TaskViewModel(taskName: taskName)
+        
+        setLayout()
+    }
+    
+    func setLayout() {
+        // リサイズ用に初期サイズを保存しておく
+        self.defoultHeight = self.frame.size.height
+        self.defoultWidth = self.frame.size.width
+        self.defoultX = self.frame.origin.x
+        self.defoultY = self.frame.origin.y
+        
         self.layer.cornerRadius = 30
         // 影の設定
         self.layer.shadowOpacity = 0.5
@@ -35,7 +48,9 @@ class TaskView: UIView {
         titleLabel.text = taskViewModel?.taskName
         
         // create gesturView(subView)
-        let gesturView:UIView = UIView(frame: self.bounds)
+        let currentHeight = self.bounds.size.height / 5
+        let rect = CGRect(x: 0, y: 0, width: self.bounds.size.width, height: currentHeight);
+        let gesturView:UIView = UIView(frame: rect)
         
         // create GesturRecognizer(pan = flick)
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panGesture(sender:)))
@@ -46,11 +61,11 @@ class TaskView: UIView {
         self.addSubview(gesturView)
     }
     
+    // フリック時の拡大縮小
     @objc func panGesture(sender:UIPanGestureRecognizer) {
         
         // 左に寄せる分の幅を取得
-        let myBoundWidht: CGFloat = UIScreen.main.bounds.size.width
-        let currentWidth = (self.frame.size.width - myBoundWidht)/2
+
         var tapEndPosX:CGFloat = 0
         var tapEndPosY:CGFloat = 0
         
@@ -65,61 +80,31 @@ class TaskView: UIView {
                 let position = sender.translation(in: self)
                 tapEndPosX = position.x     // x方向の移動量
                 tapEndPosY = -position.y    // y方向の移動量（上をプラスと扱うため、符号反転する）
-                
+                var panDirection = ""
                 // 上下左右のフリック方向を判別する
                 // xがプラスの場合（右方向）とマイナスの場合（左方向）で場合分け
                 if tapEndPosX > 0 {
-                    // 右方向へのフリック
                     if tapEndPosY > tapEndPosX {
-                        // yの移動量がxより大きい→上方向
+                        panDirection = "up"
                         print("上フリック")
-                        if !self.isShowDetail {
-                            self.defoultHeight = self.frame.size.height
-                            self.defoultWidth = self.frame.size.width
-                            self.defoultX = self.frame.origin.x
-                            self.defoultY = self.frame.origin.y
-                        }
-                        self.frame.size.height = (self.parent?.frame.size.height)! + 50
-                        self.frame.size.width = (self.parent?.parent?.frame.size.width)!
-                        self.frame = CGRect(x:self.frame.origin.x + currentWidth,y:0,width:self.frame.size.width,height:self.frame.size.height)
-                        self.layer.cornerRadius = 0
-                        self.isShowDetail = true
                     } else if tapEndPosY < -tapEndPosX {
-                        // yの移動量が-xより小さい→下方向
+                        panDirection = "down"
                         print("下フリック")
-                        self.frame = CGRect(x:self.defoultX!,y:self.defoultY!,width:self.defoultWidth!,height:self.defoultHeight!)
-                        self.isShowDetail = false
-                        self.layer.cornerRadius = 30
-                    } else {
-                        // 右方向
-                        print("右フリック")
                     }
                 } else {
-                    // 左方向へのフリック
                     if tapEndPosY > -tapEndPosX {
-                        // yの移動量が-xより大きい→上方向
+                        panDirection = "up"
                         print("上フリック")
-                        if !self.isShowDetail {
-                            self.defoultHeight = self.frame.size.height
-                            self.defoultWidth = self.frame.size.width
-                            self.defoultX = self.frame.origin.x
-                            self.defoultY = self.frame.origin.y
-                        }
-                        self.frame.size.height = (self.parent?.frame.size.height)! + 50
-                        self.frame.size.width = (self.parent?.parent?.frame.size.width)!
-                        self.frame = CGRect(x:self.frame.origin.x + currentWidth,y:0,width:self.frame.size.width,height:self.frame.size.height)
-                        self.layer.cornerRadius = 0
-                        self.isShowDetail = true
+                       
                     } else if tapEndPosY < tapEndPosX {
-                        // yの移動量がxより小さい→下方向
+                        panDirection = "down"
                         print("下フリック")
-                        self.frame = CGRect(x:self.defoultX!,y:self.defoultY!,width:self.defoultWidth!,height:self.defoultHeight!)
-                        self.layer.cornerRadius = 30
-                        self.isShowDetail = false
-                    } else {
-                        // 左方向
-                        print("左フリック")
                     }
+                }
+                if panDirection == "up" && !self.isShowDetail {
+                    self.changeViewSize()
+                } else if panDirection == "down" && self.isShowDetail {
+                    self.changeViewSize()
                 }
             default:
                 break
@@ -128,6 +113,21 @@ class TaskView: UIView {
         
     }
 
+    func changeViewSize() {
+        let myBoundWidht: CGFloat = UIScreen.main.bounds.size.width
+        let currentWidth = (self.frame.size.width - myBoundWidht)/2
+        if isShowDetail {
+            self.frame = CGRect(x:self.defoultX!,y:self.defoultY!,width:self.defoultWidth!,height:self.defoultHeight!)
+            self.layer.cornerRadius = 30
+            self.isShowDetail = false
+        } else {
+            self.frame.size.height = (self.parent?.frame.size.height)! + 50
+            self.frame.size.width = (self.parent?.parent?.frame.size.width)!
+            self.frame = CGRect(x:self.frame.origin.x + currentWidth,y:0,width:self.frame.size.width,height:self.frame.size.height)
+            self.layer.cornerRadius = 0
+            self.isShowDetail = true
+        }
+    }
 
     // 親ビュー (parent) に対して上下左右マージンゼロの指定をする
     func applyAutoLayoutMatchParent(parent: UIView, margin: CGFloat = 0) {
