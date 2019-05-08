@@ -12,6 +12,9 @@ import RxCocoa
 
 class TaskView: UIView{
 
+    @IBOutlet weak var ticketProgressBar: UIProgressView!
+    @IBOutlet weak var ticketProgressLabel: UILabel!
+    @IBOutlet weak var ticketCountLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var ticketTableView: UITableView!
@@ -40,6 +43,11 @@ class TaskView: UIView{
         
         setLayout()
         bind()
+        bindLayout()
+    }
+    
+    func bindLayout() {
+        ticketCountLabel.rx.text.asObserver()
     }
     
     func bind() {
@@ -102,6 +110,7 @@ class TaskView: UIView{
             } else {
                 // 拡大するときの処理
                 self.ticketTableView.isHidden = false
+                self.ticketTableView.reloadData()
                 self.frame.size.height = (self.parent?.frame.size.height)! + 50
                 self.frame.size.width = (self.parent?.parent?.frame.size.width)!
                 self.frame = CGRect(x:self.frame.origin.x + currentWidth,y:0,width:self.frame.size.width,height:self.frame.size.height)
@@ -116,7 +125,7 @@ class TaskView: UIView{
     }
     
     func setTableView() {
-        self.ticketTableView.estimatedRowHeight = 100
+        self.ticketTableView.estimatedRowHeight = 150
         for ticket in taskViewModel!.tickets! {
             self.ticketTableView.register(UINib(nibName: "TichketTableViewCell", bundle: nil), forCellReuseIdentifier: "TichketTableViewCell")
             

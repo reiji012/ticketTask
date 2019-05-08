@@ -16,6 +16,7 @@ class TaskViewModel: NSObject {
     var attri: String?
     var tickets: [String:Bool]?
     var task: Dictionary<String, Any>?
+    var ticketCout: Int?
     
     override init() {
         taskModel = TaskModel.sharedManager
@@ -29,6 +30,7 @@ class TaskViewModel: NSObject {
         self.taskName = (task!["title"] as! String)
         self.attri = (task!["attri"] as! String)
         self.tickets = (task!["tickets"] as! [String:Bool])
+        self.ticketCout = tickets?.count
     }
     
 }

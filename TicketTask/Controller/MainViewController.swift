@@ -83,11 +83,15 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         //タブのx座標．
         //ダミーLabel分，はじめからずらしてあげましょう．
         var originX:CGFloat = dummyLabelWidth
+        
+        // VIewを設置する高さを計算する
+        let mainScreenHeight: CGFloat = UIScreen.main.bounds.size.height
+        let currentY = mainScreenHeight - 450
         //titlesで定義したタブを1つずつ用意していく
         for (index, task) in tasks.enumerated() {
             //タブになるUIVIewを作る
             taskView = UINib(nibName: "TaskView", bundle: Bundle.main).instantiate(withOwner: self, options: nil).first as? TaskView
-            taskView.frame = CGRect.init(x: originX + 75, y: 400, width: 350.0, height: 300.0)
+            taskView.frame = CGRect.init(x: originX + 75, y: currentY, width: 350.0, height: 300.0)
             taskView.setViewModel(task: task as! Dictionary<String, Any>)
             taskView.setTableView()
 
