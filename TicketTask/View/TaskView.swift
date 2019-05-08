@@ -10,10 +10,14 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class TaskView: UIView {
+class TaskView: UIView, UITableViewDelegate,UITableViewDataSource{
 
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var ticketTableView: UITableView!
+    @IBOutlet weak var tableViewHeightConst: NSLayoutConstraint!
     
+    var tableViewArray = [UITableViewCell]()
     var taskViewModel: TaskViewModel?
 
     var defoultWidth: CGFloat?
@@ -21,7 +25,13 @@ class TaskView: UIView {
     var defoultX: CGFloat?
     var defoultY: CGFloat?
     
-    var isShowDetail: Bool = false
+    var isShowDetail: Bool = false {
+        didSet(value) {
+            
+        }
+    }
+    
+    let disposeBag = DisposeBag()
     
     func setViewModel(task:Dictionary<String, Any>) {
         let taskName = (task["title"] as! String)
@@ -29,9 +39,24 @@ class TaskView: UIView {
         taskViewModel = TaskViewModel(taskName: taskName)
         
         setLayout()
+        bind()
+    }
+    
+    func bind() {
+        backButton.rx.tap
+            .subscribe { [weak self] _ in
+                self?.changeViewSize()
+            }
+            .disposed(by: disposeBag)
     }
     
     func setLayout() {
+        
+        setTableView()
+        
+        // 初期状態では戻るボタンを非表示にする
+        backButton.isHidden = true
+        ticketTableView.isHidden = true
         // リサイズ用に初期サイズを保存しておく
         self.defoultHeight = self.frame.size.height
         self.defoultWidth = self.frame.size.width
@@ -48,7 +73,7 @@ class TaskView: UIView {
         titleLabel.text = taskViewModel?.taskName
         
         // create gesturView(subView)
-        let currentHeight = self.bounds.size.height / 5
+        let currentHeight = self.bounds.size.height / 4
         let rect = CGRect(x: 0, y: 0, width: self.bounds.size.width, height: currentHeight);
         let gesturView:UIView = UIView(frame: rect)
         
@@ -60,23 +85,60 @@ class TaskView: UIView {
         
         self.addSubview(gesturView)
     }
+    
+    
 
     func changeViewSize() {
-        let myBoundWidht: CGFloat = UIScreen.main.bounds.size.width
-        let currentWidth = (self.frame.size.width - myBoundWidht)/2
-        if isShowDetail {
-            self.frame = CGRect(x:self.defoultX!,y:self.defoultY!,width:self.defoultWidth!,height:self.defoultHeight!)
-            self.layer.cornerRadius = 30
-            self.isShowDetail = false
-        } else {
-            self.frame.size.height = (self.parent?.frame.size.height)! + 50
-            self.frame.size.width = (self.parent?.parent?.frame.size.width)!
-            self.frame = CGRect(x:self.frame.origin.x + currentWidth,y:0,width:self.frame.size.width,height:self.frame.size.height)
-            self.layer.cornerRadius = 0
-            self.isShowDetail = true
+        UIView.animate(withDuration: 0.5, animations: {
+            let myBoundWidht: CGFloat = UIScreen.main.bounds.size.width
+            let currentWidth = (self.frame.size.width - myBoundWidht)/2
+            if self.isShowDetail {
+                // 縮小するときの処理
+                self.ticketTableView.isHidden = true
+                self.frame = CGRect(x:self.defoultX!,y:self.defoultY!,width:self.defoultWidth!,height:self.defoultHeight!)
+                self.layer.cornerRadius = 30
+                self.backButton.isHidden = true
+                self.isShowDetail = false
+            } else {
+                // 拡大するときの処理
+                self.ticketTableView.isHidden = false
+                self.frame.size.height = (self.parent?.frame.size.height)! + 50
+                self.frame.size.width = (self.parent?.parent?.frame.size.width)!
+                self.frame = CGRect(x:self.frame.origin.x + currentWidth,y:0,width:self.frame.size.width,height:self.frame.size.height)
+                self.layer.cornerRadius = 0
+                self.backButton.isHidden = false
+                self.isShowDetail = true
+            }
+        })
+    }
+    
+    func setTableView() {
+        self.ticketTableView.estimatedRowHeight = 100
+        for ticket in taskViewModel!.tickets! {
+            self.ticketTableView.register(UINib(nibName: "TichketTableViewCell", bundle: nil), forCellReuseIdentifier: "TichketTableViewCell")
+            
+            guard let ticketTableViewCell = self.ticketTableView.dequeueReusableCell(withIdentifier: "TichketTableViewCell") as? TichketTableViewCell else {
+                return
+            }
+            self.tableViewArray.append(ticketTableViewCell)
         }
     }
 
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return tableViewArray.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let tableViewCell = self.tableViewArray[indexPath.row]
+        
+        if tableViewCell is TichketTableViewCell {
+            return tableViewCell
+        }
+        
+        return UITableViewCell()
+    }
     
     
     // フリック時の拡大縮小
@@ -88,47 +150,44 @@ class TaskView: UIView {
         var tapEndPosY:CGFloat = 0
         
         // 指が離れた時（sender.state = .ended）だけ処理をする
-        UIView.animate(withDuration: 0.5, animations: {
-            
-            //拡大縮小の処理
-            
-            switch sender.state {
-            case .ended:
-                // タップ開始地点からの移動量を取得
-                let position = sender.translation(in: self)
-                tapEndPosX = position.x     // x方向の移動量
-                tapEndPosY = -position.y    // y方向の移動量（上をプラスと扱うため、符号反転する）
-                var panDirection = ""
-                // 上下左右のフリック方向を判別する
-                // xがプラスの場合（右方向）とマイナスの場合（左方向）で場合分け
-                if tapEndPosX > 0 {
-                    if tapEndPosY > tapEndPosX {
-                        panDirection = "up"
-                        print("上フリック")
-                    } else if tapEndPosY < -tapEndPosX {
-                        panDirection = "down"
-                        print("下フリック")
-                    }
-                } else {
-                    if tapEndPosY > -tapEndPosX {
-                        panDirection = "up"
-                        print("上フリック")
-                        
-                    } else if tapEndPosY < tapEndPosX {
-                        panDirection = "down"
-                        print("下フリック")
-                    }
-                }
-                if panDirection == "up" && !self.isShowDetail {
-                    self.changeViewSize()
-                } else if panDirection == "down" && self.isShowDetail {
-                    self.changeViewSize()
-                }
-            default:
-                break
-            }
-        })
+        //拡大縮小の処理
         
+        switch sender.state {
+        case .ended:
+            // タップ開始地点からの移動量を取得
+            let position = sender.translation(in: self)
+            tapEndPosX = position.x     // x方向の移動量
+            tapEndPosY = -position.y    // y方向の移動量（上をプラスと扱うため、符号反転する）
+            var panDirection = ""
+            // 上下左右のフリック方向を判別する
+            // xがプラスの場合（右方向）とマイナスの場合（左方向）で場合分け
+            if tapEndPosX > 0 {
+                if tapEndPosY > tapEndPosX {
+                    panDirection = "up"
+                    print("上フリック")
+                } else if tapEndPosY < -tapEndPosX {
+                    panDirection = "down"
+                    print("下フリック")
+                }
+            } else {
+                if tapEndPosY > -tapEndPosX {
+                    panDirection = "up"
+                    print("上フリック")
+                    
+                } else if tapEndPosY < tapEndPosX {
+                    panDirection = "down"
+                    print("下フリック")
+                }
+            }
+            if panDirection == "up" && !self.isShowDetail {
+                self.changeViewSize()
+            } else if panDirection == "down" && self.isShowDetail {
+                self.changeViewSize()
+            }
+        default:
+            break
+        }
+    
     }
     
     // 親ビュー (parent) に対して上下左右マージンゼロの指定をする
@@ -151,6 +210,7 @@ class TaskView: UIView {
 }
 
 
+
 extension UIView {
     public var parent: UIView? {
         get {
@@ -164,4 +224,5 @@ extension UIView {
             }
         }
     }
+
 }
