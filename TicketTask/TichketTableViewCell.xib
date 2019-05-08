@@ -57,6 +57,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="checkBoxLabel" destination="6CQ-JL-YWA" id="Hkt-fm-DKM"/>
+                <outlet property="ticketName" destination="lWQ-xc-a9x" id="1sA-LD-s81"/>
             </connections>
             <point key="canvasLocation" x="215.94202898550725" y="125.89285714285714"/>
         </tableViewCell>

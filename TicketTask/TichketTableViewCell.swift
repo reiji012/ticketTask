@@ -10,6 +10,7 @@ import UIKit
 
 class TichketTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var ticketName: UILabel!
     @IBOutlet weak var checkBoxLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()

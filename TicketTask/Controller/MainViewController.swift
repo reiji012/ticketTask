@@ -11,9 +11,11 @@ import RxSwift
 import RxRelay
 import RxCocoa
 
-class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDelegate {
+class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource {
     
     var isShowDetail: Bool?
+    var tableViewArray = [UITableViewCell]()
+    var taskViewIndex: Int?
 
     @IBOutlet weak var scrollView: UIScrollView!
     weak var taskView: TaskView!
@@ -21,10 +23,16 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
     var taskViewModel = TaskViewModel()
     override func viewDidLoad() {
         super.viewDidLoad()
+        scrollView.delegate = self
         // Do any additional setup after loading the view.
         bindUI()
+        bind()
+        
     }
     
+    func bind() {
+        scrollView.rx.didScroll.asObservable()
+    }
     func bindUI() {
         
         //グラデーションの作成
@@ -41,7 +49,7 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
     var didPrepareMenu = false
     
     //タブの横幅
-    let tabLabelWidth:CGFloat = 500.0
+    let taskViewWidth:CGFloat = 500.0
     
     //viewDidLoad等で処理を行うと
     //scrollViewの正しいサイズが取得出来ません
@@ -67,7 +75,7 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         
         //右端にダミーのUILabelを置くことで
         //一番右のタブもセンターに持ってくることが出来ます
-        let dummyLabelWidth = scrollView.frame.size.width/2 - tabLabelWidth/2
+        let dummyLabelWidth = scrollView.frame.size.width/2 - taskViewWidth/2
         let headDummyLabel = UIView()
         headDummyLabel.frame = CGRect(x:0, y:0, width:dummyLabelWidth, height:tabLabelHeight)
         scrollView.addSubview(headDummyLabel)
@@ -81,13 +89,17 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
             taskView = UINib(nibName: "TaskView", bundle: Bundle.main).instantiate(withOwner: self, options: nil).first as? TaskView
             taskView.frame = CGRect.init(x: originX + 75, y: 400, width: 350.0, height: 300.0)
             taskView.setViewModel(task: task as! Dictionary<String, Any>)
+            taskView.setTableView()
 
-            taskView.tag = index
-            //scrollViewにぺたっとする
-            scrollView.addSubview(taskView)
+            taskView.ticketTableView!.delegate = self
+            taskView.ticketTableView!.dataSource = self
             
+            
+            taskView.tag = index + 1
+            
+            scrollView.addSubview(taskView)
             //次のタブのx座標を用意する
-            originX += tabLabelWidth
+            originX += taskViewWidth
         }
         
         //左端にダミーのUILabelを置く
@@ -103,6 +115,36 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         scrollView.contentSize = CGSize(width:originX, height:tabLabelHeight)
     }
     
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let index = (self.taskViewIndex != nil) ? self.taskViewIndex! : 1
+        let currentTaskView = self.view.viewWithTag(index) as! TaskView
+        return currentTaskView.tableViewArray.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let currentTaskView: TaskView
+        if self.taskViewIndex == nil {
+            currentTaskView = self.view.viewWithTag(1) as! TaskView
+        } else {
+            currentTaskView = self.view.viewWithTag(taskViewIndex!) as! TaskView
+        }
+        let tableViewCell = currentTaskView.tableViewArray[indexPath.row]
+        print(indexPath.row)
+        if tableViewCell is TichketTableViewCell {
+            let currentTableViewCell: TichketTableViewCell = tableViewCell as! TichketTableViewCell
+            var ticketName = ""
+            for (index, ticket) in (currentTaskView.taskViewModel?.tickets!.keys)!.enumerated() {
+                if index == indexPath.row {
+                    ticketName = ticket
+                }
+            }
+            currentTableViewCell.ticketName.text = ticketName
+            return currentTableViewCell
+        }
+        
+        return UITableViewCell()
+    }
+    
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         guard scrollView == self.scrollView else { return }
@@ -112,10 +154,12 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         
         //現在のスクロールの位置(scrollView.contentOffset.x)から
         //どこのタブを表示させたいか計算します
-        let index = Int((scrollView.contentOffset.x + tabLabelWidth/2) / tabLabelWidth)
+        let index = Int((scrollView.contentOffset.x + taskViewWidth/2) / taskViewWidth)
         let x = index * 500
         UIView.animate(withDuration: 0.3, animations: {
             scrollView.contentOffset = CGPoint(x:x, y:0)
+            self.taskViewIndex = x + 1
+            print(x)
         })
     }
     
@@ -124,10 +168,12 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         
         //これも上と同様に
         
-        let index = Int((scrollView.contentOffset.x + tabLabelWidth/2) / tabLabelWidth)
+        let index = Int((scrollView.contentOffset.x + taskViewWidth/2) / taskViewWidth)
         let x = index * 500
         UIView.animate(withDuration: 0.5, animations: {
             scrollView.contentOffset = CGPoint(x:x, y:0)
+            self.taskViewIndex = (x / 500) + 1
+            print(x)
         })
     }
     

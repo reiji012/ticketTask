@@ -3,21 +3,59 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "TaskViewModel.init():TaskViewModel.swift">
+         contextName = "TaskModel.init():TaskModel.swift">
       </ContextState>
       <ContextState
          contextName = "TaskView.setLabelText(title:):TaskView.swift">
          <PersistentStrings>
             <PersistentString
-               value = "defoultHeight">
+               value = "defoultWidth">
             </PersistentString>
             <PersistentString
-               value = "defoultWidth">
+               value = "defoultHeight">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "TaskModel.init():TaskModel.swift">
+         contextName = "MainViewController.createTaskViews():MainViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "scrollView.frame.size.width">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "TaskView.setTableView():TaskView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.tableViewArray.count">
+            </PersistentString>
+            <PersistentString
+               value = "self.taskViewModel?.taskName">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MainViewController.tableView(_:cellForRowAt:):MainViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "taskViewIndex">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "TaskModel.().init():TaskModel.swift">
+      </ContextState>
+      <ContextState
+         contextName = "TaskViewModel.init(taskName:):TaskViewModel.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.tickets">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "TaskViewModel.init():TaskViewModel.swift">
       </ContextState>
    </ContextStates>
 </VariablesViewState>
