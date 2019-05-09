@@ -13,7 +13,11 @@ import RxCocoa
 
 class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource {
     
-    var isShowDetail: Bool?
+    var isShowDetail: Bool = false {
+        didSet(value) {
+            self.scrollView.isScrollEnabled = value
+        }
+    }
     var tableViewArray = [UITableViewCell]()
     var taskViewIndex: Int?
 
