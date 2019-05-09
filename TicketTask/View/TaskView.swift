@@ -28,24 +28,34 @@ class TaskView: UIView{
     var defoultX: CGFloat?
     var defoultY: CGFloat?
     
+    var progress:Float = 0.0 {
+        didSet {
+            let convertProgress = Int((taskViewModel!.completedProgress!)*100)
+            self.ticketProgressLabel.text = "\(String(convertProgress))%"
+            ticketProgressBar.setProgress(progress, animated: true)
+        }
+    }
     var mainViewController: MainViewController? = nil
-    
     var isShowDetail: Bool = false
-    
     let disposeBag = DisposeBag()
     
     func setViewModel(task:Dictionary<String, Any>) {
         let taskName = (task["title"] as! String)
         // taskViewModelの取得
         taskViewModel = TaskViewModel(taskName: taskName)
-        
-        mainViewController = getMainViewController()
-        setLayout()
+        taskViewModel?.countProgress()
         bind()
         bindLayout()
+        setProgressValue()
+        setLayout()
+
     }
     
     func bindLayout() {
+    }
+    
+    func setProgressValue() {
+        self.progress = Float(taskViewModel!.completedProgress!)
     }
     
     func bind() {
@@ -57,9 +67,9 @@ class TaskView: UIView{
     }
     
     func setLayout() {
-        
-//        setTableView()
-        
+        let convertProgress = Int((taskViewModel!.completedProgress!)*100)
+        self.ticketProgressLabel.text = "\(String(convertProgress))%"
+        ticketProgressBar.setProgress(progress, animated: true)
         // 初期状態では戻るボタンを非表示にする
         backButton.isHidden = true
         ticketTableView.isHidden = true
@@ -92,9 +102,9 @@ class TaskView: UIView{
         self.addSubview(gesturView)
     }
     
-    
-
     func changeViewSize() {
+        mainViewController = getMainViewController()
+
         UIView.animate(withDuration: 0.5, animations: {
             let myBoundWidht: CGFloat = UIScreen.main.bounds.size.width
             let currentWidth = (self.frame.size.width - myBoundWidht)/2
@@ -138,7 +148,6 @@ class TaskView: UIView{
             }
             self.tableViewArray.append(ticketTableViewCell)
         }
-        
     }
 
     func getMainViewController() -> MainViewController? {

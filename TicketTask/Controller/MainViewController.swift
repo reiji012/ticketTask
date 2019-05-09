@@ -13,32 +13,30 @@ import RxCocoa
 
 class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource {
     
+    // ViewModelの取得
+    var taskViewModel = TaskViewModel()
+    
+    var tableViewArray = [UITableViewCell]()
+    var taskViewIndex: Int?
     var isShowDetail: Bool = false {
         didSet(value) {
             self.scrollView.isScrollEnabled = value
         }
     }
-    var tableViewArray = [UITableViewCell]()
-    var taskViewIndex: Int?
-
-    @IBOutlet weak var scrollView: UIScrollView!
     weak var taskView: TaskView!
+    //TaskViewの横幅
+    let taskViewWidth:CGFloat = 500.0
     
-    var taskViewModel = TaskViewModel()
+    @IBOutlet weak var scrollView: UIScrollView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         scrollView.delegate = self
         // Do any additional setup after loading the view.
         bindUI()
-        bind()
-        
-    }
-    
-    func bind() {
-        scrollView.rx.didScroll.asObservable()
+        createTaskViews()
     }
     func bindUI() {
-        
         //グラデーションの作成
         let topColor = UIColor(red:0.47, green:0.73, blue:0.96, alpha:1)
         let bottomColor = UIColor(red:0.34, green:0.54, blue:0.94, alpha:1)
@@ -49,25 +47,12 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         self.view.layer.insertSublayer(gradientLayer, at: 0)
     }
 
-    //一度だけメニュー作成をするためのフラグ
-    var didPrepareMenu = false
-    
-    //タブの横幅
-    let taskViewWidth:CGFloat = 500.0
-    
-    //viewDidLoad等で処理を行うと
-    //scrollViewの正しいサイズが取得出来ません
+
     override func viewDidLayoutSubviews() {
-        createTaskViews()
+        
     }
     
     func createTaskViews() {
-        //viewDidLayoutSubviewsはviewDidLoadと違い
-        //何度も呼ばれてしまうメソッドなので
-        //一度だけメニュー作成を行うようにします
-        if didPrepareMenu { return }
-        didPrepareMenu = true
-        
         //scrollViewのDelegateを指定
         scrollView.delegate = self
         
@@ -92,16 +77,15 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         let mainScreenHeight: CGFloat = UIScreen.main.bounds.size.height
         let currentY = mainScreenHeight - 450
         //titlesで定義したタブを1つずつ用意していく
-        for (index, task) in tasks.enumerated() {
+        for (index, task) in tasks!.enumerated() {
             //タブになるUIVIewを作る
             taskView = UINib(nibName: "TaskView", bundle: Bundle.main).instantiate(withOwner: self, options: nil).first as? TaskView
             taskView.frame = CGRect.init(x: originX + 75, y: currentY, width: 350.0, height: 300.0)
-            taskView.setViewModel(task: task as! Dictionary<String, Any>)
+            taskView.setViewModel(task: task)
             taskView.setTableView()
 
             taskView.ticketTableView!.delegate = self
             taskView.ticketTableView!.dataSource = self
-            
             
             taskView.tag = index + 1
             
@@ -141,11 +125,15 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         if tableViewCell is TichketTableViewCell {
             let currentTableViewCell: TichketTableViewCell = tableViewCell as! TichketTableViewCell
             var ticketName = ""
+            var isCompleted: Bool?
             for (index, ticket) in (currentTaskView.taskViewModel?.tickets!.keys)!.enumerated() {
                 if index == indexPath.row {
                     ticketName = ticket
+                    isCompleted = (currentTaskView.taskViewModel?.tickets![ticketName])!
                 }
             }
+            currentTableViewCell.isCompleted = isCompleted!
+            currentTableViewCell.checkBoxLabel.text = isCompleted! ? "✔️" : ""
             currentTableViewCell.ticketName.text = ticketName
             return currentTableViewCell
         }

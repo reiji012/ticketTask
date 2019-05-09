@@ -9,9 +9,18 @@
 import UIKit
 
 class TichketTableViewCell: UITableViewCell {
-
+    
+    var parentTaskView: TaskView?
+    var taskViewModel: TaskViewModel?
+    var isCompleted: Bool = false {
+        didSet(value) {
+            checkBoxLabel.text = isCompleted ? "✔️" : ""
+        }
+    }
+    
     @IBOutlet weak var ticketName: UILabel!
     @IBOutlet weak var checkBoxLabel: UILabel!
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -21,7 +30,19 @@ class TichketTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
+        //ViewModelの取得
+        parentTaskView = (self.parent?.parent as! TaskView)
+        self.taskViewModel = parentTaskView?.taskViewModel!
+        
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(self.changeCompletion))
+        checkBoxLabel.isUserInteractionEnabled = true
+        checkBoxLabel.addGestureRecognizer(gesture)
         // Configure the view for the selected state
     }
     
+    @objc func changeCompletion() {
+        self.isCompleted = !self.isCompleted
+        self.taskViewModel?.changeTicketCompleted(ticketName: ticketName.text!, completed: isCompleted)
+        self.parentTaskView!.setProgressValue()
+    }
 }
