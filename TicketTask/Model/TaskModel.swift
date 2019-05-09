@@ -16,19 +16,30 @@ class TaskModel {
         return TaskModel()
     }()
     private init() {
-        var tmp: Array<Any> = []
+        let testArray = ["朝の準備","晩御飯","就寝の準備","お仕事","勉強の進捗"]
+        var tmpArray: Array<Any> = []
         var array = ["title":"","attri":"","tickets":[]] as [String : Any]
-        for i in 0..<10 {
-            let taskTitle = "task\(i + 1)"
-            let attri = i % 2 == 0 ? "a" : "b"
-            let tickets = i % 2 == 0 ? ["banana":false,"tomato":true,"apple":true] : ["bread":false,"milk":false,"stake":true,"rice":false,"carry":false]
+        for (index,value) in testArray.enumerated() {
+            let taskTitle = value
+            let attri = index % 2 == 0 ? "a" : "b"
+            var tickets = index % 2 == 0 ? ["banana":false,"tomato":true,"apple":true] : ["bread":false,"milk":false,"stake":true,"rice":false,"carry":false]
             array["title"] = taskTitle
             array["attri"] = attri
-            array["tickets"] = tickets
             
-            tmp.append(array)
+            
+            switch value {
+            case "朝の準備": tickets = ["歯磨き":false,"朝ごはん":true,"新聞":true,"シャワー":true,"ニュース":false,"魚":false,"テレビ":true,"布団の処理":true,"鍵":true]
+            case "晩御飯": tickets = ["魚":false,"サラダ":true,"牛肉":true,"牛乳":true]
+            case "就寝の準備": tickets = ["歯磨き":false,"テレビ":true,"布団の準備￥":true,"シャワー":true]
+            case "お仕事": tickets = ["朝のタスク":false,"デスクの掃除":true,"事務処理":true,"午後のタスク":true]
+            case "勉強の進捗": tickets = ["学校の宿題":false,"夏休みの宿題":true,"受験勉強":true,"数学10ページ":true]
+            default: break
+            }
+            
+            array["tickets"] = tickets
+            tmpArray.append(array)
         }
-        tasks = (tmp as! [[String : Any]])
+        tasks = (tmpArray as! [[String : Any]])
     }
     
     func getTask(taskName: String) -> Dictionary<String, Any> {

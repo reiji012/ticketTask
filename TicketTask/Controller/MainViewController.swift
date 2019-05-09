@@ -7,9 +7,9 @@
 //
 
 import UIKit
-import RxSwift
-import RxRelay
-import RxCocoa
+//import RxSwift
+//import RxRelay
+//import RxCocoa
 
 class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource {
     
@@ -25,13 +25,16 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
     }
     weak var taskView: TaskView!
     //TaskViewの横幅
-    let taskViewWidth:CGFloat = 500.0
+    let taskViewWidth:CGFloat = 400.0
+    let currentWidth: Int = 400
+    var stopPoint: CGFloat = 0.0
     
     @IBOutlet weak var scrollView: UIScrollView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         scrollView.delegate = self
+        scrollView.showsVerticalScrollIndicator = false
         // Do any additional setup after loading the view.
         bindUI()
         createTaskViews()
@@ -52,6 +55,10 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         
     }
     
+    
+    /*
+     タスクを表示するViewを生成する
+     */
     func createTaskViews() {
         //scrollViewのDelegateを指定
         scrollView.delegate = self
@@ -75,12 +82,12 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         
         // VIewを設置する高さを計算する
         let mainScreenHeight: CGFloat = UIScreen.main.bounds.size.height
-        let currentY = mainScreenHeight - 450
+        let currentY = mainScreenHeight / 2 - 50
         //titlesで定義したタブを1つずつ用意していく
         for (index, task) in tasks!.enumerated() {
             //タブになるUIVIewを作る
             taskView = UINib(nibName: "TaskView", bundle: Bundle.main).instantiate(withOwner: self, options: nil).first as? TaskView
-            taskView.frame = CGRect.init(x: originX + 75, y: currentY, width: 350.0, height: 300.0)
+            taskView.frame = CGRect.init(x: originX + 25, y: currentY, width: 350.0, height: 300.0)
             taskView.setViewModel(task: task)
             taskView.setTableView()
 
@@ -144,34 +151,76 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         guard scrollView == self.scrollView else { return }
-        
+        if isShowDetail {
+            return
+        }
         //微妙なスクロール位置でスクロールをやめた場合に
         //ちょうどいいタブをセンターに持ってくるためのアニメーションです
         
         //現在のスクロールの位置(scrollView.contentOffset.x)から
         //どこのタブを表示させたいか計算します
+        let taskCount = self.taskViewModel.tasks!.count
+        //スクロール可能最大値
+        let maxScrollPoint = (taskCount - 1) * currentWidth
+        //Viewが何番目かを計算
         let index = Int((scrollView.contentOffset.x + taskViewWidth/2) / taskViewWidth)
-        let x = index * 500
+        let x = index * currentWidth
+        //どれくらいスクロールしたのか
+        let currentScroll = self.stopPoint - scrollView.contentOffset.x
+        var scrollPoint = self.stopPoint
+        if currentScroll < 0 {
+            if currentScroll <= -75 {
+                scrollPoint += CGFloat(currentWidth)
+            }
+        } else {
+            if currentScroll >= 75 {
+                scrollPoint -= CGFloat(currentWidth)
+            }
+        }
+        //スクロール位置がスクロール可能最大値を超えないようにする
+        if Int(scrollPoint) > maxScrollPoint {
+            scrollPoint -= CGFloat(self.currentWidth)
+        }
+        //スクロール位置がマイナスになってしまう時は0を指定
+        if Int(scrollPoint) < 0 {
+            scrollPoint = 0
+        }
         UIView.animate(withDuration: 0.3, animations: {
-            scrollView.contentOffset = CGPoint(x:x, y:0)
-            self.taskViewIndex = x + 1
+            scrollView.contentOffset = CGPoint(x:scrollPoint, y:0)
+            self.taskViewIndex = (Int(scrollPoint) / self.currentWidth) + 1
             print(x)
         })
+        self.stopPoint = scrollView.contentOffset.x
     }
-    
+
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         guard scrollView == self.scrollView else { return }
-        
-        //これも上と同様に
-        
-        let index = Int((scrollView.contentOffset.x + taskViewWidth/2) / taskViewWidth)
-        let x = index * 500
-        UIView.animate(withDuration: 0.5, animations: {
-            scrollView.contentOffset = CGPoint(x:x, y:0)
-            self.taskViewIndex = (x / 500) + 1
-            print(x)
-        })
+        if isShowDetail {
+            return
+        }
+        //慣性を消す
+        scrollView.setContentOffset(scrollView.contentOffset, animated: false)
+
+    }
+
+    
+    func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
+        guard scrollView == self.scrollView else { return }
+        if isShowDetail {
+            return
+        }
+        //慣性を消す
+       scrollView.setContentOffset(scrollView.contentOffset, animated: false)
     }
     
+    /*
+     縦方向へのスクロールを固定
+     */
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        var p = scrollView.contentOffset
+        p.y = self.isShowDetail ? scrollView.contentOffset.y : 0
+        scrollView.contentOffset = p
+    }
+
 }
 

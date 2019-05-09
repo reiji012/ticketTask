@@ -59,11 +59,24 @@ class TaskView: UIView{
     }
     
     func bind() {
-        backButton.rx.tap
+        self.backButton.rx.tap
             .subscribe { [weak self] _ in
                 self?.changeViewSize()
             }
             .disposed(by: disposeBag)
+        
+        self.isUserInteractionEnabled = true
+        let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(
+            target: self,
+            action: #selector(self.tapped(_:)))
+        self.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc func tapped(_ sender: UITapGestureRecognizer){
+        if isShowDetail {
+            return
+        }
+        self.changeViewSize()
     }
     
     func setLayout() {
@@ -74,8 +87,6 @@ class TaskView: UIView{
         backButton.isHidden = true
         ticketTableView.isHidden = true
         // リサイズ用に初期サイズを保存しておく
-        self.defoultHeight = self.frame.size.height
-        self.defoultWidth = self.frame.size.width
         self.defoultX = self.frame.origin.x
         self.defoultY = self.frame.origin.y
         
@@ -103,6 +114,7 @@ class TaskView: UIView{
     }
     
     func changeViewSize() {
+        //拡大縮小の処理
         mainViewController = getMainViewController()
 
         UIView.animate(withDuration: 0.5, animations: {
@@ -117,20 +129,18 @@ class TaskView: UIView{
                 self.isShowDetail = false
             } else {
                 // 拡大するときの処理
+                self.defoultHeight = self.frame.size.height
+                self.defoultWidth = self.bounds.size.width
                 self.ticketTableView.reloadData()
-                self.frame.size.height = (self.parent?.frame.size.height)!
+                self.frame.size.height = UIScreen.main.bounds.size.height
                 self.frame.size.width = (self.parent?.parent?.frame.size.width)!
-                self.frame = CGRect(x:self.frame.origin.x + currentWidth,y:0,width:self.frame.size.width,height:self.frame.size.height)
+                self.frame = CGRect(x:self.frame.origin.x + currentWidth,y:0,width:self.frame.size.width,height:UIScreen.main.bounds.size.height)
                 self.layer.cornerRadius = 0
-                let indexPath = IndexPath(row: 0, section: 0)
-                self.ticketTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
-
-                self.backButton.isHidden = false
                 self.isShowDetail = true
             }
         }, completion: { finished in
-            self.ticketTableView.isHidden =             self.isShowDetail
-                ? false : true
+            self.ticketTableView.isHidden = self.isShowDetail ? false : true
+            self.backButton.isHidden = self.isShowDetail ? false : true
             // ViewConrtollerに状態の変更を伝える
             if (self.mainViewController != nil) {
                 self.mainViewController?.isShowDetail = self.isShowDetail
@@ -140,7 +150,7 @@ class TaskView: UIView{
     
     func setTableView() {
         self.ticketTableView.estimatedRowHeight = 150
-        for ticket in taskViewModel!.tickets! {
+        for _ in taskViewModel!.tickets! {
             self.ticketTableView.register(UINib(nibName: "TichketTableViewCell", bundle: nil), forCellReuseIdentifier: "TichketTableViewCell")
             
             guard let ticketTableViewCell = self.ticketTableView.dequeueReusableCell(withIdentifier: "TichketTableViewCell") as? TichketTableViewCell else {
@@ -171,10 +181,7 @@ class TaskView: UIView{
         
         var tapEndPosX:CGFloat = 0
         var tapEndPosY:CGFloat = 0
-        
         // 指が離れた時（sender.state = .ended）だけ処理をする
-        //拡大縮小の処理
-        
         switch sender.state {
         case .ended:
             // タップ開始地点からの移動量を取得
