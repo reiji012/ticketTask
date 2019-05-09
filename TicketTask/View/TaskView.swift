@@ -28,11 +28,9 @@ class TaskView: UIView{
     var defoultX: CGFloat?
     var defoultY: CGFloat?
     
-    var isShowDetail: Bool = false {
-        didSet(value) {
-            
-        }
-    }
+    var mainViewController: MainViewController? = nil
+    
+    var isShowDetail: Bool = false
     
     let disposeBag = DisposeBag()
     
@@ -41,13 +39,13 @@ class TaskView: UIView{
         // taskViewModelの取得
         taskViewModel = TaskViewModel(taskName: taskName)
         
+        mainViewController = getMainViewController()
         setLayout()
         bind()
         bindLayout()
     }
     
     func bindLayout() {
-        ticketCountLabel.rx.text.asObserver()
     }
     
     func bind() {
@@ -109,9 +107,8 @@ class TaskView: UIView{
                 self.isShowDetail = false
             } else {
                 // 拡大するときの処理
-                self.ticketTableView.isHidden = false
                 self.ticketTableView.reloadData()
-                self.frame.size.height = (self.parent?.frame.size.height)! + 50
+                self.frame.size.height = (self.parent?.frame.size.height)!
                 self.frame.size.width = (self.parent?.parent?.frame.size.width)!
                 self.frame = CGRect(x:self.frame.origin.x + currentWidth,y:0,width:self.frame.size.width,height:self.frame.size.height)
                 self.layer.cornerRadius = 0
@@ -120,6 +117,13 @@ class TaskView: UIView{
 
                 self.backButton.isHidden = false
                 self.isShowDetail = true
+            }
+        }, completion: { finished in
+            self.ticketTableView.isHidden =             self.isShowDetail
+                ? false : true
+            // ViewConrtollerに状態の変更を伝える
+            if (self.mainViewController != nil) {
+                self.mainViewController?.isShowDetail = self.isShowDetail
             }
         })
     }
@@ -137,7 +141,19 @@ class TaskView: UIView{
         
     }
 
-    
+    func getMainViewController() -> MainViewController? {
+        if let rootViewController = UIApplication.shared.keyWindow?.rootViewController {
+            var topViewControlelr: UIViewController = rootViewController
+            
+            while let presentedViewController = topViewControlelr.presentedViewController {
+                topViewControlelr = presentedViewController
+            }
+            
+            return topViewControlelr as? MainViewController
+        } else {
+            return nil
+        }
+    }
     
     // フリック時の拡大縮小
     @objc func panGesture(sender:UIPanGestureRecognizer) {
