@@ -16,6 +16,7 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
     // ViewModelの取得
     var taskViewModel = TaskViewModel()
     
+    var centerViewAttri: String?
     var tableViewArray = [UITableViewCell]()
     var taskViewIndex: Int?
     var isShowDetail: Bool = false {
@@ -24,11 +25,15 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         }
     }
     weak var taskView: TaskView!
+    var gradientLayer: CAGradientLayer = CAGradientLayer()
     //TaskViewの横幅
     let taskViewWidth:CGFloat = 400.0
     let currentWidth: Int = 400
     var stopPoint: CGFloat = 0.0
     
+    var gradationColors: GradationColors?
+    
+    @IBOutlet weak var taskAddButton: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
     
     override func viewDidLoad() {
@@ -40,19 +45,24 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         createTaskViews()
     }
     func bindUI() {
-        //グラデーションの作成
-        let topColor = UIColor(red:0.47, green:0.73, blue:0.96, alpha:1)
-        let bottomColor = UIColor(red:0.34, green:0.54, blue:0.94, alpha:1)
-        let gradientColors: [CGColor] = [topColor.cgColor, bottomColor.cgColor]
-        let gradientLayer: CAGradientLayer = CAGradientLayer()
-        gradientLayer.colors = gradientColors
-        gradientLayer.frame = self.view.bounds
-        self.view.layer.insertSublayer(gradientLayer, at: 0)
+        gradationColors = GradationColors()
+        // 影の設定
+        self.taskAddButton.layer.shadowOpacity = 0.5
+        self.taskAddButton.layer.shadowRadius = 12
+        self.taskAddButton.layer.shadowColor = UIColor.black.cgColor
+        self.taskAddButton.layer.shadowOffset = CGSize(width: 3, height: 4)
     }
 
 
-    override func viewDidLayoutSubviews() {
-        
+    func setGradationColor() {
+        UIView.animate(withDuration: 2, animations: { () -> Void in
+            let topColor = self.centerViewAttri! == "a" ? self.gradationColors?.attriATopColor : self.gradationColors?.attriBTopColor
+            let bottomColor = self.centerViewAttri! == "a" ? self.gradationColors?.attriABottomColor : self.gradationColors?.attriBBottomColor
+            let gradientColors: [CGColor] = [topColor!.cgColor, bottomColor!.cgColor]
+            self.gradientLayer.colors = gradientColors
+            self.gradientLayer.frame = self.view.bounds
+            self.view.layer.insertSublayer(self.gradientLayer, at: 0)
+        })
     }
     
     
@@ -99,6 +109,12 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
             scrollView.addSubview(taskView)
             //次のタブのx座標を用意する
             originX += taskViewWidth
+            
+            if(index + 1 == 1) {
+                self.centerViewAttri = taskView.taskViewModel!.attri
+                //グラデーションの作成
+                self.setGradationColor()
+            }
         }
         
         //左端にダミーのUILabelを置く
@@ -114,9 +130,14 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         scrollView.contentSize = CGSize(width:originX, height:tabLabelHeight)
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func getCenterTaskView() -> TaskView {
         let index = (self.taskViewIndex != nil) ? self.taskViewIndex! : 1
         let currentTaskView = self.view.viewWithTag(index) as! TaskView
+        return currentTaskView
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let currentTaskView = getCenterTaskView()
         return currentTaskView.tableViewArray.count
     }
     
@@ -185,11 +206,14 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         if Int(scrollPoint) < 0 {
             scrollPoint = 0
         }
+        self.taskViewIndex = (Int(scrollPoint) / self.currentWidth) + 1
+        let currentTaskView = self.getCenterTaskView()
+        self.centerViewAttri = currentTaskView.taskViewModel!.attri
+        print(self.centerViewAttri)
         UIView.animate(withDuration: 0.3, animations: {
             scrollView.contentOffset = CGPoint(x:scrollPoint, y:0)
-            self.taskViewIndex = (Int(scrollPoint) / self.currentWidth) + 1
-            print(x)
         })
+        self.setGradationColor()
         self.stopPoint = scrollView.contentOffset.x
     }
 

@@ -97,8 +97,15 @@ class TaskView: UIView{
         self.layer.shadowColor = UIColor.black.cgColor
         self.layer.shadowOffset = CGSize(width: 5, height: 5)
         
-        titleLabel.text = taskViewModel?.taskName
-        
+        self.titleLabel.text = taskViewModel?.taskName
+        self.ticketCountLabel.text = "チケット:\(taskViewModel?.ticketCout ?? 0)"
+        self.createGesturView()
+    }
+    
+    /*
+     上下のジェスチャー用のVIew作成
+     */
+    func createGesturView() {
         // create gesturView(subView)
         let currentHeight = self.bounds.size.height / 4
         let rect = CGRect(x: 0, y: 0, width: self.bounds.size.width, height: currentHeight);
