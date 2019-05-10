@@ -12,6 +12,7 @@ import RxCocoa
 
 class TaskView: UIView{
 
+    @IBOutlet weak var attriImageView: UIImageView!
     @IBOutlet weak var ticketProgressBar: UIProgressView!
     @IBOutlet weak var ticketProgressLabel: UILabel!
     @IBOutlet weak var ticketCountLabel: UILabel!
@@ -74,7 +75,18 @@ class TaskView: UIView{
     }
     
     @objc func tapped(_ sender: UITapGestureRecognizer){
+        if isShowDetail {
+            return
+        }
         self.changeViewSize()
+    }
+    
+    @objc func tappedHead(_ sender: UITapGestureRecognizer){
+        self.changeViewSize()
+    }
+    
+    func setImage() {
+        self.attriImageView.image = self.taskViewModel!.attri == "a" ? UIImage(named: "人画像") : UIImage(named: "kabann")
     }
     
     func setLayout() {
@@ -99,6 +111,7 @@ class TaskView: UIView{
         self.ticketCountLabel.text = "チケット:\(taskViewModel?.ticketCout ?? 0)"
         self.createGesturView()
         self.setGradationColor()
+        self.setImage()
     }
     
     /*
@@ -114,6 +127,10 @@ class TaskView: UIView{
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panGesture(sender:)))
         
         // add GesturRecognizer to subview
+        let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(
+            target: self,
+            action: #selector(self.tappedHead(_:)))
+        gesturView.addGestureRecognizer(tapGesture)
         gesturView.addGestureRecognizer(panGestureRecognizer)
         
         self.addSubview(gesturView)

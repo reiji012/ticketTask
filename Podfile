@@ -3,10 +3,12 @@
 
 target 'TicketTask' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
+  pod 'RxSwift'
+  pod 'RxCocoa'
+  pod 'BubbleTransition', '~> 3.2.0'
   use_frameworks!
 
   # Pods for TicketTask
   
-  pod 'RxSwift'
-  pod 'RxCocoa'
+  
 end
