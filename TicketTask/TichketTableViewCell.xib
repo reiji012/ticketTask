@@ -20,16 +20,16 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lWQ-xc-a9x">
-                        <rect key="frame" x="110" y="0.0" width="318" height="100.5"/>
+                        <rect key="frame" x="110" y="0.0" width="318" height="70"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="100" id="iRc-O8-SoZ"/>
+                            <constraint firstAttribute="height" constant="70" id="iRc-O8-SoZ"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="29"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="✔️" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6CQ-JL-YWA">
-                        <rect key="frame" x="30" y="27.5" width="30" height="30"/>
+                        <rect key="frame" x="30" y="18" width="30" height="30"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="D5Z-hj-jIb"/>
@@ -51,10 +51,10 @@
                     </label>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="6CQ-JL-YWA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="18" id="1i0-ls-fu0"/>
                     <constraint firstAttribute="bottom" secondItem="lWQ-xc-a9x" secondAttribute="bottom" id="COb-kv-HbG"/>
                     <constraint firstItem="6CQ-JL-YWA" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="30" id="J9n-Ah-n30"/>
                     <constraint firstItem="lWQ-xc-a9x" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="Lhv-eA-hmm"/>
-                    <constraint firstItem="6CQ-JL-YWA" firstAttribute="centerY" secondItem="lWQ-xc-a9x" secondAttribute="centerY" constant="-8" id="OpT-gi-azh"/>
                     <constraint firstAttribute="trailing" secondItem="lWQ-xc-a9x" secondAttribute="trailing" id="Zgg-Tr-1or"/>
                     <constraint firstItem="lWQ-xc-a9x" firstAttribute="leading" secondItem="6CQ-JL-YWA" secondAttribute="trailing" constant="50" id="aHy-pd-jSr"/>
                 </constraints>

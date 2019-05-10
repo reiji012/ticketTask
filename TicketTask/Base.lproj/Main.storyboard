@@ -21,18 +21,43 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9r5-w2-dd8">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </scrollView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iWg-1l-M3x">
+                                <rect key="frame" x="324" y="94" width="40" height="40"/>
+                                <color key="backgroundColor" red="0.93404817579999999" green="0.89113301040000004" blue="0.44695240260000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="giL-rq-WBE"/>
+                                    <constraint firstAttribute="width" constant="40" id="oXS-6J-jaR"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="+">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                        <color key="value" red="0.93404817581176758" green="0.81434308978873238" blue="0.36382080047902926" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskToBounds" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="20"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="9r5-w2-dd8" secondAttribute="trailing" id="A91-yW-TGe"/>
+                            <constraint firstItem="0rI-Uf-9Vh" firstAttribute="trailing" secondItem="9r5-w2-dd8" secondAttribute="trailing" id="A91-yW-TGe"/>
                             <constraint firstItem="9r5-w2-dd8" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="WjD-E8-PZD"/>
                             <constraint firstAttribute="bottom" secondItem="9r5-w2-dd8" secondAttribute="bottom" id="WlH-T4-UmV"/>
+                            <constraint firstItem="iWg-1l-M3x" firstAttribute="top" secondItem="0rI-Uf-9Vh" secondAttribute="top" constant="50" id="Z1z-50-FMw"/>
                             <constraint firstItem="9r5-w2-dd8" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="gq3-qm-Lgn"/>
+                            <constraint firstItem="0rI-Uf-9Vh" firstAttribute="trailing" secondItem="iWg-1l-M3x" secondAttribute="trailing" constant="50" id="yzS-j6-S6m"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="0rI-Uf-9Vh"/>
                     </view>
                     <connections>
                         <outlet property="scrollView" destination="9r5-w2-dd8" id="xdo-Rm-0p3"/>
+                        <outlet property="taskAddButton" destination="iWg-1l-M3x" id="IXx-ba-zPM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
