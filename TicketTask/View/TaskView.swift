@@ -28,6 +28,7 @@ class TaskView: UIView{
     var defoultX: CGFloat?
     var defoultY: CGFloat?
     
+    var gradientLayer: CAGradientLayer = CAGradientLayer()
     var progress:Float = 0.0 {
         didSet {
             let convertProgress = Int((taskViewModel!.completedProgress!)*100)
@@ -73,9 +74,6 @@ class TaskView: UIView{
     }
     
     @objc func tapped(_ sender: UITapGestureRecognizer){
-        if isShowDetail {
-            return
-        }
         self.changeViewSize()
     }
     
@@ -100,6 +98,7 @@ class TaskView: UIView{
         self.titleLabel.text = taskViewModel?.taskName
         self.ticketCountLabel.text = "チケット:\(taskViewModel?.ticketCout ?? 0)"
         self.createGesturView()
+        self.setGradationColor()
     }
     
     /*
@@ -165,6 +164,11 @@ class TaskView: UIView{
             }
             self.tableViewArray.append(ticketTableViewCell)
         }
+    }
+    
+    func setGradationColor() {
+        let gradationColors = GradationColors()
+        self.ticketProgressBar.tintColor = self.taskViewModel?.attri == "a" ? gradationColors.attriABottomColor : gradationColors.attriBBottomColor
     }
 
     func getMainViewController() -> MainViewController? {
