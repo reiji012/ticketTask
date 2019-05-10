@@ -26,9 +26,9 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Occ-Jp-uEZ">
-                    <rect key="frame" x="15" y="50" width="60" height="60"/>
+                    <rect key="frame" x="15" y="25" width="60" height="15"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="60" id="QUX-6e-abd"/>
+                        <constraint firstAttribute="height" constant="15" id="QUX-6e-abd"/>
                         <constraint firstAttribute="width" constant="60" id="tb7-xp-bMX"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="27"/>
@@ -56,9 +56,14 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="7" id="nBb-Lm-BYg"/>
                     </constraints>
+                    <color key="progressTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="trackTintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                             <real key="value" value="4"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                            <real key="value" value="0.0"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </progressView>
@@ -74,23 +79,43 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="人画像" translatesAutoresizingMaskIntoConstraints="NO" id="lWg-KI-zIe">
+                    <rect key="frame" x="20" y="41" width="50" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="mfo-5i-nVA"/>
+                        <constraint firstAttribute="width" constant="50" id="yrV-Sk-G2h"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                            <real key="value" value="1"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                            <color key="value" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="25"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </imageView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="vrp-1Z-85c" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="25" id="0ch-3x-IB2"/>
                 <constraint firstItem="vrp-1Z-85c" firstAttribute="top" secondItem="cSn-BC-JZ5" secondAttribute="bottom" constant="8" id="4jJ-S3-AV5"/>
                 <constraint firstAttribute="trailing" secondItem="vrp-1Z-85c" secondAttribute="trailing" constant="50" id="5su-g3-aYP"/>
-                <constraint firstItem="Occ-Jp-uEZ" firstAttribute="top" secondItem="Hzy-Tp-1gk" secondAttribute="top" constant="30" id="7zZ-Zh-dVP"/>
+                <constraint firstItem="Occ-Jp-uEZ" firstAttribute="top" secondItem="Hzy-Tp-1gk" secondAttribute="top" constant="5" id="7zZ-Zh-dVP"/>
                 <constraint firstItem="I6P-G7-7H8" firstAttribute="top" secondItem="vrp-1Z-85c" secondAttribute="bottom" constant="60" id="CCC-Xl-kdN"/>
                 <constraint firstAttribute="bottom" secondItem="I6P-G7-7H8" secondAttribute="bottom" id="Jvi-uY-ihs"/>
                 <constraint firstItem="Hzy-Tp-1gk" firstAttribute="trailing" secondItem="ZYz-sQ-nm6" secondAttribute="trailing" constant="25" id="M2L-1q-qhm"/>
                 <constraint firstAttribute="trailing" secondItem="I6P-G7-7H8" secondAttribute="trailing" id="S9T-HO-bY9"/>
+                <constraint firstItem="lWg-KI-zIe" firstAttribute="leading" secondItem="Hzy-Tp-1gk" secondAttribute="leading" constant="20" id="XqO-dj-NRg"/>
                 <constraint firstItem="vrp-1Z-85c" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="150" id="a0X-89-oB4"/>
                 <constraint firstItem="I6P-G7-7H8" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="mJe-ec-OTL"/>
                 <constraint firstItem="cSn-BC-JZ5" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="25" id="mb3-ww-gSZ"/>
                 <constraint firstItem="Occ-Jp-uEZ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="t5I-h1-K2T"/>
                 <constraint firstItem="ZYz-sQ-nm6" firstAttribute="top" secondItem="vrp-1Z-85c" secondAttribute="bottom" constant="13" id="thH-SG-9VF"/>
                 <constraint firstItem="VBp-HC-ndC" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="25" id="umV-FA-NMd"/>
+                <constraint firstItem="cSn-BC-JZ5" firstAttribute="top" secondItem="lWg-KI-zIe" secondAttribute="bottom" constant="30" id="v3m-dw-pjU"/>
                 <constraint firstItem="VBp-HC-ndC" firstAttribute="top" secondItem="vrp-1Z-85c" secondAttribute="bottom" constant="20" id="xAh-77-c5k"/>
                 <constraint firstItem="ZYz-sQ-nm6" firstAttribute="leading" secondItem="VBp-HC-ndC" secondAttribute="trailing" constant="10" id="zqy-zl-Dku"/>
             </constraints>
@@ -99,6 +124,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="Hzy-Tp-1gk"/>
             <connections>
+                <outlet property="attriImageView" destination="lWg-KI-zIe" id="gz4-oJ-it2"/>
                 <outlet property="backButton" destination="Occ-Jp-uEZ" id="MUv-RW-aUA"/>
                 <outlet property="ticketCountLabel" destination="cSn-BC-JZ5" id="fBE-lo-6Hp"/>
                 <outlet property="ticketProgressBar" destination="VBp-HC-ndC" id="7Jr-QM-iwn"/>
@@ -109,4 +135,7 @@
             <point key="canvasLocation" x="72.799999999999997" y="148.42578710644679"/>
         </view>
     </objects>
+    <resources>
+        <image name="人画像" width="249" height="238"/>
+    </resources>
 </document>
