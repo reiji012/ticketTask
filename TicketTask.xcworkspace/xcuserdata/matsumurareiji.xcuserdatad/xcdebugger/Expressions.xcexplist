@@ -9,10 +9,10 @@
          contextName = "TaskView.setLabelText(title:):TaskView.swift">
          <PersistentStrings>
             <PersistentString
-               value = "defoultWidth">
+               value = "defoultHeight">
             </PersistentString>
             <PersistentString
-               value = "defoultHeight">
+               value = "defoultWidth">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -21,6 +21,14 @@
          <PersistentStrings>
             <PersistentString
                value = "scrollView.frame.size.width">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "TaskView.setGradationColor():TaskView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.taskViewModel?.attri">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

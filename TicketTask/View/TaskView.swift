@@ -139,7 +139,9 @@ class TaskView: UIView{
     func changeViewSize() {
         //拡大縮小の処理
         mainViewController = getMainViewController()
-
+        if (self.mainViewController != nil) {
+            self.mainViewController?.isShowDetail = !self.isShowDetail
+        }
         UIView.animate(withDuration: 0.5, animations: {
             let myBoundWidht: CGFloat = UIScreen.main.bounds.size.width
             let currentWidth = (self.frame.size.width - myBoundWidht)/2
@@ -165,9 +167,6 @@ class TaskView: UIView{
             self.ticketTableView.isHidden = self.isShowDetail ? false : true
             self.backButton.isHidden = self.isShowDetail ? false : true
             // ViewConrtollerに状態の変更を伝える
-            if (self.mainViewController != nil) {
-                self.mainViewController?.isShowDetail = self.isShowDetail
-            }
         })
     }
     
