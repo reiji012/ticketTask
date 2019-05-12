@@ -11,6 +11,7 @@ import UIKit
 class TaskModel {
 
     var tasks: [[String:Any]]?
+    var lastCreateTask = ["title":"","attri":"","tickets":[]] as [String : Any]
     
     static var sharedManager: TaskModel = {
         return TaskModel()
@@ -42,6 +43,7 @@ class TaskModel {
         tasks = (tmpArray as! [[String : Any]])
     }
     
+    /*タスクを取得する*/
     func getTask(taskName: String) -> Dictionary<String, Any> {
         var currentTask: Dictionary<String, Any> = [:]
         for task in tasks! {
@@ -51,5 +53,19 @@ class TaskModel {
             }
         }
         return currentTask
+    }
+    
+    /*タスクを作成する*/
+    func createTask(taskName: String, attri: String, tickets:Array<String>) {
+        var taskArray = ["title":"","attri":"","tickets":[]] as [String : Any]
+        var ticketsArray: [String : Bool] = [:]
+        taskArray["title"] = taskName
+        taskArray["attri"] = attri
+        for ticket in tickets {
+            ticketsArray.updateValue(false, forKey: ticket)
+        }
+        taskArray["tickets"] = ticketsArray
+        self.tasks?.append(taskArray)
+        self.lastCreateTask = taskArray
     }
 }
