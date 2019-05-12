@@ -21,8 +21,8 @@ class GradationColors : NSObject {
     var attriBGradientColors: [CGColor]
     
     //追加画面のカラー
-    let addViewTopColor = UIColor(red:216/255, green:241/255, blue:214/255, alpha:1)
-    let addViewBottomColor = UIColor(red:195/255, green:250/255, blue:181/255, alpha:1)
+    let addViewTopColor = UIColor(red:26/255, green:188/255, blue:156/255, alpha:1)
+    let addViewBottomColor = UIColor(red:26/255, green:188/255, blue:156/255, alpha:1)
     var addViewGradientColors: [CGColor]
     
     override init() {

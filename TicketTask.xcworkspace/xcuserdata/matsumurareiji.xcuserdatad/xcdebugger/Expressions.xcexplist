@@ -9,18 +9,10 @@
          contextName = "TaskView.setLabelText(title:):TaskView.swift">
          <PersistentStrings>
             <PersistentString
-               value = "defoultHeight">
-            </PersistentString>
-            <PersistentString
                value = "defoultWidth">
             </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "MainViewController.createTaskViews():MainViewController.swift">
-         <PersistentStrings>
             <PersistentString
-               value = "scrollView.frame.size.width">
+               value = "defoultHeight">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -29,6 +21,14 @@
          <PersistentStrings>
             <PersistentString
                value = "self.taskViewModel?.attri">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MainViewController.createTaskViews():MainViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "scrollView.frame.size.width">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -57,6 +57,9 @@
       <ContextState
          contextName = "TaskViewModel.init(taskName:):TaskViewModel.swift">
          <PersistentStrings>
+            <PersistentString
+               value = "task">
+            </PersistentString>
             <PersistentString
                value = "self.tickets">
             </PersistentString>

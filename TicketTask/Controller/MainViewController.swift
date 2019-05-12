@@ -32,6 +32,7 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
     let taskViewWidth:CGFloat = 400.0
     let currentWidth: Int = 400
     var stopPoint: CGFloat = 0.0
+    var originX:CGFloat?
     var gradationColors: GradationColors?
     
     let transition = BubbleTransition()
@@ -50,6 +51,7 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
 
     func bindUI() {
         gradationColors = GradationColors()
+        self.taskAddButton.backgroundColor = self.gradationColors?.addViewTopColor
         // 影の設定
         self.taskAddButton.layer.shadowOpacity = 0.5
         self.taskAddButton.layer.shadowRadius = 12
@@ -76,7 +78,6 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         //scrollViewのDelegateを指定
         scrollView.delegate = self
         
-//        タブのタイトル
         let tasks = taskViewModel.tasks
         
         //タブの縦幅(UIScrollViewと一緒にします)
@@ -91,7 +92,7 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         
         //タブのx座標．
         //ダミーLabel分，はじめからずらしてあげましょう．
-        var originX:CGFloat = dummyLabelWidth
+        self.originX = dummyLabelWidth
         
         // VIewを設置する高さを計算する
         let mainScreenHeight: CGFloat = UIScreen.main.bounds.size.height
@@ -100,7 +101,7 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         for (index, task) in tasks!.enumerated() {
             //タブになるUIVIewを作る
             taskView = UINib(nibName: "TaskView", bundle: Bundle.main).instantiate(withOwner: self, options: nil).first as? TaskView
-            taskView.frame = CGRect.init(x: originX + 25, y: currentY, width: 350.0, height: 300.0)
+            taskView.frame = CGRect.init(x: self.originX! + 25, y: currentY, width: 350.0, height: 300.0)
             taskView.setViewModel(task: task)
             taskView.setTableView()
 
@@ -111,7 +112,7 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
             
             scrollView.addSubview(taskView)
             //次のタブのx座標を用意する
-            originX += taskViewWidth
+            self.originX! += taskViewWidth
             
             if(index + 1 == 1) {
                 self.centerViewAttri = taskView.taskViewModel!.attri
@@ -122,15 +123,41 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         
         //左端にダミーのUILabelを置く
         let tailLabel = UILabel()
-        tailLabel.frame = CGRect(x:originX, y:0, width:dummyLabelWidth, height:tabLabelHeight)
+        tailLabel.frame = CGRect(x:self.originX!, y:0, width:dummyLabelWidth, height:tabLabelHeight)
         scrollView.addSubview(tailLabel)
         
         //ダミーLabel分を足して上げましょう
-        originX += dummyLabelWidth
+        self.originX! += dummyLabelWidth
         
         //scrollViewのcontentSizeを，タブ全体のサイズに合わせてあげる(ここ重要！)
         //最終的なoriginX = タブ全体の横幅 になります
-        scrollView.contentSize = CGSize(width:originX, height:tabLabelHeight)
+        scrollView.contentSize = CGSize(width:self.originX!, height:scrollView.frame.height)
+    }
+    
+    func addNewTaskView() {
+        let mainScreenHeight: CGFloat = UIScreen.main.bounds.size.height
+        let currentY = mainScreenHeight / 2 - 50
+        taskView = UINib(nibName: "TaskView", bundle: Bundle.main).instantiate(withOwner: self, options: nil).first as? TaskView
+        taskView.frame = CGRect.init(x: self.originX! + 25, y: currentY, width: 350.0, height: 300.0)
+        taskView.setViewModel(task: taskViewModel.taskModel!.lastCreateTask)
+        taskView.setTableView()
+        
+        taskView.ticketTableView!.delegate = self
+        taskView.ticketTableView!.dataSource = self
+        
+        taskView.tag = taskViewModel.taskModel!.tasks!.count
+        
+        scrollView.addSubview(taskView)
+        self.originX! += taskViewWidth
+        
+        //ダミーLabel分を足して上げましょう
+        let dummyLabelWidth = scrollView.frame.size.width/2 - taskViewWidth/2
+        self.originX! += dummyLabelWidth
+        
+        //scrollViewのcontentSizeを，タブ全体のサイズに合わせてあげる(ここ重要！)
+        //最終的なoriginX = タブ全体の横幅 になります
+        scrollView.contentSize = CGSize(width:self.originX!, height:scrollView.frame.height)
+
     }
     
     func getCenterTaskView() -> TaskView {
@@ -183,9 +210,9 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         
         //現在のスクロールの位置(scrollView.contentOffset.x)から
         //どこのタブを表示させたいか計算します
-        let taskCount = self.taskViewModel.tasks!.count
+        let taskCount = self.taskViewModel.taskCount
         //スクロール可能最大値
-        let maxScrollPoint = (taskCount - 1) * currentWidth
+        let maxScrollPoint = (taskCount! - 1) * currentWidth
         //Viewが何番目かを計算
         let index = Int((scrollView.contentOffset.x + taskViewWidth/2) / taskViewWidth)
         let x = index * currentWidth
@@ -212,7 +239,6 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         self.taskViewIndex = (Int(scrollPoint) / self.currentWidth) + 1
         let currentTaskView = self.getCenterTaskView()
         self.centerViewAttri = currentTaskView.taskViewModel!.attri
-        print(self.centerViewAttri)
         UIView.animate(withDuration: 0.3, animations: {
             scrollView.contentOffset = CGPoint(x:scrollPoint, y:0)
         })
@@ -255,6 +281,7 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         controller.transitioningDelegate = (self as UIViewControllerTransitioningDelegate)
         controller.modalPresentationStyle = .custom
         let nextVC = segue.destination as? AddTaskViewController
+        nextVC?.mainVC = self
         nextVC?.taskViewModel = self.taskViewModel
         nextVC?.beforeViewAttri = self.centerViewAttri!
     }
@@ -267,13 +294,13 @@ extension MainViewController : UIViewControllerTransitioningDelegate{
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         transition.transitionMode = .present
         transition.startingPoint = taskAddButton.center    //outletしたボタンの名前を使用
-        transition.bubbleColor = self.gradationColors!.addViewTopColor
+        transition.bubbleColor = self.gradationColors!.addViewBottomColor
         return transition
     }
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         transition.transitionMode = .dismiss
         transition.startingPoint = taskAddButton.center //outletしたボタンの名前を使用
-        transition.bubbleColor = self.gradationColors!.addViewTopColor
+        transition.bubbleColor = self.gradationColors!.addViewBottomColor
         return transition
     }
 }

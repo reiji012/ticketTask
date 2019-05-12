@@ -14,6 +14,7 @@ class TaskViewModel: NSObject {
     var taskModel: TaskModel?
     var tasks: [[String:Any]]?
     var taskName: String?
+    var taskCount: Int?
     var attri: String?
     var tickets: [String:Bool]? = nil {
         didSet {
@@ -24,9 +25,11 @@ class TaskViewModel: NSObject {
     var task: Dictionary<String, Any>?
     var ticketCout: Int?
     
+    
     override init() {
         taskModel = TaskModel.sharedManager
         tasks = taskModel!.tasks!
+        taskCount = tasks?.count
     }
     
     // タスクのModelを取得する
@@ -37,8 +40,11 @@ class TaskViewModel: NSObject {
         self.attri = (task!["attri"] as! String)
         self.tickets = (task!["tickets"] as! [String:Bool])
         self.ticketCout = tickets?.count
-        
-        
+    }
+    
+    func createTask(taskName: String, attri: String, tickets:Array<String>) {
+        taskModel?.createTask(taskName: taskName, attri: attri, tickets:tickets)
+        self.taskCount! += 1
     }
     
     func changeTicketCompleted(ticketName: String,completed: Bool) {
