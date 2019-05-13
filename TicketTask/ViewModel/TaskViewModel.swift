@@ -12,8 +12,11 @@ import RxSwift
 class TaskViewModel: NSObject {
     
     private let progressSubject = BehaviorSubject(value: 0.0)
+    private let ticketCountSubject = BehaviorSubject(value: 0)
     
     var progress: Observable<Double> { return progressSubject.asObservable() }
+    var ticketCout: Observable<Int> { return ticketCountSubject.asObserver() }
+
 
     var taskModel: TaskModel?
     var tasks: [[String:Any]]?
@@ -21,13 +24,14 @@ class TaskViewModel: NSObject {
     var taskCount: Int?
     var attri: String?
     var tickets: [String:Bool]? = nil {
-        didSet {
+        didSet(value) {
             self.updateModel()
+        } willSet(value) {
+            ticketCountSubject.onNext(value!.count)
         }
     }
     var completedProgress: Double?
     var task: Dictionary<String, Any>?
-    var ticketCout: Int?
     
     
     
@@ -44,7 +48,6 @@ class TaskViewModel: NSObject {
         self.taskName = (task!["title"] as! String)
         self.attri = (task!["attri"] as! String)
         self.tickets = (task!["tickets"] as! [String:Bool])
-        self.ticketCout = tickets?.count
     }
     
     func getTask(taskName: String) {
@@ -52,7 +55,6 @@ class TaskViewModel: NSObject {
         self.taskName = (task!["title"] as! String)
         self.attri = (task!["attri"] as! String)
         self.tickets = (task!["tickets"] as! [String:Bool])
-        self.ticketCout = tickets?.count
         countProgress()
     }
     
@@ -68,7 +70,6 @@ class TaskViewModel: NSObject {
     func updateModel() {
         taskModel!.taskUpdate(taskName: self.taskName!,tickets: self.tickets!)
         task = taskModel?.getTask(taskName: self.taskName!)
-        self.ticketCout = tickets?.count
 
         self.countProgress()
     }
@@ -79,7 +80,7 @@ class TaskViewModel: NSObject {
             compCount += value ? 1 : 0
         }
         
-        let num = round(Double(compCount)/Double(self.ticketCout!)*100)/100
+        let num = round(Double(compCount)/Double(self.tickets!.count)*100)/100
         self.completedProgress = num
         changeProgress()
     }
