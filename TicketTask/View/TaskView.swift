@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
+
 class TaskView: UIView{
 
     @IBOutlet weak var attriImageView: UIImageView!
@@ -33,26 +34,25 @@ class TaskView: UIView{
     var mainViewController: MainViewController? = nil
     var isShowDetail: Bool = false
     let disposeBag = DisposeBag()
-    
+
     func setViewModel(task:Dictionary<String, Any>) {
         let taskName = (task["title"] as! String)
         // taskViewModelの取得
         taskViewModel = TaskViewModel(taskName: taskName)
         taskViewModel?.countProgress()
         bind()
-        bindLayout()
+        taskViewModel?.getTask(taskName: taskName)
         setLayout()
 
+        self.isUserInteractionEnabled = true
+        let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(
+            target: self,
+            action: #selector(self.tapped(_:)))
+        self.addGestureRecognizer(tapGesture)
     }
-    
-    func bindLayout() {
-        ticketProgressBar?.setProgress(Float(taskViewModel!.completedProgress!), animated: true)
+
+    func setMenu() {
         
-        let disposable = taskViewModel!.progress.subscribe(onNext: { [ticketProgressBar] in
-            let convertProgress = Int(($0)*100)
-            self.ticketProgressLabel.text = "\(String(convertProgress))%"
-            ticketProgressBar?.setProgress(Float($0), animated: true)
-        })
     }
     
     func bind() {
@@ -62,11 +62,20 @@ class TaskView: UIView{
             }
             .disposed(by: disposeBag)
         
-        self.isUserInteractionEnabled = true
-        let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(
-            target: self,
-            action: #selector(self.tapped(_:)))
-        self.addGestureRecognizer(tapGesture)
+        ticketProgressBar?.setProgress(Float(taskViewModel!.completedProgress!), animated: true)
+        
+        self.taskViewModel!.progress.subscribe(onNext: { [ticketProgressBar] in
+            let convertProgress = Int(($0)*100)
+            self.ticketProgressLabel.text = "\(String(convertProgress))%"
+            ticketProgressBar?.setProgress(Float($0), animated: true)
+        }).disposed(by: disposeBag)
+        
+        self.taskViewModel!.ticketCout.subscribe(onNext: { [ticketCountLabel] in
+            let ticketCount = "チケット：\($0)"
+            ticketCountLabel!.text = ticketCount
+        }).disposed(by: disposeBag)
+        
+        
     }
     
     @objc func tapped(_ sender: UITapGestureRecognizer){
@@ -102,7 +111,6 @@ class TaskView: UIView{
         self.layer.shadowOffset = CGSize(width: 5, height: 5)
         
         self.titleLabel.text = taskViewModel?.taskName
-        self.ticketCountLabel.text = "チケット:\(taskViewModel?.ticketCout ?? 0)"
         self.createGesturView()
         self.setGradationColor()
         self.setImage()
