@@ -68,4 +68,13 @@ class TaskModel {
         self.tasks?.append(taskArray)
         self.lastCreateTask = taskArray
     }
+    
+    /*タスクの更新(チケットの完了未完了)*/
+    func taskUpdate(taskName: String, tickets:[String:Bool]) {
+        for (index, task) in self.tasks!.enumerated(){
+            if (task["title"] as! String) == taskName {
+                self.tasks![index]["tickets"] = tickets
+            }
+        }
+    }
 }

@@ -79,7 +79,7 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lih-B7-Z7v">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="1196"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="950"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8BL-id-SL5">
                                                 <rect key="frame" x="32" y="100" width="350" height="250"/>
@@ -246,13 +246,22 @@
                                                     <action selector="putCreateTaskBtn:" destination="TTv-tI-HTv" eventType="touchUpInside" id="wNL-ZU-ETF"/>
                                                 </connections>
                                             </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="タスクを追加できます" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6sG-xQ-eYJ">
+                                                <rect key="frame" x="32" y="39" width="274" height="32.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="27"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" red="0.10196078431372549" green="0.73725490196078436" blue="0.61176470588235299" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
+                                            <constraint firstItem="6sG-xQ-eYJ" firstAttribute="top" secondItem="Lih-B7-Z7v" secondAttribute="top" constant="39" id="78T-JU-u1E"/>
                                             <constraint firstItem="Xmh-S8-PfK" firstAttribute="top" secondItem="Q86-i2-Elf" secondAttribute="bottom" constant="45" id="Fpc-Qc-FRc"/>
                                             <constraint firstItem="Q86-i2-Elf" firstAttribute="top" secondItem="8BL-id-SL5" secondAttribute="bottom" constant="60" id="HoD-2w-4OE"/>
                                             <constraint firstAttribute="trailing" secondItem="Xmh-S8-PfK" secondAttribute="trailing" constant="32" id="PSb-Yn-7Ud"/>
+                                            <constraint firstAttribute="height" constant="950" id="XtE-Yd-sya"/>
                                             <constraint firstItem="8BL-id-SL5" firstAttribute="top" secondItem="Lih-B7-Z7v" secondAttribute="top" constant="100" id="anH-xy-i1J"/>
+                                            <constraint firstItem="6sG-xQ-eYJ" firstAttribute="leading" secondItem="Lih-B7-Z7v" secondAttribute="leading" constant="32" id="cCg-dA-J7i"/>
                                             <constraint firstItem="Q86-i2-Elf" firstAttribute="leading" secondItem="Lih-B7-Z7v" secondAttribute="leading" constant="32" id="m6L-Qf-xgp"/>
                                             <constraint firstAttribute="trailing" secondItem="8BL-id-SL5" secondAttribute="trailing" constant="32" id="mJ3-b3-1Ac"/>
                                             <constraint firstItem="8BL-id-SL5" firstAttribute="leading" secondItem="Lih-B7-Z7v" secondAttribute="leading" constant="32" id="nbX-81-W9y"/>
@@ -301,7 +310,6 @@
                             <constraint firstItem="gr8-3a-GD1" firstAttribute="bottom" secondItem="ZY8-XN-Enz" secondAttribute="bottom" id="X3K-Yr-QKM"/>
                             <constraint firstItem="gr8-3a-GD1" firstAttribute="trailing" secondItem="2Ne-9e-eMf" secondAttribute="trailing" constant="30" id="fCd-7h-euI"/>
                             <constraint firstItem="2Ne-9e-eMf" firstAttribute="top" secondItem="gr8-3a-GD1" secondAttribute="top" constant="30" id="icK-9c-weo"/>
-                            <constraint firstItem="Lih-B7-Z7v" firstAttribute="height" secondItem="w2k-u4-d5l" secondAttribute="height" constant="300" id="ujm-Bu-yLK"/>
                             <constraint firstItem="ZY8-XN-Enz" firstAttribute="leading" secondItem="gr8-3a-GD1" secondAttribute="leading" id="zOc-EY-UMZ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="gr8-3a-GD1"/>

@@ -30,13 +30,6 @@ class TaskView: UIView{
     var defoultY: CGFloat?
     
     var gradientLayer: CAGradientLayer = CAGradientLayer()
-    var progress:Float = 0.0 {
-        didSet {
-            let convertProgress = Int((taskViewModel!.completedProgress!)*100)
-            self.ticketProgressLabel.text = "\(String(convertProgress))%"
-            ticketProgressBar.setProgress(progress, animated: true)
-        }
-    }
     var mainViewController: MainViewController? = nil
     var isShowDetail: Bool = false
     let disposeBag = DisposeBag()
@@ -48,16 +41,18 @@ class TaskView: UIView{
         taskViewModel?.countProgress()
         bind()
         bindLayout()
-        setProgressValue()
         setLayout()
 
     }
     
     func bindLayout() {
-    }
-    
-    func setProgressValue() {
-        self.progress = Float(taskViewModel!.completedProgress!)
+        ticketProgressBar?.setProgress(Float(taskViewModel!.completedProgress!), animated: true)
+        
+        let disposable = taskViewModel!.progress.subscribe(onNext: { [ticketProgressBar] in
+            let convertProgress = Int(($0)*100)
+            self.ticketProgressLabel.text = "\(String(convertProgress))%"
+            ticketProgressBar?.setProgress(Float($0), animated: true)
+        })
     }
     
     func bind() {
@@ -92,7 +87,6 @@ class TaskView: UIView{
     func setLayout() {
         let convertProgress = Int((taskViewModel!.completedProgress!)*100)
         self.ticketProgressLabel.text = "\(String(convertProgress))%"
-        ticketProgressBar.setProgress(progress, animated: true)
         // 初期状態では戻るボタンを非表示にする
         backButton.isHidden = true
         ticketTableView.isHidden = true
@@ -142,7 +136,7 @@ class TaskView: UIView{
         if (self.mainViewController != nil) {
             self.mainViewController?.isShowDetail = !self.isShowDetail
         }
-        UIView.animate(withDuration: 0.5, animations: {
+        UIView.animate(withDuration: 0.6, animations: {
             let myBoundWidht: CGFloat = UIScreen.main.bounds.size.width
             let currentWidth = (self.frame.size.width - myBoundWidht)/2
             if self.isShowDetail {
@@ -180,6 +174,10 @@ class TaskView: UIView{
             }
             self.tableViewArray.append(ticketTableViewCell)
         }
+    }
+
+    func deleteRow(indexPath: IndexPath) {
+        ticketTableView.deleteRows(at: [indexPath], with: .fade)
     }
     
     func setGradationColor() {
