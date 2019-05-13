@@ -19,7 +19,6 @@
 		2BF5B76C22829DCD007D0266 /* TichketTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF5B76A22829DCD007D0266 /* TichketTableViewCell.swift */; };
 		2BF5B76D22829DCD007D0266 /* TichketTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2BF5B76B22829DCD007D0266 /* TichketTableViewCell.xib */; };
 		2BF5B7722282A0AB007D0266 /* UIView+TicketTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF5B7712282A0AB007D0266 /* UIView+TicketTask.swift */; };
-		2BF5B77622841AA8007D0266 /* TaskScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF5B77522841AA8007D0266 /* TaskScrollView.swift */; };
 		2BF5B779228512FA007D0266 /* GradationColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF5B778228512FA007D0266 /* GradationColors.swift */; };
 		2BF5B77C22855657007D0266 /* AddTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF5B77B22855657007D0266 /* AddTaskViewController.swift */; };
 		B101601FF534DC3B8EE3D6CD /* Pods_TicketTask.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9175C5698A5BEEEE5CF1DB20 /* Pods_TicketTask.framework */; };
@@ -40,7 +39,6 @@
 		2BF5B76A22829DCD007D0266 /* TichketTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TichketTableViewCell.swift; sourceTree = "<group>"; };
 		2BF5B76B22829DCD007D0266 /* TichketTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TichketTableViewCell.xib; sourceTree = "<group>"; };
 		2BF5B7712282A0AB007D0266 /* UIView+TicketTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+TicketTask.swift"; sourceTree = "<group>"; };
-		2BF5B77522841AA8007D0266 /* TaskScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskScrollView.swift; sourceTree = "<group>"; };
 		2BF5B778228512FA007D0266 /* GradationColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GradationColors.swift; path = View/Colors/GradationColors.swift; sourceTree = "<group>"; };
 		2BF5B77B22855657007D0266 /* AddTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskViewController.swift; sourceTree = "<group>"; };
 		37CFDF9363A1FC7BF7495C74 /* Pods-TicketTask.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TicketTask.release.xcconfig"; path = "Target Support Files/Pods-TicketTask/Pods-TicketTask.release.xcconfig"; sourceTree = "<group>"; };
@@ -103,7 +101,6 @@
 				2BF5B76B22829DCD007D0266 /* TichketTableViewCell.xib */,
 				2BF5B766228155EC007D0266 /* TaskView.xib */,
 				2BF5B7682281562D007D0266 /* TaskView.swift */,
-				2BF5B77522841AA8007D0266 /* TaskScrollView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -298,7 +295,6 @@
 				2BF5B76322814974007D0266 /* TaskViewModel.swift in Sources */,
 				2BF5B76C22829DCD007D0266 /* TichketTableViewCell.swift in Sources */,
 				2BF5B7652281498F007D0266 /* TaskModel.swift in Sources */,
-				2BF5B77622841AA8007D0266 /* TaskScrollView.swift in Sources */,
 				2BF5B77C22855657007D0266 /* AddTaskViewController.swift in Sources */,
 				2BF5B7722282A0AB007D0266 /* UIView+TicketTask.swift in Sources */,
 				2BF5B7692281562D007D0266 /* TaskView.swift in Sources */,

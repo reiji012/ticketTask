@@ -135,10 +135,11 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
     }
     
     func addNewTaskView() {
+        let currentTaskView = self.getCenterTaskView()
         let mainScreenHeight: CGFloat = UIScreen.main.bounds.size.height
         let currentY = mainScreenHeight / 2 - 50
         taskView = UINib(nibName: "TaskView", bundle: Bundle.main).instantiate(withOwner: self, options: nil).first as? TaskView
-        taskView.frame = CGRect.init(x: self.originX! + 25, y: currentY, width: 350.0, height: 300.0)
+        taskView.frame = CGRect.init(x: self.originX! + 18, y: currentY, width: currentTaskView.frame.size.width, height: currentTaskView.frame.size.height)
         taskView.setViewModel(task: taskViewModel.taskModel!.lastCreateTask)
         taskView.setTableView()
         
@@ -149,10 +150,6 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         
         scrollView.addSubview(taskView)
         self.originX! += taskViewWidth
-        
-        //ダミーLabel分を足して上げましょう
-        let dummyLabelWidth = scrollView.frame.size.width/2 - taskViewWidth/2
-        self.originX! += dummyLabelWidth
         
         //scrollViewのcontentSizeを，タブ全体のサイズに合わせてあげる(ここ重要！)
         //最終的なoriginX = タブ全体の横幅 になります
@@ -197,6 +194,25 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         }
         
         return UITableViewCell()
+    }
+    
+    
+    internal func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        let currentTaskView: TaskView
+        if self.taskViewIndex == nil {
+            currentTaskView = self.view.viewWithTag(1) as! TaskView
+        } else {
+            currentTaskView = self.view.viewWithTag(taskViewIndex!) as! TaskView
+        }
+        if editingStyle == .delete {
+            let tableViewCell = currentTaskView.tableViewArray[indexPath.row] as! TichketTableViewCell
+            let ticketName = tableViewCell.ticketName.text
+            currentTaskView.taskViewModel?.tickets?.removeValue(forKey: ticketName!)
+            var a = currentTaskView.ticketTableView.cellForRow(at: indexPath) as! TichketTableViewCell
+            print(a.ticketName.text)
+            currentTaskView.tableViewArray.remove(at: indexPath.row)
+            currentTaskView.ticketTableView.reloadData()
+        }
     }
     
     

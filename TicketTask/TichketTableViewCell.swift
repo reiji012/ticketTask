@@ -43,6 +43,5 @@ class TichketTableViewCell: UITableViewCell {
     @objc func changeCompletion() {
         self.isCompleted = !self.isCompleted
         self.taskViewModel?.changeTicketCompleted(ticketName: ticketName.text!, completed: isCompleted)
-        self.parentTaskView!.setProgressValue()
     }
 }
