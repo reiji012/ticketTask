@@ -21,11 +21,16 @@ class TaskViewModel: NSObject {
     var taskModel: TaskModel?
     var tasks: [[String:Any]]?
     var taskName: String?
-    var taskCount: Int?
+    func taskCount() -> Int {
+        return taskModel!.tasks!.count
+    }
     var attri: String?
+    
+    let actionType: ActionType = .taskUpdate
+    
     var tickets: [String:Bool]? = nil {
         didSet(value) {
-            self.updateModel()
+            self.updateModel(actionType: .ticketUpdate)
         } willSet(value) {
             ticketCountSubject.onNext(value!.count)
         }
@@ -33,12 +38,9 @@ class TaskViewModel: NSObject {
     var completedProgress: Double?
     var task: Dictionary<String, Any>?
     
-    
-    
     override init() {
         taskModel = TaskModel.sharedManager
         tasks = taskModel!.tasks!
-        taskCount = tasks?.count
     }
     
     // タスクのModelを取得する
@@ -60,17 +62,15 @@ class TaskViewModel: NSObject {
     
     func createTask(taskName: String, attri: String, tickets:Array<String>) {
         taskModel?.createTask(taskName: taskName, attri: attri, tickets:tickets)
-        self.taskCount! += 1
     }
     
     func changeTicketCompleted(ticketName: String,completed: Bool) {
         tickets![ticketName]! = completed
     }
     
-    func updateModel() {
-        taskModel!.taskUpdate(taskName: self.taskName!,tickets: self.tickets!)
+    func updateModel(actionType :ActionType) {
+        taskModel!.taskUpdate(taskName: self.taskName!,tickets: self.tickets!, actionType: actionType)
         task = taskModel?.getTask(taskName: self.taskName!)
-
         self.countProgress()
     }
     

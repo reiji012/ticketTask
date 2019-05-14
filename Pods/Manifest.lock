@@ -1,5 +1,6 @@
 PODS:
   - BubbleTransition (3.2.0)
+  - NewPopMenu (2.1.2)
   - RxCocoa (5.0.0):
     - RxRelay (~> 5)
     - RxSwift (~> 5)
@@ -9,22 +10,25 @@ PODS:
 
 DEPENDENCIES:
   - BubbleTransition (~> 3.2.0)
+  - NewPopMenu (~> 2.0)
   - RxCocoa
   - RxSwift
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - BubbleTransition
+    - NewPopMenu
     - RxCocoa
     - RxRelay
     - RxSwift
 
 SPEC CHECKSUMS:
   BubbleTransition: 2f112cc19772d9ab199bc850de92f5eb34744bce
+  NewPopMenu: c6129e08e8192f6257ceb5f9a4357e1b59c6e2e7
   RxCocoa: fcf32050ac00d801f34a7f71d5e8e7f23026dcd8
   RxRelay: 4f7409406a51a55cd88483f21ed898c234d60f18
   RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
 
-PODFILE CHECKSUM: d46901771ac030050f8fe830a05a5a6ece0026bf
+PODFILE CHECKSUM: 399d09fea6e1b50901b749e1cc00795812a7685d
 
 COCOAPODS: 1.6.1

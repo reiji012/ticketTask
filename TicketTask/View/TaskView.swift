@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import PopMenu
 
 
 class TaskView: UIView{
@@ -35,6 +36,7 @@ class TaskView: UIView{
     var isShowDetail: Bool = false
     let disposeBag = DisposeBag()
 
+    var gesturView:UIView?
     func setViewModel(task:Dictionary<String, Any>) {
         let taskName = (task["title"] as! String)
         // taskViewModelの取得
@@ -51,8 +53,61 @@ class TaskView: UIView{
         self.addGestureRecognizer(tapGesture)
     }
 
-    func setMenu() {
+    @IBAction func tapMenuBtn(_ sender: Any) {
+        mainViewController = getMainViewController()
+
+        var isDeleteAction = false
+        let actions = [
+            PopMenuDefaultAction(title: "タスクを削除", image: nil,color: .red,didSelect: { action in
+                isDeleteAction = true
+            }),
+            PopMenuDefaultAction(title: "タスクの編集", image: nil,color: nil, didSelect: { action in
+                print ("hi")
+                isDeleteAction = false
+            })
+        ]
+        let menu = PopMenuViewController(sourceView: sender as AnyObject, actions: actions)
+        let currentX = menu.contentFrame.origin.x
+        menu.contentFrame.origin.x = currentX - 100
+        menu.appearance.popMenuColor.backgroundColor = .solid(fill: .lightGray)
+        mainViewController!.present(menu, animated: true, completion: nil)
+        menu.didDismiss = { selected in
+            if isDeleteAction {
+                self.showAlert()
+            } else {
+                print("aa")
+            }
+            if !selected {
+                // When the user tapped outside of the menu
+            }
+        }
+    }
+    
+    func showAlert() {
+        let alert: UIAlertController = UIAlertController(title: "タスクを削除しますか？", message: "", preferredStyle:  UIAlertController.Style.alert)
         
+        // ② Actionの設定
+        // Action初期化時にタイトル, スタイル, 押された時に実行されるハンドラを指定する
+        // 第3引数のUIAlertActionStyleでボタンのスタイルを指定する
+        // OKボタン
+        let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{
+            // ボタンが押された時の処理を書く（クロージャ実装）
+            (action: UIAlertAction!) -> Void in
+            print("OK")
+            self.mainViewController?.deleteTask(view: self)
+        })
+        // キャンセルボタン
+        let cancelAction: UIAlertAction = UIAlertAction(title: "キャンセル", style: UIAlertAction.Style.cancel, handler:{
+            // ボタンが押された時の処理を書く（クロージャ実装）
+            (action: UIAlertAction!) -> Void in
+            print("Cancel")
+        })
+        
+        // ③ UIAlertControllerにActionを追加
+        alert.addAction(cancelAction)
+        alert.addAction(defaultAction)
+        // ④ Alertを表示
+        mainViewController!.present(alert, animated: true, completion: nil)
     }
     
     func bind() {
@@ -123,7 +178,7 @@ class TaskView: UIView{
         // create gesturView(subView)
         let currentHeight = self.bounds.size.height / 4
         let rect = CGRect(x: 0, y: 0, width: self.bounds.size.width, height: currentHeight);
-        let gesturView:UIView = UIView(frame: rect)
+        gesturView = UIView(frame: rect)
         
         // create GesturRecognizer(pan = flick)
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panGesture(sender:)))
@@ -132,10 +187,11 @@ class TaskView: UIView{
         let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(
             target: self,
             action: #selector(self.tappedHead(_:)))
-        gesturView.addGestureRecognizer(tapGesture)
-        gesturView.addGestureRecognizer(panGestureRecognizer)
+        gesturView!.addGestureRecognizer(tapGesture)
+        gesturView!.addGestureRecognizer(panGestureRecognizer)
         
-        self.addSubview(gesturView)
+        self.addSubview(gesturView!)
+        gesturView?.isUserInteractionEnabled = false
     }
     
     func changeViewSize() {
@@ -154,16 +210,19 @@ class TaskView: UIView{
                 self.layer.cornerRadius = 30
                 self.backButton.isHidden = true
                 self.isShowDetail = false
+                self.gesturView?.isUserInteractionEnabled = false
             } else {
                 // 拡大するときの処理
                 self.defoultHeight = self.frame.size.height
                 self.defoultWidth = self.bounds.size.width
+                self.defoultX = self.frame.origin.x
                 self.ticketTableView.reloadData()
                 self.frame.size.height = UIScreen.main.bounds.size.height
                 self.frame.size.width = (self.parent?.parent?.frame.size.width)!
                 self.frame = CGRect(x:self.frame.origin.x + currentWidth,y:0,width:self.frame.size.width,height:UIScreen.main.bounds.size.height)
                 self.layer.cornerRadius = 0
                 self.isShowDetail = true
+                self.gesturView?.isUserInteractionEnabled = true
             }
         }, completion: { finished in
             self.ticketTableView.isHidden = self.isShowDetail ? false : true
@@ -288,4 +347,13 @@ extension UIView {
         }
     }
 
+}
+extension MainViewController: PopMenuViewControllerDelegate {
+    
+    // This will be called when a menu action was selected
+    func popMenuDidSelectItem(_ popMenuViewController: PopMenuViewController, at index: Int) {
+        // Do stuff here...MainViewController
+        print(index)
+    }
+    
 }
