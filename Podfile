@@ -7,6 +7,7 @@ target 'TicketTask' do
   pod 'RxCocoa'
   pod 'BubbleTransition', '~> 3.2.0'
   pod 'NewPopMenu', '~> 2.0'
+  pod 'RealmSwift'
   use_frameworks!
 
   # Pods for TicketTask

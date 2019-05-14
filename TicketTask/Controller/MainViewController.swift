@@ -215,7 +215,7 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
     
     func deleteTask(view: TaskView) {
         view.taskViewModel?.updateModel(actionType: .taskDelete)
-        UIView.animate(withDuration: 0.5, animations: {
+        UIView.animate(withDuration: 0.2, animations: {
             // Viewを見えなくする
             view.alpha = 0
         }) { (completed) in
@@ -223,6 +223,7 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
             let index = view.tag
             UIView.animate(withDuration: 0.5, animations: {
                 for i in index..<100 {
+                    self.isShowDetail = false
                     guard let taskView = self.view.viewWithTag(i) else {
                         return
                     }
