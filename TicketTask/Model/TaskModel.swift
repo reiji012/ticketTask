@@ -69,12 +69,24 @@ class TaskModel {
         self.lastCreateTask = taskArray
     }
     
-    /*タスクの更新(チケットの完了未完了)*/
-    func taskUpdate(taskName: String, tickets:[String:Bool]) {
+    /*タスクの更新*/
+    func taskUpdate(taskName: String, tickets:[String:Bool], actionType: ActionType) {
+        var conceIndex = 0
         for (index, task) in self.tasks!.enumerated(){
             if (task["title"] as! String) == taskName {
                 self.tasks![index]["tickets"] = tickets
+                conceIndex = index
             }
         }
+        switch actionType {
+        case .taskDelete:
+            self.deleteTask(index: conceIndex)
+        default:
+            return
+        }
+    }
+    
+    func deleteTask(index: Int) {
+        self.tasks?.remove(at: index)
     }
 }

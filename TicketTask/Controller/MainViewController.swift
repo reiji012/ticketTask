@@ -208,10 +208,31 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
             let tableViewCell = currentTaskView.tableViewArray[indexPath.row] as! TichketTableViewCell
             let ticketName = tableViewCell.ticketName.text
             currentTaskView.taskViewModel?.tickets?.removeValue(forKey: ticketName!)
-            var a = currentTaskView.ticketTableView.cellForRow(at: indexPath) as! TichketTableViewCell
-            print(a.ticketName.text)
             currentTaskView.tableViewArray.remove(at: indexPath.row)
             currentTaskView.ticketTableView.reloadData()
+        }
+    }
+    
+    func deleteTask(view: TaskView) {
+        view.taskViewModel?.updateModel(actionType: .taskDelete)
+        UIView.animate(withDuration: 0.5, animations: {
+            // Viewを見えなくする
+            view.alpha = 0
+        }) { (completed) in
+            // Animationが完了したら親Viewから削除する
+            let index = view.tag
+            UIView.animate(withDuration: 0.5, animations: {
+                for i in index..<100 {
+                    guard let taskView = self.view.viewWithTag(i) else {
+                        return
+                    }
+                    taskView.tag = i - 1
+                    let frame = taskView.frame
+                    taskView.frame = CGRect(x: frame.origin.x - self.taskViewWidth, y: frame.origin.y, width: frame.size.width, height: frame.size.height)
+                }
+            })
+            
+            view.removeFromSuperview()
         }
     }
     
@@ -226,12 +247,9 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         
         //現在のスクロールの位置(scrollView.contentOffset.x)から
         //どこのタブを表示させたいか計算します
-        let taskCount = self.taskViewModel.taskCount
+        let taskCount: Int = self.taskViewModel.taskCount()
         //スクロール可能最大値
-        let maxScrollPoint = (taskCount! - 1) * currentWidth
-        //Viewが何番目かを計算
-        let index = Int((scrollView.contentOffset.x + taskViewWidth/2) / taskViewWidth)
-        let x = index * currentWidth
+        let maxScrollPoint = (taskCount - 1) * currentWidth
         //どれくらいスクロールしたのか
         let currentScroll = self.stopPoint - scrollView.contentOffset.x
         var scrollPoint = self.stopPoint

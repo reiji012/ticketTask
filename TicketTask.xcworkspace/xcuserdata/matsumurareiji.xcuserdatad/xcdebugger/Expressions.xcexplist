@@ -3,16 +3,21 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "TaskModel.init():TaskModel.swift">
+         contextName = "MainViewController.createTaskViews():MainViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "scrollView.frame.size.width">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "TaskView.setLabelText(title:):TaskView.swift">
          <PersistentStrings>
             <PersistentString
-               value = "defoultWidth">
+               value = "defoultHeight">
             </PersistentString>
             <PersistentString
-               value = "defoultHeight">
+               value = "defoultWidth">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -25,12 +30,7 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "MainViewController.createTaskViews():MainViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "scrollView.frame.size.width">
-            </PersistentString>
-         </PersistentStrings>
+         contextName = "TaskModel.init():TaskModel.swift">
       </ContextState>
       <ContextState
          contextName = "TaskView.setTableView():TaskView.swift">
@@ -48,6 +48,14 @@
          <PersistentStrings>
             <PersistentString
                value = "taskViewIndex">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MainViewController.scrollViewDidEndDragging(_:willDecelerate:):MainViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.taskViewIndex">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

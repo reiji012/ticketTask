@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2BB2EE51228AB97200769AAA /* ActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB2EE50228AB97200769AAA /* ActionType.swift */; };
 		2BF5B74D22814521007D0266 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF5B74C22814521007D0266 /* AppDelegate.swift */; };
 		2BF5B74F22814521007D0266 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF5B74E22814521007D0266 /* MainViewController.swift */; };
 		2BF5B75222814521007D0266 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2BF5B75022814521007D0266 /* Main.storyboard */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2BB2EE50228AB97200769AAA /* ActionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionType.swift; sourceTree = "<group>"; };
 		2BF5B74922814521007D0266 /* TicketTask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TicketTask.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BF5B74C22814521007D0266 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2BF5B74E22814521007D0266 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -58,6 +60,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2BB2EE4F228AB96300769AAA /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				2BB2EE50228AB97200769AAA /* ActionType.swift */,
+			);
+			name = Services;
+			sourceTree = "<group>";
+		};
 		2BF5B74022814521007D0266 = {
 			isa = PBXGroup;
 			children = (
@@ -79,6 +89,7 @@
 		2BF5B74B22814521007D0266 /* TicketTask */ = {
 			isa = PBXGroup;
 			children = (
+				2BB2EE4F228AB96300769AAA /* Services */,
 				2BF5B7612281467E007D0266 /* Model */,
 				2BF5B7602281466B007D0266 /* ViewModel */,
 				2BF5B75F22814662007D0266 /* Controller */,
@@ -266,6 +277,7 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-TicketTask/Pods-TicketTask-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/BubbleTransition/BubbleTransition.framework",
+				"${BUILT_PRODUCTS_DIR}/NewPopMenu/PopMenu.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxRelay/RxRelay.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
@@ -275,6 +287,7 @@
 			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BubbleTransition.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PopMenu.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxRelay.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
@@ -298,6 +311,7 @@
 				2BF5B77C22855657007D0266 /* AddTaskViewController.swift in Sources */,
 				2BF5B7722282A0AB007D0266 /* UIView+TicketTask.swift in Sources */,
 				2BF5B7692281562D007D0266 /* TaskView.swift in Sources */,
+				2BB2EE51228AB97200769AAA /* ActionType.swift in Sources */,
 				2BF5B779228512FA007D0266 /* GradationColors.swift in Sources */,
 				2BF5B74D22814521007D0266 /* AppDelegate.swift in Sources */,
 			);
