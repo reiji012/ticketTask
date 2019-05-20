@@ -89,4 +89,8 @@ class TaskViewModel: NSObject {
         let progress = self.completedProgress!
         progressSubject.onNext(progress)
     }
+    
+    func getTaskData() {
+        taskModel?.getTaskData()
+    }
 }

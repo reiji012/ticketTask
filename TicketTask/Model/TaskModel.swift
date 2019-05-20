@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import RealmSwift
 
 class TaskModel {
+    
+    let taskList = List<TaskItem>()
 
     var tasks: [[String:Any]]?
     var lastCreateTask = ["title":"","attri":"","tickets":[]] as [String : Any]
@@ -88,5 +91,74 @@ class TaskModel {
     
     func deleteTask(index: Int) {
         self.tasks?.remove(at: index)
+    }
+    
+    func getTaskData() {
+        do {
+            let realm = try Realm()
+            let results = realm.objects(TaskItem.self)
+            var a = results.count
+            if  results.count == 0 {
+                print(results)
+                self.dataFirstInit()
+            }
+            print(results)
+
+        
+            try! realm.write {
+                realm.add(TasksData())
+                print("データベース追加後", results.count)
+                print(results)
+            }
+            
+        } catch {
+            print(error)
+        }
+
+    }
+    
+    /*
+    初期データの挿入
+     */
+    func dataFirstInit() {
+        do {
+            let realm = try Realm()
+            let results = realm.objects(TaskItem.self)
+            print(results)
+            
+            let task1Dictionary:[String:Any] = [
+                "taskTitle": "朝の準備",
+                "attri": "a",
+                "tickets": [["taskName"    : "朝の準備",
+                            "ticketName"  : "歯磨き",
+                            "isCompleted" : false],
+                            ["taskName"    : "朝の準備",
+                             "ticketName"  : "歯磨き",
+                             "isCompleted" : false]]
+            ]
+            let task2Dictionary:[String:Any] = [
+                "taskTitle": "お仕事",
+                "attri": "b",
+                "tickets": [["taskName"    : "お仕事",
+                             "ticketName"  : "データの入力",
+                             "isCompleted" : false],
+                            ["taskName"    : "お仕事",
+                             "ticketName"  : "書類のコピー",
+                             "isCompleted" : false]]
+            ]
+            
+            let taskItem1 = TaskItem(value: task1Dictionary)
+            let taskItem2 = TaskItem(value: task2Dictionary)
+            
+            try! realm.write {
+                realm.add(taskItem1)
+                realm.add(taskItem2)
+                print("データベース追加後", results.count)
+                print(results)
+            }
+            
+        } catch {
+            print("error")
+        }
     }
 }

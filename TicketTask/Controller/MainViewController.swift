@@ -46,6 +46,7 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         // Do any additional setup after loading the view.
         bindUI()
         createTaskViews()
+        taskViewModel.getTaskData()
     }
 
     func bindUI() {
@@ -80,7 +81,7 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         let tasks = taskViewModel.tasks
         
         //タブの縦幅(UIScrollViewと一緒にします)
-        let tabLabelHeight:CGFloat = scrollView.frame.height
+        let tabLabelHeight:CGFloat = UIScreen.main.bounds.size.height
         
         //右端にダミーのUILabelを置くことで
         //一番右のタブもセンターに持ってくることが出来ます
@@ -113,6 +114,7 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
             //次のタブのx座標を用意する
             self.originX! += taskViewWidth
             
+            print(taskView.frame.size.width)
             if(index + 1 == 1) {
                 self.centerViewAttri = taskView.taskViewModel!.attri
                 //グラデーションの作成
@@ -128,7 +130,7 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         //ダミーLabel分を足して上げましょう
         self.originX! += dummyLabelWidth
         
-        //scrollViewのcontentSizeを，タブ全体のサイズに合わせてあげる(ここ重要！)
+        //scrollViewのcontentSizeを，View全体のサイズに合わせる
         //最終的なoriginX = タブ全体の横幅 になります
         scrollView.contentSize = CGSize(width:self.originX!, height:scrollView.frame.height)
     }
@@ -150,7 +152,7 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         scrollView.addSubview(taskView)
         self.originX! += taskViewWidth
         
-        //scrollViewのcontentSizeを，タブ全体のサイズに合わせてあげる(ここ重要！)
+        //scrollViewのcontentSizeを，View全体のサイズに合わせる
         //最終的なoriginX = タブ全体の横幅 になります
         scrollView.contentSize = CGSize(width:self.originX!, height:scrollView.frame.height)
 
@@ -222,7 +224,6 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
             let index = view.tag
             UIView.animate(withDuration: 0.5, animations: {
                 for i in index..<100 {
-                    self.isShowDetail = false
                     guard let taskView = self.view.viewWithTag(i) else {
                         return
                     }
@@ -231,7 +232,8 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
                     taskView.frame = CGRect(x: frame.origin.x - self.taskViewWidth, y: frame.origin.y, width: frame.size.width, height: frame.size.height)
                 }
             })
-            
+            self.scrollView.isScrollEnabled = true
+            self.taskAddButton.isHidden = false
             view.removeFromSuperview()
         }
     }
@@ -276,6 +278,7 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         UIView.animate(withDuration: 0.3, animations: {
             scrollView.contentOffset = CGPoint(x:scrollPoint, y:0)
         })
+        print(taskView.frame.size.width)
         self.setGradationColor()
         self.stopPoint = scrollView.contentOffset.x
     }

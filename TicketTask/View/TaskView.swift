@@ -212,6 +212,8 @@ class TaskView: UIView{
                 self.isShowDetail = false
                 self.gesturView?.isUserInteractionEnabled = false
             } else {
+                print(self.frame.size.width)
+                print(self.bounds.size.width)
                 // 拡大するときの処理
                 self.defoultHeight = self.frame.size.height
                 self.defoultWidth = self.bounds.size.width
