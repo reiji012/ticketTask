@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		2BB2EE51228AB97200769AAA /* ActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB2EE50228AB97200769AAA /* ActionType.swift */; };
+		2BE551662292695000D5AFA9 /* TaskItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE551652292695000D5AFA9 /* TaskItem.swift */; };
+		2BE55168229299A100D5AFA9 /* TicketModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE55167229299A100D5AFA9 /* TicketModel.swift */; };
+		2BE5516B2292A83700D5AFA9 /* TasksData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE5516A2292A83700D5AFA9 /* TasksData.swift */; };
 		2BF5B74D22814521007D0266 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF5B74C22814521007D0266 /* AppDelegate.swift */; };
 		2BF5B74F22814521007D0266 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF5B74E22814521007D0266 /* MainViewController.swift */; };
 		2BF5B75222814521007D0266 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2BF5B75022814521007D0266 /* Main.storyboard */; };
@@ -27,6 +30,9 @@
 
 /* Begin PBXFileReference section */
 		2BB2EE50228AB97200769AAA /* ActionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionType.swift; sourceTree = "<group>"; };
+		2BE551652292695000D5AFA9 /* TaskItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TaskItem.swift; path = Model/TaskItem.swift; sourceTree = "<group>"; };
+		2BE55167229299A100D5AFA9 /* TicketModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketModel.swift; sourceTree = "<group>"; };
+		2BE5516A2292A83700D5AFA9 /* TasksData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksData.swift; sourceTree = "<group>"; };
 		2BF5B74922814521007D0266 /* TicketTask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TicketTask.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BF5B74C22814521007D0266 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2BF5B74E22814521007D0266 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -63,9 +69,20 @@
 		2BB2EE4F228AB96300769AAA /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				2BE551692292A7E300D5AFA9 /* RealmItem */,
 				2BB2EE50228AB97200769AAA /* ActionType.swift */,
 			);
 			name = Services;
+			sourceTree = "<group>";
+		};
+		2BE551692292A7E300D5AFA9 /* RealmItem */ = {
+			isa = PBXGroup;
+			children = (
+				2BE551652292695000D5AFA9 /* TaskItem.swift */,
+				2BE55167229299A100D5AFA9 /* TicketModel.swift */,
+				2BE5516A2292A83700D5AFA9 /* TasksData.swift */,
+			);
+			name = RealmItem;
 			sourceTree = "<group>";
 		};
 		2BF5B74022814521007D0266 = {
@@ -311,9 +328,12 @@
 				2BF5B76C22829DCD007D0266 /* TichketTableViewCell.swift in Sources */,
 				2BF5B7652281498F007D0266 /* TaskModel.swift in Sources */,
 				2BF5B77C22855657007D0266 /* AddTaskViewController.swift in Sources */,
+				2BE55168229299A100D5AFA9 /* TicketModel.swift in Sources */,
+				2BE551662292695000D5AFA9 /* TaskItem.swift in Sources */,
 				2BF5B7722282A0AB007D0266 /* UIView+TicketTask.swift in Sources */,
 				2BF5B7692281562D007D0266 /* TaskView.swift in Sources */,
 				2BB2EE51228AB97200769AAA /* ActionType.swift in Sources */,
+				2BE5516B2292A83700D5AFA9 /* TasksData.swift in Sources */,
 				2BF5B779228512FA007D0266 /* GradationColors.swift in Sources */,
 				2BF5B74D22814521007D0266 /* AppDelegate.swift in Sources */,
 			);
