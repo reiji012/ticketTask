@@ -45,14 +45,44 @@ class TaskModel {
     func createTask(taskName: String, attri: String, tickets:Array<String>) {
         var taskArray = ["title":"","attri":"","tickets":[]] as [String : Any]
         var ticketsArray: [String : Bool] = [:]
+        var ticketsRealmArray: [[String : Any]] = []
         taskArray["title"] = taskName
         taskArray["attri"] = attri
         for ticket in tickets {
             ticketsArray.updateValue(false, forKey: ticket)
+            let array = ["taskName"    : taskName,
+                         "ticketName"  : ticket,
+                         "isCompleted" : false] as [String : Any]
+             ticketsRealmArray.append(array)
         }
+       
         taskArray["tickets"] = ticketsArray
         self.tasks?.append(taskArray)
         self.lastCreateTask = taskArray
+        
+        do {
+            let realm = try Realm()
+            let results = realm.objects(TaskItem.self)
+            print(results)
+            
+            let taskDictionary:[String:Any] = [
+                TASK_TITLE: taskName,
+                TASK_ATTRI: attri,
+                TASK_TICKETS: ticketsRealmArray
+            ]
+            
+            
+            let taskItem = TaskItem(value: taskDictionary)
+            
+            try! realm.write {
+                realm.add(taskItem)
+                print("データベース追加後", results.count)
+                print(results)
+            }
+        }
+        catch {
+        }
+        
     }
     
     /*タスクの更新*/
@@ -74,6 +104,7 @@ class TaskModel {
         }
     }
     
+    /*チケットの更新*/
     func updateTicket(index: Int) {
         guard let tasks = self.tasks else { return }
         let task = tasks[index]
@@ -92,6 +123,7 @@ class TaskModel {
         }
     }
     
+    /*タスクの削除*/
     func deleteTask(index: Int) {
         self.tasks?.remove(at: index)
         do {
@@ -109,6 +141,7 @@ class TaskModel {
         
     }
     
+    /*Realmからデータを取得する*/
     func getTaskData() {
         do {
             let realm = try Realm()

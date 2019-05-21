@@ -10,28 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TicketTask/Model/TaskModel.swift"
-            timestampString = "580124290.60894"
+            timestampString = "580125723.062986"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "84"
-            endingLineNumber = "84"
-            landmarkName = "updateTicket(index:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TicketTask/Model/TaskModel.swift"
-            timestampString = "580124290.609463"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
-            landmarkName = "taskUpdate(taskName:tickets:actionType:)"
+            startingLineNumber = "68"
+            endingLineNumber = "68"
+            landmarkName = "createTask(taskName:attri:tickets:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
