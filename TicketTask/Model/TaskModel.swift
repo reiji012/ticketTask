@@ -57,18 +57,38 @@ class TaskModel {
     
     /*タスクの更新*/
     func taskUpdate(taskName: String, tickets:[String:Bool], actionType: ActionType) {
-        var conceIndex = 0
+        var indexPath = 0
         for (index, task) in self.tasks!.enumerated(){
             if (task["title"] as! String) == taskName {
                 self.tasks![index]["tickets"] = tickets
-                conceIndex = index
+                indexPath = index
             }
         }
         switch actionType {
         case .taskDelete:
-            self.deleteTask(index: conceIndex)
+            self.deleteTask(index: indexPath)
+        case .ticketUpdate:
+            self.updateTicket(index: indexPath)
         default:
             return
+        }
+    }
+    
+    func updateTicket(index: Int) {
+        guard let tasks = self.tasks else { return }
+        let task = tasks[index]
+        do {
+            let realm = try Realm()
+            let results = realm.objects(TaskItem.self)
+            try! realm.write {
+                for ticket in results[index].tickets {
+                    var tickets = task["tickets"] as! [String:Bool]
+                    ticket.isCompleted = (tickets[ticket.ticketName])!
+                }
+            }
+        }
+        catch {
+            print(error)
         }
     }
     
