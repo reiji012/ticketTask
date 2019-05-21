@@ -41,12 +41,12 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        taskViewModel.getTaskData()
         scrollView.delegate = self
         scrollView.showsVerticalScrollIndicator = false
         // Do any additional setup after loading the view.
         bindUI()
         createTaskViews()
-        taskViewModel.getTaskData()
     }
 
     func bindUI() {
