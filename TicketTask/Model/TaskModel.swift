@@ -12,6 +12,11 @@ import RealmSwift
 class TaskModel {
     
     let taskList = List<TaskItem>()
+    let TASK_TITLE = "taskTitle"
+    let TASK_ATTRI = "attri"
+    let TASK_TICKETS = "tickets"
+    let TICKET_NAME = "ticketName"
+    let TICKET_IS_COMPLETED = "isCompleted"
 
     var tasks: [[String:Any]]?
     var lastCreateTask = ["title":"","attri":"","tickets":[]] as [String : Any]
@@ -19,31 +24,9 @@ class TaskModel {
     static var sharedManager: TaskModel = {
         return TaskModel()
     }()
+    
     private init() {
-        let testArray = ["朝の準備","晩御飯","就寝の準備","お仕事","勉強の進捗"]
-        var tmpArray: Array<Any> = []
-        var array = ["title":"","attri":"","tickets":[]] as [String : Any]
-        for (index,value) in testArray.enumerated() {
-            let taskTitle = value
-            let attri = index % 2 == 0 ? "a" : "b"
-            var tickets = index % 2 == 0 ? ["banana":false,"tomato":true,"apple":true] : ["bread":false,"milk":false,"stake":true,"rice":false,"carry":false]
-            array["title"] = taskTitle
-            array["attri"] = attri
-            
-            
-            switch value {
-            case "朝の準備": tickets = ["歯磨き":false,"朝ごはん":true,"新聞":true,"シャワー":true,"ニュース":false,"魚":false,"テレビ":true,"布団の処理":true,"鍵":true]
-            case "晩御飯": tickets = ["魚":false,"サラダ":true,"牛肉":true,"牛乳":true]
-            case "就寝の準備": tickets = ["歯磨き":false,"テレビ":true,"布団の準備￥":true,"シャワー":true]
-            case "お仕事": tickets = ["朝のタスク":false,"デスクの掃除":true,"事務処理":true,"午後のタスク":true]
-            case "勉強の進捗": tickets = ["学校の宿題":false,"夏休みの宿題":true,"受験勉強":true,"数学10ページ":true]
-            default: break
-            }
-            
-            array["tickets"] = tickets
-            tmpArray.append(array)
-        }
-        tasks = (tmpArray as! [[String : Any]])
+
     }
     
     /*タスクを取得する*/
@@ -91,25 +74,49 @@ class TaskModel {
     
     func deleteTask(index: Int) {
         self.tasks?.remove(at: index)
+        do {
+            let realm = try Realm()
+            let results = realm.objects(TaskItem.self)
+            try! realm.write {
+                realm.delete(results[index])
+            }
+            
+            
+        }
+        catch {
+            print (error)
+        }
+        
     }
     
     func getTaskData() {
         do {
             let realm = try Realm()
             let results = realm.objects(TaskItem.self)
-            var a = results.count
             if  results.count == 0 {
                 print(results)
                 self.dataFirstInit()
             }
-            print(results)
-
-        
-            try! realm.write {
-                realm.add(TasksData())
-                print("データベース追加後", results.count)
-                print(results)
+            
+            //データを取り出してモデルに反映する
+            var tmpArray: Array<Any> = []
+            var array = ["title":"","attri":"","tickets":[]] as [String : Any]
+            for task in results{
+                array["title"] = task[TASK_TITLE]!
+                array["attri"] = task[TASK_ATTRI]
+                var ticketArray: [String:Bool] = [:]
+                let tickets = task[TASK_TICKETS]
+                for ticket in tickets as! List<TicketModel> {
+                    let ticketName = ticket[TICKET_NAME] as! String
+                    let isCompleted = ticket[TICKET_IS_COMPLETED] as! Bool
+                    ticketArray[ticketName] = isCompleted
+                }
+                array["tickets"] = ticketArray
+                tmpArray.append(array)
             }
+            self.tasks = (tmpArray as! [[String : Any]])
+            
+            print(tasks as Any)
             
         } catch {
             print(error)
@@ -127,19 +134,19 @@ class TaskModel {
             print(results)
             
             let task1Dictionary:[String:Any] = [
-                "taskTitle": "朝の準備",
-                "attri": "a",
-                "tickets": [["taskName"    : "朝の準備",
+                TASK_TITLE: "朝の準備",
+                TASK_ATTRI: "a",
+                TASK_TICKETS: [["taskName"    : "朝の準備",
                             "ticketName"  : "歯磨き",
                             "isCompleted" : false],
                             ["taskName"    : "朝の準備",
-                             "ticketName"  : "歯磨き",
+                             "ticketName"  : "鍵を閉める",
                              "isCompleted" : false]]
             ]
             let task2Dictionary:[String:Any] = [
-                "taskTitle": "お仕事",
-                "attri": "b",
-                "tickets": [["taskName"    : "お仕事",
+                TASK_TITLE: "お仕事",
+                TASK_ATTRI: "b",
+                TASK_TICKETS: [["taskName"    : "お仕事",
                              "ticketName"  : "データの入力",
                              "isCompleted" : false],
                             ["taskName"    : "お仕事",

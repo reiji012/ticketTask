@@ -40,7 +40,6 @@ class TaskViewModel: NSObject {
     
     override init() {
         taskModel = TaskModel.sharedManager
-        tasks = taskModel!.tasks!
     }
     
     // タスクのModelを取得する
@@ -92,5 +91,6 @@ class TaskViewModel: NSObject {
     
     func getTaskData() {
         taskModel?.getTaskData()
+        tasks = taskModel!.tasks!
     }
 }
