@@ -26,11 +26,12 @@ class TaskViewModel: NSObject {
     }
     var attri: String?
     
-    let actionType: ActionType = .taskUpdate
+    var actionType: ActionType = .taskUpdate
     
     var tickets: [String:Bool]? = nil {
         didSet(value) {
-            self.updateModel(actionType: .ticketUpdate)
+            self.updateModel(actionType: self.actionType)
+            self.actionType = .ticketUpdate
         } willSet(value) {
             ticketCountSubject.onNext(value!.count)
         }

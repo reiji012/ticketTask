@@ -99,8 +99,32 @@ class TaskModel {
             self.deleteTask(index: indexPath)
         case .ticketUpdate:
             self.updateTicket(index: indexPath)
+        case .ticketDelete:
+            self.deleteTicket(index: indexPath)
         default:
             return
+        }
+    }
+    
+    /*チケットの削除*/
+    func deleteTicket(index: Int) {
+        guard let tasks = self.tasks else { return }
+        let task = tasks[index]
+        do {
+            let realm = try Realm()
+            let results = realm.objects(TaskItem.self)
+            try! realm.write {
+                for ticket in results[index].tickets {
+                    var tickets = task["tickets"] as! [String:Bool]
+                    // モデルに存在しない（削除された）チケットをデータベース上から削除
+                    if tickets[ticket.ticketName] == nil {
+                        realm.delete(ticket)
+                    }
+                }
+            }
+        }
+        catch {
+            print(error)
         }
     }
     
@@ -114,6 +138,11 @@ class TaskModel {
             try! realm.write {
                 for ticket in results[index].tickets {
                     var tickets = task["tickets"] as! [String:Bool]
+                    // モデルからチケットが削除されていればデータベース上のチケットも削除する
+                    if tickets[ticket.ticketName] == nil {
+                        return
+                    }
+//                    ticket.ticketName = self.tasks![index]["tickets"] as! String
                     ticket.isCompleted = (tickets[ticket.ticketName])!
                 }
             }
@@ -190,21 +219,21 @@ class TaskModel {
                 TASK_TITLE: "朝の準備",
                 TASK_ATTRI: "a",
                 TASK_TICKETS: [["taskName"    : "朝の準備",
-                            "ticketName"  : "歯磨き",
-                            "isCompleted" : false],
-                            ["taskName"    : "朝の準備",
-                             "ticketName"  : "鍵を閉める",
-                             "isCompleted" : false]]
+                                "ticketName"  : "歯磨き",
+                                "isCompleted" : false],
+                               ["taskName"    : "朝の準備",
+                                "ticketName"  : "鍵を閉める",
+                                "isCompleted" : false]]
             ]
             let task2Dictionary:[String:Any] = [
                 TASK_TITLE: "お仕事",
                 TASK_ATTRI: "b",
                 TASK_TICKETS: [["taskName"    : "お仕事",
-                             "ticketName"  : "データの入力",
-                             "isCompleted" : false],
-                            ["taskName"    : "お仕事",
-                             "ticketName"  : "書類のコピー",
-                             "isCompleted" : false]]
+                                "ticketName"  : "データの入力",
+                                "isCompleted" : false],
+                               ["taskName"    : "お仕事",
+                                "ticketName"  : "書類のコピー",
+                                "isCompleted" : false]]
             ]
             
             let taskItem1 = TaskItem(value: task1Dictionary)
