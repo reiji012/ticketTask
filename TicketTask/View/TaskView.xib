@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -13,11 +13,11 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="TaskView" customModule="TicketTask" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="439" height="249"/>
+            <rect key="frame" x="0.0" y="0.0" width="439" height="488"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Occ-Jp-uEZ">
-                    <rect key="frame" x="15" y="5" width="60" height="15"/>
+                    <rect key="frame" x="15" y="25" width="60" height="15"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="15" id="QUX-6e-abd"/>
                         <constraint firstAttribute="width" constant="60" id="tb7-xp-bMX"/>
@@ -38,13 +38,14 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </button>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="I6P-G7-7H8">
-                    <rect key="frame" x="0.0" y="260" width="439" height="516"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="I6P-G7-7H8">
+                    <rect key="frame" x="0.0" y="260" width="439" height="228"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </tableView>
                 <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="VBp-HC-ndC">
                     <rect key="frame" x="25" y="220" width="348" height="7"/>
                     <constraints>
+                        <constraint firstAttribute="width" constant="348" id="Hrh-OI-UuZ"/>
                         <constraint firstAttribute="height" constant="7" id="nBb-Lm-BYg"/>
                     </constraints>
                     <color key="trackTintColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -109,7 +110,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3XW-sK-gN9">
-                    <rect key="frame" x="359" y="55" width="50" height="50"/>
+                    <rect key="frame" x="170" y="55" width="50" height="50"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="50" id="ANl-3n-t4f"/>
                         <constraint firstAttribute="height" constant="50" id="QB1-KP-4i6"/>
@@ -123,6 +124,7 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="vrp-1Z-85c" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="25" id="0ch-3x-IB2"/>
+                <constraint firstItem="3XW-sK-gN9" firstAttribute="leading" secondItem="lWg-KI-zIe" secondAttribute="trailing" constant="100" id="2uA-p2-DCl"/>
                 <constraint firstItem="vrp-1Z-85c" firstAttribute="top" secondItem="cSn-BC-JZ5" secondAttribute="bottom" constant="8" id="4jJ-S3-AV5"/>
                 <constraint firstAttribute="trailing" secondItem="vrp-1Z-85c" secondAttribute="trailing" constant="50" id="5su-g3-aYP"/>
                 <constraint firstItem="vrp-1Z-85c" firstAttribute="top" secondItem="3XW-sK-gN9" secondAttribute="bottom" constant="55" id="6Jg-cW-yeS"/>
@@ -133,7 +135,6 @@
                 <constraint firstAttribute="trailing" secondItem="I6P-G7-7H8" secondAttribute="trailing" id="S9T-HO-bY9"/>
                 <constraint firstItem="lWg-KI-zIe" firstAttribute="leading" secondItem="Hzy-Tp-1gk" secondAttribute="leading" constant="20" id="XqO-dj-NRg"/>
                 <constraint firstItem="vrp-1Z-85c" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="160" id="a0X-89-oB4"/>
-                <constraint firstItem="Hzy-Tp-1gk" firstAttribute="trailing" secondItem="3XW-sK-gN9" secondAttribute="trailing" constant="30" id="irq-iD-Iet"/>
                 <constraint firstItem="I6P-G7-7H8" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="mJe-ec-OTL"/>
                 <constraint firstItem="cSn-BC-JZ5" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="25" id="mb3-ww-gSZ"/>
                 <constraint firstItem="Occ-Jp-uEZ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="t5I-h1-K2T"/>
@@ -141,7 +142,6 @@
                 <constraint firstItem="VBp-HC-ndC" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="25" id="umV-FA-NMd"/>
                 <constraint firstItem="cSn-BC-JZ5" firstAttribute="top" secondItem="lWg-KI-zIe" secondAttribute="bottom" constant="30" id="v3m-dw-pjU"/>
                 <constraint firstItem="VBp-HC-ndC" firstAttribute="top" secondItem="vrp-1Z-85c" secondAttribute="bottom" constant="20" id="xAh-77-c5k"/>
-                <constraint firstAttribute="trailing" secondItem="VBp-HC-ndC" secondAttribute="trailing" constant="66" id="zqy-zl-Dku"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
@@ -150,13 +150,16 @@
             <connections>
                 <outlet property="attriImageView" destination="lWg-KI-zIe" id="gz4-oJ-it2"/>
                 <outlet property="backButton" destination="Occ-Jp-uEZ" id="MUv-RW-aUA"/>
+                <outlet property="menuBtnLeftConst" destination="2uA-p2-DCl" id="JXU-Xi-nwp"/>
+                <outlet property="menuButton" destination="3XW-sK-gN9" id="vuy-ms-sRc"/>
+                <outlet property="progressBarWidthConst" destination="Hrh-OI-UuZ" id="iS2-2z-5OE"/>
                 <outlet property="ticketCountLabel" destination="cSn-BC-JZ5" id="fBE-lo-6Hp"/>
                 <outlet property="ticketProgressBar" destination="VBp-HC-ndC" id="7Jr-QM-iwn"/>
                 <outlet property="ticketProgressLabel" destination="ZYz-sQ-nm6" id="4qc-SX-gkR"/>
                 <outlet property="ticketTableView" destination="I6P-G7-7H8" id="llA-g0-uCF"/>
                 <outlet property="titleLabel" destination="vrp-1Z-85c" id="2io-hF-DCc"/>
             </connections>
-            <point key="canvasLocation" x="64.799999999999997" y="385.45727136431788"/>
+            <point key="canvasLocation" x="64.799999999999997" y="492.95352323838085"/>
         </view>
     </objects>
     <resources>

@@ -6,32 +6,80 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TicketTask/Model/TaskModel.swift"
-            timestampString = "580268018.107146"
+            filePath = "TicketTask/View/TaskView.swift"
+            timestampString = "580303219.096409"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "68"
-            endingLineNumber = "68"
-            landmarkName = "createTask(taskName:attri:tickets:)"
+            startingLineNumber = "242"
+            endingLineNumber = "242"
+            landmarkName = "changeViewSize()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TicketTask/Model/TaskModel.swift"
-            timestampString = "580268018.107428"
+            filePath = "TicketTask/View/TaskView.swift"
+            timestampString = "580303219.097227"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "140"
-            endingLineNumber = "140"
-            landmarkName = "updateTicket(index:)"
+            startingLineNumber = "239"
+            endingLineNumber = "239"
+            landmarkName = "changeViewSize()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in TicketTask.TaskView.changeViewSize() -&gt; ()"
+                  moduleName = "TicketTask"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/matsumurareiji/Develop/private-app/ticketTask/TicketTask/View/TaskView.swift"
+                  timestampString = "580300105.473991"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "223"
+                  endingLineNumber = "223"
+                  offsetFromSymbolStart = "4794">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in TicketTask.TaskView.changeViewSize() -&gt; ()"
+                  moduleName = "TicketTask"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/matsumurareiji/Develop/private-app/ticketTask/TicketTask/View/TaskView.swift"
+                  timestampString = "580300105.476904"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "223"
+                  endingLineNumber = "223"
+                  offsetFromSymbolStart = "6435">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TicketTask/View/TaskView.swift"
+            timestampString = "580303219.097683"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "240"
+            endingLineNumber = "240"
+            landmarkName = "changeViewSize()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
