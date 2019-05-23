@@ -21,6 +21,9 @@ class TaskView: UIView{
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var ticketTableView: UITableView!
+    @IBOutlet weak var menuBtnLeftConst: NSLayoutConstraint!
+    @IBOutlet weak var menuButton: UIButton!
+    @IBOutlet weak var progressBarWidthConst: NSLayoutConstraint!
     @IBOutlet weak var tableViewHeightConst: NSLayoutConstraint!
     
     var tableViewArray = [UITableViewCell]()
@@ -51,6 +54,7 @@ class TaskView: UIView{
             target: self,
             action: #selector(self.tapped(_:)))
         self.addGestureRecognizer(tapGesture)
+        print(self.frame.size.width)
     }
 
     @IBAction func tapMenuBtn(_ sender: Any) {
@@ -69,7 +73,7 @@ class TaskView: UIView{
         let menu = PopMenuViewController(sourceView: sender as AnyObject, actions: actions)
         let currentX = menu.contentFrame.origin.x
         menu.contentFrame.origin.x = currentX - 100
-        menu.appearance.popMenuColor.backgroundColor = .solid(fill: .lightGray)
+        menu.appearance.popMenuColor.backgroundColor = .solid(fill: .white)
         mainViewController!.present(menu, animated: true, completion: nil)
         menu.didDismiss = { selected in
             if isDeleteAction {
@@ -165,6 +169,9 @@ class TaskView: UIView{
         self.layer.shadowColor = UIColor.black.cgColor
         self.layer.shadowOffset = CGSize(width: 5, height: 5)
         
+        self.progressBarWidthConst.constant = (UIScreen.main.bounds.size.width / 2)
+        self.menuBtnLeftConst.constant = (UIScreen.main.bounds.size.width / 2.7)
+        
         self.titleLabel.text = taskViewModel?.taskName
         self.createGesturView()
         self.setGradationColor()
@@ -200,11 +207,24 @@ class TaskView: UIView{
         if (self.mainViewController != nil) {
             self.mainViewController?.isShowDetail = !self.isShowDetail
         }
-        UIView.animate(withDuration: 0.6, animations: {
-            let myBoundWidht: CGFloat = UIScreen.main.bounds.size.width
-            let currentWidth = (self.frame.size.width - myBoundWidht)/2
+        let myBoundWidht: CGFloat = UIScreen.main.bounds.size.width
+        let currentWidth = (self.frame.size.width - myBoundWidht)/2
+        self.menuButton.layoutIfNeeded()
+        self.layoutIfNeeded()
+        self.ticketProgressBar.layoutIfNeeded()
+        if isShowDetail {
+            self.menuBtnLeftConst.constant -= ((myBoundWidht - self.defoultWidth!)  / 1.3)
+            self.progressBarWidthConst.constant -= (myBoundWidht - self.defoultWidth!)
+        } else {
+            self.menuBtnLeftConst.constant += ((myBoundWidht - self.bounds.size.width)  / 1.3)
+            self.progressBarWidthConst.constant += (myBoundWidht - self.bounds.size.width)
+        }
+        UIView.animate(withDuration: 0.6, delay: 0.0, animations: {
             if self.isShowDetail {
                 // 縮小するときの処理
+                self.menuButton.layoutIfNeeded()
+                self.layoutIfNeeded()
+                self.ticketProgressBar.layoutIfNeeded()
                 self.ticketTableView.isHidden = true
                 self.frame = CGRect(x:self.defoultX!,y:self.defoultY!,width:self.defoultWidth!,height:self.defoultHeight!)
                 self.layer.cornerRadius = 30
@@ -212,8 +232,9 @@ class TaskView: UIView{
                 self.isShowDetail = false
                 self.gesturView?.isUserInteractionEnabled = false
             } else {
-                print(self.frame.size.width)
-                print(self.bounds.size.width)
+                self.menuButton.layoutIfNeeded()
+                self.layoutIfNeeded()
+                self.ticketProgressBar.layoutIfNeeded()
                 // 拡大するときの処理
                 self.defoultHeight = self.frame.size.height
                 self.defoultWidth = self.bounds.size.width
