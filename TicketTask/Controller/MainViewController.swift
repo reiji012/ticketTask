@@ -208,6 +208,7 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         if editingStyle == .delete {
             let tableViewCell = currentTaskView.tableViewArray[indexPath.row] as! TichketTableViewCell
             let ticketName = tableViewCell.ticketName.text
+            currentTaskView.taskViewModel?.actionType = .ticketDelete
             currentTaskView.taskViewModel?.tickets?.removeValue(forKey: ticketName!)
             currentTaskView.tableViewArray.remove(at: indexPath.row)
             currentTaskView.ticketTableView.reloadData()
