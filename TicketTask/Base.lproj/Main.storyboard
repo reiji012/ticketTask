@@ -18,6 +18,48 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j1C-QR-cem">
+                                <rect key="frame" x="0.0" y="44" width="414" height="300"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="今日の天気" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="drW-ht-H27">
+                                        <rect key="frame" x="20" y="49" width="186.5" height="44.5"/>
+                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="37"/>
+                                        <color key="textColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="最高気温:20°(曇り)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gGC-8B-Bg4">
+                                        <rect key="frame" x="23" y="113.5" width="164.5" height="23"/>
+                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="19"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="最低気温:10°(曇り)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5WO-9k-8hm">
+                                        <rect key="frame" x="23" y="146.5" width="161.5" height="23"/>
+                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="19"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="天気画像" translatesAutoresizingMaskIntoConstraints="NO" id="csz-Uo-139">
+                                        <rect key="frame" x="263" y="103" width="123" height="74"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="123" id="ndy-wm-n5L"/>
+                                            <constraint firstAttribute="height" constant="74" id="t3n-qq-e0n"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.28235294117647058" green="0.6588235294117647" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="csz-Uo-139" secondAttribute="trailing" constant="28" id="DD7-cn-hrI"/>
+                                    <constraint firstItem="gGC-8B-Bg4" firstAttribute="leading" secondItem="j1C-QR-cem" secondAttribute="leading" constant="23" id="InS-Ih-g9E"/>
+                                    <constraint firstItem="csz-Uo-139" firstAttribute="top" secondItem="j1C-QR-cem" secondAttribute="top" constant="103" id="JxV-no-bvQ"/>
+                                    <constraint firstItem="drW-ht-H27" firstAttribute="leading" secondItem="j1C-QR-cem" secondAttribute="leading" constant="20" id="LMu-lC-eXC"/>
+                                    <constraint firstItem="drW-ht-H27" firstAttribute="top" secondItem="j1C-QR-cem" secondAttribute="top" constant="49" id="Mdd-fL-0zr"/>
+                                    <constraint firstItem="gGC-8B-Bg4" firstAttribute="top" secondItem="drW-ht-H27" secondAttribute="bottom" constant="20" id="Mmo-WT-pyD"/>
+                                    <constraint firstAttribute="height" constant="300" id="TwJ-6S-4QL"/>
+                                    <constraint firstItem="5WO-9k-8hm" firstAttribute="top" secondItem="gGC-8B-Bg4" secondAttribute="bottom" constant="10" id="Y1n-3h-RqF"/>
+                                    <constraint firstItem="5WO-9k-8hm" firstAttribute="leading" secondItem="j1C-QR-cem" secondAttribute="leading" constant="23" id="kKa-H5-ij5"/>
+                                </constraints>
+                            </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9r5-w2-dd8">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </scrollView>
@@ -50,10 +92,13 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="0rI-Uf-9Vh" firstAttribute="trailing" secondItem="9r5-w2-dd8" secondAttribute="trailing" id="A91-yW-TGe"/>
+                            <constraint firstItem="0rI-Uf-9Vh" firstAttribute="trailing" secondItem="j1C-QR-cem" secondAttribute="trailing" id="Jl5-eZ-A01"/>
                             <constraint firstItem="9r5-w2-dd8" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="WjD-E8-PZD"/>
                             <constraint firstAttribute="bottom" secondItem="9r5-w2-dd8" secondAttribute="bottom" id="WlH-T4-UmV"/>
                             <constraint firstItem="iWg-1l-M3x" firstAttribute="top" secondItem="0rI-Uf-9Vh" secondAttribute="top" constant="30" id="Z1z-50-FMw"/>
+                            <constraint firstItem="j1C-QR-cem" firstAttribute="top" secondItem="0rI-Uf-9Vh" secondAttribute="top" id="fhl-Vl-zib"/>
                             <constraint firstItem="9r5-w2-dd8" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="gq3-qm-Lgn"/>
+                            <constraint firstItem="j1C-QR-cem" firstAttribute="leading" secondItem="0rI-Uf-9Vh" secondAttribute="leading" id="vKB-w5-jR1"/>
                             <constraint firstItem="0rI-Uf-9Vh" firstAttribute="trailing" secondItem="iWg-1l-M3x" secondAttribute="trailing" constant="30" id="yzS-j6-S6m"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="0rI-Uf-9Vh"/>
@@ -61,6 +106,8 @@
                     <connections>
                         <outlet property="scrollView" destination="9r5-w2-dd8" id="xdo-Rm-0p3"/>
                         <outlet property="taskAddButton" destination="iWg-1l-M3x" id="IXx-ba-zPM"/>
+                        <outlet property="weatherImgView" destination="csz-Uo-139" id="xIc-i7-Jcb"/>
+                        <outlet property="weatherView" destination="j1C-QR-cem" id="jod-b5-gHQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -330,4 +377,7 @@
             <point key="canvasLocation" x="940.57971014492762" y="133.92857142857142"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="天気画像" width="298" height="169"/>
+    </resources>
 </document>

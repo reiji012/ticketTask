@@ -36,6 +36,8 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
     
     let transition = BubbleTransition()
     
+    @IBOutlet weak var weatherImgView: UIImageView!
+    @IBOutlet weak var weatherView: UIView!
     @IBOutlet weak var taskAddButton: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
     
@@ -50,6 +52,11 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
     }
 
     func bindUI() {
+        
+        weatherView.isOpaque = false // 不透明を false
+        weatherView.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0) // alpha 0 で色を設定
+        weatherImgView.isOpaque = false // 不透明を false
+        weatherImgView.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0) // alpha 0 で色を設定
         gradationColors = GradationColors()
         self.taskAddButton.backgroundColor = self.gradationColors?.addViewTopColor
         // 影の設定

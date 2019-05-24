@@ -11,8 +11,8 @@ import UIKit
 class GradationColors : NSObject {
     
     //属性「a」のカラー
-    let attriATopColor = UIColor(red:0.47, green:0.73, blue:0.96, alpha:1)
-    let attriABottomColor = UIColor(red:0.34, green:0.54, blue:0.94, alpha:1)
+    let attriATopColor = UIColor(red:72/255, green:168/255, blue:255/255, alpha:1)
+    let attriABottomColor = UIColor(red:100/255, green:115/255, blue:255/255, alpha:1)
     var attriAGradientColors: [CGColor]
     
     //属性「b」のカラー
