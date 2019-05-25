@@ -8,6 +8,7 @@ target 'TicketTask' do
   pod 'BubbleTransition', '~> 3.2.0'
   pod 'NewPopMenu', '~> 2.0'
   pod 'RealmSwift'
+  pod 'SPStorkController'
   use_frameworks!
 
   # Pods for TicketTask

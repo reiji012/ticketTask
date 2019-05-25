@@ -170,7 +170,7 @@ class TaskView: UIView{
         self.layer.shadowOffset = CGSize(width: 5, height: 5)
         
         self.progressBarWidthConst.constant = (UIScreen.main.bounds.size.width / 2)
-        self.menuBtnLeftConst.constant = (UIScreen.main.bounds.size.width / 2.7)
+        self.menuBtnLeftConst.constant = (UIScreen.main.bounds.size.width / 2) - 50
         
         self.titleLabel.text = taskViewModel?.taskName
         self.createGesturView()
