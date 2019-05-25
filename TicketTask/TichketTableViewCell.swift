@@ -14,7 +14,8 @@ class TichketTableViewCell: UITableViewCell {
     var taskViewModel: TaskViewModel?
     var isCompleted: Bool = false {
         didSet(value) {
-            checkBoxLabel.text = isCompleted ? "✔️" : ""
+            
+            checkBoxLabel.textColor = isCompleted ? UIColor.green : UIColor.lightGray
         }
     }
     
@@ -30,6 +31,7 @@ class TichketTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
+        checkBoxLabel.text = "✔︎"
         //ViewModelの取得
         parentTaskView = (self.parent?.parent as! TaskView)
         self.taskViewModel = parentTaskView?.taskViewModel!

@@ -20,7 +20,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lWQ-xc-a9x">
-                        <rect key="frame" x="105" y="0.0" width="323" height="60"/>
+                        <rect key="frame" x="120" y="0.0" width="308" height="60"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="60" id="iRc-O8-SoZ"/>
                         </constraints>
@@ -28,16 +28,16 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="✔️" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6CQ-JL-YWA">
-                        <rect key="frame" x="30" y="17" width="25" height="25"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="✔︎" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6CQ-JL-YWA">
+                        <rect key="frame" x="30" y="10" width="40" height="40"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="25" id="D5Z-hj-jIb"/>
-                            <constraint firstAttribute="width" constant="25" id="si2-DV-08O"/>
+                            <constraint firstAttribute="height" constant="40" id="D5Z-hj-jIb"/>
+                            <constraint firstAttribute="width" constant="40" id="si2-DV-08O"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
+                        <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="30"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="highlightedColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <size key="shadowOffset" width="1" height="1"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="boolean" keyPath="" value="YES"/>
@@ -47,11 +47,14 @@
                             <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
                                 <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="20"/>
+                            </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="6CQ-JL-YWA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="17" id="1i0-ls-fu0"/>
+                    <constraint firstItem="6CQ-JL-YWA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="1i0-ls-fu0"/>
                     <constraint firstAttribute="bottom" secondItem="lWQ-xc-a9x" secondAttribute="bottom" id="COb-kv-HbG"/>
                     <constraint firstItem="6CQ-JL-YWA" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="30" id="J9n-Ah-n30"/>
                     <constraint firstItem="lWQ-xc-a9x" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="Lhv-eA-hmm"/>
