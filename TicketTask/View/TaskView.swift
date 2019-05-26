@@ -257,9 +257,9 @@ class TaskView: UIView{
     func setTableView() {
         self.ticketTableView.estimatedRowHeight = 150
         for _ in taskViewModel!.tickets! {
-            self.ticketTableView.register(UINib(nibName: "TichketTableViewCell", bundle: nil), forCellReuseIdentifier: "TichketTableViewCell")
+            self.ticketTableView.register(UINib(nibName: "TicketTableViewCell", bundle: nil), forCellReuseIdentifier: "TicketTableViewCell")
             
-            guard let ticketTableViewCell = self.ticketTableView.dequeueReusableCell(withIdentifier: "TichketTableViewCell") as? TichketTableViewCell else {
+            guard let ticketTableViewCell = self.ticketTableView.dequeueReusableCell(withIdentifier: "TicketTableViewCell") as? TicketTableViewCell else {
                 return
             }
             self.tableViewArray.append(ticketTableViewCell)

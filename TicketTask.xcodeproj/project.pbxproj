@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B68EEF022993E9B0059A348 /* TaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B68EEEF22993E9B0059A348 /* TaskViewController.swift */; };
 		2BB2EE51228AB97200769AAA /* ActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB2EE50228AB97200769AAA /* ActionType.swift */; };
 		2BE551662292695000D5AFA9 /* TaskItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE551652292695000D5AFA9 /* TaskItem.swift */; };
 		2BE55168229299A100D5AFA9 /* TicketModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE55167229299A100D5AFA9 /* TicketModel.swift */; };
@@ -20,8 +21,8 @@
 		2BF5B7652281498F007D0266 /* TaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF5B7642281498F007D0266 /* TaskModel.swift */; };
 		2BF5B767228155EC007D0266 /* TaskView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2BF5B766228155EC007D0266 /* TaskView.xib */; };
 		2BF5B7692281562D007D0266 /* TaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF5B7682281562D007D0266 /* TaskView.swift */; };
-		2BF5B76C22829DCD007D0266 /* TichketTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF5B76A22829DCD007D0266 /* TichketTableViewCell.swift */; };
-		2BF5B76D22829DCD007D0266 /* TichketTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2BF5B76B22829DCD007D0266 /* TichketTableViewCell.xib */; };
+		2BF5B76C22829DCD007D0266 /* TicketTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF5B76A22829DCD007D0266 /* TicketTableViewCell.swift */; };
+		2BF5B76D22829DCD007D0266 /* TicketTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2BF5B76B22829DCD007D0266 /* TicketTableViewCell.xib */; };
 		2BF5B7722282A0AB007D0266 /* UIView+TicketTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF5B7712282A0AB007D0266 /* UIView+TicketTask.swift */; };
 		2BF5B779228512FA007D0266 /* GradationColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF5B778228512FA007D0266 /* GradationColors.swift */; };
 		2BF5B77C22855657007D0266 /* AddTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF5B77B22855657007D0266 /* AddTaskViewController.swift */; };
@@ -29,6 +30,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2B68EEEF22993E9B0059A348 /* TaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewController.swift; sourceTree = "<group>"; };
 		2BB2EE50228AB97200769AAA /* ActionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionType.swift; sourceTree = "<group>"; };
 		2BE551652292695000D5AFA9 /* TaskItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TaskItem.swift; path = Model/TaskItem.swift; sourceTree = "<group>"; };
 		2BE55167229299A100D5AFA9 /* TicketModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketModel.swift; sourceTree = "<group>"; };
@@ -44,8 +46,8 @@
 		2BF5B7642281498F007D0266 /* TaskModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskModel.swift; sourceTree = "<group>"; };
 		2BF5B766228155EC007D0266 /* TaskView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = TaskView.xib; path = View/TaskView.xib; sourceTree = "<group>"; };
 		2BF5B7682281562D007D0266 /* TaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TaskView.swift; path = View/TaskView.swift; sourceTree = "<group>"; };
-		2BF5B76A22829DCD007D0266 /* TichketTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TichketTableViewCell.swift; sourceTree = "<group>"; };
-		2BF5B76B22829DCD007D0266 /* TichketTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TichketTableViewCell.xib; sourceTree = "<group>"; };
+		2BF5B76A22829DCD007D0266 /* TicketTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketTableViewCell.swift; sourceTree = "<group>"; };
+		2BF5B76B22829DCD007D0266 /* TicketTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TicketTableViewCell.xib; sourceTree = "<group>"; };
 		2BF5B7712282A0AB007D0266 /* UIView+TicketTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+TicketTask.swift"; sourceTree = "<group>"; };
 		2BF5B778228512FA007D0266 /* GradationColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GradationColors.swift; path = View/Colors/GradationColors.swift; sourceTree = "<group>"; };
 		2BF5B77B22855657007D0266 /* AddTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskViewController.swift; sourceTree = "<group>"; };
@@ -125,8 +127,8 @@
 				2BF5B76E22829FEF007D0266 /* extention */,
 				2BF5B75522814521007D0266 /* LaunchScreen.storyboard */,
 				2BF5B75022814521007D0266 /* Main.storyboard */,
-				2BF5B76A22829DCD007D0266 /* TichketTableViewCell.swift */,
-				2BF5B76B22829DCD007D0266 /* TichketTableViewCell.xib */,
+				2BF5B76A22829DCD007D0266 /* TicketTableViewCell.swift */,
+				2BF5B76B22829DCD007D0266 /* TicketTableViewCell.xib */,
 				2BF5B766228155EC007D0266 /* TaskView.xib */,
 				2BF5B7682281562D007D0266 /* TaskView.swift */,
 			);
@@ -138,6 +140,7 @@
 			children = (
 				2BF5B74E22814521007D0266 /* MainViewController.swift */,
 				2BF5B77B22855657007D0266 /* AddTaskViewController.swift */,
+				2B68EEEF22993E9B0059A348 /* TaskViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -251,7 +254,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2BF5B76D22829DCD007D0266 /* TichketTableViewCell.xib in Resources */,
+				2BF5B76D22829DCD007D0266 /* TicketTableViewCell.xib in Resources */,
 				2BF5B75722814521007D0266 /* LaunchScreen.storyboard in Resources */,
 				2BF5B75422814521007D0266 /* Assets.xcassets in Resources */,
 				2BF5B75222814521007D0266 /* Main.storyboard in Resources */,
@@ -299,6 +302,7 @@
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SPStorkController/SPStorkController.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
@@ -310,6 +314,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SPStorkController.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -324,8 +329,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				2BF5B74F22814521007D0266 /* MainViewController.swift in Sources */,
+				2B68EEF022993E9B0059A348 /* TaskViewController.swift in Sources */,
 				2BF5B76322814974007D0266 /* TaskViewModel.swift in Sources */,
-				2BF5B76C22829DCD007D0266 /* TichketTableViewCell.swift in Sources */,
+				2BF5B76C22829DCD007D0266 /* TicketTableViewCell.swift in Sources */,
 				2BF5B7652281498F007D0266 /* TaskModel.swift in Sources */,
 				2BF5B77C22855657007D0266 /* AddTaskViewController.swift in Sources */,
 				2BE55168229299A100D5AFA9 /* TicketModel.swift in Sources */,

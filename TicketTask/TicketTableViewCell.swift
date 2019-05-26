@@ -1,5 +1,5 @@
 //
-//  TichketTableViewCell.swift
+//  TicketTableViewCell.swift
 //  TicketTask
 //
 //  Created by 松村礼二 on 2019/05/08.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TichketTableViewCell: UITableViewCell {
+class TicketTableViewCell: UITableViewCell {
     
     var parentTaskView: TaskView?
     var taskViewModel: TaskViewModel?
