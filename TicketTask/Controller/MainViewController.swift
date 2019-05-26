@@ -15,6 +15,7 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
     
     // ViewModelの取得
     var taskViewModel = TaskViewModel()
+    var taskViewController = TaskViewController()
     
     var centerViewAttri: String?
     var tableViewArray = [UITableViewCell]()
@@ -192,8 +193,8 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         }
         let tableViewCell = currentTaskView.tableViewArray[indexPath.row]
         print(indexPath.row)
-        if tableViewCell is TichketTableViewCell {
-            let currentTableViewCell: TichketTableViewCell = tableViewCell as! TichketTableViewCell
+        if tableViewCell is TicketTableViewCell {
+            let currentTableViewCell: TicketTableViewCell = tableViewCell as! TicketTableViewCell
             var ticketName = ""
             var isCompleted: Bool?
             for (index, ticket) in (currentTaskView.taskViewModel?.tickets!.keys)!.enumerated() {
@@ -220,7 +221,7 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
             currentTaskView = self.view.viewWithTag(taskViewIndex!) as! TaskView
         }
         if editingStyle == .delete {
-            let tableViewCell = currentTaskView.tableViewArray[indexPath.row] as! TichketTableViewCell
+            let tableViewCell = currentTaskView.tableViewArray[indexPath.row] as! TicketTableViewCell
             let ticketName = tableViewCell.ticketName.text
             currentTaskView.taskViewModel?.actionType = .ticketDelete
             currentTaskView.taskViewModel?.tickets?.removeValue(forKey: ticketName!)
