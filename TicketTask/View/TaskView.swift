@@ -10,10 +10,13 @@ import UIKit
 import RxSwift
 import RxCocoa
 import PopMenu
+import SPStorkController
 
 
 class TaskView: UIView{
 
+    @IBOutlet weak var menuTopConst: NSLayoutConstraint!
+    @IBOutlet weak var titleTopConst: NSLayoutConstraint!
     @IBOutlet weak var attriImageView: UIImageView!
     @IBOutlet weak var ticketProgressBar: UIProgressView!
     @IBOutlet weak var ticketProgressLabel: UILabel!
@@ -33,6 +36,8 @@ class TaskView: UIView{
     var defoultHeight: CGFloat?
     var defoultX: CGFloat?
     var defoultY: CGFloat?
+    
+    var topSafeAreaHeight: CGFloat = 0
     
     var gradientLayer: CAGradientLayer = CAGradientLayer()
     var mainViewController: MainViewController? = nil
@@ -60,14 +65,13 @@ class TaskView: UIView{
     @IBAction func tapMenuBtn(_ sender: Any) {
         mainViewController = getMainViewController()
 
-        var isDeleteAction = false
+        var selectIndex = 0
         let actions = [
             PopMenuDefaultAction(title: "タスクを削除", image: nil,color: .red,didSelect: { action in
-                isDeleteAction = true
+                selectIndex = 1
             }),
             PopMenuDefaultAction(title: "タスクの編集", image: nil,color: nil, didSelect: { action in
-                print ("hi")
-                isDeleteAction = false
+                selectIndex = 2
             })
         ]
         let menu = PopMenuViewController(sourceView: sender as AnyObject, actions: actions)
@@ -76,15 +80,27 @@ class TaskView: UIView{
         menu.appearance.popMenuColor.backgroundColor = .solid(fill: .white)
         mainViewController!.present(menu, animated: true, completion: nil)
         menu.didDismiss = { selected in
-            if isDeleteAction {
+            switch selectIndex {
+            case 1:
                 self.showAlert()
-            } else {
-                print("aa")
+            case 2:
+                self.showEditView()
+            default:
+                break
             }
             if !selected {
                 // When the user tapped outside of the menu
             }
         }
+    }
+    
+    func showEditView() {
+        let storyboard = UIStoryboard(name: "Edit", bundle: nil)
+        let editViewController = storyboard.instantiateInitialViewController() as! EditTaskViewController
+        let trantisionDelegate = SPStorkTransitioningDelegate()
+        editViewController.transitioningDelegate = trantisionDelegate
+        editViewController.modalPresentationStyle = .custom
+        self.mainViewController?.showEditView(editTaskVC: editViewController, taskVM: self.taskViewModel!)
     }
     
     func showAlert() {
@@ -134,6 +150,15 @@ class TaskView: UIView{
             ticketCountLabel!.text = ticketCount
         }).disposed(by: disposeBag)
         
+        self.taskViewModel!.taskTitle.subscribe(onNext: { [titleLabel] in
+            let taskTitle = $0
+            titleLabel!.text = taskTitle
+        }).disposed(by: disposeBag)
+        
+        self.taskViewModel!.taskAttri.subscribe(onNext: { [attriImageView] in
+            let taskAttr = $0
+            attriImageView!.image = taskAttr == "生活" ? UIImage(named: "人画像") : UIImage(named: "kabann")
+        }).disposed(by: disposeBag)
         
     }
     
@@ -149,7 +174,7 @@ class TaskView: UIView{
     }
     
     func setImage() {
-        self.attriImageView.image = self.taskViewModel!.attri == "a" ? UIImage(named: "人画像") : UIImage(named: "kabann")
+        self.attriImageView.image = self.taskViewModel!.attri == "生活" ? UIImage(named: "人画像") : UIImage(named: "kabann")
     }
     
     func setLayout() {
@@ -170,7 +195,7 @@ class TaskView: UIView{
         self.layer.shadowOffset = CGSize(width: 5, height: 5)
         
         self.progressBarWidthConst.constant = (UIScreen.main.bounds.size.width / 2)
-        self.menuBtnLeftConst.constant = (UIScreen.main.bounds.size.width / 2) - 50
+        self.menuBtnLeftConst.constant = (UIScreen.main.bounds.size.width / 1.7) - 70
         
         self.titleLabel.text = taskViewModel?.taskName
         self.createGesturView()
@@ -211,12 +236,23 @@ class TaskView: UIView{
         let currentWidth = (self.frame.size.width - myBoundWidht)/2
         self.menuButton.layoutIfNeeded()
         self.layoutIfNeeded()
+        titleLabel.layoutIfNeeded()
         self.ticketProgressBar.layoutIfNeeded()
         if isShowDetail {
-            self.menuBtnLeftConst.constant -= ((myBoundWidht - self.defoultWidth!)  / 1.3)
+            // 縮小するときの処理
+            self.menuTopConst.constant = 50
+            self.titleTopConst.constant = 160
+            self.menuBtnLeftConst.constant -= ((myBoundWidht - self.defoultWidth!))
             self.progressBarWidthConst.constant -= (myBoundWidht - self.defoultWidth!)
         } else {
-            self.menuBtnLeftConst.constant += ((myBoundWidht - self.bounds.size.width)  / 1.3)
+            // 拡大するときの処理
+            if 0 < self.mainViewController!.topSafeAreaHeight() {
+                self.menuTopConst.constant = (20 + self.mainViewController!.topSafeAreaHeight())
+            } else {
+               self.menuTopConst.constant = 40
+            }
+            self.titleTopConst.constant = 220
+            self.menuBtnLeftConst.constant += ((myBoundWidht - self.bounds.size.width))
             self.progressBarWidthConst.constant += (myBoundWidht - self.bounds.size.width)
         }
         UIView.animate(withDuration: 0.6, delay: 0.0, animations: {
@@ -272,7 +308,7 @@ class TaskView: UIView{
     
     func setGradationColor() {
         let gradationColors = GradationColors()
-        self.ticketProgressBar.tintColor = self.taskViewModel?.attri == "a" ? gradationColors.attriABottomColor : gradationColors.attriBBottomColor
+        self.ticketProgressBar.tintColor = self.taskViewModel?.attri == "生活" ? gradationColors.attriLifeBottomColor : gradationColors.attriWorkBottomColor
     }
 
     func getMainViewController() -> MainViewController? {

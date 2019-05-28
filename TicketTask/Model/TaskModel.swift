@@ -217,7 +217,7 @@ class TaskModel {
             
             let task1Dictionary:[String:Any] = [
                 TASK_TITLE: "朝の準備",
-                TASK_ATTRI: "a",
+                TASK_ATTRI: "生活",
                 TASK_TICKETS: [["taskName"    : "朝の準備",
                                 "ticketName"  : "歯磨き",
                                 "isCompleted" : false],
@@ -227,7 +227,7 @@ class TaskModel {
             ]
             let task2Dictionary:[String:Any] = [
                 TASK_TITLE: "お仕事",
-                TASK_ATTRI: "b",
+                TASK_ATTRI: "仕事",
                 TASK_TICKETS: [["taskName"    : "お仕事",
                                 "ticketName"  : "データの入力",
                                 "isCompleted" : false],

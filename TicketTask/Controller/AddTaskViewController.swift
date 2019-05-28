@@ -7,32 +7,38 @@
 //
 
 import UIKit
+import SPStorkController
+import SparrowKit
 
 class AddTaskViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource{
     
 
+    @IBOutlet weak var scrolView: UIScrollView!
     @IBOutlet weak var taskTicketView: UIView!
     @IBOutlet weak var taskHeadVIew: UIView!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var ticketTableView: UITableView!
-    @IBOutlet weak var closeViewButton: UIButton!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var attriTextField: UITextField!
     @IBOutlet weak var ticketTextField: UITextField!
     @IBOutlet weak var ticketCellLabel: UILabel!
     
     var pickerView: UIPickerView = UIPickerView()
-    let attris: [String] = ["a", "b"]
+    let attris: [String] = ["生活", "仕事"]
     var gradientLayer: CAGradientLayer = CAGradientLayer()
     var tickets: [String] = []
-    var taskViewModel: TaskViewModel?
+    var taskViewModel = TaskViewModel()
     var beforeViewAttri: String?
     var gradationColors = GradationColors()
     var mainVC: MainViewController?
+    let navBar = SPFakeBarView.init(style: .stork)
+    // Screenの高さ
+    var screenHeight:CGFloat!
+    // Screenの幅
+    var screenWidth:CGFloat!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        closeViewButton.backgroundColor = self.beforeViewAttri == "a" ? gradationColors.attriATopColor : gradationColors.attriBTopColor
         
         titleTextField.delegate = self
         attriTextField.delegate = self
@@ -41,9 +47,13 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITableViewD
         ticketTableView.dataSource = self
         titleTextField.text = ""
         attriTextField.text = attris[0]
-        
+        // 画面サイズ取得
+        let screenSize: CGRect = UIScreen.main.bounds
+        screenWidth = screenSize.width
+        screenHeight = screenSize.height
         bindUIs()
         setPickerView()
+        
     }
 
     @IBAction func pushCloseViewBtn(_ sender: Any) {
@@ -52,11 +62,38 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITableViewD
     
     func bindUIs() {
         setGradationColor()
+        
+        self.navBar.titleLabel.text = "タスクを追加"
+        self.navBar.leftButton.setTitle("キャンセル", for: .normal)
+        self.navBar.leftButton.addTarget(self, action: #selector(self.cansel), for: .touchUpInside)
+        self.navBar.rightButton.setTitle("追加", for: .normal)
+        self.navBar.rightButton.addTarget(self, action: #selector(self.save), for: .touchUpInside)
+        self.navBar.backgroundColor = UIColor.lightGray
+        self.view.addSubview(self.navBar)
         // 影の設定
-        self.closeViewButton.layer.shadowOpacity = 0.5
-        self.closeViewButton.layer.shadowRadius = 6
-        self.closeViewButton.layer.shadowColor = UIColor.black.cgColor
-        self.closeViewButton.layer.shadowOffset = CGSize(width: 1, height: 2)
+//        self.closeViewButton.layer.shadowOpacity = 0.5
+//        self.closeViewButton.layer.shadowRadius = 6
+//        self.closeViewButton.layer.shadowColor = UIColor.black.cgColor
+//        self.closeViewButton.layer.shadowOffset = CGSize(width: 1, height: 2)
+    }
+    
+    @objc func cansel() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func save() {
+        if (titleTextField.text == "" || attriTextField.text == "" || tickets.count == 0) {
+            showAlert()
+            return
+        }
+        taskViewModel.createTask(taskName: titleTextField.text!, attri: attriTextField.text!, tickets: tickets)
+        dismiss(animated: true, completion: {
+            guard let vc = self.mainVC else {
+                return
+            }
+            vc.addNewTaskView()
+        })
+        self.dismiss(animated: true, completion: nil)
     }
     
     func setGradationColor() {
@@ -104,17 +141,7 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITableViewD
     }
     
     @IBAction func putCreateTaskBtn(_ sender: Any) {
-        if (titleTextField.text == "" || attriTextField.text == "" || tickets.count == 0) {
-            showAlert()
-            return
-        }
-        taskViewModel?.createTask(taskName: titleTextField.text!, attri: attriTextField.text!, tickets: tickets)
-        dismiss(animated: true, completion: {
-            guard let vc = self.mainVC else {
-                return
-            }
-            vc.addNewTaskView()
-        })
+        
     }
     
     func showAlert(){
@@ -184,6 +211,52 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITableViewD
             tickets.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(onKeyboardWillShow(_:)),
+                                               name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onKeyboardWillHide(_:)),
+                                               name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        super.viewWillDisappear(animated)
+    }
+    
+    @objc private func onKeyboardWillShow(_ notification: Notification) {
+        guard
+            let userInfo = notification.userInfo,
+            let keyboardInfo = UIKeyboardInfo(info: userInfo),
+            let inputView = view.findFirstResponder(),
+            let scrollView = inputView.findSuperView(ofType: UIScrollView.self)
+            else { return }
+        
+        let inputRect = inputView.convert(inputView.bounds, to: scrollView)
+        let keyboardRect = scrollView.convert(keyboardInfo.frame, from: nil)
+        let offsetY = inputRect.maxY - keyboardRect.minY
+        if offsetY > 0 {
+            let contentOffset = CGPoint(x: scrollView.contentOffset.x, y: scrollView.contentOffset.y + offsetY)
+            scrollView.contentOffset = contentOffset
+        }
+        // 例えば iPhoneX の Portrait 表示だと bottom に34ptほど隙間ができるのでその分を差し引く
+        let contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardInfo.frame.height - view.safeAreaInsets.bottom, right: 0)
+        scrollView.contentInset = contentInset
+        scrollView.scrollIndicatorInsets = contentInset
+    }
+    
+    @objc private func onKeyboardWillHide(_ notification: Notification) {
+        guard
+            let inputView = view.findFirstResponder(),
+            let scrollView = inputView.findSuperView(ofType: UIScrollView.self)
+            else { return }
+        scrollView.contentInset = .zero
+        scrollView.scrollIndicatorInsets = .zero
     }
 }
 

@@ -10,13 +10,14 @@ import UIKit
 import RxSwift
 import RxCocoa
 import BubbleTransition
+import SPStorkController
+import SparrowKit
+import PKHUD
 
 class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource {
     
     // ViewModelの取得
     var taskViewModel = TaskViewModel()
-    var taskViewController = TaskViewController()
-    
     var centerViewAttri: String?
     var tableViewArray = [UITableViewCell]()
     var taskViewIndex: Int?
@@ -34,13 +35,16 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
     var stopPoint: CGFloat = 0.0
     var originX:CGFloat?
     var gradationColors: GradationColors?
+    func topSafeAreaHeight() -> CGFloat {
+        return self.view.safeAreaInsets.top
+    }
     
     let transition = BubbleTransition()
     
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var weatherImgView: UIImageView!
     @IBOutlet weak var weatherView: UIView!
     @IBOutlet weak var taskAddButton: UIButton!
-    @IBOutlet weak var scrollView: UIScrollView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +56,15 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         createTaskViews()
     }
 
+    @IBAction func pushAddBtn(_ sender: Any) {
+        let storyboard = self.storyboard
+        let addTaskVC = storyboard!.instantiateViewController(withIdentifier: "addView") as! AddTaskViewController
+        let transitionDelegate = SPStorkTransitioningDelegate()
+        addTaskVC.mainVC = self
+        addTaskVC.transitioningDelegate = transitionDelegate
+        addTaskVC.modalPresentationStyle = .custom
+        self.present(addTaskVC, animated: true, completion: nil)
+    }
     func bindUI() {
         
         weatherView.isOpaque = false // 不透明を false
@@ -59,7 +72,6 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         weatherImgView.isOpaque = false // 不透明を false
         weatherImgView.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0) // alpha 0 で色を設定
         gradationColors = GradationColors()
-        self.taskAddButton.backgroundColor = self.gradationColors?.addViewTopColor
         // 影の設定
         self.taskAddButton.layer.shadowOpacity = 0.5
         self.taskAddButton.layer.shadowRadius = 12
@@ -70,8 +82,8 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
 
     func setGradationColor() {
         UIView.animate(withDuration: 2, animations: { () -> Void in
-            let topColor = self.centerViewAttri! == "a" ? self.gradationColors?.attriATopColor : self.gradationColors?.attriBTopColor
-            let bottomColor = self.centerViewAttri! == "a" ? self.gradationColors?.attriABottomColor : self.gradationColors?.attriBBottomColor
+            let topColor = self.centerViewAttri! == "生活" ? self.gradationColors?.attriLifeTopColor : self.gradationColors?.attriWorkTopColor
+            let bottomColor = self.centerViewAttri! == "生活" ? self.gradationColors?.attriLifeBottomColor : self.gradationColors?.attriWorkBottomColor
             let gradientColors: [CGColor] = [topColor!.cgColor, bottomColor!.cgColor]
             self.gradientLayer.colors = gradientColors
             self.gradientLayer.frame = self.view.bounds
@@ -119,7 +131,7 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
             taskView.frame = CGRect.init(x: self.originX! + 25, y: currentY, width: 350.0, height: 300.0)
             taskView.setViewModel(task: task)
             taskView.setTableView()
-
+            taskView.topSafeAreaHeight = self.view.safeAreaInsets.top
             taskView.ticketTableView!.delegate = self
             taskView.ticketTableView!.dataSource = self
             
@@ -171,6 +183,18 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         //最終的なoriginX = タブ全体の横幅 になります
         scrollView.contentSize = CGSize(width:self.originX!, height:scrollView.frame.height)
 
+        
+        HUD.flash(.success, onView: view, delay: 2)
+        let taskCount: Int = self.taskViewModel.taskCount()
+        //スクロール可能最大値
+        let maxScrollPoint = (taskCount - 1) * currentWidth
+        UIView.animate(withDuration: 0.3, animations: {
+            self.scrollView.contentOffset = CGPoint(x:maxScrollPoint, y:0)
+        })
+    }
+    
+    func taskEdited() {
+        HUD.flash(.success, onView: view, delay: 0.5)
     }
     
     func getCenterTaskView() -> TaskView {
@@ -339,21 +363,30 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         nextVC?.beforeViewAttri = self.centerViewAttri!
     }
     
+    func showEditView(editTaskVC: EditTaskViewController, taskVM: TaskViewModel) {
+        editTaskVC.mainVC = self
+        editTaskVC.taskViewModel = taskVM
+        UIView.animate(withDuration: 2, animations: {
+            self.present(editTaskVC, animated: true, completion: nil)
+        })
+        
+    }
+    
 }
 
 extension MainViewController : UIViewControllerTransitioningDelegate{
     
     //　手順⑤
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        transition.transitionMode = .present
-        transition.startingPoint = taskAddButton.center    //outletしたボタンの名前を使用
-        transition.bubbleColor = self.gradationColors!.addViewBottomColor
-        return transition
-    }
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        transition.transitionMode = .dismiss
-        transition.startingPoint = taskAddButton.center //outletしたボタンの名前を使用
-        transition.bubbleColor = self.gradationColors!.addViewBottomColor
-        return transition
-    }
+//    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+//        transition.transitionMode = .present
+//        transition.startingPoint = taskAddButton.center    //outletしたボタンの名前を使用
+//        transition.bubbleColor = self.gradationColors!.addViewBottomColor
+//        return transition
+//    }
+//    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+//        transition.transitionMode = .dismiss
+//        transition.startingPoint = taskAddButton.center //outletしたボタンの名前を使用
+//        transition.bubbleColor = self.gradationColors!.addViewBottomColor
+//        return transition
+//    }
 }
