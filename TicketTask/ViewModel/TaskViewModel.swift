@@ -13,9 +13,13 @@ class TaskViewModel: NSObject {
     
     private let progressSubject = BehaviorSubject(value: 0.0)
     private let ticketCountSubject = BehaviorSubject(value: 0)
+    private let taskTitleSubject = BehaviorSubject(value: "")
+    private let taskAttriSubject = BehaviorSubject(value: "")
     
     var progress: Observable<Double> { return progressSubject.asObservable() }
     var ticketCout: Observable<Int> { return ticketCountSubject.asObserver() }
+    var taskTitle: Observable<String> { return taskTitleSubject.asObserver() }
+    var taskAttri: Observable<String> { return taskAttriSubject.asObserver() }
 
 
     var taskModel: TaskModel?
@@ -93,5 +97,12 @@ class TaskViewModel: NSObject {
     func getTaskData() {
         taskModel?.getTaskData()
         tasks = taskModel!.tasks!
+    }
+    
+    func taskEdited(afterTaskName: String, afterTaskAttr: String) {
+        let newTaskName = afterTaskName
+        let newTaskAttr = afterTaskAttr
+        taskTitleSubject.onNext(newTaskName)
+        taskAttriSubject.onNext(newTaskAttr)
     }
 }
