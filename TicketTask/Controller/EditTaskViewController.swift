@@ -62,9 +62,15 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func save() {
-        self.dismiss(animated: true, completion: {
-            self.mainVC?.taskEdited()
-        })
+        if (self.titleTextField.text == nil) {
+            return
+        }
+        self.taskViewModel?.taskEdited(afterTaskName: self.titleTextField.text!, afterTaskAttr: self.attriTextField.text!)
+        
+        self.dismiss(animated: true, completion:
+            {HUD.flash(.success, onView: self.mainVC!.view, delay: 0.5)}
+        )
+        self.mainVC?.taskEdited(attri: self.attriTextField.text!)
     }
     
     func bind() {
