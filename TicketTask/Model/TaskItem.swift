@@ -10,7 +10,12 @@ import Foundation
 import RealmSwift
 
 class TaskItem: Object {
+    @objc dynamic var id: Int = 0
     @objc dynamic var taskTitle: String = ""
     @objc dynamic var attri: String = ""
     let tickets = List<TicketModel>()
+    
+    override static func primaryKey() -> String? {
+        return "id"
+    }
 }

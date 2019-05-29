@@ -10,8 +10,7 @@ import Foundation
 import RealmSwift
 
 class TicketModel: Object {
-    @objc dynamic var taskName: String = ""
     @objc dynamic var ticketName: String = ""
-    @objc dynamic var ticketID = 0
     @objc dynamic var isCompleted: Bool = false
+    
 }

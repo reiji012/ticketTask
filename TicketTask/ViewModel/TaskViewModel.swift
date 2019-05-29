@@ -21,7 +21,7 @@ class TaskViewModel: NSObject {
     var taskTitle: Observable<String> { return taskTitleSubject.asObserver() }
     var taskAttri: Observable<String> { return taskAttriSubject.asObserver() }
 
-
+    var taskID: Int?
     var taskModel: TaskModel?
     var tasks: [[String:Any]]?
     var taskName: String?
@@ -54,6 +54,7 @@ class TaskViewModel: NSObject {
         self.taskName = (task!["title"] as! String)
         self.attri = (task!["attri"] as! String)
         self.tickets = (task!["tickets"] as! [String:Bool])
+        self.taskID = (task!["id"] as! Int)
     }
     
     func getTask(taskName: String) {
@@ -61,6 +62,7 @@ class TaskViewModel: NSObject {
         self.taskName = (task!["title"] as! String)
         self.attri = (task!["attri"] as! String)
         self.tickets = (task!["tickets"] as! [String:Bool])
+        self.taskID = (task!["id"] as! Int)
         countProgress()
     }
     
@@ -73,7 +75,7 @@ class TaskViewModel: NSObject {
     }
     
     func updateModel(actionType :ActionType) {
-        taskModel!.taskUpdate(taskName: self.taskName!,tickets: self.tickets!, actionType: actionType)
+        taskModel!.taskUpdate(id: self.taskID!,tickets: self.tickets!, actionType: actionType)
         task = taskModel?.getTask(taskName: self.taskName!)
         self.countProgress()
     }
@@ -100,9 +102,10 @@ class TaskViewModel: NSObject {
     }
     
     func taskEdited(afterTaskName: String, afterTaskAttr: String) {
-        let newTaskName = afterTaskName
-        let newTaskAttr = afterTaskAttr
-        taskTitleSubject.onNext(newTaskName)
-        taskAttriSubject.onNext(newTaskAttr)
+        self.taskModel?.editTask(afterTaskName: afterTaskName, afterTaskAttr: afterTaskAttr, id: self.taskID!)
+        self.taskName = afterTaskName
+        self.attri = afterTaskAttr
+        taskTitleSubject.onNext(afterTaskName)
+        taskAttriSubject.onNext(afterTaskAttr)
     }
 }

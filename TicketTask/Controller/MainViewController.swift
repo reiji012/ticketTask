@@ -184,7 +184,7 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         scrollView.contentSize = CGSize(width:self.originX!, height:scrollView.frame.height)
 
         
-        HUD.flash(.success, onView: view, delay: 2)
+        HUD.flash(.success, onView: view, delay: 1)
         let taskCount: Int = self.taskViewModel.taskCount()
         //スクロール可能最大値
         let maxScrollPoint = (taskCount - 1) * currentWidth
@@ -193,8 +193,9 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         })
     }
     
-    func taskEdited() {
-        HUD.flash(.success, onView: view, delay: 0.5)
+    func taskEdited(attri: String) {
+        self.centerViewAttri = attri
+        setGradationColor()
     }
     
     func getCenterTaskView() -> TaskView {

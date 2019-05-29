@@ -209,7 +209,7 @@ class TaskView: UIView{
     func createGesturView() {
         // create gesturView(subView)
         let currentHeight = self.bounds.size.height / 4
-        let rect = CGRect(x: 0, y: 0, width: self.bounds.size.width, height: currentHeight);
+        let rect = CGRect(x: 0, y: 0, width: self.bounds.size.width / 4, height: currentHeight);
         gesturView = UIView(frame: rect)
         
         // create GesturRecognizer(pan = flick)

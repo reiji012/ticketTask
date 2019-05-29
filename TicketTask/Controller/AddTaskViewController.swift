@@ -67,7 +67,7 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITableViewD
         self.navBar.leftButton.setTitle("キャンセル", for: .normal)
         self.navBar.leftButton.addTarget(self, action: #selector(self.cansel), for: .touchUpInside)
         self.navBar.rightButton.setTitle("追加", for: .normal)
-        self.navBar.rightButton.addTarget(self, action: #selector(self.save), for: .touchUpInside)
+        self.navBar.rightButton.addTarget(self, action: #selector(self.create), for: .touchUpInside)
         self.navBar.backgroundColor = UIColor.lightGray
         self.view.addSubview(self.navBar)
         // 影の設定
@@ -81,7 +81,7 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITableViewD
         self.dismiss(animated: true, completion: nil)
     }
     
-    @objc func save() {
+    @objc func create() {
         if (titleTextField.text == "" || attriTextField.text == "" || tickets.count == 0) {
             showAlert()
             return
