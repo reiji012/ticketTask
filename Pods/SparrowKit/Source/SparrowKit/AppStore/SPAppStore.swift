@@ -28,8 +28,8 @@ struct SPAppStore {
         return "https://itunes.apple.com/by/app/id" + appID
     }
     
-    static func open(appID: String) {
-        if let url = URL(string: "itms-apps://itunes.apple.com/app/id\(appID)"),
+    static func open(app id: String) {
+        if let url = URL(string: "itms-apps://itunes.apple.com/app/id\(id)"),
             UIApplication.shared.canOpenURL(url) {
             if #available(iOS 10.0, *) {
                 UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
@@ -53,6 +53,12 @@ struct SPAppStore {
             if #available(iOS 10.3, *) {
                 SKStoreReviewController.requestReview()
             }
+        }
+    }
+    
+    static func requestReview() {
+        if #available(iOS 10.3, *) {
+            SKStoreReviewController.requestReview()
         }
     }
     
@@ -128,7 +134,6 @@ extension String {
     }
 }
 
-// Helper function inserted by Swift 4.2 migrator.
 fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
 	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }

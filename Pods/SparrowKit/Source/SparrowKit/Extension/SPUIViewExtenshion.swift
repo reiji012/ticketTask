@@ -21,7 +21,7 @@
 
 import UIKit
 
-public extension UIView {
+extension UIView {
     
     var viewController: UIViewController? {
         get {
@@ -32,37 +32,21 @@ public extension UIView {
     }
 }
 
-public extension UIView {
+extension UIView {
     
-    var topSafeArea: CGFloat {
-        var topSafeArea: CGFloat = 0
+    var safeArea: UIEdgeInsets {
         if #available(iOS 11.0, *) {
-            topSafeArea = self.safeAreaInsets.top
+            return self.safeAreaInsets
+        } else{
+            return UIEdgeInsets.zero
         }
-        return topSafeArea
     }
     
-    var bottomSafeArea: CGFloat {
-        var bottomSafeArea: CGFloat = 0
-        if #available(iOS 11.0, *) {
-            bottomSafeArea = self.safeAreaInsets.bottom
-        }
-        return bottomSafeArea
+    func setBounds(_ view: UIView, withWidthFactor widthFactor: CGFloat = 1, maxWidth: CGFloat? = nil, withHeightFactor heightFactor: CGFloat = 1, maxHeight: CGFloat? = nil, withCentering: Bool = false) {
+        self.setBounds(view.bounds, withWidthFactor: widthFactor, maxWidth: maxWidth, withHeightFactor: heightFactor, maxHeight: maxHeight, withCentering: withCentering)
     }
     
-    func setHeight(_ height: CGFloat) {
-        self.frame = CGRect.init(x: self.frame.origin.x, y: self.frame.origin.y, width: self.frame.width, height: height)
-    }
-    
-    func setWidth(_ width: CGFloat) {
-        self.frame = CGRect.init(x: self.frame.origin.x, y: self.frame.origin.y, width: width, height: self.frame.height)
-    }
-    
-    func setEqualsFrameFromBounds(_ view: UIView, withWidthFactor widthFactor: CGFloat = 1, maxWidth: CGFloat? = nil, withHeightFactor heightFactor: CGFloat = 1, maxHeight: CGFloat? = nil, withCentering: Bool = false) {
-        self.setEqualsFrameFromBounds(view.bounds, withWidthFactor: widthFactor, maxWidth: maxWidth, withHeightFactor: heightFactor, maxHeight: maxHeight, withCentering: withCentering)
-    }
-    
-    func setEqualsFrameFromBounds(_ bounds: CGRect, withWidthFactor widthFactor: CGFloat = 1, maxWidth: CGFloat? = nil, withHeightFactor heightFactor: CGFloat = 1, maxHeight: CGFloat? = nil, withCentering: Bool = false) {
+    func setBounds(_ bounds: CGRect, withWidthFactor widthFactor: CGFloat = 1, maxWidth: CGFloat? = nil, withHeightFactor heightFactor: CGFloat = 1, maxHeight: CGFloat? = nil, withCentering: Bool = false) {
         
         var width = bounds.width * widthFactor
         if maxWidth != nil { width.setIfMore(when: maxWidth!) }
@@ -78,14 +62,14 @@ public extension UIView {
         }
     }
     
-    func setEqualsBoundsFromSuperview(customWidth: CGFloat? = nil, customHeight: CGFloat? = nil) {
+    func setSuperviewBounds(customWidth: CGFloat? = nil, customHeight: CGFloat? = nil) {
         if self.superview == nil { return }
         self.frame = CGRect.init(origin: CGPoint.zero, size: self.superview!.frame.size)
         if customWidth != nil {
-            self.frame = CGRect.init(origin: CGPoint.zero, size: CGSize.init(width: customWidth!, height: self.frame.height))
+            self.frame = CGRect.init(origin: CGPoint.zero, size: CGSize.init(width: customWidth!, height: self.superview!.frame.height))
         }
         if customHeight != nil {
-            self.frame = CGRect.init(origin: CGPoint.zero, size: CGSize.init(width: self.frame.width, height: customHeight!))
+            self.frame = CGRect.init(origin: CGPoint.zero, size: CGSize.init(width: self.superview!.frame.width, height: customHeight!))
         }
     }
     
@@ -111,23 +95,23 @@ public extension UIView {
         )
     }
     
-    func setYCenteringFromSuperview() {
+    func setYCenter() {
         self.center.y = (self.superview?.frame.height ?? 0) / 2
     }
     
-    func setXCenteringFromSuperview() {
+    func setXCenter() {
         self.center.x = (self.superview?.frame.width ?? 0) / 2
     }
     
-    func setToCenterInSuperview() {
+    func setToCenter() {
         self.center = CGPoint.init(x: ((self.superview?.frame.width) ?? 0) / 2, y: ((self.superview?.frame.height) ?? 0) / 2)
     }
 }
 
-public extension UIView {
+extension UIView {
     
     func setParalax(amountFactor: CGFloat) {
-        let amount = self.frame.minSideSize * amountFactor
+        let amount = self.frame.minSide * amountFactor
         self.setParalax(amount: amount)
     }
     
@@ -147,13 +131,13 @@ public extension UIView {
     }
 }
 
-public extension UIView {
+extension UIView {
     
     func addGrade(alpha: CGFloat, color: UIColor = UIColor.black) -> UIView {
         let gradeView = UIView.init()
         gradeView.alpha = 0
         self.addSubview(gradeView)
-        SPConstraints.setEqualSize(gradeView, superVuew: self)
+        SPConstraints.setEqualSizeSuperview(for: gradeView)
         gradeView.alpha = alpha
         gradeView.backgroundColor = color
         return gradeView
@@ -177,14 +161,14 @@ extension UIView {
         let xTranslation = (self.frame.width - shadowWidth) / 2 + (self.frame.width * xTranslationFactor)
         let yTranslation = (self.frame.height - shadowHeight) / 2 + (self.frame.height * yTranslationFactor)
         
-        let cornerRadius = self.frame.minSideSize * cornerRadiusFactor
+        let cornerRadius = self.frame.minSide * cornerRadiusFactor
         
         let shadowPath = UIBezierPath.init(
             roundedRect: CGRect.init(x: xTranslation, y: yTranslation, width: shadowWidth, height: shadowHeight),
             cornerRadius: cornerRadius
         )
         
-        let blurRadius = self.frame.minSideSize * blurRadiusFactor
+        let blurRadius = self.frame.minSide * blurRadiusFactor
         
         self.layer.shadowColor = UIColor.black.cgColor
         self.layer.shadowOffset = CGSize.zero
@@ -280,6 +264,6 @@ extension UIView {
     }
     
     func round() {
-        self.layer.cornerRadius = self.frame.minSideSize / 2
+        self.layer.cornerRadius = self.frame.minSide / 2
     }
 }

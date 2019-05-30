@@ -120,6 +120,25 @@
                         <action selector="tapMenuBtn:" destination="iN0-l3-epB" eventType="touchUpInside" id="hRv-dK-6qW"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1aM-GF-ws9">
+                    <rect key="frame" x="369" y="448" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="D5g-L9-xoH"/>
+                        <constraint firstAttribute="width" constant="40" id="vJ3-bD-xnw"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                    <state key="normal" title="+">
+                        <color key="titleColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                            <real key="value" value="0.0"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="20"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
@@ -130,11 +149,13 @@
                 <constraint firstItem="3XW-sK-gN9" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="50" id="7qU-qg-cxw"/>
                 <constraint firstItem="I6P-G7-7H8" firstAttribute="top" secondItem="vrp-1Z-85c" secondAttribute="bottom" constant="60" id="CCC-Xl-kdN"/>
                 <constraint firstAttribute="bottom" secondItem="I6P-G7-7H8" secondAttribute="bottom" id="Jvi-uY-ihs"/>
+                <constraint firstItem="Hzy-Tp-1gk" firstAttribute="trailing" secondItem="1aM-GF-ws9" secondAttribute="trailing" constant="30" id="P3K-3K-UUM"/>
                 <constraint firstItem="ZYz-sQ-nm6" firstAttribute="leading" secondItem="VBp-HC-ndC" secondAttribute="trailing" constant="10" id="QBj-jM-nUo"/>
                 <constraint firstItem="Occ-Jp-uEZ" firstAttribute="top" secondItem="Hzy-Tp-1gk" secondAttribute="top" constant="35" id="QId-9q-PbR"/>
                 <constraint firstAttribute="trailing" secondItem="I6P-G7-7H8" secondAttribute="trailing" id="S9T-HO-bY9"/>
                 <constraint firstItem="lWg-KI-zIe" firstAttribute="leading" secondItem="Hzy-Tp-1gk" secondAttribute="leading" constant="20" id="XqO-dj-NRg"/>
                 <constraint firstItem="vrp-1Z-85c" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="160" id="a0X-89-oB4"/>
+                <constraint firstItem="Hzy-Tp-1gk" firstAttribute="bottom" secondItem="1aM-GF-ws9" secondAttribute="bottom" constant="50" id="awU-NJ-Ysc"/>
                 <constraint firstItem="I6P-G7-7H8" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="mJe-ec-OTL"/>
                 <constraint firstItem="cSn-BC-JZ5" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="25" id="mb3-ww-gSZ"/>
                 <constraint firstItem="Occ-Jp-uEZ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="30" id="t5I-h1-K2T"/>
@@ -154,6 +175,7 @@
                 <outlet property="menuButton" destination="3XW-sK-gN9" id="vuy-ms-sRc"/>
                 <outlet property="menuTopConst" destination="7qU-qg-cxw" id="C2Q-XT-aYy"/>
                 <outlet property="progressBarWidthConst" destination="Hrh-OI-UuZ" id="iS2-2z-5OE"/>
+                <outlet property="ticketAddBtn" destination="1aM-GF-ws9" id="dPZ-TM-wib"/>
                 <outlet property="ticketCountLabel" destination="cSn-BC-JZ5" id="fBE-lo-6Hp"/>
                 <outlet property="ticketProgressBar" destination="VBp-HC-ndC" id="7Jr-QM-iwn"/>
                 <outlet property="ticketProgressLabel" destination="ZYz-sQ-nm6" id="4qc-SX-gkR"/>

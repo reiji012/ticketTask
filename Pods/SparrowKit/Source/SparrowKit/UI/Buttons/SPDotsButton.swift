@@ -59,7 +59,7 @@ class SPDotButton: SPButton {
     
     override func commonInit() {
         super.commonInit()
-        self.backgroundColor = UIColor.black.withAlphaComponent(0.2)
+        self.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         for _ in 0...2 {
             let dotView = UIView()
             dotView.isUserInteractionEnabled = false
@@ -71,8 +71,8 @@ class SPDotButton: SPButton {
     
     override func sizeToFit() {
         super.sizeToFit()
-        self.setWidth(self.customSideSize)
-        self.setHeight(self.customSideSize)
+        self.frame.set(width: self.customSideSize)
+        self.frame.set(height: self.customSideSize)
         self.layoutSubviews()
     }
     
@@ -87,9 +87,9 @@ class SPDotButton: SPButton {
         var currentXPosition: CGFloat = insest
         
         for dotView in self.dotsView {
-            dotView.setWidth(sideSize)
-            dotView.setHeight(sideSize)
-            dotView.setYCenteringFromSuperview()
+            dotView.frame.set(width: sideSize)
+            dotView.frame.set(height: sideSize)
+            dotView.setYCenter()
             dotView.frame.origin.x = currentXPosition
             dotView.round()
             currentXPosition += (sideSize + space)

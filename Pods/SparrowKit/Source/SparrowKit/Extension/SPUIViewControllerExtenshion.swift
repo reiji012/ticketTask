@@ -135,6 +135,10 @@ extension UIViewController {
             if #available(iOS 11.0, *) {
                 self.navigationItem.largeTitleDisplayMode = .never
             }
+        case .noContent:
+            if #available(iOS 11.0, *) {
+                self.navigationItem.largeTitleDisplayMode = .never
+            }
         }        
     }
 }

@@ -11,6 +11,7 @@ import SPStorkController
 import SparrowKit
 import PKHUD
 import RxSwift
+import SPFakeBar
 
 class EditTaskViewController: UIViewController, UITextFieldDelegate {
 
@@ -100,7 +101,8 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate {
             let gradientColors: [CGColor] = [topColor!.cgColor, bottomColor!.cgColor]
             self.timerBtn.tintColor = self.attriTextField.text == "生活" ? self.gradationColors?.attriLifeBottomColor : self.gradationColors?.attriWorkBottomColor
             self.gradientLayer.colors = gradientColors
-            self.gradientLayer.frame = self.contentsView.bounds
+            self.gradientLayer.frame = self.view.bounds
+//            self.gradientLayer.locations = [0.3, 0.7]
             self.view.layer.insertSublayer(self.gradientLayer, at: 0)
         })
     }

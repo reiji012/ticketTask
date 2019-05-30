@@ -9,8 +9,9 @@ target 'TicketTask' do
   pod 'NewPopMenu', '~> 2.0'
   pod 'RealmSwift'
   pod 'SPStorkController', '1.1.8'
-  pod 'SparrowKit',  '1.2'
+  pod 'SparrowKit'
   pod 'PKHUD', '~> 5.0'
+  pod 'SPFakeBar'
   use_frameworks!
 
   # Pods for TicketTask

@@ -44,9 +44,9 @@ class SPNativeLargeButton: SPDownloadingButton {
     
     override func commonInit() {
         super.commonInit()
-        self.titleLabel?.font = UIFont.system(type: UIFont.BoldType.DemiBold, size: 16)
+        self.titleLabel?.font = UIFont.system(weight: UIFont.FontWeight.demiBold, size: 16)
         self.setTitleColor(UIColor.white)
-        self.backgroundColor = SPNativeStyleKit.Colors.blue
+        self.backgroundColor = SPNativeColors.blue
         self.layer.masksToBounds = true
         self.layer.cornerRadius = 8
         self.contentEdgeInsets = UIEdgeInsets.init(top: 15, left: 15, bottom: 15, right: 15)
@@ -58,13 +58,13 @@ class SPNativeLargeButton: SPDownloadingButton {
             let sideSpace: CGFloat = superview.frame.width * 0.112
             var width = superview.frame.width - sideSpace * 2
             width.setIfMore(when: 335)
-            self.setWidth(width)
+            self.frame.set(width: width)
         }
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.gradientView?.setEqualsBoundsFromSuperview()
+        self.gradientView?.setSuperviewBounds()
         self.gradientView?.layer.cornerRadius = self.layer.cornerRadius
         self.gradientView?.gradientLayer.cornerRadius = self.layer.cornerRadius
     }

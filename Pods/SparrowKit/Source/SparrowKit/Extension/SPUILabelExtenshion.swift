@@ -21,7 +21,7 @@
 
 import UIKit
 
-public extension UILabel {
+extension UILabel {
     
     func setShadowOffsetForLetters(blurRadius: CGFloat = 0, widthOffset: CGFloat = 0, heightOffset: CGFloat, opacity: CGFloat) {
         self.layer.shadowRadius = blurRadius
@@ -42,7 +42,7 @@ public extension UILabel {
         self.setShadowOffsetForLetters(blurRadius: 0, widthOffset: 0, heightOffset: 0, opacity: 0)
     }
     
-    func setCenteringAlignment() {
+    func setCenterAlignment() {
         self.textAlignment = .center
         self.baselineAdjustment = .alignCenters
     }
@@ -52,5 +52,49 @@ public extension UILabel {
             let attrs: [NSAttributedString.Key : Any] = [.kern: value]
             attributedText = NSAttributedString(string: textString, attributes: attrs)
         }
+    }
+    
+    func setLineSpacing(_ lineSpacing: CGFloat = 0.0, lineHeightMultiple: CGFloat = 0.0) {
+        
+        guard let labelText = self.text else { return }
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = lineSpacing
+        paragraphStyle.lineHeightMultiple = lineHeightMultiple
+        
+        let attributedString: NSMutableAttributedString
+        if let labelattributedText = self.attributedText {
+            attributedString = NSMutableAttributedString(attributedString: labelattributedText)
+        } else {
+            attributedString = NSMutableAttributedString(string: labelText)
+        }
+        
+        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
+        
+        self.attributedText = attributedString
+    }
+    
+    func setFormat(text: String, positions: [FormatPosition], font: UIFont, textColor: UIColor, backgroundColor: UIColor = .clear) {
+        
+        let title = NSMutableAttributedString.init(string: text)
+        
+        for position in positions {
+            title.addAttributes(
+                [
+                    NSAttributedString.Key.backgroundColor : backgroundColor,
+                    NSAttributedString.Key.foregroundColor : textColor,
+                    NSAttributedString.Key.font : font
+                ],
+                range: NSRange.init(location: position.start, length: position.length)
+            )
+        }
+        
+        self.attributedText = title
+    }
+    
+    struct FormatPosition {
+        
+        var start: Int
+        var length: Int
     }
 }

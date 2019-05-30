@@ -24,7 +24,6 @@ import UIKit
 class SPDownloadingButton: SPButton {
     
     let activityIndicatorView = UIActivityIndicatorView.init()
-    var isFrameRounded: Bool = false
     
     func startLoading() {
         self.activityIndicatorView.alpha = 0
@@ -39,7 +38,10 @@ class SPDownloadingButton: SPButton {
         })
     }
     
-    func stopLoading() {
+    func stopLoading(newText: String? = nil) {
+        if let newText = newText {
+            self.setTitle(newText)
+        }
         SPAnimation.animate(0.2, animations: {
             self.activityIndicatorView.alpha = 0
         }, withComplection: {
@@ -53,10 +55,6 @@ class SPDownloadingButton: SPButton {
     override func layoutSubviews() {
         super.layoutSubviews()
         self.activityIndicatorView.center = CGPoint.init(x: self.frame.width / 2, y: self.frame.height / 2)
-        
-        if self.isFrameRounded {
-            self.round()
-        }
     }
 }
 

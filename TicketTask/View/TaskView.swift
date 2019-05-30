@@ -15,6 +15,7 @@ import SPStorkController
 
 class TaskView: UIView{
 
+    @IBOutlet weak var ticketAddBtn: UIButton!
     @IBOutlet weak var menuTopConst: NSLayoutConstraint!
     @IBOutlet weak var titleTopConst: NSLayoutConstraint!
     @IBOutlet weak var attriImageView: UIImageView!
@@ -31,7 +32,7 @@ class TaskView: UIView{
     
     var tableViewArray = [UITableViewCell]()
     var taskViewModel: TaskViewModel?
-
+    var gradationColors = GradationColors()
     var defoultWidth: CGFloat?
     var defoultHeight: CGFloat?
     var defoultX: CGFloat?
@@ -39,7 +40,7 @@ class TaskView: UIView{
     
     var topSafeAreaHeight: CGFloat = 0
     
-    var gradientLayer: CAGradientLayer = CAGradientLayer()
+   
     var mainViewController: MainViewController? = nil
     var isShowDetail: Bool = false
     let disposeBag = DisposeBag()
@@ -137,6 +138,12 @@ class TaskView: UIView{
             }
             .disposed(by: disposeBag)
         
+        self.ticketAddBtn.rx.tap
+            .subscribe { [weak self] _ in
+                self?.showAddticketView()
+            }
+            .disposed(by: disposeBag)
+        
         ticketProgressBar?.setProgress(Float(taskViewModel!.completedProgress!), animated: true)
         
         self.taskViewModel!.progress.subscribe(onNext: { [ticketProgressBar] in
@@ -177,7 +184,19 @@ class TaskView: UIView{
         self.attriImageView.image = self.taskViewModel!.attri == "生活" ? UIImage(named: "人画像") : UIImage(named: "kabann")
     }
     
+    func showAddticketView() {
+        let storyboard = UIStoryboard(name: "AddTicket", bundle: nil)
+        let addTicketViewController = storyboard.instantiateInitialViewController() as! AddTicketViewController
+        let trantisionDelegate = SPStorkTransitioningDelegate()
+//        trantisionDelegate.translateForDismiss = 100
+        trantisionDelegate.customHeight = 400
+        addTicketViewController.transitioningDelegate = trantisionDelegate
+        addTicketViewController.modalPresentationStyle = .custom
+        self.mainViewController?.showAddTicketView(addTicketVC: addTicketViewController, taskVM: self.taskViewModel!)
+    }
+    
     func setLayout() {
+        self.ticketAddBtn.isHidden = true
         let convertProgress = Int((taskViewModel!.completedProgress!)*100)
         self.ticketProgressLabel.text = "\(String(convertProgress))%"
         // 初期状態では戻るボタンを非表示にする
@@ -189,16 +208,17 @@ class TaskView: UIView{
         
         self.layer.cornerRadius = 30
         // 影の設定
-        self.layer.shadowOpacity = 0.5
+        self.layer.shadowOpacity = 0.7
         self.layer.shadowRadius = 12
         self.layer.shadowColor = UIColor.black.cgColor
-        self.layer.shadowOffset = CGSize(width: 5, height: 5)
+        self.layer.shadowOffset = CGSize(width: 1, height: 5)
         
         self.progressBarWidthConst.constant = (UIScreen.main.bounds.size.width / 2)
         self.menuBtnLeftConst.constant = (UIScreen.main.bounds.size.width / 1.7) - 70
         
         self.titleLabel.text = taskViewModel?.taskName
         self.createGesturView()
+        self.setButtonLayout()
         self.setGradationColor()
         self.setImage()
     }
@@ -260,6 +280,7 @@ class TaskView: UIView{
                 // 縮小するときの処理
                 self.menuButton.layoutIfNeeded()
                 self.layoutIfNeeded()
+                self.ticketAddBtn.isHidden = true
                 self.ticketProgressBar.layoutIfNeeded()
                 self.ticketTableView.isHidden = true
                 self.frame = CGRect(x:self.defoultX!,y:self.defoultY!,width:self.defoultWidth!,height:self.defoultHeight!)
@@ -272,6 +293,7 @@ class TaskView: UIView{
                 self.layoutIfNeeded()
                 self.ticketProgressBar.layoutIfNeeded()
                 // 拡大するときの処理
+                self.ticketAddBtn.isHidden = false
                 self.defoultHeight = self.frame.size.height
                 self.defoultWidth = self.bounds.size.width
                 self.defoultX = self.frame.origin.x
@@ -306,9 +328,34 @@ class TaskView: UIView{
         ticketTableView.deleteRows(at: [indexPath], with: .fade)
     }
     
+    func setButtonLayout() {
+        var view = UIView()
+        view.bounds = ticketAddBtn.bounds
+        self.ticketAddBtn.layer.shadowOpacity = 0.5
+        self.ticketAddBtn.layer.shadowRadius = 12
+        self.ticketAddBtn.layer.shadowColor = UIColor.black.cgColor
+        self.ticketAddBtn.layer.shadowOffset = CGSize(width: 3, height: 4)
+        
+    }
+    
     func setGradationColor() {
-        let gradationColors = GradationColors()
+         let gradientLayer = CAGradientLayer()
         self.ticketProgressBar.tintColor = self.taskViewModel?.attri == "生活" ? gradationColors.attriLifeBottomColor : gradationColors.attriWorkBottomColor
+        
+        let topColor = self.taskViewModel?.attri == "生活" ? self.gradationColors.attriLifeTopColor : gradationColors.attriWorkTopColor
+        let bottomColor = self.taskViewModel?.attri == "生活" ? self.gradationColors.attriLifeBottomColor : gradationColors.attriWorkBottomColor
+        let gradientColors: [CGColor] = [topColor.cgColor, bottomColor.cgColor]
+        gradientLayer.colors = gradientColors
+        gradientLayer.bounds = self.ticketAddBtn.bounds
+        gradientLayer.frame.origin.x += 20
+        gradientLayer.frame.origin.y += 20
+//        gradientLayer.cornerRadius = self.ticketAddBtn.bounds.midY
+        self.ticketAddBtn.layer.insertSublayer(gradientLayer, at: 0)
+//        self.view.layer.insertSublayer(self.gradientLayer, at: 0)
+        self.ticketAddBtn.layer.shadowOpacity = 0.5
+        self.ticketAddBtn.layer.shadowRadius = 12
+        self.ticketAddBtn.layer.shadowColor = UIColor.black.cgColor
+        self.ticketAddBtn.layer.shadowOffset = CGSize(width: 3, height: 4)
     }
 
     func getMainViewController() -> MainViewController? {

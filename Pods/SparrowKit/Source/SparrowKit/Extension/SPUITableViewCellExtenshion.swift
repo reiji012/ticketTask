@@ -23,7 +23,7 @@ import UIKit
 
 extension UITableViewCell {
     
-    public var accessoryView: UIView? {
+    var accessoryView: UIView? {
         return subviews.compactMap { $0 as? UIButton }.first
     }
     
@@ -33,12 +33,12 @@ extension UITableViewCell {
         }
         set {
             let backgroundView = UIView()
-            backgroundView.backgroundColor = SPNativeStyleKit.Colors.customGray
+            backgroundView.backgroundColor = SPNativeColors.customGray
             self.selectedBackgroundView = backgroundView
         }
     }
     
-    public func highlight() {
+    func highlight() {
         self.setHighlighted(true, animated: false)
         self.setHighlighted(false, animated: true)
     }

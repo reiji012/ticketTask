@@ -21,11 +21,11 @@
 
 import UIKit
 
-public class SPAnimationUpward {
+class SPAnimationUpward {
     
-    fileprivate static let durationListAnimation: TimeInterval = 0.45
-    fileprivate static let coefLenthForTransition: CGFloat = 2.8
-    fileprivate static let delayPerItem: TimeInterval = 0.09
+    static let durationListAnimation: TimeInterval = 0.45
+    static let coefLenthForTransition: CGFloat = 2.8
+    static let delayPerItem: TimeInterval = 0.09
     
     static func hide(_ duration: TimeInterval,
                    view: UIView,
