@@ -39,7 +39,7 @@ class SPPlayCircleButton: UIButton {
         }
     }
     
-    var iconColor = SPNativeStyleKit.Colors.white {
+    var iconColor = SPNativeColors.white {
         didSet {
             self.iconView.color = self.iconColor
         }
@@ -52,7 +52,7 @@ class SPPlayCircleButton: UIButton {
         self.addSubview(self.iconView)
         self.iconView.isUserInteractionEnabled = false
         self.setTitle("", for: .normal)
-        self.backgroundColor = SPNativeStyleKit.Colors.blue
+        self.backgroundColor = SPNativeColors.blue
         self.audioState = .play
     }
     
@@ -62,7 +62,7 @@ class SPPlayCircleButton: UIButton {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.iconView.setEqualsFrameFromBounds(self, withWidthFactor: 0.45, withHeightFactor: 0.45, withCentering: true)
+        self.iconView.setBounds(self, withWidthFactor: 0.45, withHeightFactor: 0.45, withCentering: true)
         self.round()
     }
     

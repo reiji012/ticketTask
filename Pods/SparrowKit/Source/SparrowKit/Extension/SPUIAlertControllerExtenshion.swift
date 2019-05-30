@@ -32,16 +32,17 @@ extension UIAlertController {
         }
     }
     
-    public static func show(title: String, message: String, buttonTitle: String, cancelButtonTitle: String? = nil, complection: @escaping ()->() = {}, on viewController: UIViewController) {
+    
+    static func show(title: String? = nil, message: String? = nil, buttonTitle: String, cancelButtonTitle: String? = nil, complection: @escaping ()->() = {}, on viewController: UIViewController) {
         let ac = UIAlertController(
             title: title,
             message: message,
             preferredStyle: .alert
         )
         
-        if cancelButtonTitle != nil {
+        if let cancelTitle = cancelButtonTitle {
             ac.addAction(UIAlertAction.init(
-                title: cancelButtonTitle!,
+                title: cancelTitle,
                 style: UIAlertAction.Style.cancel,
                 handler: nil)
             )
@@ -57,17 +58,15 @@ extension UIAlertController {
         viewController.present(ac, animated: true, completion: nil)
     }
     
-    public static func сonfirm(title: String? = nil, message: String, buttonTitle: String, cancelButtonTitle: String, isDestructive: Bool = false, complection: @escaping (Bool)->(), on viewController: UIViewController) {
+    static func сonfirm(title: String? = nil, message: String? = nil, buttonTitle: String, cancelButtonTitle: String, isDestructive: Bool = false, complection: @escaping (Bool)->(), on viewController: UIViewController) {
         let ac = UIAlertController(
             title: title,
             message: message,
             preferredStyle: .actionSheet
         )
         
-        var style = UIAlertAction.Style.default
-        if isDestructive {
-            style = .destructive
-        }
+        let style = isDestructive ? .destructive : UIAlertAction.Style.default
+
         ac.addAction(UIAlertAction.init(
             title: buttonTitle,
             style: style,
@@ -76,11 +75,10 @@ extension UIAlertController {
         }))
         ac.addAction(UIAlertAction.init(
             title: cancelButtonTitle,
-            style: UIAlertAction.Style.default,
+            style: UIAlertAction.Style.cancel,
             handler: { (action) in
                 complection(false)
         }))
-        
         viewController.present(ac, animated: true, completion: nil)
     }
 }
@@ -96,6 +94,13 @@ extension UIAlertController {
     
     func addDestructiveAction(title: String, complection: @escaping ()->()) {
         let action = UIAlertAction(title: title, style: .destructive) { (action) in
+            complection()
+        }
+        self.addAction(action)
+    }
+    
+    func addCancelAction(title: String, complection: @escaping ()->() = {}) {
+        let action = UIAlertAction(title: title, style: .cancel) { (action) in
             complection()
         }
         self.addAction(action)

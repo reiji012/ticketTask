@@ -2,15 +2,16 @@ PODS:
   - BubbleTransition (3.2.0)
   - NewPopMenu (2.1.2)
   - PKHUD (5.2.1)
-  - Realm (3.15.0):
-    - Realm/Headers (= 3.15.0)
-  - Realm/Headers (3.15.0)
-  - RealmSwift (3.15.0):
-    - Realm (= 3.15.0)
+  - Realm (3.16.0):
+    - Realm/Headers (= 3.16.0)
+  - Realm/Headers (3.16.0)
+  - RealmSwift (3.16.0):
+    - Realm (= 3.16.0)
   - RxCocoa (4.5.0):
     - RxSwift (>= 4.4.2, ~> 4.4)
   - RxSwift (4.5.0)
-  - SparrowKit (1.2)
+  - SparrowKit (2.0.1)
+  - SPFakeBar (1.0.6)
   - SPStorkController (1.1.8)
 
 DEPENDENCIES:
@@ -20,7 +21,8 @@ DEPENDENCIES:
   - RealmSwift
   - RxCocoa (~> 4.5.0)
   - RxSwift (~> 4.5.0)
-  - SparrowKit (= 1.2)
+  - SparrowKit
+  - SPFakeBar
   - SPStorkController (= 1.1.8)
 
 SPEC REPOS:
@@ -33,19 +35,21 @@ SPEC REPOS:
     - RxCocoa
     - RxSwift
     - SparrowKit
+    - SPFakeBar
     - SPStorkController
 
 SPEC CHECKSUMS:
   BubbleTransition: 2f112cc19772d9ab199bc850de92f5eb34744bce
   NewPopMenu: c6129e08e8192f6257ceb5f9a4357e1b59c6e2e7
   PKHUD: 4e6162c4c39ac367c6934e9855c6b4762ee16256
-  Realm: 9b834e1be6062f544805252c812348872dc5d4ed
-  RealmSwift: 8a41886f8ab6efef9eb8df97de2f2bb911561a79
+  Realm: 5ca1b8c472dfc532cd0ba0bfe2ce49f97130158f
+  RealmSwift: 2ee401dbcc188706261921326146f5a539d4d4a7
   RxCocoa: cbf70265dc65a981d4ac982e513c10cf23df24a0
   RxSwift: f172070dfd1a93d70a9ab97a5a01166206e1c575
-  SparrowKit: 22d2f2e630c640c9b8347af9304a0170cac017ff
+  SparrowKit: 3cfae4791388f8c9eab867eb7c828d60d650de69
+  SPFakeBar: 0f9f17c1d4f1702fd48c594b0535486c5924394e
   SPStorkController: e92e1100e6ccaab694e38cffe4a44336c10901f6
 
-PODFILE CHECKSUM: 1990f2c086dc1185b30cbd22e3bbeee6d5c70dad
+PODFILE CHECKSUM: 7a415b14533f638944dd301a33cb81e66c3870c3
 
 COCOAPODS: 1.6.2

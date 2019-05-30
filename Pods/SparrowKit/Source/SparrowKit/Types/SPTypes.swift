@@ -21,24 +21,19 @@
 
 import UIKit
 
-public enum SPStatusBar {
+enum SPStatusBar {
     case dark
     case light
 }
 
-public enum SPSnapToSide {
-    case left
-    case right
-}
-
-public enum SPSystemIconType {
+enum SPSystemIcon {
     case share
     case close
     case favorite
     case favorite_fill
 }
 
-public enum SPSocialNetwork {
+enum SPSocialNetwork {
     case whatsapp
     case telegram
     case vk
@@ -46,7 +41,7 @@ public enum SPSocialNetwork {
     case viber
 }
 
-public enum SPOauthState {
+enum SPOauthState {
     case succsess
     case unvalidLogin
     case invalidLogin
@@ -56,20 +51,26 @@ public enum SPOauthState {
     case error
 }
 
-public enum SPSeparatorInsetStyle {
+enum SPSeparatorInsetStyle {
     case beforeImage
     case all
     case none
     case auto
 }
 
-public enum SPNavigationTitleStyle {
+enum SPNavigationTitleStyle {
     case large
     case small
     case stork
+    case noContent
 }
 
-public enum SPSystemApp {
+enum SPSystemApp {
     case photos
     case setting
+}
+
+enum SPSelectionType {
+    case select
+    case unselect
 }

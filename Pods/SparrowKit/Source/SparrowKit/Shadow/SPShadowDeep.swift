@@ -27,13 +27,13 @@ extension SPShadow {
         
         private init() {}
         
-        public static func setFor(label: UILabel) {
+        static func setFor(label: UILabel) {
             var offset = label.frame.height * 0.03
             offset.setIfMore(when: 1)
             label.setShadowOffsetForLetters(heightOffset: offset, opacity: 0.35)
         }
         
-        public static func setFor(view: UIView) {
+        static func setFor(view: UIView) {
             
             let xTranslationFactor: CGFloat = 0
             let yTranslationFactor: CGFloat = 0.18
@@ -66,7 +66,7 @@ extension SPShadow {
                 yTranslation = view.frame.height + maxBottomSpace - shadowHeight
             }
             
-            var blurRadius = view.frame.minSideSize * blurRadiusFactor
+            var blurRadius = view.frame.minSide * blurRadiusFactor
             blurRadius.setIfMore(when: 10)
             blurRadius.setIfFewer(when: 7)
             

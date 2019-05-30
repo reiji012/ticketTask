@@ -24,6 +24,10 @@ import UIKit
 
 extension String {
     
+    var digits: String {
+        return components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
+    }
+    
     mutating func dropLast(substring: String) {
         if self.hasSuffix(substring) {
             self = String(dropLast(substring.count))
@@ -66,7 +70,32 @@ extension String {
         return false
     }
     
+    var isEmptyContent: Bool {
+        return (self.removeAllSpaces() == "")
+    }
+    
+    var words: [String] {
+        return components(separatedBy: .punctuationCharacters).joined().components(separatedBy: .whitespaces)
+    }
+    
+    func removePrefix(_ prefix: String) -> String {
+        guard self.hasPrefix(prefix) else { return self }
+        return String(self.dropFirst(prefix.count))
+    }
+    
     mutating func replace(_ replacingString: String, with newString: String) {
         self = self.replacingOccurrences(of: replacingString, with: newString)
+    }
+    
+    func replace(_ replacingString: String, with newString: String) -> String {
+        return self.replacingOccurrences(of: replacingString, with: newString)
+    }
+    
+    func slice(from: String, to: String) -> String? {
+        return (range(of: from)?.upperBound).flatMap { substringFrom in
+            (range(of: to, range: substringFrom..<endIndex)?.lowerBound).map { substringTo in
+                String(self[substringFrom..<substringTo])
+            }
+        }
     }
 }

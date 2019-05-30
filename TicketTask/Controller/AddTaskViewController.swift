@@ -9,6 +9,7 @@
 import UIKit
 import SPStorkController
 import SparrowKit
+import SPFakeBar
 
 class AddTaskViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource{
     

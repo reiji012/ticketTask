@@ -21,41 +21,7 @@
 
 import UIKit
 
-class SPVibration {
-    
-    private let generator = UINotificationFeedbackGenerator()
-    
-    func prepare() {
-        self.generator.prepare()
-    }
-    
-    func impact(_ mode: Mode) {
-        
-        switch mode {
-        case .success:
-            self.generator.notificationOccurred(UINotificationFeedbackGenerator.FeedbackType.success)
-        case .warning:
-            self.generator.notificationOccurred(UINotificationFeedbackGenerator.FeedbackType.warning)
-        case .error:
-            self.generator.notificationOccurred(UINotificationFeedbackGenerator.FeedbackType.error)
-        }
-    }
-}
-
-extension SPVibration {
-    
-    static func impact(_ mode: Mode) {
-        let generator = UINotificationFeedbackGenerator()
-        
-        switch mode {
-        case .success:
-            generator.notificationOccurred(UINotificationFeedbackGenerator.FeedbackType.success)
-        case .warning:
-            generator.notificationOccurred(UINotificationFeedbackGenerator.FeedbackType.warning)
-        case .error:
-            generator.notificationOccurred(UINotificationFeedbackGenerator.FeedbackType.error)
-        }
-    }
+struct SPVibration {
     
     static func impact(_ style: Style) {
         
@@ -69,18 +35,26 @@ extension SPVibration {
         case .heavy:
             let generator = UIImpactFeedbackGenerator(style: .heavy)
             generator.impactOccurred()
+        case .success:
+            let generator = UINotificationFeedbackGenerator()
+            generator.notificationOccurred(UINotificationFeedbackGenerator.FeedbackType.success)
+        case .warning:
+            let generator = UINotificationFeedbackGenerator()
+            generator.notificationOccurred(UINotificationFeedbackGenerator.FeedbackType.warning)
+        case .error:
+            let generator = UINotificationFeedbackGenerator()
+            generator.notificationOccurred(UINotificationFeedbackGenerator.FeedbackType.error)
         }
-    }
-    
-    enum Mode {
-        case error
-        case success
-        case warning
     }
     
     enum Style {
         case light
         case medium
         case heavy
+        case error
+        case success
+        case warning
     }
+    
+    private init() {}
 }

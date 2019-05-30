@@ -21,7 +21,7 @@
 
 import UIKit
 
-struct SPApp {
+enum SPApp {
     
     static var udid: String? {
         return UIDevice.current.identifierForVendor?.uuidString
@@ -33,6 +33,14 @@ struct SPApp {
     
     static var rootController: UIViewController? {
         return UIApplication.shared.keyWindow?.rootViewController
+    }
+    
+    static var safeArea: UIEdgeInsets {
+        if #available(iOS 11.0, *) {
+            return UIApplication.shared.keyWindow?.safeArea ?? UIEdgeInsets.zero
+        } else {
+            return UIEdgeInsets.zero
+        }
     }
     
     static func set(rootController: UIViewController, animatable: Bool = true) {
@@ -56,5 +64,10 @@ struct SPApp {
         }
     }
     
-    private init() {}
+    static func set(elementsColor: UIColor) {
+        UINavigationController.elementsColor = elementsColor
+        UIAlertController.elementsColor = elementsColor
+        UITabBarController.elementsColor = elementsColor
+        UITabBar.appearance().tintColor = elementsColor
+    }
 }

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B84AD53229FE292004B484D /* AddTicket.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B84AD52229FE292004B484D /* AddTicket.storyboard */; };
+		2B84AD55229FE2C9004B484D /* AddTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B84AD54229FE2C9004B484D /* AddTicketViewController.swift */; };
 		2BB2EE51228AB97200769AAA /* ActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB2EE50228AB97200769AAA /* ActionType.swift */; };
 		2BE551662292695000D5AFA9 /* TaskItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE551652292695000D5AFA9 /* TaskItem.swift */; };
 		2BE55168229299A100D5AFA9 /* TicketModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE55167229299A100D5AFA9 /* TicketModel.swift */; };
@@ -32,6 +34,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2B84AD52229FE292004B484D /* AddTicket.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AddTicket.storyboard; sourceTree = "<group>"; };
+		2B84AD54229FE2C9004B484D /* AddTicketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTicketViewController.swift; sourceTree = "<group>"; };
 		2BB2EE50228AB97200769AAA /* ActionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionType.swift; sourceTree = "<group>"; };
 		2BE551652292695000D5AFA9 /* TaskItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TaskItem.swift; path = Model/TaskItem.swift; sourceTree = "<group>"; };
 		2BE55167229299A100D5AFA9 /* TicketModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketModel.swift; sourceTree = "<group>"; };
@@ -137,6 +141,7 @@
 				2BF5B766228155EC007D0266 /* TaskView.xib */,
 				2BF5B7682281562D007D0266 /* TaskView.swift */,
 				2BF44284229CE1FE00F32613 /* Add.storyboard */,
+				2B84AD52229FE292004B484D /* AddTicket.storyboard */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -147,6 +152,7 @@
 				2BF5B74E22814521007D0266 /* MainViewController.swift */,
 				2BF5B77B22855657007D0266 /* AddTaskViewController.swift */,
 				2BF44280229BEB8C00F32613 /* EditTaskViewController.swift */,
+				2B84AD54229FE2C9004B484D /* AddTicketViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -260,6 +266,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B84AD53229FE292004B484D /* AddTicket.storyboard in Resources */,
 				2BF5B76D22829DCD007D0266 /* TicketTableViewCell.xib in Resources */,
 				2BF5B75722814521007D0266 /* LaunchScreen.storyboard in Resources */,
 				2BF44285229CE1FE00F32613 /* Add.storyboard in Resources */,
@@ -311,6 +318,7 @@
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SPFakeBar/SPFakeBar.framework",
 				"${BUILT_PRODUCTS_DIR}/SPStorkController/SPStorkController.framework",
 				"${BUILT_PRODUCTS_DIR}/SparrowKit/SparrowKit.framework",
 			);
@@ -325,6 +333,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SPFakeBar.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SPStorkController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SparrowKit.framework",
 			);
@@ -345,6 +354,7 @@
 				2BF5B76C22829DCD007D0266 /* TicketTableViewCell.swift in Sources */,
 				2BF5B7652281498F007D0266 /* TaskModel.swift in Sources */,
 				2BF5B77C22855657007D0266 /* AddTaskViewController.swift in Sources */,
+				2B84AD55229FE2C9004B484D /* AddTicketViewController.swift in Sources */,
 				2BE55168229299A100D5AFA9 /* TicketModel.swift in Sources */,
 				2BE551662292695000D5AFA9 /* TaskItem.swift in Sources */,
 				2BF5B7722282A0AB007D0266 /* UIView+TicketTask.swift in Sources */,

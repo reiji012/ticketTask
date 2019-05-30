@@ -21,10 +21,10 @@
 
 import UIKit
 
-public class SPAnimationSpring {
+class SPAnimationSpring {
     
-    fileprivate static let spring: CGFloat = 1
-    fileprivate static let velocity: CGFloat = 1
+    static let spring: CGFloat = 1
+    static let velocity: CGFloat = 1
     
     static func animate(_ duration: TimeInterval,
                         animations: (() -> Void)!,

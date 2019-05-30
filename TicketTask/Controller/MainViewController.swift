@@ -373,6 +373,14 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         
     }
     
+    func showAddTicketView(addTicketVC: AddTicketViewController, taskVM: TaskViewModel) {
+        addTicketVC.mainVC = self
+        addTicketVC.taskViewModel = taskVM
+        UIView.animate(withDuration: 2, animations: {
+            self.present(addTicketVC, animated: true, completion: nil)
+        })
+    }
+    
 }
 
 extension MainViewController : UIViewControllerTransitioningDelegate{

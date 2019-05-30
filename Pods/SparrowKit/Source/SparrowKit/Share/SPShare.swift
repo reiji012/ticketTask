@@ -21,9 +21,9 @@
 
 import UIKit
 
-public struct SPShare {
+struct SPShare {
     
-    public struct Native {
+    struct Native {
         
         static func share(text: String? = nil, fileNames: [String] = [], images: [UIImage] = [], complection: ((_ isSharing: Bool)->())? = nil, sourceView: UIView, on viewController: UIViewController) {
             

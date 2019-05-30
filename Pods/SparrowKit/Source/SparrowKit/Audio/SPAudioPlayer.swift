@@ -22,7 +22,7 @@
 import UIKit
 import AVFoundation
 
-public class SPAudioPlayer: NSObject, AVAudioPlayerDelegate {
+class SPAudioPlayer: NSObject, AVAudioPlayerDelegate {
     
     fileprivate var player: AVAudioPlayer = AVAudioPlayer()
     fileprivate var endPlayingComplection: (()->())? = nil
@@ -51,7 +51,7 @@ public class SPAudioPlayer: NSObject, AVAudioPlayerDelegate {
         player.stop()
     }
     
-    public func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         self.endPlayingComplection?()
     }
 }

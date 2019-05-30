@@ -60,13 +60,21 @@ extension UIButton {
 
 extension UIButton {
     
-    func setTitle(_ title: String) {
+    func setTitle(_ title: String, color: UIColor? = nil) {
         self.setTitle(title, for: .normal)
+        if let color = color {
+            self.setTitleColor(color)
+        }
     }
     
     func setTitleColor(_ color: UIColor) {
         self.setTitleColor(color, for: .normal)
         self.setTitleColor(color.withAlphaComponent(0.7), for: .highlighted)
+    }
+    
+    func setImage(_ image: UIImage) {
+        self.setImage(image, for: .normal)
+        self.imageView?.contentMode = .scaleAspectFit
     }
     
     func removeAllTargets() {
@@ -98,11 +106,11 @@ extension UIButton {
     }
     
     func setAnimatableText(_ text: String, withComplection completion: (() -> Void)! = {}) {
-        SPAnimation.animate(0.2, animations: {
+        SPAnimation.animate(0.3, animations: {
             self.titleLabel?.alpha = 0
         }, withComplection: {
             self.setTitle(text, for: .normal)
-            SPAnimation.animate(0.2, animations: {
+            SPAnimation.animate(0.3, animations: {
                 self.titleLabel?.alpha = 1
             }, withComplection: {   
                 completion()
@@ -111,7 +119,7 @@ extension UIButton {
     }
     
     func hideContent(completion: (() -> Void)! = {}) {
-        SPAnimation.animate(0.2, animations: {
+        SPAnimation.animate(0.25, animations: {
             self.titleLabel?.alpha = 0
         }, withComplection: {
              completion()
@@ -119,7 +127,7 @@ extension UIButton {
     }
     
     func showContent(completion: (() -> Void)! = {}) {
-        SPAnimation.animate(0.2, animations: {
+        SPAnimation.animate(0.25, animations: {
             self.titleLabel?.alpha = 1
         }, withComplection: {
             completion()

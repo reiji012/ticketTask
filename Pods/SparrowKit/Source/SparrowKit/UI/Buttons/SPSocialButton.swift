@@ -75,13 +75,13 @@ class SPSocialButton: UIButton {
     fileprivate func commonInit() {
         self.iconView.isUserInteractionEnabled = false
         self.addSubview(self.iconView)
-        self.backgroundColor = SPNativeStyleKit.Colors.blue
-        self.iconView.color = SPNativeStyleKit.Colors.white
+        self.backgroundColor = SPNativeColors.blue
+        self.iconView.color = SPNativeColors.white
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.iconView.setEqualsFrameFromBounds(self, withWidthFactor: self.widthIconFactor, withHeightFactor: self.heightIconFactor, withCentering: true)
+        self.iconView.setBounds(self, withWidthFactor: self.widthIconFactor, withHeightFactor: self.heightIconFactor, withCentering: true)
         self.round()
     }
 }

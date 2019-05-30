@@ -21,91 +21,41 @@
 
 import UIKit
 
-public extension UIFont {
+extension UIFont {
     
-    public struct fonts {
-        
-        public static func AvenirNext(type: BoldType, size: CGFloat) -> UIFont {
-            return UIFont.createFont(.AvenirNext, boldType: type, size: size)
-        }
+    static func system(weight: FontWeight, size: CGFloat) -> UIFont {
+        return UIFont.systemFont(ofSize: size, weight: self.weight(for: weight))
     }
     
-    public static func system(type: BoldType, size: CGFloat) -> UIFont {
-        if #available(iOS 8.2, *) {
-            return UIFont.systemFont(ofSize: size, weight: self.getBoldTypeBy(boldType: type))
-        } else {
-            return self.createFont(.AvenirNext, boldType: type, size: size)
-        }
-    }
-    
-    public static func createFont(_ fontType: FontType, boldType: BoldType, size: CGFloat) -> UIFont {
-        return UIFont.init(
-            name: self.getFontNameBy(fontType: fontType) + self.getBoldTypeNameBy(boldType: boldType),
-            size: size
-        )!
-    }
-    
-    private static func getFontNameBy(fontType: FontType) -> String {
-        switch fontType {
-        case .AvenirNext:
-            return "AvenirNext"
-        }
-    }
-    
-    private static func getBoldTypeNameBy(boldType: BoldType) -> String {
-        switch boldType {
-        case .UltraLight:
-            return "-UltraLight"
-        case .Light:
-            return "-Light"
-        case .Medium:
-            return "-Medium"
-        case .Regular:
-            return "-Regular"
-        case .Bold:
-            return "-Bold"
-        case .DemiBold:
-            return "-DemiBold"
-        default:
-            return "-Regular"
-        }
-    }
-    
-    
-    @available(iOS 8.2, *)
-    private static func getBoldTypeBy(boldType: BoldType) -> UIFont.Weight {
-        switch boldType {
-        case .UltraLight:
+    private static func weight(for weight: FontWeight) -> UIFont.Weight {
+        switch weight {
+        case .ultraLight:
             return UIFont.Weight.ultraLight
-        case .Light:
+        case .light:
             return UIFont.Weight.light
-        case .Medium:
+        case .medium:
             return UIFont.Weight.medium
-        case .Regular:
+        case .regular:
             return UIFont.Weight.regular
-        case .Bold:
+        case .bold:
             return UIFont.Weight.bold
-        case .DemiBold:
+        case .demiBold:
             return UIFont.Weight.semibold
-        case .Heavy:
+        case .heavy:
             return UIFont.Weight.heavy
         default:
             return UIFont.Weight.regular
         }
     }
     
-    public enum FontType {
-        case AvenirNext
-    }
-    
-    public enum BoldType {
-        case Regular
-        case Medium
-        case Light
-        case UltraLight
-        case Heavy
-        case Bold
-        case DemiBold
-        case None
+    enum FontWeight {
+        case regular
+        case medium
+        case light
+        case ultraLight
+        case heavy
+        case bold
+        case demiBold
+        case none
     }
 }
