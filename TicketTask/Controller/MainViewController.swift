@@ -206,7 +206,7 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let currentTaskView = getCenterTaskView()
-        return currentTaskView.tableViewArray.count
+        return currentTaskView.ticketsCount
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -230,7 +230,7 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
             }
             currentTableViewCell.isCompleted = isCompleted!
             currentTableViewCell.checkBoxLabel.text = isCompleted! ? "✔️" : ""
-            currentTableViewCell.ticketName.text = ticketName
+            currentTableViewCell.ticketNameLabel.text = ticketName
             return currentTableViewCell
         }
         
@@ -247,12 +247,28 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         }
         if editingStyle == .delete {
             let tableViewCell = currentTaskView.tableViewArray[indexPath.row] as! TicketTableViewCell
-            let ticketName = tableViewCell.ticketName.text
+            let ticketName = tableViewCell.ticketNameLabel.text
             currentTaskView.taskViewModel?.actionType = .ticketDelete
             currentTaskView.taskViewModel?.tickets?.removeValue(forKey: ticketName!)
             currentTaskView.tableViewArray.remove(at: indexPath.row)
             currentTaskView.ticketTableView.reloadData()
         }
+    }
+    
+    func addTicket(ticket: String) {
+        let currentTaskView: TaskView
+        if self.taskViewIndex == nil {
+            currentTaskView = self.view.viewWithTag(1) as! TaskView
+        } else {
+            currentTaskView = self.view.viewWithTag(taskViewIndex!) as! TaskView
+        }
+        currentTaskView.taskViewModel?.actionType = .ticketCreate
+        currentTaskView.taskViewModel?.addTicket(ticketName: ticket)
+        guard let ticketTableViewCell = currentTaskView.ticketTableView.dequeueReusableCell(withIdentifier: "TicketTableViewCell") as? TicketTableViewCell else {
+            return
+        }
+        currentTaskView.tableViewArray.append(ticketTableViewCell)
+        currentTaskView.ticketTableView.reloadData()
     }
     
     func deleteTask(view: TaskView) {

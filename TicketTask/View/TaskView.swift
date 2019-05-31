@@ -37,6 +37,7 @@ class TaskView: UIView{
     var defoultHeight: CGFloat?
     var defoultX: CGFloat?
     var defoultY: CGFloat?
+    var ticketsCount: Int = 0
     
     var topSafeAreaHeight: CGFloat = 0
     
@@ -153,6 +154,7 @@ class TaskView: UIView{
         }).disposed(by: disposeBag)
         
         self.taskViewModel!.ticketCout.subscribe(onNext: { [ticketCountLabel] in
+            self.ticketsCount = $0
             let ticketCount = "チケット：\($0)"
             ticketCountLabel!.text = ticketCount
         }).disposed(by: disposeBag)

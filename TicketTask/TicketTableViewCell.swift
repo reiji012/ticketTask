@@ -19,7 +19,7 @@ class TicketTableViewCell: UITableViewCell {
         }
     }
     
-    @IBOutlet weak var ticketName: UILabel!
+    @IBOutlet weak var ticketNameLabel: UILabel!
     @IBOutlet weak var checkBoxLabel: UILabel!
 
     override func awakeFromNib() {
@@ -44,6 +44,6 @@ class TicketTableViewCell: UITableViewCell {
     
     @objc func changeCompletion() {
         self.isCompleted = !self.isCompleted
-        self.taskViewModel?.changeTicketCompleted(ticketName: ticketName.text!, completed: isCompleted)
+        self.taskViewModel?.changeTicketCompleted(ticketName: ticketNameLabel.text!, completed: isCompleted)
     }
 }

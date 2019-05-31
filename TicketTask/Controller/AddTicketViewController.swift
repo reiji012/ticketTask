@@ -13,6 +13,8 @@ import SPFakeBar
 
 class AddTicketViewController: UIViewController {
     
+    @IBOutlet weak var ticketTextField: UITextField!
+    @IBOutlet weak var closeButton: UIButton!
     let navBar = SPFakeBarView.init(style: .stork)
     var gradationColors: GradationColors?
     var gradientLayer: CAGradientLayer = CAGradientLayer()
@@ -21,7 +23,7 @@ class AddTicketViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.ticketTextField.text = ""
 //        self.navBar.titleLabel.text = "チケットの追加"
 //        self.navBar.leftButton.setTitle("キャンセル", for: .normal)
 //        self.navBar.leftButton.addTarget(self, action: #selector(self.cansel), for: .touchUpInside)
@@ -50,4 +52,16 @@ class AddTicketViewController: UIViewController {
         super.viewWillDisappear(animated)
     }
 
+    @IBAction func tapAddBtn(_ sender: Any) {
+        if (self.ticketTextField.text == "") {
+            return
+        }
+        mainVC?.addTicket(ticket: self.ticketTextField.text!)
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func tapCloseButton(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
 }
