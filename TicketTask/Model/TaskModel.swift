@@ -42,7 +42,7 @@ class TaskModel {
     }
     
     /*タスクを作成する*/
-    func createTask(taskName: String, attri: String, tickets:Array<String>) {
+    func createTask(taskName: String, attri: String, tickets:Array<String>) -> ValidateError? {
         var taskArray = ["title":"","attri":"","tickets":[], "id":0] as [String : Any]
         var ticketsArray: [String : Bool] = [:]
         var ticketsRealmArray: [[String : Any]] = []
@@ -63,6 +63,11 @@ class TaskModel {
             let realm = try Realm()
             let results = realm.objects(TaskItem.self)
             print(results)
+            let tasks = results.map {$0.taskTitle}
+            if tasks.index(of: taskName) != nil {
+                let error = ValidateError.taskValidError
+                return error
+            }
             
             let taskDictionary:[String:Any] = [
                 TASK_TITLE: taskName,
@@ -79,8 +84,10 @@ class TaskModel {
                 print("データベース追加後", results.count)
                 print(results)
             }
+            return nil
         }
         catch {
+            return (error as! ValidateError)
         }
         
     }

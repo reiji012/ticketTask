@@ -146,6 +146,10 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate {
         // インプットビュー設定
         attriTextField.inputView = pickerView
         attriTextField.inputAccessoryView = toolbar
+        
+        // デフォルト設定
+        let defoultIndex = self.taskViewModel?.attri == "仕事" ? 1 : 2
+        pickerView.selectRow(defoultIndex, inComponent: 0, animated: false)
     }
     
     // 決定ボタン押下
@@ -211,7 +215,7 @@ extension EditTaskViewController : UIPickerViewDelegate, UIPickerViewDataSource 
     
     // ドラムロールの列数
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 2
+        return 1
     }
     
     // ドラムロールの行数
