@@ -264,10 +264,8 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         }
         currentTaskView.taskViewModel?.actionType = .ticketCreate
         currentTaskView.taskViewModel?.addTicket(ticketName: ticket)
-        guard let ticketTableViewCell = currentTaskView.ticketTableView.dequeueReusableCell(withIdentifier: "TicketTableViewCell") as? TicketTableViewCell else {
-            return
-        }
-        currentTaskView.tableViewArray.append(ticketTableViewCell)
+        let ticketTableViewCell = UINib(nibName: "TicketTableViewCell", bundle: Bundle.main).instantiate(withOwner: self, options: nil).first as? TicketTableViewCell
+        currentTaskView.tableViewArray.append(ticketTableViewCell!)
         currentTaskView.ticketTableView.reloadData()
     }
     
