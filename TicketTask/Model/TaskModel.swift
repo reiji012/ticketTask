@@ -94,6 +94,7 @@ class TaskModel {
                 indexPath = index
             }
         }
+        // アクションによって処理を変える
         switch actionType {
         case .taskDelete:
             self.deleteTask(index: indexPath)
@@ -101,8 +102,37 @@ class TaskModel {
             self.updateTicket(index: indexPath)
         case .ticketDelete:
             self.deleteTicket(index: indexPath)
+        case .ticketCreate:
+            self.addTicket(tickets: [String](tickets.keys), id: id)
         default:
             return
+        }
+    }
+    
+    /*チケットの追加*/
+    func addTicket(tickets:[String], id: Int) {
+        do {
+            let realm = try Realm()
+            let task = realm.objects(TaskItem.self).filter("id = \(id)").first
+            print(task)
+            var ticketArray = [String]()
+            ticketArray = task!.tickets.map { $0.ticketName }
+            
+            for ticket in tickets {
+                if ticketArray.index(of: ticket) == nil {
+                    let newTicket = TicketModel()
+                    newTicket.ticketName = ticket
+                    try! realm.write {
+                        task!.tickets.append(newTicket)
+                    }
+                }
+            }
+            
+            print(task)
+            
+        }
+        catch {
+            print(error)
         }
     }
     

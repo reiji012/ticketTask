@@ -70,6 +70,10 @@ class TaskViewModel: NSObject {
         taskModel?.createTask(taskName: taskName, attri: attri, tickets:tickets)
     }
     
+    func addTicket(ticketName: String) {
+        self.tickets!.updateValue(false, forKey: ticketName)
+    }
+    
     func changeTicketCompleted(ticketName: String,completed: Bool) {
         tickets![ticketName]! = completed
     }
