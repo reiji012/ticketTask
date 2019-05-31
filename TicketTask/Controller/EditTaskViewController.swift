@@ -211,7 +211,7 @@ extension EditTaskViewController : UIPickerViewDelegate, UIPickerViewDataSource 
     
     // ドラムロールの列数
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
+        return 2
     }
     
     // ドラムロールの行数
