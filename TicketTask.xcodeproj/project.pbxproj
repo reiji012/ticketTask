@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2B84AD53229FE292004B484D /* AddTicket.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B84AD52229FE292004B484D /* AddTicket.storyboard */; };
 		2B84AD55229FE2C9004B484D /* AddTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B84AD54229FE2C9004B484D /* AddTicketViewController.swift */; };
+		2B84AD5B22A1267F004B484D /* ValidateError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B84AD5A22A1267F004B484D /* ValidateError.swift */; };
 		2BB2EE51228AB97200769AAA /* ActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB2EE50228AB97200769AAA /* ActionType.swift */; };
 		2BE551662292695000D5AFA9 /* TaskItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE551652292695000D5AFA9 /* TaskItem.swift */; };
 		2BE55168229299A100D5AFA9 /* TicketModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE55167229299A100D5AFA9 /* TicketModel.swift */; };
@@ -36,6 +37,7 @@
 /* Begin PBXFileReference section */
 		2B84AD52229FE292004B484D /* AddTicket.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AddTicket.storyboard; sourceTree = "<group>"; };
 		2B84AD54229FE2C9004B484D /* AddTicketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTicketViewController.swift; sourceTree = "<group>"; };
+		2B84AD5A22A1267F004B484D /* ValidateError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateError.swift; sourceTree = "<group>"; };
 		2BB2EE50228AB97200769AAA /* ActionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionType.swift; sourceTree = "<group>"; };
 		2BE551652292695000D5AFA9 /* TaskItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TaskItem.swift; path = Model/TaskItem.swift; sourceTree = "<group>"; };
 		2BE55167229299A100D5AFA9 /* TicketModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketModel.swift; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 			children = (
 				2BE551692292A7E300D5AFA9 /* RealmItem */,
 				2BB2EE50228AB97200769AAA /* ActionType.swift */,
+				2B84AD5A22A1267F004B484D /* ValidateError.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -357,6 +360,7 @@
 				2B84AD55229FE2C9004B484D /* AddTicketViewController.swift in Sources */,
 				2BE55168229299A100D5AFA9 /* TicketModel.swift in Sources */,
 				2BE551662292695000D5AFA9 /* TaskItem.swift in Sources */,
+				2B84AD5B22A1267F004B484D /* ValidateError.swift in Sources */,
 				2BF5B7722282A0AB007D0266 /* UIView+TicketTask.swift in Sources */,
 				2BF5B7692281562D007D0266 /* TaskView.swift in Sources */,
 				2BB2EE51228AB97200769AAA /* ActionType.swift in Sources */,

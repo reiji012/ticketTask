@@ -32,6 +32,7 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITableViewD
     var beforeViewAttri: String?
     var gradationColors = GradationColors()
     var mainVC: MainViewController?
+    var ticketArray = [String]()
     let navBar = SPFakeBarView.init(style: .stork)
     // Screenの高さ
     var screenHeight:CGFloat!
@@ -40,13 +41,13 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITableViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         titleTextField.delegate = self
         attriTextField.delegate = self
         ticketTextField.delegate = self
         ticketTableView.delegate = self
         ticketTableView.dataSource = self
         titleTextField.text = ""
+        ticketTextField.text = ""
         attriTextField.text = attris[0]
         // 画面サイズ取得
         let screenSize: CGRect = UIScreen.main.bounds
@@ -84,10 +85,14 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITableViewD
     
     @objc func create() {
         if (titleTextField.text == "" || attriTextField.text == "" || tickets.count == 0) {
-            showAlert()
+            showValidateAlert(error: .inputValidError)
             return
         }
-        taskViewModel.createTask(taskName: titleTextField.text!, attri: attriTextField.text!, tickets: tickets)
+        let error = taskViewModel.createTask(taskName: titleTextField.text!, attri: attriTextField.text!, tickets: tickets)
+        if (error != nil) {
+            self.showValidateAlert(error: error!)
+            return
+        }
         dismiss(animated: true, completion: {
             guard let vc = self.mainVC else {
                 return
@@ -131,57 +136,61 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITableViewD
     }
     
     @IBAction func addTicket(_ sender: Any) {
-        guard let text = ticketTextField.text else {
+        let text = ticketTextField.text
+        if text == "" {
             return
         }
-        if text != "" {
+        if ticketArray.index(of: text!) == nil {
             self.tickets.append(ticketTextField.text!)
             ticketTableView.reloadData()
             ticketTextField.text = ""
+            ticketArray.append(text!)
+        } else {
+            showValidateAlert(error: .ticketValidError)
         }
+        
     }
     
     @IBAction func putCreateTaskBtn(_ sender: Any) {
         
     }
     
-    func showAlert(){
-        // ① UIAlertControllerクラスのインスタンスを生成
-        // タイトル, メッセージ, Alertのスタイルを指定する
-        // 第3引数のpreferredStyleでアラートの表示スタイルを指定する
+    func showValidateAlert(error: ValidateError){
+
+        var massage = ""
         var title = ""
-        if titleTextField.text == "" {
-            title += "タイトルを入力してください\n"
+        switch error {
+        case .inputValidError:
+            title = "入力エラー"
+            if titleTextField.text == "" {
+                massage += "タイトルを入力してください\n"
+            }
+            if attriTextField.text == "" {
+                massage += "属性を入力してください\n"
+            }
+            if tickets.count == 0 {
+                massage += "チケットを一つ以上追加してください\n"
+            }
+        case .taskValidError:
+            title = "データベースエラー"
+            massage = error.rawValue
+        case .ticketValidError:
+            title = "入力エラー"
+            massage = error.rawValue
+        default:
+            title = "保存に失敗しました"
         }
-        if attriTextField.text == "" {
-            title += "属性を入力してください\n"
-        }
-        if tickets.count == 0 {
-            title += "チケットを一つ以上追加してください\n"
-        }
-        let alert: UIAlertController = UIAlertController(title: "入力項目が足りていません", message: title, preferredStyle:  UIAlertController.Style.alert)
         
-        // ② Actionの設定
-        // Action初期化時にタイトル, スタイル, 押された時に実行されるハンドラを指定する
-        // 第3引数のUIAlertActionStyleでボタンのスタイルを指定する
-        // OKボタン
+        let alert: UIAlertController = UIAlertController(title: title, message: massage, preferredStyle:  UIAlertController.Style.alert)
+
         let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{
             // ボタンが押された時の処理を書く（クロージャ実装）
             (action: UIAlertAction!) -> Void in
             print("OK")
         })
-        // キャンセルボタン
-        let cancelAction: UIAlertAction = UIAlertAction(title: "キャンセル", style: UIAlertAction.Style.cancel, handler:{
-            // ボタンが押された時の処理を書く（クロージャ実装）
-            (action: UIAlertAction!) -> Void in
-            print("Cancel")
-        })
-        
-        // ③ UIAlertControllerにActionを追加
-        alert.addAction(cancelAction)
+
         alert.addAction(defaultAction)
         
-        // ④ Alertを表示
         present(alert, animated: true, completion: nil)
     }
     

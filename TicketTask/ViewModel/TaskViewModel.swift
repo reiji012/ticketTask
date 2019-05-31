@@ -66,8 +66,13 @@ class TaskViewModel: NSObject {
         countProgress()
     }
     
-    func createTask(taskName: String, attri: String, tickets:Array<String>) {
-        taskModel?.createTask(taskName: taskName, attri: attri, tickets:tickets)
+    func createTask(taskName: String, attri: String, tickets:Array<String>) -> ValidateError? {
+        let error = taskModel?.createTask(taskName: taskName, attri: attri, tickets:tickets)
+        if (error != nil) {
+            return error
+        } else {
+            return nil
+        }
     }
     
     func addTicket(ticketName: String) {
