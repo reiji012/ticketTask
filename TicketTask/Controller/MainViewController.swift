@@ -191,10 +191,13 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         UIView.animate(withDuration: 0.3, animations: {
             self.scrollView.contentOffset = CGPoint(x:maxScrollPoint, y:0)
         })
+        self.stopPoint = scrollView.contentOffset.x
     }
     
     func taskEdited(attri: String) {
         self.centerViewAttri = attri
+        let currentTaskView = getCenterTaskView()
+        currentTaskView.setGradationColor()
         setGradationColor()
     }
     
@@ -255,7 +258,7 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         }
     }
     
-    func addTicket(ticket: String) {
+    func addTicket(ticket: String) -> ValidateError? {
         let currentTaskView: TaskView
         if self.taskViewIndex == nil {
             currentTaskView = self.view.viewWithTag(1) as! TaskView
@@ -263,10 +266,14 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
             currentTaskView = self.view.viewWithTag(taskViewIndex!) as! TaskView
         }
         currentTaskView.taskViewModel?.actionType = .ticketCreate
-        currentTaskView.taskViewModel?.addTicket(ticketName: ticket)
+        let error = currentTaskView.taskViewModel?.addTicket(ticketName: ticket)
+        if error != nil {
+            return error
+        }
         let ticketTableViewCell = UINib(nibName: "TicketTableViewCell", bundle: Bundle.main).instantiate(withOwner: self, options: nil).first as? TicketTableViewCell
         currentTaskView.tableViewArray.append(ticketTableViewCell!)
         currentTaskView.ticketTableView.reloadData()
+        return nil
     }
     
     func deleteTask(view: TaskView) {
@@ -277,19 +284,39 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         }) { (completed) in
             // Animationが完了したら親Viewから削除する
             let index = view.tag
-            UIView.animate(withDuration: 0.5, animations: {
-                for i in index..<100 {
-                    guard let taskView = self.view.viewWithTag(i) else {
-                        return
+            let scrollPoint = self.stopPoint - CGFloat(self.currentWidth)
+            if (self.isLaskTaskView(view: view)) {
+                UIView.animate(withDuration: 0.5, animations: {
+                    self.scrollView.contentOffset = CGPoint(x:scrollPoint, y:0)
+                    self.stopPoint = scrollPoint
+                })
+            } else {
+                UIView.animate(withDuration: 0.5, animations: {
+                    for i in index..<100 {
+                        guard let taskView = self.view.viewWithTag(i) else {
+                            return
+                        }
+                        taskView.tag = i - 1
+                        let frame = taskView.frame
+                        taskView.frame = CGRect(x: frame.origin.x - self.taskViewWidth, y: frame.origin.y, width: frame.size.width, height: frame.size.height)
                     }
-                    taskView.tag = i - 1
-                    let frame = taskView.frame
-                    taskView.frame = CGRect(x: frame.origin.x - self.taskViewWidth, y: frame.origin.y, width: frame.size.width, height: frame.size.height)
-                }
-            })
-            self.scrollView.isScrollEnabled = true
-            self.taskAddButton.isHidden = false
-            view.removeFromSuperview()
+                })
+                self.scrollView.isScrollEnabled = true
+                self.taskAddButton.isHidden = false
+                view.removeFromSuperview()
+            }
+        }
+    }
+    
+    func isLaskTaskView(view: TaskView) -> Bool {
+        //どこのタブを表示させたいか計算します
+        let taskCount: Int = self.taskViewModel.taskCount()
+        //スクロール可能最大値
+        let maxScrollPoint = (taskCount - 1) * currentWidth
+        if (maxScrollPoint < Int(self.stopPoint)) {
+            return true
+        } else {
+            return false
         }
     }
     

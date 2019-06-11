@@ -13,7 +13,7 @@ import SPFakeBar
 
 class AddTaskViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource{
     
-
+    var tableView: UITableView = UITableView()
     @IBOutlet weak var scrolView: UIScrollView!
     @IBOutlet weak var taskTicketView: UIView!
     @IBOutlet weak var taskHeadVIew: UIView!

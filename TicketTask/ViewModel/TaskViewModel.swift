@@ -75,8 +75,13 @@ class TaskViewModel: NSObject {
         }
     }
     
-    func addTicket(ticketName: String) {
+    func addTicket(ticketName: String) -> ValidateError? {
+        let ticketArray = tickets?.keys
+        if ticketArray!.index(of: ticketName) != nil {
+            return .ticketValidError
+        }
         self.tickets!.updateValue(false, forKey: ticketName)
+        return nil
     }
     
     func changeTicketCompleted(ticketName: String,completed: Bool) {
