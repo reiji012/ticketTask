@@ -216,13 +216,14 @@ class TaskView: UIView{
         self.layer.shadowOffset = CGSize(width: 1, height: 5)
         
         self.progressBarWidthConst.constant = (UIScreen.main.bounds.size.width / 2)
-        self.menuBtnLeftConst.constant = (UIScreen.main.bounds.size.width / 1.7) - 70
+        self.menuBtnLeftConst.constant = (UIScreen.main.bounds.size.width / 1.8) - 70
         
         self.titleLabel.text = taskViewModel?.taskName
         self.createGesturView()
         self.setButtonLayout()
         self.setGradationColor()
         self.setImage()
+        self.ticketTableView.allowsMultipleSelectionDuringEditing = true
     }
     
     /*
@@ -354,10 +355,10 @@ class TaskView: UIView{
 //        gradientLayer.cornerRadius = self.ticketAddBtn.bounds.midY
         self.ticketAddBtn.layer.insertSublayer(gradientLayer, at: 0)
 //        self.view.layer.insertSublayer(self.gradientLayer, at: 0)
-        self.ticketAddBtn.layer.shadowOpacity = 0.5
-        self.ticketAddBtn.layer.shadowRadius = 12
-        self.ticketAddBtn.layer.shadowColor = UIColor.black.cgColor
-        self.ticketAddBtn.layer.shadowOffset = CGSize(width: 3, height: 4)
+//        self.ticketAddBtn.layer.shadowOpacity = 0.5
+//        self.ticketAddBtn.layer.shadowRadius = 12
+//        self.ticketAddBtn.layer.shadowColor = UIColor.black.cgColor
+//        self.ticketAddBtn.layer.shadowOffset = CGSize(width: 3, height: 4)
     }
 
     func getMainViewController() -> MainViewController? {

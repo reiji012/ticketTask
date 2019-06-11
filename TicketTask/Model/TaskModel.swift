@@ -19,7 +19,7 @@ class TaskModel {
     let TICKET_IS_COMPLETED = "isCompleted"
 
     var tasks: [[String:Any]]?
-    var lastCreateTask = ["title":"","attri":"","tickets":[]] as [String : Any]
+    var lastCreateTask = ["title":"","attri":"","tickets":[], "id":0] as [String : Any]
     
     static var sharedManager: TaskModel = {
         return TaskModel()
@@ -46,6 +46,7 @@ class TaskModel {
         var taskArray = ["title":"","attri":"","tickets":[], "id":0] as [String : Any]
         var ticketsArray: [String : Bool] = [:]
         var ticketsRealmArray: [[String : Any]] = []
+        let lastID = self.lastId()
         taskArray["title"] = taskName
         taskArray["attri"] = attri
         for ticket in tickets {
@@ -54,7 +55,7 @@ class TaskModel {
                          "isCompleted" : false] as [String : Any]
              ticketsRealmArray.append(array)
         }
-       
+        taskArray["id"] = lastID
         taskArray["tickets"] = ticketsArray
         self.tasks?.append(taskArray)
         self.lastCreateTask = taskArray
@@ -79,7 +80,7 @@ class TaskModel {
             let taskItem = TaskItem(value: taskDictionary)
             
             try! realm.write {
-                taskItem.id = self.lastId()
+                taskItem.id = lastID
                 realm.add(taskItem)
                 print("データベース追加後", results.count)
                 print(results)

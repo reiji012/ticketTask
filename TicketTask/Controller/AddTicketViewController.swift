@@ -24,13 +24,6 @@ class AddTicketViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.ticketTextField.text = ""
-//        self.navBar.titleLabel.text = "チケットの追加"
-//        self.navBar.leftButton.setTitle("キャンセル", for: .normal)
-//        self.navBar.leftButton.addTarget(self, action: #selector(self.cansel), for: .touchUpInside)
-//        self.navBar.rightButton.setTitle("追加", for: .normal)
-//        self.navBar.rightButton.addTarget(self, action: #selector(self.addTicket), for: .touchUpInside)
-//        self.navBar.backgroundColor = UIColor.lightGray
-//        self.view.addSubview(self.navBar)
     }
     
     
@@ -56,12 +49,44 @@ class AddTicketViewController: UIViewController {
         if (self.ticketTextField.text == "") {
             return
         }
-        mainVC?.addTicket(ticket: self.ticketTextField.text!)
+        let error = mainVC?.addTicket(ticket: self.ticketTextField.text!)
+        if error != nil {
+            showValidateAlert(error: error!)
+            return
+        }
         self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func tapCloseButton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    func showValidateAlert(error: ValidateError){
+        
+        var massage = ""
+        var title = ""
+        switch error {
+        case .taskValidError:
+            title = "データベースエラー"
+            massage = error.rawValue
+        case .ticketValidError:
+            title = "入力エラー"
+            massage = error.rawValue
+        default:
+            title = "保存に失敗しました"
+        }
+        
+        let alert: UIAlertController = UIAlertController(title: title, message: massage, preferredStyle:  UIAlertController.Style.alert)
+        
+        let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{
+            // ボタンが押された時の処理を書く（クロージャ実装）
+            (action: UIAlertAction!) -> Void in
+            print("OK")
+        })
+        
+        alert.addAction(defaultAction)
+        
+        present(alert, animated: true, completion: nil)
     }
     
 }
