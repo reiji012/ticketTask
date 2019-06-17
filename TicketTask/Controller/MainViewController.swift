@@ -192,6 +192,8 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
             self.scrollView.contentOffset = CGPoint(x:maxScrollPoint, y:0)
         })
         self.stopPoint = scrollView.contentOffset.x
+        self.centerViewAttri = taskView.taskViewModel?.attri
+        setGradationColor()
     }
     
     func taskEdited(attri: String) {
