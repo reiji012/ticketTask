@@ -12,6 +12,7 @@ target 'TicketTask' do
   pod 'SparrowKit'
   pod 'PKHUD', '~> 5.0'
   pod 'SPFakeBar'
+  pod 'SwiftyJSON', '~> 4.0'
   use_frameworks!
 
   # Pods for TicketTask
