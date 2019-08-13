@@ -14,7 +14,7 @@ import SPStorkController
 import SparrowKit
 import PKHUD
 
-class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource {
+class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,MainDelegate {
     
     // ViewModelの取得
     var taskViewModel = TaskViewModel()
@@ -41,15 +41,23 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
     
     let transition = BubbleTransition()
     
+    //カウンターアニメーションの時間設定
+    private var counterAnimationLabelDuration: TimeInterval = 3.0
+    
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var weatherImgView: UIImageView!
     @IBOutlet weak var weatherView: UIView!
     @IBOutlet weak var taskAddButton: UIButton!
+    @IBOutlet weak var maxTempLabel: WeatherLabel!
+    @IBOutlet weak var minTempLabel: WeatherLabel!
+    @IBOutlet weak var descriptionLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         taskViewModel.getTaskData()
+        taskViewModel.setupWetherInfo()
         scrollView.delegate = self
+        taskViewModel.delegate = self
         scrollView.showsVerticalScrollIndicator = false
         // Do any additional setup after loading the view.
         bindUI()
@@ -422,6 +430,17 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         UIView.animate(withDuration: 2, animations: {
             self.present(addTicketVC, animated: true, completion: nil)
         })
+    }
+    
+    func setWeatherInfo() {
+        DispatchQueue.main.async {
+            self.descriptionLabel.text = "(\(self.taskViewModel.todayWetherInfo![WetherInfoConst.DESCRIPTION.rawValue]!))"
+            self.weatherImgView.image = self.taskViewModel.weatherIconImage
+            
+            self.maxTempLabel.changeCountValueWithAnimation(Float("\(self.taskViewModel.todayWetherInfo![WetherInfoConst.TEMP_MAX.rawValue]!)")!, withDuration: self.counterAnimationLabelDuration, andAnimationType: .EaseOut, andCounterType: .Float)
+            self.minTempLabel.changeCountValueWithAnimation(Float("\(self.taskViewModel.todayWetherInfo![WetherInfoConst.TEMP_MIN.rawValue]!)")!, withDuration: self.counterAnimationLabelDuration, andAnimationType: .EaseOut, andCounterType: .Float)
+            
+        }
     }
     
 }
