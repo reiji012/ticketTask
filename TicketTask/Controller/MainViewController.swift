@@ -102,7 +102,8 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
     override func viewDidAppear(_ animated: Bool) {
         for i in 0..<self.taskViewModel.taskCount() {
             let taskView = self.view.viewWithTag(i + 1) as! TaskView
-            taskView.frame.size.height = 300
+            let myBoundSize: CGSize = UIScreen.main.bounds.size
+            taskView.frame.size.height = myBoundSize.height <= 600 ? myBoundSize.height : 300
         }
     }
     
