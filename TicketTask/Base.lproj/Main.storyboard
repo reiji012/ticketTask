@@ -52,7 +52,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="天気画像" translatesAutoresizingMaskIntoConstraints="NO" id="csz-Uo-139">
-                                        <rect key="frame" x="274" y="103" width="140" height="90"/>
+                                        <rect key="frame" x="274" y="105" width="140" height="90"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="140" id="ndy-wm-n5L"/>
                                             <constraint firstAttribute="height" constant="90" id="t3n-qq-e0n"/>
@@ -70,11 +70,11 @@
                                     <constraint firstItem="ju6-8I-7bi" firstAttribute="leading" secondItem="gGC-8B-Bg4" secondAttribute="trailing" id="4Mf-Jv-kyA"/>
                                     <constraint firstAttribute="trailing" secondItem="csz-Uo-139" secondAttribute="trailing" id="DD7-cn-hrI"/>
                                     <constraint firstItem="fcY-9n-INa" firstAttribute="top" secondItem="gGC-8B-Bg4" secondAttribute="bottom" constant="10.5" id="FBG-LO-dR9"/>
-                                    <constraint firstItem="csz-Uo-139" firstAttribute="top" secondItem="j1C-QR-cem" secondAttribute="top" constant="103" id="JxV-no-bvQ"/>
                                     <constraint firstItem="drW-ht-H27" firstAttribute="leading" secondItem="j1C-QR-cem" secondAttribute="leading" constant="20" id="LMu-lC-eXC"/>
                                     <constraint firstItem="drW-ht-H27" firstAttribute="top" secondItem="j1C-QR-cem" secondAttribute="top" constant="49" id="Mdd-fL-0zr"/>
                                     <constraint firstItem="gGC-8B-Bg4" firstAttribute="top" secondItem="drW-ht-H27" secondAttribute="bottom" constant="18.5" id="Mmo-WT-pyD"/>
                                     <constraint firstAttribute="height" constant="300" id="TwJ-6S-4QL"/>
+                                    <constraint firstItem="csz-Uo-139" firstAttribute="bottom" secondItem="fcY-9n-INa" secondAttribute="bottom" id="Vv2-0W-IWG"/>
                                     <constraint firstItem="gGC-8B-Bg4" firstAttribute="leading" secondItem="bCS-Oa-aiZ" secondAttribute="trailing" id="WO7-bG-FGe"/>
                                     <constraint firstItem="5WO-9k-8hm" firstAttribute="top" secondItem="gGC-8B-Bg4" secondAttribute="bottom" constant="10" id="Y1n-3h-RqF"/>
                                     <constraint firstItem="gGC-8B-Bg4" firstAttribute="centerY" secondItem="j1C-QR-cem" secondAttribute="centerY" id="ZbD-0O-oWI"/>
