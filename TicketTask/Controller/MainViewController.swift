@@ -21,6 +21,7 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
     var centerViewAttri: String?
     var tableViewArray = [UITableViewCell]()
     var taskViewIndex: Int?
+
     var isShowDetail: Bool = false {
         didSet(value) {
             self.scrollView.isScrollEnabled = value
@@ -30,6 +31,7 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
     weak var taskView: TaskView!
     var gradientLayer: CAGradientLayer = CAGradientLayer()
     //TaskViewの横幅
+    var taskViewHeight: CGFloat!
     let taskViewWidth:CGFloat = 400.0
     let currentWidth: Int = 400
     var stopPoint: CGFloat = 0.0
@@ -40,6 +42,8 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
     }
     
     let transition = BubbleTransition()
+    
+    var tabbarHeight: CGFloat!
     
     //カウンターアニメーションの時間設定
     private var counterAnimationLabelDuration: TimeInterval = 3.0
@@ -54,6 +58,11 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // 端末のサイズでタスクカードの大きさを設定
+        let myBoundSize: CGSize = UIScreen.main.bounds.size
+        taskViewHeight = myBoundSize.height <= 600 ? 250 : 300
+        
         taskViewModel.getTaskData()
         taskViewModel.setupWetherInfo()
         scrollView.delegate = self
@@ -62,6 +71,24 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         // Do any additional setup after loading the view.
         bindUI()
         createTaskViews()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        
+        for i in 0..<self.taskViewModel.taskCount() {
+            let taskView = self.view.viewWithTag(i + 1) as! TaskView
+            let myBoundSize: CGSize = UIScreen.main.bounds.size
+            taskView.frame.size.height = self.taskViewHeight
+        }
+        
+        let currentTaskView: TaskView = self.getCenterTaskView()
+        let myBoundSize: CGSize = UIScreen.main.bounds.size
+        currentTaskView.frame.size.height = self.isShowDetail ? myBoundSize.height : self.taskViewHeight
+    }
+    
+    override func viewDidLayoutSubviews() {
+        self.tabbarHeight = self.tabBarController!.tabBar.frame.size.height
     }
 
     @IBAction func pushAddBtn(_ sender: Any) {
@@ -73,6 +100,7 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         addTaskVC.modalPresentationStyle = .custom
         self.present(addTaskVC, animated: true, completion: nil)
     }
+    
     func bindUI() {
         
         weatherView.isOpaque = false // 不透明を false
@@ -87,6 +115,16 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         self.taskAddButton.layer.shadowOffset = CGSize(width: 3, height: 4)
     }
 
+    func changeTabbarStatus(isFront: Bool) {
+//        self.tabBarController!.tabBar.isHidden = !isFront
+        UIView.animate(withDuration: 2, animations: { () -> Void in
+            if isFront {
+                self.tabBarController!.tabBar.center.y -= 100
+            } else {
+                self.tabBarController!.tabBar.center.y += 100
+            }
+        })
+    }
 
     func setGradationColor() {
         UIView.animate(withDuration: 2, animations: { () -> Void in
@@ -98,14 +136,7 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
             self.view.layer.insertSublayer(self.gradientLayer, at: 0)
         })
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        for i in 0..<self.taskViewModel.taskCount() {
-            let taskView = self.view.viewWithTag(i + 1) as! TaskView
-            let myBoundSize: CGSize = UIScreen.main.bounds.size
-            taskView.frame.size.height = myBoundSize.height <= 600 ? myBoundSize.height : 300
-        }
-    }
+
     
     /*
      タスクを表示するViewを生成する
@@ -138,7 +169,7 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
             //タブになるUIVIewを作る
             taskView = UINib(nibName: "TaskView", bundle: Bundle.main).instantiate(withOwner: self, options: nil).first as? TaskView
             taskView.frame = CGRect.init(x: self.originX! + 25, y: currentY, width: 350.0, height: 300.0)
-            taskView.setViewModel(task: task)
+            taskView.setViewModel(task: task, mainVC: self)
             taskView.setTableView()
             taskView.topSafeAreaHeight = self.view.safeAreaInsets.top
             taskView.ticketTableView!.delegate = self
@@ -177,7 +208,7 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         let currentY = mainScreenHeight / 2 - 50
         taskView = UINib(nibName: "TaskView", bundle: Bundle.main).instantiate(withOwner: self, options: nil).first as? TaskView
         taskView.frame = CGRect.init(x: self.originX! + 18, y: currentY, width: currentTaskView.frame.size.width, height: currentTaskView.frame.size.height)
-        taskView.setViewModel(task: taskViewModel.taskModel!.lastCreateTask)
+        taskView.setViewModel(task: taskViewModel.taskModel!.lastCreateTask, mainVC: self)
         taskView.setTableView()
         
         taskView.ticketTableView!.delegate = self
@@ -230,7 +261,10 @@ class MainViewController: UIViewController,UIScrollViewDelegate,UITableViewDeleg
         } else {
             currentTaskView = self.view.viewWithTag(taskViewIndex!) as! TaskView
         }
-        let tableViewCell = currentTaskView.tableViewArray[indexPath.row]
+        guard let tableViewCell: UITableViewCell = currentTaskView.tableViewArray[indexPath.row] else {
+            return UITableViewCell()
+        }
+//        let tableViewCell = currentTaskView.tableViewArray[indexPath.row]
         print(indexPath.row)
         if tableViewCell is TicketTableViewCell {
             let currentTableViewCell: TicketTableViewCell = tableViewCell as! TicketTableViewCell

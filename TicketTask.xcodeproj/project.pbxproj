@@ -35,6 +35,8 @@
 		8E6B2A0E22FF227400113E30 /* Utill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6B2A0D22FF227400113E30 /* Utill.swift */; };
 		8E6B2A1022FF22E900113E30 /* WetherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6B2A0F22FF22E900113E30 /* WetherModel.swift */; };
 		8E6DAB9622FFF36A00A72D0D /* MainDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6DAB9522FFF36A00A72D0D /* MainDelegate.swift */; };
+		8E8A0B0E2314161500FFCE15 /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8A0B0D2314161500FFCE15 /* Const.swift */; };
+		8E8A0B10231437D600FFCE15 /* TicketTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8A0B0F231437D600FFCE15 /* TicketTabbarController.swift */; };
 		8EACD6D823027E7F0095F4A0 /* WeatherLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EACD6D723027E7F0095F4A0 /* WeatherLabel.swift */; };
 		B101601FF534DC3B8EE3D6CD /* Pods_TicketTask.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9175C5698A5BEEEE5CF1DB20 /* Pods_TicketTask.framework */; };
 /* End PBXBuildFile section */
@@ -71,6 +73,8 @@
 		8E6B2A0D22FF227400113E30 /* Utill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utill.swift; sourceTree = "<group>"; };
 		8E6B2A0F22FF22E900113E30 /* WetherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WetherModel.swift; sourceTree = "<group>"; };
 		8E6DAB9522FFF36A00A72D0D /* MainDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainDelegate.swift; sourceTree = "<group>"; };
+		8E8A0B0D2314161500FFCE15 /* Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
+		8E8A0B0F231437D600FFCE15 /* TicketTabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketTabbarController.swift; sourceTree = "<group>"; };
 		8EACD6D723027E7F0095F4A0 /* WeatherLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherLabel.swift; sourceTree = "<group>"; };
 		9175C5698A5BEEEE5CF1DB20 /* Pods_TicketTask.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TicketTask.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3E7EA07422E788A8A52AC14 /* Pods-TicketTask.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TicketTask.debug.xcconfig"; path = "Target Support Files/Pods-TicketTask/Pods-TicketTask.debug.xcconfig"; sourceTree = "<group>"; };
@@ -164,6 +168,7 @@
 				2BF5B77B22855657007D0266 /* AddTaskViewController.swift */,
 				2BF44280229BEB8C00F32613 /* EditTaskViewController.swift */,
 				2B84AD54229FE2C9004B484D /* AddTicketViewController.swift */,
+				8E8A0B0F231437D600FFCE15 /* TicketTabbarController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -221,6 +226,7 @@
 			isa = PBXGroup;
 			children = (
 				8E6B2A0D22FF227400113E30 /* Utill.swift */,
+				8E8A0B0D2314161500FFCE15 /* Const.swift */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -404,7 +410,9 @@
 				8E6B2A0E22FF227400113E30 /* Utill.swift in Sources */,
 				8E6B2A0B22FD4B0700113E30 /* WetherAPIRequest.swift in Sources */,
 				2BF5B779228512FA007D0266 /* GradationColors.swift in Sources */,
+				8E8A0B10231437D600FFCE15 /* TicketTabbarController.swift in Sources */,
 				2BF5B74D22814521007D0266 /* AppDelegate.swift in Sources */,
+				8E8A0B0E2314161500FFCE15 /* Const.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
