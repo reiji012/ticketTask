@@ -47,7 +47,9 @@ class TaskView: UIView{
     let disposeBag = DisposeBag()
 
     var gesturView:UIView?
-    func setViewModel(task:Dictionary<String, Any>) {
+    
+    func setViewModel(task:Dictionary<String, Any>, mainVC: MainViewController) {
+        self.mainViewController = mainVC
         let taskName = (task["title"] as! String)
         // taskViewModelの取得
         taskViewModel = TaskViewModel(taskName: taskName)
@@ -65,7 +67,6 @@ class TaskView: UIView{
     }
 
     @IBAction func tapMenuBtn(_ sender: Any) {
-        mainViewController = getMainViewController()
 
         var selectIndex = 0
         let actions = [
@@ -187,14 +188,37 @@ class TaskView: UIView{
     }
     
     func showAddticketView() {
-        let storyboard = UIStoryboard(name: "AddTicket", bundle: nil)
-        let addTicketViewController = storyboard.instantiateInitialViewController() as! AddTicketViewController
-        let trantisionDelegate = SPStorkTransitioningDelegate()
-//        trantisionDelegate.translateForDismiss = 100
-        trantisionDelegate.customHeight = 400
-        addTicketViewController.transitioningDelegate = trantisionDelegate
-        addTicketViewController.modalPresentationStyle = .custom
-        self.mainViewController?.showAddTicketView(addTicketVC: addTicketViewController, taskVM: self.taskViewModel!)
+//        let storyboard = UIStoryboard(name: "AddTicket", bundle: nil)
+//        let addTicketViewController = storyboard.instantiateInitialViewController() as! AddTicketViewController
+//        let trantisionDelegate = SPStorkTransitioningDelegate()
+////        trantisionDelegate.translateForDismiss = 100
+//        trantisionDelegate.customHeight = self.mainViewController?.taskViewHeight
+//        addTicketViewController.transitioningDelegate = trantisionDelegate
+//        addTicketViewController.modalPresentationStyle = .custom
+//        self.mainViewController?.showAddTicketView(addTicketVC: addTicketViewController, taskVM: self.taskViewModel!)
+        
+        var inputTextField: UITextField?
+        
+        //alertの表示文言
+        let alertController: UIAlertController = UIAlertController(title: "チケットの追加", message: "", preferredStyle: .alert)
+        
+        //キャンセルボタンを押す
+        let cancelAction: UIAlertAction = UIAlertAction(title: "キャンセル", style: .cancel) { action -> Void in
+            // キャンセルを押した時の処理
+        }
+        alertController.addAction(cancelAction)
+        
+        let addAction: UIAlertAction = UIAlertAction(title: "追加", style: .default) { action -> Void in
+            //追加ボタンを押した時の処理
+        }
+        
+        alertController.addAction(addAction)
+        
+        alertController.addTextField { textField -> Void in
+            inputTextField = textField
+            textField.placeholder = "追加するチケット"
+        }
+        mainViewController!.present(alertController, animated: true, completion: nil)
     }
     
     func setLayout() {
@@ -251,7 +275,6 @@ class TaskView: UIView{
     
     func changeViewSize() {
         //拡大縮小の処理
-        mainViewController = getMainViewController()
         if (self.mainViewController != nil) {
             self.mainViewController?.isShowDetail = !self.isShowDetail
         }
@@ -267,6 +290,7 @@ class TaskView: UIView{
             self.titleTopConst.constant = 160
             self.menuBtnLeftConst.constant -= ((myBoundWidht - self.defoultWidth!))
             self.progressBarWidthConst.constant -= (myBoundWidht - self.defoultWidth!)
+            
         } else {
             // 拡大するときの処理
             if 0 < self.mainViewController!.topSafeAreaHeight() {
@@ -291,6 +315,7 @@ class TaskView: UIView{
                 self.backButton.isHidden = true
                 self.isShowDetail = false
                 self.gesturView?.isUserInteractionEnabled = false
+                self.mainViewController!.changeTabbarStatus(isFront: true)
             } else {
                 self.menuButton.layoutIfNeeded()
                 self.layoutIfNeeded()
@@ -307,6 +332,8 @@ class TaskView: UIView{
                 self.layer.cornerRadius = 0
                 self.isShowDetail = true
                 self.gesturView?.isUserInteractionEnabled = true
+                self.mainViewController!.changeTabbarStatus(isFront: false)
+
             }
         }, completion: { finished in
             self.ticketTableView.isHidden = self.isShowDetail ? false : true
