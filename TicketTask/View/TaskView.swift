@@ -32,7 +32,7 @@ class TaskView: UIView{
     
     var tableViewArray = [UITableViewCell]()
     var taskViewModel: TaskViewModel?
-    var gradationColors = GradationColors()
+    var ticketTaskColor = TicketTaskColor()
     var defoultWidth: CGFloat?
     var defoultHeight: CGFloat?
     var defoultX: CGFloat?
@@ -40,6 +40,8 @@ class TaskView: UIView{
     var ticketsCount: Int = 0
     
     var topSafeAreaHeight: CGFloat = 0
+    
+    var layerChangeCount: UInt32 = 0
     
    
     var mainViewController: MainViewController? = nil
@@ -64,6 +66,10 @@ class TaskView: UIView{
             action: #selector(self.tapped(_:)))
         self.addGestureRecognizer(tapGesture)
         print(self.frame.size.width)
+        
+        // UIImageView の場合
+        attriImageView.image = attriImageView.image?.withRenderingMode(.alwaysTemplate)
+        attriImageView.tintColor = taskViewModel?.taskColor
     }
 
     @IBAction func tapMenuBtn(_ sender: Any) {
@@ -167,7 +173,7 @@ class TaskView: UIView{
         
         self.taskViewModel!.taskAttri.subscribe(onNext: { [attriImageView] in
             let taskAttr = $0
-            attriImageView!.image = taskAttr == "生活" ? UIImage(named: "人画像") : UIImage(named: "kabann")
+            attriImageView!.image = self.taskViewModel?.iconImage?.withRenderingMode(.alwaysTemplate)
         }).disposed(by: disposeBag)
         
     }
@@ -184,7 +190,7 @@ class TaskView: UIView{
     }
     
     func setImage() {
-        self.attriImageView.image = self.taskViewModel!.attri == "生活" ? UIImage(named: "人画像") : UIImage(named: "kabann")
+        self.attriImageView.image = self.taskViewModel?.iconImage?.withRenderingMode(.alwaysTemplate)
     }
     
     func showAddticketView() {
@@ -370,17 +376,17 @@ class TaskView: UIView{
     
     func setGradationColor() {
          let gradientLayer = CAGradientLayer()
-        self.ticketProgressBar.tintColor = self.taskViewModel?.attri == "生活" ? gradationColors.attriLifeBottomColor : gradationColors.attriWorkBottomColor
-        
-        let topColor = self.taskViewModel?.attri == "生活" ? self.gradationColors.attriLifeTopColor : gradationColors.attriWorkTopColor
-        let bottomColor = self.taskViewModel?.attri == "生活" ? self.gradationColors.attriLifeBottomColor : gradationColors.attriWorkBottomColor
-        let gradientColors: [CGColor] = [topColor.cgColor, bottomColor.cgColor]
+        self.ticketProgressBar.tintColor = self.taskViewModel?.taskColor
+        self.attriImageView.image = self.attriImageView.image?.withRenderingMode(.alwaysTemplate)
+        self.attriImageView.tintColor = self.taskViewModel?.taskColor
+        let gradientColors: [CGColor] = ticketTaskColor.getGradation(colorStr: self.taskViewModel!.colorString!)
         gradientLayer.colors = gradientColors
         gradientLayer.bounds = self.ticketAddBtn.bounds
         gradientLayer.frame.origin.x += 20
         gradientLayer.frame.origin.y += 20
 //        gradientLayer.cornerRadius = self.ticketAddBtn.bounds.midY
-        self.ticketAddBtn.layer.insertSublayer(gradientLayer, at: 0)
+        self.layerChangeCount += 1
+        self.ticketAddBtn.layer.insertSublayer(gradientLayer, at: self.layerChangeCount)
 //        self.view.layer.insertSublayer(self.gradientLayer, at: 0)
 //        self.ticketAddBtn.layer.shadowOpacity = 0.5
 //        self.ticketAddBtn.layer.shadowRadius = 12

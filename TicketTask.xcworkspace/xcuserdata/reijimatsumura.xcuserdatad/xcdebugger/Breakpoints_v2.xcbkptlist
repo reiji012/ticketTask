@@ -11,12 +11,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TicketTask/Controller/MainViewController.swift"
-            timestampString = "588573174.86484"
+            timestampString = "589718133.531213"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "91"
-            endingLineNumber = "91"
-            landmarkName = "viewDidLayoutSubviews()"
+            startingLineNumber = "197"
+            endingLineNumber = "197"
+            landmarkName = "addNewTaskView()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TicketTask/ViewModel/TaskViewModel.swift"
+            timestampString = "589718133.531852"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "108"
+            endingLineNumber = "108"
+            landmarkName = "createTask(taskName:attri:colorStr:iconStr:tickets:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -27,12 +43,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TicketTask/Controller/MainViewController.swift"
-            timestampString = "588573174.865067"
+            timestampString = "589718133.531986"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "120"
-            endingLineNumber = "120"
-            landmarkName = "changeTabbarStatus(isFront:)"
+            startingLineNumber = "258"
+            endingLineNumber = "258"
+            landmarkName = "deleteTask(view:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

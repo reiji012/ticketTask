@@ -29,7 +29,6 @@
 		2BF5B76C22829DCD007D0266 /* TicketTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF5B76A22829DCD007D0266 /* TicketTableViewCell.swift */; };
 		2BF5B76D22829DCD007D0266 /* TicketTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2BF5B76B22829DCD007D0266 /* TicketTableViewCell.xib */; };
 		2BF5B7722282A0AB007D0266 /* UIView+TicketTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF5B7712282A0AB007D0266 /* UIView+TicketTask.swift */; };
-		2BF5B779228512FA007D0266 /* GradationColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF5B778228512FA007D0266 /* GradationColors.swift */; };
 		2BF5B77C22855657007D0266 /* AddTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF5B77B22855657007D0266 /* AddTaskViewController.swift */; };
 		8E6B2A0B22FD4B0700113E30 /* WetherAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6B2A0A22FD4B0700113E30 /* WetherAPIRequest.swift */; };
 		8E6B2A0E22FF227400113E30 /* Utill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6B2A0D22FF227400113E30 /* Utill.swift */; };
@@ -37,7 +36,14 @@
 		8E6DAB9622FFF36A00A72D0D /* MainDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6DAB9522FFF36A00A72D0D /* MainDelegate.swift */; };
 		8E8A0B0E2314161500FFCE15 /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8A0B0D2314161500FFCE15 /* Const.swift */; };
 		8E8A0B10231437D600FFCE15 /* TicketTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8A0B0F231437D600FFCE15 /* TicketTabbarController.swift */; };
+		8E8A0B12231605E400FFCE15 /* TaskIconImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8A0B11231605E400FFCE15 /* TaskIconImageView.swift */; };
+		8E8A0B182316A36F00FFCE15 /* Color.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E8A0B172316A36F00FFCE15 /* Color.storyboard */; };
+		8E8A0B1A2316B04B00FFCE15 /* ColorSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8A0B192316B04B00FFCE15 /* ColorSelectViewController.swift */; };
+		8E8A0B1C2318D55E00FFCE15 /* Icon.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E8A0B1B2318D55E00FFCE15 /* Icon.storyboard */; };
+		8E8A0B1E2318D9C900FFCE15 /* IconSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8A0B1D2318D9C900FFCE15 /* IconSelectViewController.swift */; };
+		8E9EC2982318FCEE00F9896F /* TicketTaskColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9EC2972318FCEE00F9896F /* TicketTaskColor.swift */; };
 		8EACD6D823027E7F0095F4A0 /* WeatherLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EACD6D723027E7F0095F4A0 /* WeatherLabel.swift */; };
+		8EE5B773231BC5B200C2B70A /* TaskEditDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE5B772231BC5B200C2B70A /* TaskEditDelegate.swift */; };
 		B101601FF534DC3B8EE3D6CD /* Pods_TicketTask.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9175C5698A5BEEEE5CF1DB20 /* Pods_TicketTask.framework */; };
 /* End PBXBuildFile section */
 
@@ -66,7 +72,6 @@
 		2BF5B76A22829DCD007D0266 /* TicketTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketTableViewCell.swift; sourceTree = "<group>"; };
 		2BF5B76B22829DCD007D0266 /* TicketTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TicketTableViewCell.xib; sourceTree = "<group>"; };
 		2BF5B7712282A0AB007D0266 /* UIView+TicketTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+TicketTask.swift"; sourceTree = "<group>"; };
-		2BF5B778228512FA007D0266 /* GradationColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GradationColors.swift; path = View/Colors/GradationColors.swift; sourceTree = "<group>"; };
 		2BF5B77B22855657007D0266 /* AddTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskViewController.swift; sourceTree = "<group>"; };
 		37CFDF9363A1FC7BF7495C74 /* Pods-TicketTask.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TicketTask.release.xcconfig"; path = "Target Support Files/Pods-TicketTask/Pods-TicketTask.release.xcconfig"; sourceTree = "<group>"; };
 		8E6B2A0A22FD4B0700113E30 /* WetherAPIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WetherAPIRequest.swift; sourceTree = "<group>"; };
@@ -75,7 +80,14 @@
 		8E6DAB9522FFF36A00A72D0D /* MainDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainDelegate.swift; sourceTree = "<group>"; };
 		8E8A0B0D2314161500FFCE15 /* Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
 		8E8A0B0F231437D600FFCE15 /* TicketTabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketTabbarController.swift; sourceTree = "<group>"; };
+		8E8A0B11231605E400FFCE15 /* TaskIconImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskIconImageView.swift; sourceTree = "<group>"; };
+		8E8A0B172316A36F00FFCE15 /* Color.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Color.storyboard; sourceTree = "<group>"; };
+		8E8A0B192316B04B00FFCE15 /* ColorSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSelectViewController.swift; sourceTree = "<group>"; };
+		8E8A0B1B2318D55E00FFCE15 /* Icon.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Icon.storyboard; sourceTree = "<group>"; };
+		8E8A0B1D2318D9C900FFCE15 /* IconSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectViewController.swift; sourceTree = "<group>"; };
+		8E9EC2972318FCEE00F9896F /* TicketTaskColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TicketTaskColor.swift; path = View/Colors/TicketTaskColor.swift; sourceTree = "<group>"; };
 		8EACD6D723027E7F0095F4A0 /* WeatherLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherLabel.swift; sourceTree = "<group>"; };
+		8EE5B772231BC5B200C2B70A /* TaskEditDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskEditDelegate.swift; sourceTree = "<group>"; };
 		9175C5698A5BEEEE5CF1DB20 /* Pods_TicketTask.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TicketTask.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3E7EA07422E788A8A52AC14 /* Pods-TicketTask.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TicketTask.debug.xcconfig"; path = "Target Support Files/Pods-TicketTask/Pods-TicketTask.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -95,21 +107,21 @@
 		2BB2EE4F228AB96300769AAA /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				2BE551692292A7E300D5AFA9 /* RealmItem */,
 				2BB2EE50228AB97200769AAA /* ActionType.swift */,
 				2B84AD5A22A1267F004B484D /* ValidateError.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
 		};
-		2BE551692292A7E300D5AFA9 /* RealmItem */ = {
+		2BE551692292A7E300D5AFA9 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
 				2BE551652292695000D5AFA9 /* TaskItem.swift */,
 				2BE55167229299A100D5AFA9 /* TicketModel.swift */,
 				2BE5516A2292A83700D5AFA9 /* TasksData.swift */,
 			);
-			name = RealmItem;
+			name = Entity;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		2BF5B74022814521007D0266 = {
@@ -151,11 +163,11 @@
 		2BF5B75E22814657007D0266 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				2BF5B77A22851309007D0266 /* Colors */,
 				2BF5B76E22829FEF007D0266 /* extention */,
 				2BF5B76A22829DCD007D0266 /* TicketTableViewCell.swift */,
 				2BF5B7682281562D007D0266 /* TaskView.swift */,
 				8EACD6D723027E7F0095F4A0 /* WeatherLabel.swift */,
+				8E8A0B11231605E400FFCE15 /* TaskIconImageView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -169,6 +181,8 @@
 				2BF44280229BEB8C00F32613 /* EditTaskViewController.swift */,
 				2B84AD54229FE2C9004B484D /* AddTicketViewController.swift */,
 				8E8A0B0F231437D600FFCE15 /* TicketTabbarController.swift */,
+				8E8A0B192316B04B00FFCE15 /* ColorSelectViewController.swift */,
+				8E8A0B1D2318D9C900FFCE15 /* IconSelectViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -184,6 +198,7 @@
 		2BF5B7612281467E007D0266 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				2BE551692292A7E300D5AFA9 /* Entity */,
 				2BF5B7642281498F007D0266 /* TaskModel.swift */,
 				8E6B2A0F22FF22E900113E30 /* WetherModel.swift */,
 			);
@@ -201,7 +216,7 @@
 		2BF5B77A22851309007D0266 /* Colors */ = {
 			isa = PBXGroup;
 			children = (
-				2BF5B778228512FA007D0266 /* GradationColors.swift */,
+				8E9EC2972318FCEE00F9896F /* TicketTaskColor.swift */,
 			);
 			name = Colors;
 			sourceTree = "<group>";
@@ -225,6 +240,7 @@
 		8E6B2A0C22FF225C00113E30 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				2BF5B77A22851309007D0266 /* Colors */,
 				8E6B2A0D22FF227400113E30 /* Utill.swift */,
 				8E8A0B0D2314161500FFCE15 /* Const.swift */,
 			);
@@ -235,6 +251,7 @@
 			isa = PBXGroup;
 			children = (
 				8E6DAB9522FFF36A00A72D0D /* MainDelegate.swift */,
+				8EE5B772231BC5B200C2B70A /* TaskEditDelegate.swift */,
 			);
 			path = Delegate;
 			sourceTree = "<group>";
@@ -248,6 +265,8 @@
 				2BF5B75022814521007D0266 /* Main.storyboard */,
 				2BF44282229CC63C00F32613 /* Edit.storyboard */,
 				2BF5B75522814521007D0266 /* LaunchScreen.storyboard */,
+				8E8A0B172316A36F00FFCE15 /* Color.storyboard */,
+				8E8A0B1B2318D55E00FFCE15 /* Icon.storyboard */,
 			);
 			name = Storyboards;
 			sourceTree = "<group>";
@@ -336,6 +355,8 @@
 				2BF44285229CE1FE00F32613 /* Add.storyboard in Resources */,
 				2BF5B75422814521007D0266 /* Assets.xcassets in Resources */,
 				2BF5B75222814521007D0266 /* Main.storyboard in Resources */,
+				8E8A0B182316A36F00FFCE15 /* Color.storyboard in Resources */,
+				8E8A0B1C2318D55E00FFCE15 /* Icon.storyboard in Resources */,
 				2BF44283229CC63C00F32613 /* Edit.storyboard in Resources */,
 				2BF5B767228155EC007D0266 /* TaskView.xib in Resources */,
 			);
@@ -398,18 +419,22 @@
 				2B84AD55229FE2C9004B484D /* AddTicketViewController.swift in Sources */,
 				2BE55168229299A100D5AFA9 /* TicketModel.swift in Sources */,
 				2BE551662292695000D5AFA9 /* TaskItem.swift in Sources */,
+				8E8A0B1E2318D9C900FFCE15 /* IconSelectViewController.swift in Sources */,
 				8E6B2A1022FF22E900113E30 /* WetherModel.swift in Sources */,
 				2B84AD5B22A1267F004B484D /* ValidateError.swift in Sources */,
 				2BF5B7722282A0AB007D0266 /* UIView+TicketTask.swift in Sources */,
 				2BF5B7692281562D007D0266 /* TaskView.swift in Sources */,
+				8E8A0B12231605E400FFCE15 /* TaskIconImageView.swift in Sources */,
+				8EE5B773231BC5B200C2B70A /* TaskEditDelegate.swift in Sources */,
+				8E8A0B1A2316B04B00FFCE15 /* ColorSelectViewController.swift in Sources */,
 				2BB2EE51228AB97200769AAA /* ActionType.swift in Sources */,
+				8E9EC2982318FCEE00F9896F /* TicketTaskColor.swift in Sources */,
 				8E6DAB9622FFF36A00A72D0D /* MainDelegate.swift in Sources */,
 				2BE5516B2292A83700D5AFA9 /* TasksData.swift in Sources */,
 				2BF44281229BEB8C00F32613 /* EditTaskViewController.swift in Sources */,
 				8EACD6D823027E7F0095F4A0 /* WeatherLabel.swift in Sources */,
 				8E6B2A0E22FF227400113E30 /* Utill.swift in Sources */,
 				8E6B2A0B22FD4B0700113E30 /* WetherAPIRequest.swift in Sources */,
-				2BF5B779228512FA007D0266 /* GradationColors.swift in Sources */,
 				8E8A0B10231437D600FFCE15 /* TicketTabbarController.swift in Sources */,
 				2BF5B74D22814521007D0266 /* AppDelegate.swift in Sources */,
 				8E8A0B0E2314161500FFCE15 /* Const.swift in Sources */,

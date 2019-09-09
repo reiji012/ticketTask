@@ -13,10 +13,12 @@ import PKHUD
 import RxSwift
 import SPFakeBar
 
-class EditTaskViewController: UIViewController, UITextFieldDelegate {
+class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPresentationControllerDelegate, TaskEditDalegate {
 
     let disposeBag = DisposeBag()
     
+    @IBOutlet weak var iconImageView: UIImageView!
+    @IBOutlet weak var colorView: UIView!
     @IBOutlet weak var attriTextField: UITextField!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var timerBtn: UISegmentedControl!
@@ -25,17 +27,23 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var scrollView: UIScrollView!
     
     let navBar = SPFakeBarView.init(style: .stork)
-    var gradationColors: GradationColors?
+    var ticketTaskColor: TicketTaskColor?
     var gradientLayer: CAGradientLayer = CAGradientLayer()
     var taskViewModel: TaskViewModel?
     var mainVC: MainViewController?
     var isEdited: Bool = false
     var pickerView: UIPickerView = UIPickerView()
+    
+    var currentColorStr: String?
+    var currentIconStr: String?
+    var currentColor: UIColor?
+    var currentIcon: UIImage?
+    
     let attris: [String] = ["生活", "仕事"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        gradationColors = GradationColors()
+        ticketTaskColor = TicketTaskColor()
         bind()
         self.modalPresentationCapturesStatusBarAppearance = true
         self.view.backgroundColor = UIColor.white
@@ -50,8 +58,8 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate {
         
         self.titleTextField.text = taskViewModel?.taskName
         self.attriTextField.text = taskViewModel?.attri
-        setPickerView()
-        setGradationColor()
+        
+        self.initStateSet()
     }
     
     @objc func cansel() {
@@ -66,12 +74,51 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate {
         if (self.titleTextField.text == nil) {
             return
         }
-        self.taskViewModel?.taskEdited(afterTaskName: self.titleTextField.text!, afterTaskAttr: self.attriTextField.text!)
+        self.taskViewModel?.taskEdited(afterTaskName: self.titleTextField.text!, afterTaskAttr: self.attriTextField.text!, color: currentColor!, colorStr: currentColorStr!, image: currentIcon!, imageStr: currentIconStr!)
         
         self.dismiss(animated: true, completion:
             {HUD.flash(.success, onView: self.mainVC!.view, delay: 0.5)}
         )
-        self.mainVC?.taskEdited(attri: self.attriTextField.text!)
+        self.mainVC?.taskEdited(attri: self.attriTextField.text!, color: currentColorStr!)
+    }
+    
+    @IBAction func tapIcon(_ sender: Any) {
+        let storyboard: UIStoryboard = UIStoryboard(name: "Icon", bundle: nil)
+        let iconSelectVC = storyboard.instantiateInitialViewController() as! IconSelectViewController
+        iconSelectVC.editTaskVC = self
+        iconSelectVC.delegate = self
+        iconSelectVC.modalPresentationStyle = .overFullScreen
+        
+        iconSelectVC.preferredContentSize = CGSize(width: 200, height: 200)
+        iconSelectVC.popoverPresentationController?.sourceView = view
+        // ピヨッと表示する位置の指定
+        iconSelectVC.popoverPresentationController?.sourceRect = (sender as AnyObject).frame
+        // 矢印が出る方向の指定
+        iconSelectVC.popoverPresentationController?.permittedArrowDirections = .any
+        // デリゲートの設定
+        iconSelectVC.popoverPresentationController?.delegate = self
+        //表示
+        present(iconSelectVC, animated: true, completion: nil)
+    }
+    
+    
+    @IBAction func tapColorView(_ sender: Any) {
+        let storyboard: UIStoryboard = UIStoryboard(name: "Color", bundle: nil)
+        let colorCollectionVC = storyboard.instantiateInitialViewController() as! ColorSelectViewController
+        colorCollectionVC.delegate = self
+        colorCollectionVC.editTaskVC = self
+        colorCollectionVC.modalPresentationStyle = .overFullScreen
+        
+        colorCollectionVC.preferredContentSize = CGSize(width: 200, height: 200)
+        colorCollectionVC.popoverPresentationController?.sourceView = view
+        // ピヨッと表示する位置の指定
+        colorCollectionVC.popoverPresentationController?.sourceRect = (sender as AnyObject).frame
+        // 矢印が出る方向の指定
+        colorCollectionVC.popoverPresentationController?.permittedArrowDirections = .any
+        // デリゲートの設定
+        colorCollectionVC.popoverPresentationController?.delegate = self
+        //表示
+        present(colorCollectionVC, animated: true, completion: nil)
     }
     
     func bind() {
@@ -94,17 +141,51 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate {
             .disposed(by: disposeBag)
     }
     
+    func initStateSet() {
+        currentIcon = self.taskViewModel?.iconImage?.withRenderingMode(.alwaysTemplate)
+        currentColor = self.taskViewModel?.taskColor
+        currentIconStr = self.taskViewModel?.iconString
+        currentColorStr = self.taskViewModel?.colorString
+        
+        setPickerView()
+        setColorView()
+        setIconImage()
+        setGradationColor()
+    }
+    
     func setGradationColor() {
-        UIView.animate(withDuration: 2, animations: { () -> Void in
-            let topColor = self.attriTextField.text == "生活" ? self.gradationColors?.attriLifeTopColor : self.gradationColors?.attriWorkTopColor
-            let bottomColor = self.attriTextField.text == "生活" ? self.gradationColors?.attriLifeBottomColor : self.gradationColors?.attriWorkBottomColor
-            let gradientColors: [CGColor] = [topColor!.cgColor, bottomColor!.cgColor]
-            self.timerBtn.tintColor = self.attriTextField.text == "生活" ? self.gradationColors?.attriLifeBottomColor : self.gradationColors?.attriWorkBottomColor
-            self.gradientLayer.colors = gradientColors
+        UIView.animate(withDuration: 1.5, animations: { () -> Void in
+            let gradationColor: [CGColor] = self.ticketTaskColor!.getGradation(colorStr: self.currentColorStr!)
+            self.timerBtn.tintColor = self.currentColor
+            self.gradientLayer.colors = gradationColor
             self.gradientLayer.frame = self.view.bounds
 //            self.gradientLayer.locations = [0.3, 0.7]
             self.view.layer.insertSublayer(self.gradientLayer, at: 0)
         })
+    }
+    
+    func selectedColor(color: UIColor, colorStr: String) {
+        currentColorStr = colorStr
+        currentColor = color
+        setColorView()
+        setIconImage()
+        setGradationColor()
+    }
+    
+    func selectedIcon(icon: UIImage, iconStr: String) {
+        currentIconStr = iconStr
+        currentIcon = icon.withRenderingMode(.alwaysTemplate)
+        setIconImage()
+    }
+    
+    
+    func setColorView() {
+        self.colorView.backgroundColor = self.currentColor
+    }
+    
+    func setIconImage() {
+        self.iconImageView.image = currentIcon
+        self.iconImageView.tintColor = currentColor
     }
     
     func showAlert() {
@@ -151,6 +232,11 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate {
         let defoultIndex = self.taskViewModel?.attri == "仕事" ? 1 : 2
         pickerView.selectRow(defoultIndex, inComponent: 0, animated: false)
     }
+    
+    func changeColor() {
+        
+    }
+    
     
     // 決定ボタン押下
     @objc func done() {
@@ -211,6 +297,7 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate {
     }
 
 }
+
 extension EditTaskViewController : UIPickerViewDelegate, UIPickerViewDataSource {
     
     // ドラムロールの列数

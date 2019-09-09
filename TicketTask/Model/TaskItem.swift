@@ -13,6 +13,9 @@ class TaskItem: Object {
     @objc dynamic var id: Int = 0
     @objc dynamic var taskTitle: String = ""
     @objc dynamic var attri: String = ""
+    @objc dynamic var color: String = ""
+    @objc dynamic var icon: String = ""
+    @objc dynamic var category: String = ""
     let tickets = List<TicketModel>()
     
     override static func primaryKey() -> String? {
