@@ -10,4 +10,6 @@ import Foundation
 
 protocol MainDelegate {
     func setWeatherInfo()
+    func setTaskEmptyViewState(isHidden: Bool)
+    func createTaskViews()
 }

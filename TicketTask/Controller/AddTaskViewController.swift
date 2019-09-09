@@ -11,7 +11,7 @@ import SPStorkController
 import SparrowKit
 import SPFakeBar
 
-class AddTaskViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource{
+class AddTaskViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, UIPopoverPresentationControllerDelegate, TaskEditDalegate{
     
     var tableView: UITableView = UITableView()
     @IBOutlet weak var scrolView: UIScrollView!
@@ -23,6 +23,8 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITableViewD
     @IBOutlet weak var attriTextField: UITextField!
     @IBOutlet weak var ticketTextField: UITextField!
     @IBOutlet weak var ticketCellLabel: UILabel!
+    @IBOutlet weak var iconImageView: UIImageView!
+    @IBOutlet weak var colorView: UIView!
     
     var pickerView: UIPickerView = UIPickerView()
     let attris: [String] = ["生活", "仕事"]
@@ -30,7 +32,7 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITableViewD
     var tickets: [String] = []
     var taskViewModel = TaskViewModel()
     var beforeViewAttri: String?
-    var gradationColors = GradationColors()
+    var ticketTaskColor = TicketTaskColor()
     var mainVC: MainViewController?
     var ticketArray = [String]()
     let navBar = SPFakeBarView.init(style: .stork)
@@ -38,6 +40,11 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITableViewD
     var screenHeight:CGFloat!
     // Screenの幅
     var screenWidth:CGFloat!
+    
+    private var currentColor: UIColor!
+    private var currentColorStr: String!
+    private var currentIcon: UIImage!
+    private var currentIconStr: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,6 +60,7 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITableViewD
         let screenSize: CGRect = UIScreen.main.bounds
         screenWidth = screenSize.width
         screenHeight = screenSize.height
+        initSetState()
         bindUIs()
         setPickerView()
         
@@ -79,6 +87,17 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITableViewD
 //        self.closeViewButton.layer.shadowOffset = CGSize(width: 1, height: 2)
     }
     
+    func initSetState() {
+        let iconStr = "icon-0"
+        self.currentColor = self.ticketTaskColor.ticketTaskOrange_1
+        self.currentColorStr = ticketTaskColor.ORANGE
+        self.currentIcon = UIImage(named: iconStr)?.withRenderingMode(.alwaysTemplate)
+        self.currentIconStr = iconStr
+        self.setColorView()
+        self.setIconImage()
+        self.setGradationColor()
+    }
+    
     @objc func cansel() {
         self.dismiss(animated: true, completion: nil)
     }
@@ -88,7 +107,7 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITableViewD
             showValidateAlert(error: .inputValidError)
             return
         }
-        let error = taskViewModel.createTask(taskName: titleTextField.text!, attri: attriTextField.text!, tickets: tickets)
+        let error = mainVC!.taskViewModel.createTask(taskName: titleTextField.text!, attri: attriTextField.text!, colorStr: currentColorStr, iconStr: currentIconStr, tickets: tickets)
         if (error != nil) {
             self.showValidateAlert(error: error!)
             return
@@ -102,13 +121,72 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITableViewD
         self.dismiss(animated: true, completion: nil)
     }
     
+    @IBAction func tapIconView(_ sender: Any) {
+        let storyboard: UIStoryboard = UIStoryboard(name: "Icon", bundle: nil)
+        let iconSelectVC = storyboard.instantiateInitialViewController() as! IconSelectViewController
+        iconSelectVC.delegate = self
+        iconSelectVC.modalPresentationStyle = .overFullScreen
+        
+        iconSelectVC.preferredContentSize = CGSize(width: 200, height: 200)
+        iconSelectVC.popoverPresentationController?.sourceView = view
+        // ピヨッと表示する位置の指定
+        iconSelectVC.popoverPresentationController?.sourceRect = (sender as AnyObject).frame
+        // 矢印が出る方向の指定
+        iconSelectVC.popoverPresentationController?.permittedArrowDirections = .any
+        // デリゲートの設定
+        iconSelectVC.popoverPresentationController?.delegate = self
+        //表示
+        present(iconSelectVC, animated: true, completion: nil)
+    }
+    
+    @IBAction func tapColorView(_ sender: Any) {
+        let storyboard: UIStoryboard = UIStoryboard(name: "Color", bundle: nil)
+        let colorCollectionVC = storyboard.instantiateInitialViewController() as! ColorSelectViewController
+        colorCollectionVC.delegate = self
+        colorCollectionVC.modalPresentationStyle = .overFullScreen
+        
+        colorCollectionVC.preferredContentSize = CGSize(width: 200, height: 200)
+        colorCollectionVC.popoverPresentationController?.sourceView = view
+        // ピヨッと表示する位置の指定
+        colorCollectionVC.popoverPresentationController?.sourceRect = (sender as AnyObject).frame
+        // 矢印が出る方向の指定
+        colorCollectionVC.popoverPresentationController?.permittedArrowDirections = .any
+        // デリゲートの設定
+        colorCollectionVC.popoverPresentationController?.delegate = self
+        //表示
+        present(colorCollectionVC, animated: true, completion: nil)
+    }
+    
+    func selectedColor(color: UIColor, colorStr: String) {
+        currentColorStr = colorStr
+        currentColor = color
+        setColorView()
+        setIconImage()
+        setGradationColor()
+    }
+    
+    func selectedIcon(icon: UIImage, iconStr: String) {
+        currentIconStr = iconStr
+        currentIcon = icon.withRenderingMode(.alwaysTemplate)
+        setIconImage()
+    }
+    
+    
+    func setColorView() {
+        self.colorView.backgroundColor = self.currentColor
+    }
+    
+    func setIconImage() {
+        self.iconImageView.image = currentIcon
+        self.iconImageView.tintColor = currentColor
+    }
+    
     func setGradationColor() {
         UIView.animate(withDuration: 2, animations: { () -> Void in
-            let topColor = self.gradationColors.addViewTopColor
-            let bottomColor = self.gradationColors.addViewBottomColor
-            let gradientColors: [CGColor] = [topColor.cgColor, bottomColor.cgColor]
+            let gradientColors = self.ticketTaskColor.getGradation(colorStr: self.currentColorStr)
             self.gradientLayer.colors = gradientColors
             self.gradientLayer.frame = self.view.bounds
+            //            self.gradientLayer.locations = [0.3, 0.7]
             self.view.layer.insertSublayer(self.gradientLayer, at: 0)
         })
     }
@@ -310,6 +388,7 @@ extension AddTaskViewController : UIPickerViewDelegate, UIPickerViewDataSource {
      }
      */
 }
+
 
 extension UIScrollView {
     override open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

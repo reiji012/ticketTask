@@ -12,6 +12,7 @@ import RxSwift
 class TaskViewModel: NSObject {
     
     private let wetherData = WetherAPIRequest()
+    private let gradationColors = TicketTaskColor()
     private let progressSubject = BehaviorSubject(value: 0.0)
     private let ticketCountSubject = BehaviorSubject(value: 0)
     private let taskTitleSubject = BehaviorSubject(value: "")
@@ -35,6 +36,11 @@ class TaskViewModel: NSObject {
         return taskModel!.tasks!.count
     }
     var attri: String?
+    
+    var iconImage: UIImage?
+    var iconString: String?
+    var taskColor: UIColor?
+    var colorString: String?
     
     var actionType: ActionType = .taskUpdate
     
@@ -61,7 +67,10 @@ class TaskViewModel: NSObject {
         self.taskName = (task!["title"] as! String)
         self.attri = (task!["attri"] as! String)
         self.tickets = (task!["tickets"] as! [String:Bool])
+        self.iconString = (task!["icon"] as! String)
+        self.colorString = (task!["color"] as! String)
         self.taskID = (task!["id"] as! Int)
+        self.iconImage = UIImage(named: iconString!)!.withRenderingMode(.alwaysTemplate)
     }
     
     func getTask(taskName: String) {
@@ -69,15 +78,34 @@ class TaskViewModel: NSObject {
         self.taskName = (task!["title"] as! String)
         self.attri = (task!["attri"] as! String)
         self.tickets = (task!["tickets"] as! [String:Bool])
+        self.iconString = (task!["icon"] as! String)
+        self.colorString = (task!["color"] as! String)
         self.taskID = (task!["id"] as! Int)
+        setColor()
         countProgress()
     }
     
-    func createTask(taskName: String, attri: String, tickets:Array<String>) -> ValidateError? {
-        let error = taskModel?.createTask(taskName: taskName, attri: attri, tickets:tickets)
+    func setColor() {
+        switch colorString {
+        case gradationColors.BLUE:
+            taskColor = gradationColors.ticketTaskBlue_1
+        case gradationColors.ORANGE:
+            taskColor = gradationColors.ticketTaskOrange_1
+        case gradationColors.RED:
+            taskColor = gradationColors.ticketTaskRed_1
+        case gradationColors.GREEN:
+            taskColor = gradationColors.ticketTaskGreen_1
+        default:
+            taskColor = gradationColors.ticketTaskBlue_1
+        }
+    }
+    
+    func createTask(taskName: String, attri: String, colorStr: String, iconStr: String, tickets:Array<String>) -> ValidateError? {
+        let error = taskModel?.createTask(taskName: taskName, attri: attri, colorStr: colorStr, iconStr:  iconStr, tickets:tickets)
         if (error != nil) {
             return error
         } else {
+            self.tasks = self.taskModel!.tasks
             return nil
         }
     }
@@ -122,10 +150,15 @@ class TaskViewModel: NSObject {
         tasks = taskModel!.tasks!
     }
     
-    func taskEdited(afterTaskName: String, afterTaskAttr: String) {
-        self.taskModel?.editTask(afterTaskName: afterTaskName, afterTaskAttr: afterTaskAttr, id: self.taskID!)
+    func taskEdited(afterTaskName: String, afterTaskAttr: String, color: UIColor, colorStr: String, image: UIImage, imageStr: String) {
+//        self.taskModel?.editTask(afterTaskName: afterTaskName, afterTaskAttr: afterTaskAttr, id: self.taskID!)
+        self.taskModel?.editTask(afterTaskName: afterTaskName, afterTaskAttr: afterTaskAttr, colorStr: colorStr, imageStr: imageStr, id: self.taskID!)
         self.taskName = afterTaskName
         self.attri = afterTaskAttr
+        self.taskColor = color
+        self.colorString = colorStr
+        self.iconImage = image
+        self.iconString = imageStr
         taskTitleSubject.onNext(afterTaskName)
         taskAttriSubject.onNext(afterTaskAttr)
     }
@@ -139,5 +172,19 @@ class TaskViewModel: NSObject {
             self.weatherIconImage = self.wetherModel?.weatherIconImage
             delegate.setWeatherInfo()
         })
+    }
+    
+    func setupIcon() {
+        let iconString = self.task
+        self.iconImage = UIImage(named: "")
+    }
+    
+    func checkIsTaskEmpty() {
+        let isTaskEmpty = self.taskModel!.tasks?.isEmpty
+        self.delegate?.setTaskEmptyViewState(isHidden: !(isTaskEmpty!))
+        if !(isTaskEmpty!) {
+            self.delegate?.createTaskViews()
+        }
+        
     }
 }

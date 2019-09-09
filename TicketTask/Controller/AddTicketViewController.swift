@@ -16,7 +16,7 @@ class AddTicketViewController: UIViewController {
     @IBOutlet weak var ticketTextField: UITextField!
     @IBOutlet weak var closeButton: UIButton!
     let navBar = SPFakeBarView.init(style: .stork)
-    var gradationColors: GradationColors?
+    var ticketTaskColor: TicketTaskColor?
     var gradientLayer: CAGradientLayer = CAGradientLayer()
     var taskViewModel: TaskViewModel?
     var mainVC: MainViewController?
@@ -26,6 +26,9 @@ class AddTicketViewController: UIViewController {
         self.ticketTextField.text = ""
     }
     
+    func initSetState() {
+        
+    }
     
     @objc func cansel() {
         self.dismiss(animated: true, completion: nil)

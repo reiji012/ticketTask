@@ -15,18 +15,25 @@ class TaskModel {
     let TASK_TITLE = "taskTitle"
     let TASK_ATTRI = "attri"
     let TASK_TICKETS = "tickets"
+    let TASK_ICON = "icon"
+    let TASK_COLOR = "color"
+    let TASK_CATEGORY = "category"
     let TICKET_NAME = "ticketName"
     let TICKET_IS_COMPLETED = "isCompleted"
 
     var tasks: [[String:Any]]?
     var lastCreateTask = ["title":"","attri":"","tickets":[], "id":0] as [String : Any]
     
+    var realm: Realm!
+    
     static var sharedManager: TaskModel = {
         return TaskModel()
     }()
     
     private init() {
-
+        var config = Realm.Configuration()
+        config.deleteRealmIfMigrationNeeded = true
+        self.realm = try! Realm(configuration: config)
     }
     
     /*タスクを取得する*/
@@ -42,13 +49,15 @@ class TaskModel {
     }
     
     /*タスクを作成する*/
-    func createTask(taskName: String, attri: String, tickets:Array<String>) -> ValidateError? {
-        var taskArray = ["title":"","attri":"","tickets":[], "id":0] as [String : Any]
+    func createTask(taskName: String, attri: String, colorStr: String, iconStr: String, tickets:Array<String>) -> ValidateError? {
+        var taskArray = ["title":"","attri":"","icon":"","color":"","category":"","tickets":[], "id":0] as [String : Any]
         var ticketsArray: [String : Bool] = [:]
         var ticketsRealmArray: [[String : Any]] = []
         let lastID = self.lastId()
         taskArray["title"] = taskName
         taskArray["attri"] = attri
+        taskArray["icon"] = iconStr
+        taskArray["color"] = colorStr
         for ticket in tickets {
             ticketsArray.updateValue(false, forKey: ticket)
             let array = ["ticketName"  : ticket,
@@ -61,7 +70,6 @@ class TaskModel {
         self.lastCreateTask = taskArray
         
         do {
-            let realm = try Realm()
             let results = realm.objects(TaskItem.self)
             print(results)
             let tasks = results.map {$0.taskTitle}
@@ -73,6 +81,8 @@ class TaskModel {
             let taskDictionary:[String:Any] = [
                 TASK_TITLE: taskName,
                 TASK_ATTRI: attri,
+                TASK_COLOR: colorStr,
+                TASK_ICON: iconStr,
                 TASK_TICKETS: ticketsRealmArray
             ]
             
@@ -120,7 +130,6 @@ class TaskModel {
     /*チケットの追加*/
     func addTicket(tickets:[String], id: Int) {
         do {
-            let realm = try Realm()
             let task = realm.objects(TaskItem.self).filter("id = \(id)").first
             print(task)
             var ticketArray = [String]()
@@ -149,7 +158,6 @@ class TaskModel {
         guard let tasks = self.tasks else { return }
         let task = tasks[index]
         do {
-            let realm = try Realm()
             let results = realm.objects(TaskItem.self)
             try! realm.write {
                 for ticket in results[index].tickets {
@@ -171,7 +179,6 @@ class TaskModel {
         guard let tasks = self.tasks else { return }
         let task = tasks[index]
         do {
-            let realm = try Realm()
             let results = realm.objects(TaskItem.self)
             try! realm.write {
                 for ticket in results[index].tickets {
@@ -194,7 +201,6 @@ class TaskModel {
     func deleteTask(index: Int) {
         self.tasks?.remove(at: index)
         do {
-            let realm = try Realm()
             let results = realm.objects(TaskItem.self)
             try! realm.write {
                 realm.delete(results[index])
@@ -207,14 +213,15 @@ class TaskModel {
         
     }
     
-    func editTask(afterTaskName: String, afterTaskAttr: String, id: Int) {
+    func editTask(afterTaskName: String, afterTaskAttr: String, colorStr: String, imageStr: String, id: Int) {
         do {
-            let realm = try Realm()
             let results = realm.objects(TaskItem.self).filter("id = \(id)")
             
             try! realm.write {
                 results.setValue(afterTaskName, forKey: TASK_TITLE)
                 results.setValue(afterTaskAttr, forKey: TASK_ATTRI)
+                results.setValue(colorStr, forKey: TASK_COLOR)
+                results.setValue(imageStr, forKey: TASK_ICON)
             }
         }
         catch {
@@ -227,21 +234,23 @@ class TaskModel {
         let config = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
         Realm.Configuration.defaultConfiguration = config
         do {
-            let realm = try Realm()
             let results = realm.objects(TaskItem.self)
             if  results.count == 0 {
                 print(results)
-                self.dataFirstInit()
+//                self.dataFirstInit()
             }
             print(results)
 
             
             //データを取り出してモデルに反映する
             var tmpArray: Array<Any> = []
-            var array = ["title":"","attri":"","tickets":[], "id":0] as [String : Any]
+            var array = ["title":"","attri":"","icon":"","color":"","category":"","tickets":[], "id":0] as [String : Any]
             for task in results{
                 array["title"] = task[TASK_TITLE]!
                 array["attri"] = task[TASK_ATTRI]
+                array["icon"] = task[TASK_ICON]
+                array["color"] = task[TASK_COLOR]
+                array["category"] = task[TASK_CATEGORY]
                 array["id"] = task.id
                 var ticketArray: [String:Bool] = [:]
                 let tickets = task[TASK_TICKETS]
@@ -268,13 +277,15 @@ class TaskModel {
      */
     func dataFirstInit() {
         do {
-            let realm = try Realm()
             let results = realm.objects(TaskItem.self)
             print(results)
             
             let task1Dictionary:[String:Any] = [
                 TASK_TITLE: "朝の準備",
                 TASK_ATTRI: "生活",
+                TASK_ICON: "icon-1",
+                TASK_COLOR: "blue",
+                TASK_CATEGORY: "category-1",
                 TASK_TICKETS: [[
                                 "ticketName"  : "歯磨き",
                                 "isCompleted" : false],
@@ -285,6 +296,9 @@ class TaskModel {
             let task2Dictionary:[String:Any] = [
                 TASK_TITLE: "お仕事",
                 TASK_ATTRI: "仕事",
+                TASK_ICON: "icon-2",
+                TASK_COLOR: "orange",
+                TASK_CATEGORY: "category-2",
                 TASK_TICKETS: [[
                                 "ticketName"  : "データの入力",
                                 "isCompleted" : false],
@@ -313,12 +327,11 @@ class TaskModel {
     func lastId() -> Int {
         var nextId = 0
         do {
-            let realm = try Realm()
             var idArray = [Int]()
             for task in realm.objects(TaskItem.self) {
                 idArray.append(task.id)
             }
-            nextId = idArray.max()! + 1
+            nextId = idArray.isEmpty ? 0 : idArray.max()! + 1
         }
         catch {
             print(error)
