@@ -310,7 +310,6 @@ class MainViewController: UIViewController {
         UIView.animate(withDuration: 2, animations: {
             self.present(editTaskVC, animated: true, completion: nil)
         })
-        
     }
     
     func showAddTicketView(addTicketVC: AddTicketViewController, taskVM: TaskViewModel) {
