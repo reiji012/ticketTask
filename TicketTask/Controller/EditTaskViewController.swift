@@ -19,7 +19,6 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
     
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var colorView: UIView!
-    @IBOutlet weak var attriTextField: UITextField!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var timerBtn: UISegmentedControl!
     @IBOutlet weak var headerView: UIView!
@@ -57,7 +56,6 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
         self.view.addSubview(self.navBar)
         
         self.titleTextField.text = taskViewModel?.taskName
-        self.attriTextField.text = taskViewModel?.attri
         
         self.initStateSet()
     }
@@ -74,12 +72,18 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
         if (self.titleTextField.text == nil) {
             return
         }
-        self.taskViewModel?.taskEdited(afterTaskName: self.titleTextField.text!, afterTaskAttr: self.attriTextField.text!, color: currentColor!, colorStr: currentColorStr!, image: currentIcon!, imageStr: currentIconStr!)
+        self.taskViewModel?.taskEdited(
+            afterTaskName: self.titleTextField.text!,
+            afterTaskAttr: "",
+            color: currentColor!,
+            colorStr: currentColorStr!, image: currentIcon!,
+            imageStr: currentIconStr!
+        )
         
         self.dismiss(animated: true, completion:
             {HUD.flash(.success, onView: self.mainVC!.view, delay: 0.5)}
         )
-        self.mainVC?.taskEdited(attri: self.attriTextField.text!, color: currentColorStr!)
+        self.mainVC?.taskEdited(attri: "", color: currentColorStr!)
     }
     
     @IBAction func tapIcon(_ sender: Any) {
@@ -123,12 +127,6 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
     
     func bind() {
         titleTextField.rx.controlEvent(.editingChanged).asDriver()
-            .drive(onNext: { _ in
-                self.isEdited = true
-            })
-            .disposed(by: disposeBag)
-        
-        attriTextField.rx.controlEvent(.editingChanged).asDriver()
             .drive(onNext: { _ in
                 self.isEdited = true
             })
@@ -224,10 +222,6 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
         let doneItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
         toolbar.setItems([spacelItem, doneItem], animated: true)
         
-        // インプットビュー設定
-        attriTextField.inputView = pickerView
-        attriTextField.inputAccessoryView = toolbar
-        
         // デフォルト設定
         let defoultIndex = self.taskViewModel?.attri == "仕事" ? 1 : 2
         pickerView.selectRow(defoultIndex, inComponent: 0, animated: false)
@@ -240,8 +234,6 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
     
     // 決定ボタン押下
     @objc func done() {
-        attriTextField.endEditing(true)
-        attriTextField.text = "\(attris[pickerView.selectedRow(inComponent: 0)])"
         setGradationColor()
         self.isEdited = true
     }

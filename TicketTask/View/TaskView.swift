@@ -15,6 +15,7 @@ import SPStorkController
 
 class TaskView: UIView{
 
+    @IBOutlet weak var buttonTextLabel: UILabel!
     @IBOutlet weak var ticketAddBtn: UIButton!
     @IBOutlet weak var menuTopConst: NSLayoutConstraint!
     @IBOutlet weak var titleTopConst: NSLayoutConstraint!
@@ -229,6 +230,7 @@ class TaskView: UIView{
     
     func setLayout() {
         self.ticketAddBtn.isHidden = true
+        self.buttonTextLabel.isHidden = true
         let convertProgress = Int((taskViewModel!.completedProgress!)*100)
         self.ticketProgressLabel.text = "\(String(convertProgress))%"
         // 初期状態では戻るボタンを非表示にする
@@ -314,6 +316,7 @@ class TaskView: UIView{
                 self.menuButton.layoutIfNeeded()
                 self.layoutIfNeeded()
                 self.ticketAddBtn.isHidden = true
+                self.buttonTextLabel.isHidden = true
                 self.ticketProgressBar.layoutIfNeeded()
                 self.ticketTableView.isHidden = true
                 self.frame = CGRect(x:self.defoultX!,y:self.defoultY!,width:self.defoultWidth!,height:self.defoultHeight!)
@@ -328,6 +331,7 @@ class TaskView: UIView{
                 self.ticketProgressBar.layoutIfNeeded()
                 // 拡大するときの処理
                 self.ticketAddBtn.isHidden = false
+                self.buttonTextLabel.isHidden = false
                 self.defoultHeight = self.frame.size.height
                 self.defoultWidth = self.bounds.size.width
                 self.defoultX = self.frame.origin.x
@@ -385,8 +389,9 @@ class TaskView: UIView{
         gradientLayer.frame.origin.x += 20
         gradientLayer.frame.origin.y += 20
 //        gradientLayer.cornerRadius = self.ticketAddBtn.bounds.midY
-        self.layerChangeCount += 1
-        self.ticketAddBtn.layer.insertSublayer(gradientLayer, at: self.layerChangeCount)
+        self.ticketAddBtn.layer.sublayers = nil
+        self.ticketAddBtn.layer.insertSublayer(gradientLayer, at: 0)
+        self.ticketAddBtn.setTitle("＋", for: .normal)
 //        self.view.layer.insertSublayer(self.gradientLayer, at: 0)
 //        self.ticketAddBtn.layer.shadowOpacity = 0.5
 //        self.ticketAddBtn.layer.shadowRadius = 12
