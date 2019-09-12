@@ -15,14 +15,15 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITableViewD
     
     var tableView: UITableView = UITableView()
     @IBOutlet weak var scrolView: UIScrollView!
+    @IBOutlet weak var timerBtm: UISegmentedControl!
     @IBOutlet weak var taskTicketView: UIView!
     @IBOutlet weak var taskHeadVIew: UIView!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var ticketTableView: UITableView!
     @IBOutlet weak var titleTextField: UITextField!
-    @IBOutlet weak var attriTextField: UITextField!
     @IBOutlet weak var ticketTextField: UITextField!
     @IBOutlet weak var ticketCellLabel: UILabel!
+    @IBOutlet weak var ticketAddBtn: UIButton!
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var colorView: UIView!
     
@@ -49,13 +50,11 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         titleTextField.delegate = self
-        attriTextField.delegate = self
         ticketTextField.delegate = self
         ticketTableView.delegate = self
         ticketTableView.dataSource = self
         titleTextField.text = ""
         ticketTextField.text = ""
-        attriTextField.text = attris[0]
         // 画面サイズ取得
         let screenSize: CGRect = UIScreen.main.bounds
         screenWidth = screenSize.width
@@ -103,11 +102,15 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITableViewD
     }
     
     @objc func create() {
-        if (titleTextField.text == "" || attriTextField.text == "" || tickets.count == 0) {
+        if (titleTextField.text == "" || tickets.count == 0) {
             showValidateAlert(error: .inputValidError)
             return
         }
-        let error = mainVC!.taskViewModel.createTask(taskName: titleTextField.text!, attri: attriTextField.text!, colorStr: currentColorStr, iconStr: currentIconStr, tickets: tickets)
+        let error = mainVC!.taskViewModel.createTask(taskName: titleTextField.text!,
+                                                     attri: "",
+                                                     colorStr: currentColorStr,
+                                                     iconStr: currentIconStr,
+                                                     tickets: tickets)
         if (error != nil) {
             self.showValidateAlert(error: error!)
             return
@@ -186,7 +189,8 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITableViewD
             let gradientColors = self.ticketTaskColor.getGradation(colorStr: self.currentColorStr)
             self.gradientLayer.colors = gradientColors
             self.gradientLayer.frame = self.view.bounds
-            //            self.gradientLayer.locations = [0.3, 0.7]
+            self.timerBtm.tintColor = self.currentColor
+            self.ticketAddBtn.setTitleColor(self.currentColor, for: .normal)
             self.view.layer.insertSublayer(self.gradientLayer, at: 0)
         })
     }
@@ -203,14 +207,9 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITableViewD
         let doneItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
         toolbar.setItems([spacelItem, doneItem], animated: true)
         
-        // インプットビュー設定
-        attriTextField.inputView = pickerView
-        attriTextField.inputAccessoryView = toolbar
     }
     // 決定ボタン押下
     @objc func done() {
-        attriTextField.endEditing(true)
-        attriTextField.text = "\(attris[pickerView.selectedRow(inComponent: 0)])"
     }
     
     @IBAction func addTicket(_ sender: Any) {
@@ -242,9 +241,6 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITableViewD
             title = "入力エラー"
             if titleTextField.text == "" {
                 massage += "タイトルを入力してください\n"
-            }
-            if attriTextField.text == "" {
-                massage += "属性を入力してください\n"
             }
             if tickets.count == 0 {
                 massage += "チケットを一つ以上追加してください\n"

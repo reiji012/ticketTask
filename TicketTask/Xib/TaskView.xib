@@ -148,7 +148,7 @@
                         <constraint firstAttribute="width" constant="40" id="vJ3-bD-xnw"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="26"/>
-                    <state key="normal" title="+">
+                    <state key="normal">
                         <color key="titleColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                     <userDefinedRuntimeAttributes>
@@ -160,6 +160,16 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="＋" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XtX-dI-mkG">
+                    <rect key="frame" x="369" y="448" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="Xq6-4B-HPp"/>
+                        <constraint firstAttribute="height" constant="40" id="kiX-lk-8cZ"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name=".HiraKakuInterface-W3" family=".Hiragino Kaku Gothic Interface" pointSize="23"/>
+                    <color key="textColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
@@ -174,9 +184,11 @@
                 <constraint firstItem="ZYz-sQ-nm6" firstAttribute="leading" secondItem="VBp-HC-ndC" secondAttribute="trailing" constant="10" id="QBj-jM-nUo"/>
                 <constraint firstItem="Occ-Jp-uEZ" firstAttribute="top" secondItem="Hzy-Tp-1gk" secondAttribute="top" constant="35" id="QId-9q-PbR"/>
                 <constraint firstAttribute="trailing" secondItem="I6P-G7-7H8" secondAttribute="trailing" id="S9T-HO-bY9"/>
+                <constraint firstItem="Hzy-Tp-1gk" firstAttribute="bottom" secondItem="XtX-dI-mkG" secondAttribute="bottom" constant="50" id="TKn-jh-Vph"/>
                 <constraint firstItem="ll0-GP-Jv7" firstAttribute="leading" secondItem="Hzy-Tp-1gk" secondAttribute="leading" constant="22" id="XqO-dj-NRg"/>
                 <constraint firstItem="vrp-1Z-85c" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="160" id="a0X-89-oB4"/>
                 <constraint firstItem="Hzy-Tp-1gk" firstAttribute="bottom" secondItem="1aM-GF-ws9" secondAttribute="bottom" constant="50" id="awU-NJ-Ysc"/>
+                <constraint firstItem="Hzy-Tp-1gk" firstAttribute="trailing" secondItem="XtX-dI-mkG" secondAttribute="trailing" constant="30" id="h0K-KR-XvJ"/>
                 <constraint firstItem="I6P-G7-7H8" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="mJe-ec-OTL"/>
                 <constraint firstItem="cSn-BC-JZ5" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="25" id="mb3-ww-gSZ"/>
                 <constraint firstItem="Occ-Jp-uEZ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="30" id="t5I-h1-K2T"/>
@@ -192,6 +204,7 @@
             <connections>
                 <outlet property="attriImageView" destination="lWg-KI-zIe" id="gz4-oJ-it2"/>
                 <outlet property="backButton" destination="Occ-Jp-uEZ" id="MUv-RW-aUA"/>
+                <outlet property="buttonTextLabel" destination="XtX-dI-mkG" id="8qF-ri-wH3"/>
                 <outlet property="menuBtnLeftConst" destination="2uA-p2-DCl" id="JXU-Xi-nwp"/>
                 <outlet property="menuButton" destination="3XW-sK-gN9" id="vuy-ms-sRc"/>
                 <outlet property="menuTopConst" destination="7qU-qg-cxw" id="C2Q-XT-aYy"/>
