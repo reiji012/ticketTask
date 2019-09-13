@@ -52,7 +52,6 @@ class AddTicketViewController: UIViewController {
         if (self.ticketTextField.text == "") {
             return
         }
-        mainVC?.addTicket(ticket: self.ticketTextField.text!)
         self.dismiss(animated: true, completion: nil)
     }
     

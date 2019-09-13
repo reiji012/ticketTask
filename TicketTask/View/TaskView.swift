@@ -71,6 +71,7 @@ class TaskView: UIView{
         // UIImageView の場合
         attriImageView.image = attriImageView.image?.withRenderingMode(.alwaysTemplate)
         attriImageView.tintColor = taskViewModel?.taskColor
+        ticketTableView.register(UINib(nibName: "TicketTableViewCell", bundle: nil), forCellReuseIdentifier: "TicketTableViewCell")
     }
 
     @IBAction func tapMenuBtn(_ sender: Any) {
@@ -219,7 +220,7 @@ class TaskView: UIView{
             guard let text = alertController.textFields?.first!.text else {
                 return
             }
-            self.mainViewController?.addTicket(ticket: text)
+            self.mainViewController?.addTicket(ticket: text, view: self)
             //追加ボタンを押した時の処理
         }
         
@@ -357,15 +358,10 @@ class TaskView: UIView{
     }
     
     func setTableView() {
+        self.ticketTableView.delegate = self
+        self.ticketTableView.dataSource = self
         self.ticketTableView.estimatedRowHeight = 150
-        for _ in taskViewModel!.tickets! {
-            self.ticketTableView.register(UINib(nibName: "TicketTableViewCell", bundle: nil), forCellReuseIdentifier: "TicketTableViewCell")
-            
-            guard let ticketTableViewCell = self.ticketTableView.dequeueReusableCell(withIdentifier: "TicketTableViewCell") as? TicketTableViewCell else {
-                return
-            }
-            self.tableViewArray.append(ticketTableViewCell)
-        }
+        self.ticketTableView.reloadData()
     }
 
     func deleteRow(indexPath: IndexPath) {
@@ -505,6 +501,46 @@ extension MainViewController: PopMenuViewControllerDelegate {
     func popMenuDidSelectItem(_ popMenuViewController: PopMenuViewController, at index: Int) {
         // Do stuff here...MainViewController
         print(index)
+    }
+    
+}
+
+extension TaskView: UITableViewDelegate {
+    
+}
+
+extension TaskView: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return (taskViewModel?.tickets?.count)!
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "TicketTableViewCell") as? TicketTableViewCell {
+            cell.taskViewModel = self.taskViewModel
+            var ticketName = ""
+            var isCompleted: Bool?
+            for (index, ticket) in (self.taskViewModel?.tickets!.keys)!.enumerated() {
+                if index == indexPath.row {
+                    ticketName = ticket
+                    isCompleted = (cell.taskViewModel?.tickets![ticketName])!
+                }
+            }
+            cell.isCompleted = isCompleted!
+            cell.checkBoxLabel.text = isCompleted! ? "✔️" : ""
+            cell.ticketNameLabel.text = ticketName
+            return cell
+        }
+        
+        return UITableViewCell()
+    }
+    
+    internal func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let ticketName = Array(self.taskViewModel!.tickets!.keys)[indexPath.row]
+            self.taskViewModel?.actionType = .ticketDelete
+            self.taskViewModel?.tickets?.removeValue(forKey: ticketName)
+            self.ticketTableView.reloadData()
+        }
     }
     
 }
