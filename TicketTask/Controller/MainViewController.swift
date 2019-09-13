@@ -158,24 +158,11 @@ class MainViewController: UIViewController {
     }
     
     func addNewTaskView() {
-//        let currentTaskView = self.getCenterTaskView()
-        let mainScreenHeight: CGFloat = UIScreen.main.bounds.size.height
-        let currentY = mainScreenHeight / 2 - 50
-        
         //scrollViewのDelegateを指定
         scrollView.delegate = self
         
-        taskView = UINib(nibName: "TaskView", bundle: Bundle.main).instantiate(withOwner: self, options: nil).first as? TaskView
-        taskView.frame = CGRect.init(x: self.originX! + 18, y: currentY, width: initTaskViewWidth, height: initTaskViewHeight)
-        taskView.setViewModel(task: taskViewModel.taskModel!.lastCreateTask, mainVC: self)
-        taskView.setTableView()
+        createTaskView(task: taskViewModel.taskModel!.lastCreateTask, tag: taskViewModel.taskModel!.tasks!.count)
         
-        taskView.ticketTableView!.delegate = self
-        taskView.ticketTableView!.dataSource = self
-        
-        taskView.tag = taskViewModel.taskModel!.tasks!.count
-        
-        scrollView.addSubview(taskView)
         self.originX! += taskViewWidth
         print("self.originX!:\(self.originX!)")
         //scrollViewのcontentSizeを，View全体のサイズに合わせる
@@ -196,6 +183,22 @@ class MainViewController: UIViewController {
         self.centerViewAttri = taskView.taskViewModel?.attri
         self.centerViewColor = taskView.taskViewModel?.colorString
         setGradationColor()
+    }
+    
+    func createTaskView(task:Dictionary<String, Any>, tag: Int){
+        // VIewを設置する高さを計算する
+        let mainScreenHeight: CGFloat = UIScreen.main.bounds.size.height
+        let currentY = mainScreenHeight / 2 - 50
+        
+        taskView = UINib(nibName: "TaskView", bundle: Bundle.main).instantiate(withOwner: self, options: nil).first as? TaskView
+        taskView.frame = CGRect.init(x: self.originX! + 25, y: currentY, width: initTaskViewWidth, height: initTaskViewHeight)
+        taskView.setViewModel(task: task, mainVC: self)
+        taskView.setTableView()
+        taskView.topSafeAreaHeight = self.view.safeAreaInsets.top
+        taskView.ticketTableView!.delegate = self
+        taskView.ticketTableView!.dataSource = self
+        taskView.tag = tag
+        scrollView.addSubview(taskView)
     }
     
     func taskEdited(attri: String, color: String) {
@@ -381,23 +384,11 @@ extension MainViewController: MainDelegate {
         //ダミーView分，はじめからずらしてあげましょう．
         self.originX = dummyViewWidth
         
-        // VIewを設置する高さを計算する
-        let mainScreenHeight: CGFloat = UIScreen.main.bounds.size.height
-        let currentY = mainScreenHeight / 2 - 50
         //titlesで定義したタブを1つずつ用意していく
         for (index, task) in tasks!.enumerated() {
             //タブになるUIVIewを作る
-            taskView = UINib(nibName: "TaskView", bundle: Bundle.main).instantiate(withOwner: self, options: nil).first as? TaskView
-            taskView.frame = CGRect.init(x: self.originX! + 25, y: currentY, width: self.initTaskViewWidth, height: initTaskViewHeight)
-            taskView.setViewModel(task: task, mainVC: self)
-            taskView.setTableView()
-            taskView.topSafeAreaHeight = self.view.safeAreaInsets.top
-            taskView.ticketTableView!.delegate = self
-            taskView.ticketTableView!.dataSource = self
+            createTaskView(task: task, tag: index + 1)
             
-            taskView.tag = index + 1
-            
-            scrollView.addSubview(taskView)
             //次のタブのx座標を用意する
             self.originX! += taskViewWidth
             
