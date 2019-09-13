@@ -52,11 +52,7 @@ class AddTicketViewController: UIViewController {
         if (self.ticketTextField.text == "") {
             return
         }
-        let error = mainVC?.addTicket(ticket: self.ticketTextField.text!)
-        if error != nil {
-            showValidateAlert(error: error!)
-            return
-        }
+        mainVC?.addTicket(ticket: self.ticketTextField.text!)
         self.dismiss(animated: true, completion: nil)
     }
     
