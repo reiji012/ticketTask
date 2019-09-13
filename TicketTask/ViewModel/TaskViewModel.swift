@@ -127,8 +127,9 @@ class TaskViewModel: NSObject {
         taskModel!.taskUpdate(id: self.taskID!,tickets: self.tickets!, actionType: actionType)
         task = taskModel?.getTask(taskName: self.taskName!)
         self.countProgress()
+        delegate?.didChangeTaskCount(taskCount: self.taskCount())
     }
-    
+
     func countProgress() {
         var compCount = 0
         for value in self.tickets!.values {
