@@ -195,8 +195,6 @@ class MainViewController: UIViewController {
         taskView.setViewModel(task: task, mainVC: self)
         taskView.setTableView()
         taskView.topSafeAreaHeight = self.view.safeAreaInsets.top
-        taskView.ticketTableView!.delegate = self
-        taskView.ticketTableView!.dataSource = self
         taskView.tag = tag
         scrollView.addSubview(taskView)
     }
@@ -226,21 +224,15 @@ class MainViewController: UIViewController {
     ///
     /// - Parameter ticket: 追加するチケット
     /// - Returns: エラー
-    func addTicket(ticket: String) {
-        let currentTaskView: TaskView
-        if self.taskViewIndex == nil {
-            currentTaskView = self.view.viewWithTag(1) as! TaskView
-        } else {
-            currentTaskView = self.view.viewWithTag(taskViewIndex!) as! TaskView
-        }
-        currentTaskView.taskViewModel?.actionType = .ticketCreate
-        let error = currentTaskView.taskViewModel?.addTicket(ticketName: ticket)
+    func addTicket(ticket: String, view: TaskView) {
+        view.taskViewModel?.actionType = .ticketCreate
+        let error = view.taskViewModel?.addTicket(ticketName: ticket)
         if error != nil {
             self.showValidateAlert(error: error!)
         }
         let ticketTableViewCell = UINib(nibName: "TicketTableViewCell", bundle: Bundle.main).instantiate(withOwner: self, options: nil).first as? TicketTableViewCell
-        currentTaskView.tableViewArray.append(ticketTableViewCell!)
-        currentTaskView.ticketTableView.reloadData()
+        view.tableViewArray.append(ticketTableViewCell!)
+        view.ticketTableView.reloadData()
     }
     
     func showValidateAlert(error: ValidateError){
@@ -518,73 +510,7 @@ extension MainViewController: UIScrollViewDelegate {
         //慣性を消す
         scrollView.setContentOffset(scrollView.contentOffset, animated: false)
     }
-}
-
-
-extension MainViewController: UITableViewDelegate {
-    
-}
-
-
-extension MainViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        var ticketCount = 0
-        if let currentTaskView = getCenterTaskView() {
-            ticketCount = currentTaskView.ticketsCount
-        }
-        return ticketCount
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let currentTaskView: TaskView
-        if self.taskViewIndex == nil {
-            currentTaskView = self.view.viewWithTag(1) as! TaskView
-        } else {
-            currentTaskView = self.view.viewWithTag(taskViewIndex!) as! TaskView
-        }
-        guard let tableViewCell: UITableViewCell = currentTaskView.tableViewArray[indexPath.row] else {
-            return UITableViewCell()
-        }
-        //        let tableViewCell = currentTaskView.tableViewArray[indexPath.row]
-        print(indexPath.row)
-        if tableViewCell is TicketTableViewCell {
-            let currentTableViewCell: TicketTableViewCell = tableViewCell as! TicketTableViewCell
-            var ticketName = ""
-            var isCompleted: Bool?
-            for (index, ticket) in (currentTaskView.taskViewModel?.tickets!.keys)!.enumerated() {
-                if index == indexPath.row {
-                    ticketName = ticket
-                    isCompleted = (currentTaskView.taskViewModel?.tickets![ticketName])!
-                }
-            }
-            currentTableViewCell.isCompleted = isCompleted!
-            currentTableViewCell.checkBoxLabel.text = isCompleted! ? "✔️" : ""
-            currentTableViewCell.ticketNameLabel.text = ticketName
-            return currentTableViewCell
-        }
-        
-        return UITableViewCell()
-    }
-    
-    
-    internal func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        let currentTaskView: TaskView
-        if self.taskViewIndex == nil {
-            currentTaskView = self.view.viewWithTag(1) as! TaskView
-        } else {
-            currentTaskView = self.view.viewWithTag(taskViewIndex!) as! TaskView
-        }
-        if editingStyle == .delete {
-            let tableViewCell = currentTaskView.tableViewArray[indexPath.row] as! TicketTableViewCell
-            let ticketName = tableViewCell.ticketNameLabel.text
-            currentTaskView.taskViewModel?.actionType = .ticketDelete
-            currentTaskView.taskViewModel?.tickets?.removeValue(forKey: ticketName!)
-            currentTaskView.tableViewArray.remove(at: indexPath.row)
-            currentTaskView.ticketTableView.reloadData()
-        }
-    }
-    
-}
+} 
 
 extension MainViewController : UIViewControllerTransitioningDelegate{
     

@@ -6,17 +6,49 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TicketTask/ViewModel/TaskViewModel.swift"
-            timestampString = "590053786.539941"
+            filePath = "TicketTask/Controller/MainViewController.swift"
+            timestampString = "590060684.956822"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "127"
-            endingLineNumber = "127"
-            landmarkName = "updateModel(actionType:)"
+            startingLineNumber = "271"
+            endingLineNumber = "271"
+            landmarkName = "deleteTask(view:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TicketTask.MainViewController.deleteTask(view: TicketTask.TaskView) -&gt; ()"
+                  moduleName = "TicketTask"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/a999-308/Develop/ticketTask/TicketTask/Controller/MainViewController.swift"
+                  timestampString = "590060684.971523"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "271"
+                  endingLineNumber = "271"
+                  offsetFromSymbolStart = "269">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in TicketTask.MainViewController.deleteTask(view: TicketTask.TaskView) -&gt; ()"
+                  moduleName = "TicketTask"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/a999-308/Develop/ticketTask/TicketTask/Controller/MainViewController.swift"
+                  timestampString = "590060684.975157"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "273"
+                  endingLineNumber = "273"
+                  offsetFromSymbolStart = "20">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -25,93 +57,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TicketTask/Model/TaskModel.swift"
-            timestampString = "590053786.5400209"
+            filePath = "TicketTask/Controller/MainViewController.swift"
+            timestampString = "590060684.957927"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "167"
-            endingLineNumber = "167"
-            landmarkName = "deleteTicket(index:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TicketTask/Model/TaskModel.swift"
-            timestampString = "590053786.54008"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "158"
-            endingLineNumber = "158"
-            landmarkName = "deleteTicket(index:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TicketTask/Model/TaskModel.swift"
-            timestampString = "590053786.5401289"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "115"
-            endingLineNumber = "115"
-            landmarkName = "taskUpdate(id:tickets:actionType:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TicketTask/Model/TaskModel.swift"
-            timestampString = "590053786.540175"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "116"
-            endingLineNumber = "116"
-            landmarkName = "taskUpdate(id:tickets:actionType:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TicketTask/Model/TaskModel.swift"
-            timestampString = "590053786.540221"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "108"
-            endingLineNumber = "108"
-            landmarkName = "taskUpdate(id:tickets:actionType:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TicketTask/Model/TaskModel.swift"
-            timestampString = "590053786.540267"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "206"
-            endingLineNumber = "206"
-            landmarkName = "deleteTask(index:)"
+            startingLineNumber = "276"
+            endingLineNumber = "276"
+            landmarkName = "deleteTask(view:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -122,13 +74,45 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TicketTask/Controller/MainViewController.swift"
-            timestampString = "590053786.540313"
+            timestampString = "590060684.958528"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "201"
-            endingLineNumber = "201"
-            landmarkName = "createTaskView(task:tag:)"
+            startingLineNumber = "284"
+            endingLineNumber = "284"
+            landmarkName = "deleteTask(view:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (Swift.Bool) -&gt; () in TicketTask.MainViewController.deleteTask(view: TicketTask.TaskView) -&gt; ()"
+                  moduleName = "TicketTask"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/a999-308/Develop/ticketTask/TicketTask/Controller/MainViewController.swift"
+                  timestampString = "590060685.109795"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "284"
+                  endingLineNumber = "284"
+                  offsetFromSymbolStart = "844">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 () -&gt; () in closure #2 (Swift.Bool) -&gt; () in TicketTask.MainViewController.deleteTask(view: TicketTask.TaskView) -&gt; ()"
+                  moduleName = "TicketTask"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/a999-308/Develop/ticketTask/TicketTask/Controller/MainViewController.swift"
+                  timestampString = "590060685.115988"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "285"
+                  endingLineNumber = "285"
+                  offsetFromSymbolStart = "253">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -138,29 +122,45 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TicketTask/Controller/MainViewController.swift"
-            timestampString = "590053786.541189"
+            timestampString = "590060684.959107"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "390"
-            endingLineNumber = "390"
-            landmarkName = "createTaskViews()"
+            startingLineNumber = "279"
+            endingLineNumber = "279"
+            landmarkName = "deleteTask(view:)"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TicketTask/Controller/MainViewController.swift"
-            timestampString = "590053786.541803"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "190"
-            endingLineNumber = "190"
-            landmarkName = "createTaskView(task:tag:)"
-            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (Swift.Bool) -&gt; () in TicketTask.MainViewController.deleteTask(view: TicketTask.TaskView) -&gt; ()"
+                  moduleName = "TicketTask"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/a999-308/Develop/ticketTask/TicketTask/Controller/MainViewController.swift"
+                  timestampString = "590060685.148013"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "279"
+                  endingLineNumber = "279"
+                  offsetFromSymbolStart = "538">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in closure #2 (Swift.Bool) -&gt; () in TicketTask.MainViewController.deleteTask(view: TicketTask.TaskView) -&gt; ()"
+                  moduleName = "TicketTask"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/a999-308/Develop/ticketTask/TicketTask/Controller/MainViewController.swift"
+                  timestampString = "590060685.150973"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "280"
+                  endingLineNumber = "280"
+                  offsetFromSymbolStart = "104">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

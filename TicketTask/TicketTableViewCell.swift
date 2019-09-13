@@ -32,9 +32,6 @@ class TicketTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         checkBoxLabel.text = "✔︎"
-        //ViewModelの取得
-        parentTaskView = (self.parent?.parent as! TaskView)
-        self.taskViewModel = parentTaskView?.taskViewModel!
         
         let gesture = UITapGestureRecognizer(target: self, action: #selector(self.changeCompletion))
         checkBoxLabel.isUserInteractionEnabled = true
