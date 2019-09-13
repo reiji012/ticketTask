@@ -223,7 +223,7 @@ class MainViewController: UIViewController {
     ///
     /// - Parameter ticket: 追加するチケット
     /// - Returns: エラー
-    func addTicket(ticket: String) -> ValidateError? {
+    func addTicket(ticket: String) {
         let currentTaskView: TaskView
         if self.taskViewIndex == nil {
             currentTaskView = self.view.viewWithTag(1) as! TaskView
@@ -233,12 +233,39 @@ class MainViewController: UIViewController {
         currentTaskView.taskViewModel?.actionType = .ticketCreate
         let error = currentTaskView.taskViewModel?.addTicket(ticketName: ticket)
         if error != nil {
-            return error
+            self.showValidateAlert(error: error!)
         }
         let ticketTableViewCell = UINib(nibName: "TicketTableViewCell", bundle: Bundle.main).instantiate(withOwner: self, options: nil).first as? TicketTableViewCell
         currentTaskView.tableViewArray.append(ticketTableViewCell!)
         currentTaskView.ticketTableView.reloadData()
-        return nil
+    }
+    
+    func showValidateAlert(error: ValidateError){
+        
+        var massage = ""
+        var title = ""
+        switch error {
+        case .taskValidError:
+            title = "データベースエラー"
+            massage = error.rawValue
+        case .ticketValidError:
+            title = "入力エラー"
+            massage = error.rawValue
+        default:
+            title = "保存に失敗しました"
+        }
+        
+        let alert: UIAlertController = UIAlertController(title: title, message: massage, preferredStyle:  UIAlertController.Style.alert)
+        
+        let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{
+            // ボタンが押された時の処理を書く（クロージャ実装）
+            (action: UIAlertAction!) -> Void in
+            print("OK")
+        })
+        
+        alert.addAction(defaultAction)
+        
+        present(alert, animated: true, completion: nil)
     }
     
     /// タスクの削除

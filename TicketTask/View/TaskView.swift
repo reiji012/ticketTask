@@ -216,6 +216,10 @@ class TaskView: UIView{
         alertController.addAction(cancelAction)
         
         let addAction: UIAlertAction = UIAlertAction(title: "追加", style: .default) { action -> Void in
+            guard let text = alertController.textFields?.first!.text else {
+                return
+            }
+            self.mainViewController?.addTicket(ticket: text)
             //追加ボタンを押した時の処理
         }
         
