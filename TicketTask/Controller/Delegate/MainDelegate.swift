@@ -12,4 +12,5 @@ protocol MainDelegate {
     func setWeatherInfo()
     func setTaskEmptyViewState(isHidden: Bool)
     func createTaskViews()
+    func didChangeTaskCount(taskCount: Int)
 }

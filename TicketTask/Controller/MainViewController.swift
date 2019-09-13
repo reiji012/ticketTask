@@ -96,9 +96,10 @@ class MainViewController: UIViewController {
             taskView.frame.size.height = self.taskViewHeight
         }
         
-        let currentTaskView: TaskView = self.getCenterTaskView()
-        let myBoundSize: CGSize = UIScreen.main.bounds.size
-        currentTaskView.frame.size.height = self.isShowDetail ? myBoundSize.height : self.taskViewHeight
+        if let currentTaskView: TaskView = self.getCenterTaskView() {
+            let myBoundSize: CGSize = UIScreen.main.bounds.size
+            currentTaskView.frame.size.height = self.isShowDetail ? myBoundSize.height : self.taskViewHeight
+        }
     }
 
     @IBAction func pushAddBtn(_ sender: Any) {
@@ -200,20 +201,22 @@ class MainViewController: UIViewController {
     func taskEdited(attri: String, color: String) {
         self.centerViewAttri = attri
         self.centerViewColor = color
-        let currentTaskView = getCenterTaskView()
-        currentTaskView.setGradationColor()
-        setGradationColor()
+        if let currentTaskView = getCenterTaskView() {
+            currentTaskView.setGradationColor()
+            setGradationColor()
+        }
     }
     
     /// 画面中央のViewを取得
     ///
     /// - Returns: View
-    func getCenterTaskView() -> TaskView {
+    func getCenterTaskView() -> TaskView? {
         let index = (self.taskViewIndex != nil) ? self.taskViewIndex! : 1
-        let currentTaskView = self.view.viewWithTag(index) as! TaskView
+        guard let currentTaskView = self.view.viewWithTag(index) as? TaskView else {
+            return nil
+        }
         return currentTaskView
     }
-    
 
     
     /// チケットの追加
@@ -324,6 +327,10 @@ class MainViewController: UIViewController {
 }
 
 extension MainViewController: MainDelegate {
+    func didChangeTaskCount(taskCount: Int) {
+        taskEmptyView.isHidden = taskCount < 1
+    }
+    
     
     /*
      タスクを表示するViewを生成する
@@ -462,9 +469,10 @@ extension MainViewController: UIScrollViewDelegate {
             scrollPoint = 0
         }
         self.taskViewIndex = (Int(scrollPoint) / self.currentWidth) + 1
-        let currentTaskView = self.getCenterTaskView()
-        self.centerViewAttri = currentTaskView.taskViewModel!.attri
-        self.centerViewColor = currentTaskView.taskViewModel!.colorString
+        if let currentTaskView = self.getCenterTaskView() {
+            self.centerViewAttri = currentTaskView.taskViewModel!.attri
+            self.centerViewColor = currentTaskView.taskViewModel!.colorString
+        }
         UIView.animate(withDuration: 0.3, animations: {
             scrollView.contentOffset = CGPoint(x:scrollPoint, y:0)
         })
@@ -502,8 +510,11 @@ extension MainViewController: UITableViewDelegate {
 
 extension MainViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let currentTaskView = getCenterTaskView()
-        return currentTaskView.ticketsCount
+        var ticketCount = 0
+        if let currentTaskView = getCenterTaskView() {
+            ticketCount = currentTaskView.ticketsCount
+        }
+        return ticketCount
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
