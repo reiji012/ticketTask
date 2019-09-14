@@ -14,6 +14,23 @@ import SPStorkController
 import SparrowKit
 import PKHUD
 
+enum DeviceSize {
+    case small
+    case middle
+    case large
+    
+    var viewWidth: CGFloat {
+        switch self {
+        case .small:
+            return 256
+        case .middle:
+            return 311
+        case .large:
+            return 350
+        }
+    }
+}
+
 class MainViewController: UIViewController {
     
     // ViewModelの取得
@@ -56,6 +73,8 @@ class MainViewController: UIViewController {
     private var dummyViewWidth: CGFloat!
     private var scrollViewHeight: CGFloat!
     
+    private var deviceSize: DeviceSize?
+    
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var weatherImgView: UIImageView!
     @IBOutlet weak var weatherView: UIView!
@@ -70,6 +89,18 @@ class MainViewController: UIViewController {
         
         // 端末のサイズでタスクカードの大きさを設定
         let myBoundSize: CGSize = UIScreen.main.bounds.size
+        
+        switch myBoundSize.width {
+        case 320:
+            deviceSize = .small
+        case 375:
+            deviceSize = .middle
+        case 414:
+            deviceSize = .large
+        default:
+            break
+        }
+        
         taskViewHeight = myBoundSize.height <= 600 ? 250 : 300
         dummyViewWidth = scrollView.frame.size.width/2 - taskViewWidth/2
         scrollViewHeight = scrollView.frame.size.height
@@ -161,7 +192,7 @@ class MainViewController: UIViewController {
         //scrollViewのDelegateを指定
         scrollView.delegate = self
         
-        createTaskView(task: taskViewModel.taskModel!.lastCreateTask, tag: taskViewModel.taskModel!.tasks!.count)
+        createTaskView(task: taskViewModel.taskModel!.lastCreateTask, tag: taskViewModel.taskModel!.tasks!.count, isInitCreate: false)
         
         self.originX! += taskViewWidth
         print("self.originX!:\(self.originX!)")
@@ -185,13 +216,15 @@ class MainViewController: UIViewController {
         setGradationColor()
     }
     
-    func createTaskView(task:Dictionary<String, Any>, tag: Int){
+    func createTaskView(task:Dictionary<String, Any>, tag: Int, isInitCreate: Bool){
         // VIewを設置する高さを計算する
         let mainScreenHeight: CGFloat = UIScreen.main.bounds.size.height
         let currentY = mainScreenHeight / 2 - 50
         
+        let viewWidth = isInitCreate ? initTaskViewWidth : deviceSize?.viewWidth
+        
         taskView = UINib(nibName: "TaskView", bundle: Bundle.main).instantiate(withOwner: self, options: nil).first as? TaskView
-        taskView.frame = CGRect.init(x: self.originX! + 25, y: currentY, width: initTaskViewWidth, height: initTaskViewHeight)
+        taskView.frame = CGRect.init(x: self.originX! + 25, y: currentY, width: viewWidth!, height: initTaskViewHeight)
         taskView.setViewModel(task: task, mainVC: self)
         taskView.setTableView()
         taskView.topSafeAreaHeight = self.view.safeAreaInsets.top
@@ -379,7 +412,7 @@ extension MainViewController: MainDelegate {
         //titlesで定義したタブを1つずつ用意していく
         for (index, task) in tasks!.enumerated() {
             //タブになるUIVIewを作る
-            createTaskView(task: task, tag: index + 1)
+            createTaskView(task: task, tag: index + 1, isInitCreate: true)
             
             //次のタブのx座標を用意する
             self.originX! += taskViewWidth
@@ -399,7 +432,7 @@ extension MainViewController: MainDelegate {
         scrollView.addSubview(tailLabel)
         
         //ダミーLabel分を足して上げましょう
-        self.originX! += dummyViewWidth
+//        self.originX! += dummyViewWidth
         
         //scrollViewのcontentSizeを，View全体のサイズに合わせる
         //最終的なoriginX = タブ全体の横幅 になります
@@ -419,7 +452,7 @@ extension MainViewController: MainDelegate {
         
         //タブのx座標．
         //ダミーView分，はじめからずらしてあげましょう．
-        self.originX = dummyViewWidth
+        self.originX = taskViewWidth
     }
     
     func setWeatherInfo() {

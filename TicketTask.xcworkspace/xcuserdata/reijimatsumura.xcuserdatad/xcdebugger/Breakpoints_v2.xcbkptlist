@@ -11,12 +11,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TicketTask/Controller/MainViewController.swift"
-            timestampString = "589989068.609841"
+            timestampString = "590145652.640075"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "197"
-            endingLineNumber = "197"
-            landmarkName = "addNewTaskView()"
+            startingLineNumber = "262"
+            endingLineNumber = "262"
+            landmarkName = "addTicket(ticket:view:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -43,11 +43,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TicketTask/Controller/MainViewController.swift"
-            timestampString = "589989068.610279"
+            timestampString = "590145652.64055"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "268"
-            endingLineNumber = "268"
+            startingLineNumber = "333"
+            endingLineNumber = "333"
             landmarkName = "deleteTask(view:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -59,12 +59,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TicketTask/View/TaskView.swift"
-            timestampString = "589989068.610333"
+            timestampString = "590130786.060012"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "393"
-            endingLineNumber = "393"
+            startingLineNumber = "385"
+            endingLineNumber = "385"
             landmarkName = "setGradationColor()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TicketTask/View/TaskView.swift"
+            timestampString = "590130786.060232"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "256"
+            endingLineNumber = "256"
+            landmarkName = "setLayout()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
