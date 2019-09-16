@@ -430,7 +430,6 @@ extension MainViewController: MainDelegate {
         let tailLabel = UILabel()
         tailLabel.frame = CGRect(x:self.originX!, y:0, width:dummyViewWidth, height:tabLabelHeight)
         scrollView.addSubview(tailLabel)
-        
         //ダミーLabel分を足して上げましょう
 //        self.originX! += dummyViewWidth
         
