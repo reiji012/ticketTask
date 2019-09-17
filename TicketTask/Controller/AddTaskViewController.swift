@@ -46,6 +46,7 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITableViewD
     private var currentColorStr: String!
     private var currentIcon: UIImage!
     private var currentIconStr: String!
+    private var resetType: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -110,7 +111,8 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITableViewD
                                                      attri: "",
                                                      colorStr: currentColorStr,
                                                      iconStr: currentIconStr,
-                                                     tickets: tickets)
+                                                     tickets: tickets,
+                                                     resetType: self.resetType)
         if (error != nil) {
             self.showValidateAlert(error: error!)
             return

@@ -17,6 +17,7 @@ class TaskViewModel: NSObject {
     private let ticketCountSubject = BehaviorSubject(value: 0)
     private let taskTitleSubject = BehaviorSubject(value: "")
     private let taskAttriSubject = BehaviorSubject(value: "")
+    private let settingData = SettingData()
     
     var progress: Observable<Double> { return progressSubject.asObservable() }
     var ticketCout: Observable<Int> { return ticketCountSubject.asObserver() }
@@ -100,8 +101,8 @@ class TaskViewModel: NSObject {
         }
     }
     
-    func createTask(taskName: String, attri: String, colorStr: String, iconStr: String, tickets:Array<String>) -> ValidateError? {
-        let error = taskModel?.createTask(taskName: taskName, attri: attri, colorStr: colorStr, iconStr:  iconStr, tickets:tickets)
+    func createTask(taskName: String, attri: String, colorStr: String, iconStr: String, tickets:Array<String>, resetType: Int) -> ValidateError? {
+        let error = taskModel?.createTask(taskName: taskName, attri: attri, colorStr: colorStr, iconStr:  iconStr, tickets:tickets, resetType: resetType)
         if (error != nil) {
             return error
         } else {
