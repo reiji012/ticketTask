@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1122BE2C2330B325001CD87C /* SettingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1122BE2B2330B325001CD87C /* SettingData.swift */; };
 		2B84AD53229FE292004B484D /* AddTicket.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B84AD52229FE292004B484D /* AddTicket.storyboard */; };
 		2B84AD55229FE2C9004B484D /* AddTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B84AD54229FE2C9004B484D /* AddTicketViewController.swift */; };
 		2B84AD5B22A1267F004B484D /* ValidateError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B84AD5A22A1267F004B484D /* ValidateError.swift */; };
@@ -48,6 +49,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1122BE2B2330B325001CD87C /* SettingData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingData.swift; sourceTree = "<group>"; };
 		2B84AD52229FE292004B484D /* AddTicket.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AddTicket.storyboard; sourceTree = "<group>"; };
 		2B84AD54229FE2C9004B484D /* AddTicketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTicketViewController.swift; sourceTree = "<group>"; };
 		2B84AD5A22A1267F004B484D /* ValidateError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateError.swift; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 		2BB2EE4F228AB96300769AAA /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				1122BE2B2330B325001CD87C /* SettingData.swift */,
 				2BB2EE50228AB97200769AAA /* ActionType.swift */,
 				2B84AD5A22A1267F004B484D /* ValidateError.swift */,
 			);
@@ -411,6 +414,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1122BE2C2330B325001CD87C /* SettingData.swift in Sources */,
 				2BF5B74F22814521007D0266 /* MainViewController.swift in Sources */,
 				2BF5B76322814974007D0266 /* TaskViewModel.swift in Sources */,
 				2BF5B76C22829DCD007D0266 /* TicketTableViewCell.swift in Sources */,

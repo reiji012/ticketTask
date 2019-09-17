@@ -18,6 +18,8 @@ class TaskModel {
     let TASK_ICON = "icon"
     let TASK_COLOR = "color"
     let TASK_CATEGORY = "category"
+    let TASK_LASTRESETDATE = "lastResetDate"
+    let TASK_RESET_TYPE = "resetType"
     let TICKET_NAME = "ticketName"
     let TICKET_IS_COMPLETED = "isCompleted"
 
@@ -49,7 +51,7 @@ class TaskModel {
     }
     
     /*タスクを作成する*/
-    func createTask(taskName: String, attri: String, colorStr: String, iconStr: String, tickets:Array<String>) -> ValidateError? {
+    func createTask(taskName: String, attri: String, colorStr: String, iconStr: String, tickets:Array<String>, resetType: Int) -> ValidateError? {
         var taskArray = ["title":"","attri":"","icon":"","color":"","category":"","tickets":[], "id":0] as [String : Any]
         var ticketsArray: [String : Bool] = [:]
         var ticketsRealmArray: [[String : Any]] = []
@@ -83,7 +85,8 @@ class TaskModel {
                 TASK_ATTRI: attri,
                 TASK_COLOR: colorStr,
                 TASK_ICON: iconStr,
-                TASK_TICKETS: ticketsRealmArray
+                TASK_TICKETS: ticketsRealmArray,
+                TASK_RESET_TYPE: resetType
             ]
             
             
@@ -234,7 +237,7 @@ class TaskModel {
         let config = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
         Realm.Configuration.defaultConfiguration = config
         do {
-            let results = realm.objects(TaskItem.self)
+            let results = realm.objects(TaskItem.self).sorted(byKeyPath: "id", ascending: true)
             if  results.count == 0 {
                 print(results)
 //                self.dataFirstInit()
@@ -272,56 +275,24 @@ class TaskModel {
 
     }
     
-    /*
-    初期データの挿入
-     */
-    func dataFirstInit() {
-        do {
-            let results = realm.objects(TaskItem.self)
-            print(results)
-            
-            let task1Dictionary:[String:Any] = [
-                TASK_TITLE: "朝の準備",
-                TASK_ATTRI: "生活",
-                TASK_ICON: "icon-1",
-                TASK_COLOR: "blue",
-                TASK_CATEGORY: "category-1",
-                TASK_TICKETS: [[
-                                "ticketName"  : "歯磨き",
-                                "isCompleted" : false],
-                               [
-                                "ticketName"  : "鍵を閉める",
-                                "isCompleted" : false]]
-            ]
-            let task2Dictionary:[String:Any] = [
-                TASK_TITLE: "お仕事",
-                TASK_ATTRI: "仕事",
-                TASK_ICON: "icon-2",
-                TASK_COLOR: "orange",
-                TASK_CATEGORY: "category-2",
-                TASK_TICKETS: [[
-                                "ticketName"  : "データの入力",
-                                "isCompleted" : false],
-                               [
-                                "ticketName"  : "書類のコピー",
-                                "isCompleted" : false]]
-            ]
-            
-            let taskItem1 = TaskItem(value: task1Dictionary)
-            let taskItem2 = TaskItem(value: task2Dictionary)
-            
-            try! realm.write {
-                realm.add(taskItem1)
-                print("データベース追加後", results)
-                taskItem2.id = self.lastId()
-                realm.add(taskItem2)
-                print("データベース追加後", results)
-                print(results)
+    /// タスクの状態のリセット
+    ///
+    /// - Parameter resetType: リセットタイプ
+    func checkResetModel(resetType: Int) {
+        let result = realm.objects(TaskItem.self).filter("resetType == %@", resetType)
+        for task in result {
+            let lastResetDate = task.lastResetDate!
+            let now = Date()
+            if now > lastResetDate {
+                try! realm.write {
+                    for ticket in task.tickets {
+                        ticket.isCompleted = false
+                    }
+                    task.setValue(now, forKey: TASK_LASTRESETDATE)
+                }
             }
-            
-        } catch {
-            print("error")
         }
+        
     }
     
     func lastId() -> Int {
