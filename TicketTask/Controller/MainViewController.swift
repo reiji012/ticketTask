@@ -454,6 +454,7 @@ extension MainViewController: MainDelegate {
         self.originX = taskViewWidth
     }
     
+    /// 天気情報のセット
     func setWeatherInfo() {
         DispatchQueue.main.async {
             self.descriptionLabel.text = "(\(self.taskViewModel.todayWetherInfo![WetherInfoConst.DESCRIPTION.rawValue]!))"
