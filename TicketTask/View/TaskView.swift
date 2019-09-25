@@ -48,8 +48,6 @@ class TaskView: UIView{
     var mainViewController: MainViewController? = nil
     var isShowDetail: Bool = false
     let disposeBag = DisposeBag()
-
-    var gesturView:UIView?
     
     func setViewModel(task:Dictionary<String, Any>, mainVC: MainViewController) {
         self.mainViewController = mainVC
@@ -196,15 +194,6 @@ class TaskView: UIView{
     }
     
     func showAddticketView() {
-//        let storyboard = UIStoryboard(name: "AddTicket", bundle: nil)
-//        let addTicketViewController = storyboard.instantiateInitialViewController() as! AddTicketViewController
-//        let trantisionDelegate = SPStorkTransitioningDelegate()
-////        trantisionDelegate.translateForDismiss = 100
-//        trantisionDelegate.customHeight = self.mainViewController?.taskViewHeight
-//        addTicketViewController.transitioningDelegate = trantisionDelegate
-//        addTicketViewController.modalPresentationStyle = .custom
-//        self.mainViewController?.showAddTicketView(addTicketVC: addTicketViewController, taskVM: self.taskViewModel!)
-        
         var inputTextField: UITextField?
         
         //alertの表示文言
@@ -256,34 +245,10 @@ class TaskView: UIView{
         self.menuBtnLeftConst.constant = (UIScreen.main.bounds.size.width / 1.8) - 70
         
         self.titleLabel.text = taskViewModel?.taskName
-        self.createGesturView()
         self.setButtonLayout()
         self.setGradationColor()
         self.setImage()
         self.ticketTableView.allowsMultipleSelectionDuringEditing = true
-    }
-    
-    /*
-     上下のジェスチャー用のVIew作成
-     */
-    func createGesturView() {
-        // create gesturView(subView)
-        let currentHeight = self.bounds.size.height / 4
-        let rect = CGRect(x: 0, y: 0, width: self.bounds.size.width / 4, height: currentHeight);
-        gesturView = UIView(frame: rect)
-        
-        // create GesturRecognizer(pan = flick)
-        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panGesture(sender:)))
-        
-        // add GesturRecognizer to subview
-        let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(
-            target: self,
-            action: #selector(self.tappedHead(_:)))
-        gesturView!.addGestureRecognizer(tapGesture)
-        gesturView!.addGestureRecognizer(panGestureRecognizer)
-        
-        self.addSubview(gesturView!)
-        gesturView?.isUserInteractionEnabled = false
     }
     
     func changeViewSize() {
@@ -293,10 +258,6 @@ class TaskView: UIView{
         }
         let myBoundWidht: CGFloat = UIScreen.main.bounds.size.width
         let currentWidth = (self.frame.size.width - myBoundWidht)/2
-        self.menuButton.layoutIfNeeded()
-        self.layoutIfNeeded()
-        titleLabel.layoutIfNeeded()
-        self.ticketProgressBar.layoutIfNeeded()
         if isShowDetail {
             // 縮小するときの処理
             self.menuTopConst.constant = 50
@@ -316,43 +277,35 @@ class TaskView: UIView{
             self.progressBarWidthConst.constant += (myBoundWidht - self.bounds.size.width)
         }
         UIView.animate(withDuration: 0.6, delay: 0.0, animations: {
+            
+            self.menuButton.layoutIfNeeded()
+            self.layoutIfNeeded()
+            self.ticketProgressBar.layoutIfNeeded()
+            
+            self.ticketAddBtn.isHidden = self.isShowDetail
+            self.buttonTextLabel.isHidden = self.isShowDetail
+            self.layer.cornerRadius = self.isShowDetail ? 30 : 0
+            self.mainViewController!.changeTabbarStatus(isFront: self.isShowDetail)
             if self.isShowDetail {
                 // 縮小するときの処理
-                self.menuButton.layoutIfNeeded()
-                self.layoutIfNeeded()
-                self.ticketAddBtn.isHidden = true
-                self.buttonTextLabel.isHidden = true
-                self.ticketProgressBar.layoutIfNeeded()
                 self.ticketTableView.isHidden = true
                 self.frame = CGRect(x:self.defoultX!,y:self.defoultY!,width:self.defoultWidth!,height:self.defoultHeight!)
-                self.layer.cornerRadius = 30
+                
                 self.backButton.isHidden = true
-                self.isShowDetail = false
-                self.gesturView?.isUserInteractionEnabled = false
-                self.mainViewController!.changeTabbarStatus(isFront: true)
+                
             } else {
-                self.menuButton.layoutIfNeeded()
-                self.layoutIfNeeded()
-                self.ticketProgressBar.layoutIfNeeded()
                 // 拡大するときの処理
-                self.ticketAddBtn.isHidden = false
-                self.buttonTextLabel.isHidden = false
                 self.defoultHeight = self.frame.size.height
                 self.defoultWidth = self.bounds.size.width
                 self.defoultX = self.frame.origin.x
                 self.ticketTableView.reloadData()
-                self.frame.size.height = UIScreen.main.bounds.size.height
-                self.frame.size.width = (self.parent?.parent?.frame.size.width)!
-                self.frame = CGRect(x:self.frame.origin.x + currentWidth,y:0,width:self.frame.size.width,height:UIScreen.main.bounds.size.height)
-                self.layer.cornerRadius = 0
-                self.isShowDetail = true
-                self.gesturView?.isUserInteractionEnabled = true
-                self.mainViewController!.changeTabbarStatus(isFront: false)
+                self.frame = CGRect(x:self.frame.origin.x + currentWidth,y:0,width:(self.parent?.parent?.frame.size.width)!,height:UIScreen.main.bounds.size.height)
 
             }
         }, completion: { finished in
-            self.ticketTableView.isHidden = self.isShowDetail ? false : true
-            self.backButton.isHidden = self.isShowDetail ? false : true
+            self.isShowDetail = !self.isShowDetail
+            self.ticketTableView.isHidden = !self.isShowDetail
+            self.backButton.isHidden = !self.isShowDetail
             // ViewConrtollerに状態の変更を伝える
         })
     }
@@ -388,15 +341,10 @@ class TaskView: UIView{
         gradientLayer.bounds = self.ticketAddBtn.bounds
         gradientLayer.frame.origin.x += 20
         gradientLayer.frame.origin.y += 20
-//        gradientLayer.cornerRadius = self.ticketAddBtn.bounds.midY
         self.ticketAddBtn.layer.sublayers = nil
         self.ticketAddBtn.layer.insertSublayer(gradientLayer, at: 0)
         self.ticketAddBtn.setTitle("＋", for: .normal)
-//        self.view.layer.insertSublayer(self.gradientLayer, at: 0)
-//        self.ticketAddBtn.layer.shadowOpacity = 0.5
-//        self.ticketAddBtn.layer.shadowRadius = 12
-//        self.ticketAddBtn.layer.shadowColor = UIColor.black.cgColor
-//        self.ticketAddBtn.layer.shadowOffset = CGSize(width: 3, height: 4)
+
     }
 
     func getMainViewController() -> MainViewController? {
