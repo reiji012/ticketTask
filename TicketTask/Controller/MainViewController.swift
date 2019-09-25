@@ -14,7 +14,7 @@ import SPStorkController
 import SparrowKit
 import PKHUD
 
-enum DeviceSize {
+enum TaskViewSize {
     case small
     case middle
     case large
@@ -73,7 +73,7 @@ class MainViewController: UIViewController {
     private var dummyViewWidth: CGFloat!
     private var scrollViewHeight: CGFloat!
     
-    private var deviceSize: DeviceSize?
+    private var taskViewSize: TaskViewSize?
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var weatherImgView: UIImageView!
@@ -92,11 +92,11 @@ class MainViewController: UIViewController {
         
         switch myBoundSize.width {
         case 320:
-            deviceSize = .small
+            taskViewSize = .small
         case 375:
-            deviceSize = .middle
+            taskViewSize = .middle
         case 414:
-            deviceSize = .large
+            taskViewSize = .large
         default:
             break
         }
@@ -221,7 +221,7 @@ class MainViewController: UIViewController {
         let mainScreenHeight: CGFloat = UIScreen.main.bounds.size.height
         let currentY = mainScreenHeight / 2 - 50
         
-        let viewWidth = isInitCreate ? initTaskViewWidth : deviceSize?.viewWidth
+        let viewWidth = isInitCreate ? initTaskViewWidth : taskViewSize?.viewWidth
         
         taskView = UINib(nibName: "TaskView", bundle: Bundle.main).instantiate(withOwner: self, options: nil).first as? TaskView
         taskView.frame = CGRect.init(x: self.originX! + 25, y: currentY, width: viewWidth!, height: initTaskViewHeight)
