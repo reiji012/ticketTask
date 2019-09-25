@@ -14,8 +14,8 @@ class TicketTableViewCell: UITableViewCell {
     var taskViewModel: TaskViewModel?
     var isCompleted: Bool = false {
         didSet(value) {
-            
-            checkBoxLabel.textColor = isCompleted ? UIColor.green : UIColor.lightGray
+            checkBoxLabel.textColor = isCompleted ? UIColor.white : UIColor.lightGray
+            checkBoxLabel.backgroundColor = self.isCompleted ? self.taskViewModel?.taskColor : UIColor.white
         }
     }
     
@@ -42,5 +42,12 @@ class TicketTableViewCell: UITableViewCell {
     @objc func changeCompletion() {
         self.isCompleted = !self.isCompleted
         self.taskViewModel?.changeTicketCompleted(ticketName: ticketNameLabel.text!, completed: isCompleted)
+        
+        UIView.animate(withDuration: 0.2, delay: 0.0, options: [.curveEaseIn, .autoreverse], animations: {
+            
+            self.checkBoxLabel.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+        }) { _ in
+            self.checkBoxLabel.transform = CGAffineTransform(scaleX: 1, y: 1)
+        }
     }
 }
