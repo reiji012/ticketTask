@@ -12,28 +12,10 @@ class TicketTabbarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // UITabBarControllerDelegateの宣言
         self.delegate = self
-        // 初期設定として空のUIViewControllerのインスタンスを追加する
-//        self.viewControllers = [UIViewController(), UIViewController(), UIViewController(), UIViewController()]
-        // ...(以下GlobalTabBarControllerに表示するコンテンツを表示させるための処理を追記する)...
+
     }
-//    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-//        // MEMO: UITabBarに配置されているアイコン画像をアニメーションさせるための処理
-//        // 現在配置されているUITabBarからUIImageViewを取得して配列にする
-//        let targetClass: AnyClass = NSClassFromString("UITabBarButton")!
-//        let tabBarViews = tabBar.subviews.filter{ $0.isKind(of: targetClass) }
-//        let tabBarImageViews = tabBarViews.map{ $0.subviews.first as! UIImageView }
-//        // アイコン画像をバウンドさせるようなアニメーションを付与する
-//        UIView.animateKeyframes(withDuration: 0.16, delay: 0.0, options: [.autoreverse], animations: {
-//            UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 1.0, animations: {
-//                tabBarImageViews[item.tag].transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
-//            })
-//            UIView.addKeyframe(withRelativeStartTime: 1.0, relativeDuration: 1.0, animations: {
-//                tabBarImageViews[item.tag].transform = CGAffineTransform.identity
-//            })
-//        })
-//    }
+
     // MARK: - Private Function
     // タブ選択時に中のコンテンツをスライドさせるアニメーションを付与する
     private func animateTabContents(_ toIndex: Int) {

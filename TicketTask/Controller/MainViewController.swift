@@ -375,8 +375,6 @@ class MainViewController: UIViewController {
             self.present(addTicketVC, animated: true, completion: nil)
         })
     }
-    
-    
 }
 
 extension MainViewController: MainDelegate {
