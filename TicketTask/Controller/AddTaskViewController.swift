@@ -91,11 +91,6 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPre
         self.navBar.rightButton.addTarget(self, action: #selector(self.create), for: .touchUpInside)
         self.navBar.backgroundColor = UIColor.lightGray
         self.view.addSubview(self.navBar)
-        // 影の設定
-//        self.closeViewButton.layer.shadowOpacity = 0.5
-//        self.closeViewButton.layer.shadowRadius = 6
-//        self.closeViewButton.layer.shadowColor = UIColor.black.cgColor
-//        self.closeViewButton.layer.shadowOffset = CGSize(width: 1, height: 2)
     }
     
     func initSetState() {
@@ -107,35 +102,6 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPre
         self.setColorView()
         self.setIconImage()
         self.setGradationColor()
-    }
-    
-    
-    @objc func cansel() {
-        self.dismiss(animated: true, completion: nil)
-    }
-    
-    // Taskの作成
-    @objc func create() {
-        if (titleTextField.text == "" || tickets.count == 0) {
-            showValidateAlert(error: .inputValidError)
-            return
-        }
-        let error = mainVC!.taskViewModel.createTask(taskName: titleTextField.text!,
-                                                     attri: "",
-                                                     colorStr: currentColorStr,
-                                                     iconStr: currentIconStr,
-                                                     tickets: tickets,
-                                                     resetType: self.resetType)
-        if (error != nil) {
-            self.showValidateAlert(error: error!)
-            return
-        }
-        dismiss(animated: true, completion: {
-            guard let vc = self.mainVC else {
-                return
-            }
-            vc.addNewTaskView()
-        })
     }
     
     @IBAction func tapIconView(_ sender: Any) {
@@ -174,6 +140,50 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPre
         present(colorCollectionVC, animated: true, completion: nil)
     }
     
+    @IBAction func touchAddTicketButton(_ sender: Any) {
+        let text = ticketTextField.text
+        if text == "" {
+            return
+        }
+        if ticketArray.index(of: text!) == nil {
+            self.tickets.append(ticketTextField.text!)
+            ticketTableView.reloadData()
+            ticketTextField.text = ""
+            ticketArray.append(text!)
+        } else {
+            showValidateAlert(error: .ticketValidError)
+        }
+        
+    }
+    
+    @objc func cansel() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    // Taskの作成
+    @objc func create() {
+        if (titleTextField.text == "" || tickets.count == 0) {
+            showValidateAlert(error: .inputValidError)
+            return
+        }
+        let error = mainVC!.taskViewModel.createTask(taskName: titleTextField.text!,
+                                                     attri: "",
+                                                     colorStr: currentColorStr,
+                                                     iconStr: currentIconStr,
+                                                     tickets: tickets,
+                                                     resetType: self.resetType)
+        if (error != nil) {
+            self.showValidateAlert(error: error!)
+            return
+        }
+        dismiss(animated: true, completion: {
+            guard let vc = self.mainVC else {
+                return
+            }
+            vc.addNewTaskView()
+        })
+    }
+    
     func selectedColor(color: UIColor, colorStr: String) {
         currentColorStr = colorStr
         currentColor = color
@@ -208,26 +218,7 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPre
             self.view.layer.insertSublayer(self.gradientLayer, at: 0)
         })
     }
-    
-    @IBAction func addTicket(_ sender: Any) {
-        let text = ticketTextField.text
-        if text == "" {
-            return
-        }
-        if ticketArray.index(of: text!) == nil {
-            self.tickets.append(ticketTextField.text!)
-            ticketTableView.reloadData()
-            ticketTextField.text = ""
-            ticketArray.append(text!)
-        } else {
-            showValidateAlert(error: .ticketValidError)
-        }
-        
-    }
-    
-    @IBAction func putCreateTaskBtn(_ sender: Any) {
-        
-    }
+
     
     func showValidateAlert(error: ValidateError){
 
