@@ -11,7 +11,7 @@ import SPStorkController
 import SparrowKit
 import SPFakeBar
 
-class AddTaskViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, UIPopoverPresentationControllerDelegate, TaskEditDalegate{
+class AddTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPresentationControllerDelegate, TaskEditDalegate{
     
     var tableView: UITableView = UITableView()
     @IBOutlet weak var scrolView: UIScrollView!
@@ -62,12 +62,23 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITableViewD
         screenHeight = screenSize.height
         initSetState()
         bindUIs()
-        setPickerView()
         
     }
-
-    @IBAction func pushCloseViewBtn(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(onKeyboardWillShow(_:)),
+                                               name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onKeyboardWillHide(_:)),
+                                               name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        super.viewWillDisappear(animated)
     }
     
     func bindUIs() {
@@ -98,10 +109,12 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITableViewD
         self.setGradationColor()
     }
     
+    
     @objc func cansel() {
         self.dismiss(animated: true, completion: nil)
     }
     
+    // Taskの作成
     @objc func create() {
         if (titleTextField.text == "" || tickets.count == 0) {
             showValidateAlert(error: .inputValidError)
@@ -123,7 +136,6 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITableViewD
             }
             vc.addNewTaskView()
         })
-        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func tapIconView(_ sender: Any) {
@@ -197,23 +209,6 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITableViewD
         })
     }
     
-    func setPickerView() {
-        // ピッカー設定
-        pickerView.delegate = self
-        pickerView.dataSource = self
-        pickerView.showsSelectionIndicator = true
-        
-        // 決定バーの生成
-        let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 35))
-        let spacelItem = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
-        let doneItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
-        toolbar.setItems([spacelItem, doneItem], animated: true)
-        
-    }
-    // 決定ボタン押下
-    @objc func done() {
-    }
-    
     @IBAction func addTicket(_ sender: Any) {
         let text = ticketTextField.text
         if text == "" {
@@ -279,41 +274,8 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITableViewD
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tickets.count
-    }
 
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        // セルに表示する値を設定する
-        cell.textLabel!.text = tickets[indexPath.row]
-        return cell
-    }
-    
-    internal func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            tickets.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(onKeyboardWillShow(_:)),
-                                               name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(onKeyboardWillHide(_:)),
-                                               name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-        
-        super.viewWillDisappear(animated)
-    }
+
     
     @objc private func onKeyboardWillShow(_ notification: Notification) {
         guard
@@ -346,47 +308,30 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UITableViewD
     }
 }
 
-extension AddTaskViewController : UIPickerViewDelegate, UIPickerViewDataSource {
-    
-    // ドラムロールの列数
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
+extension AddTaskViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return tickets.count
     }
     
-    // ドラムロールの行数
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        /*
-         列が複数ある場合は
-         if component == 0 {
-         } else {
-         ...
-         }
-         こんな感じで分岐が可能
-         */
-        return attris.count
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        // セルに表示する値を設定する
+        cell.textLabel!.text = tickets[indexPath.row]
+        return cell
     }
     
-    // ドラムロールの各タイトル
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        /*
-         列が複数ある場合は
-         if component == 0 {
-         } else {
-         ...
-         }
-         こんな感じで分岐が可能
-         */
-        return attris[row]
+    internal func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            tickets.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
     }
-    
-    /*
-     // ドラムロール選択時
-     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-     self.textField.text = list[row]
-     }
-     */
 }
 
+extension AddTaskViewController: UITableViewDelegate {
+    
+}
 
 extension UIScrollView {
     override open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

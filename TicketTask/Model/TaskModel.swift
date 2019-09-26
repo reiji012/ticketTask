@@ -68,14 +68,14 @@ class TaskModel {
         }
         taskArray["id"] = lastID
         taskArray["tickets"] = ticketsArray
-        self.tasks?.append(taskArray)
-        self.lastCreateTask = taskArray
+        
         
         do {
             let results = realm.objects(TaskItem.self)
             print(results)
             let tasks = results.map {$0.taskTitle}
             if tasks.index(of: taskName) != nil {
+                // 同じ名前のタスクが存在した場合はエラーを返す
                 let error = ValidateError.taskValidError
                 return error
             }
@@ -98,6 +98,9 @@ class TaskModel {
                 print("データベース追加後", results.count)
                 print(results)
             }
+            // タスク追加に成功した時にtasksパラメータにタスクを追加
+            self.tasks?.append(taskArray)
+            self.lastCreateTask = taskArray
             return nil
         }
         catch {

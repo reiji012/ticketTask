@@ -59,7 +59,6 @@ class TaskView: UIView{
         taskViewModel?.getTask(taskName: taskName)
         setLayout()
 
-        self.isUserInteractionEnabled = true
         let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(
             target: self,
             action: #selector(self.tapped(_:)))
@@ -182,10 +181,6 @@ class TaskView: UIView{
         if isShowDetail {
             return
         }
-        self.changeViewSize()
-    }
-    
-    @objc func tappedHead(_ sender: UITapGestureRecognizer){
         self.changeViewSize()
     }
     
@@ -359,52 +354,6 @@ class TaskView: UIView{
         } else {
             return nil
         }
-    }
-    
-    // フリック時の拡大縮小
-    @objc func panGesture(sender:UIPanGestureRecognizer) {
-        
-        // 左に寄せる分の幅を取得
-        
-        var tapEndPosX:CGFloat = 0
-        var tapEndPosY:CGFloat = 0
-        // 指が離れた時（sender.state = .ended）だけ処理をする
-        switch sender.state {
-        case .ended:
-            // タップ開始地点からの移動量を取得
-            let position = sender.translation(in: self)
-            tapEndPosX = position.x     // x方向の移動量
-            tapEndPosY = -position.y    // y方向の移動量（上をプラスと扱うため、符号反転する）
-            var panDirection = ""
-            // 上下左右のフリック方向を判別する
-            // xがプラスの場合（右方向）とマイナスの場合（左方向）で場合分け
-            if tapEndPosX > 0 {
-                if tapEndPosY > tapEndPosX {
-                    panDirection = "up"
-                    print("上フリック")
-                } else if tapEndPosY < -tapEndPosX {
-                    panDirection = "down"
-                    print("下フリック")
-                }
-            } else {
-                if tapEndPosY > -tapEndPosX {
-                    panDirection = "up"
-                    print("上フリック")
-                    
-                } else if tapEndPosY < tapEndPosX {
-                    panDirection = "down"
-                    print("下フリック")
-                }
-            }
-            if panDirection == "up" && !self.isShowDetail {
-                self.changeViewSize()
-            } else if panDirection == "down" && self.isShowDetail {
-                self.changeViewSize()
-            }
-        default:
-            break
-        }
-    
     }
     
     // 親ビュー (parent) に対して上下左右マージンゼロの指定をする
