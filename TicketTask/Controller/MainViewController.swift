@@ -194,19 +194,15 @@ class MainViewController: UIViewController {
         
         createTaskView(task: taskViewModel.taskModel!.lastCreateTask, tag: taskViewModel.taskModel!.tasks!.count, isInitCreate: false)
         
-        self.originX! += taskViewWidth
         print("self.originX!:\(self.originX!)")
         //scrollViewのcontentSizeを，View全体のサイズに合わせる
         //最終的なoriginX = タブ全体の横幅 になります
-        scrollView.contentSize = CGSize(width:self.originX!, height:scrollView.frame.height)
-
+        scrollView.contentSize = CGSize(width:self.originX! + taskViewWidth, height:scrollView.frame.height)
         
         HUD.flash(.success, onView: view, delay: 1)
         let taskCount: Int = self.taskViewModel.taskCount()
-        print("taskCount:\(taskCount)")
         //スクロール可能最大値
         let maxScrollPoint = (taskCount - 1) * currentWidth
-        print("maxScrollPoint:\(maxScrollPoint)")
         UIView.animate(withDuration: 0.3, animations: {
             self.scrollView.contentOffset = CGPoint(x:maxScrollPoint, y:0)
         })
@@ -230,6 +226,8 @@ class MainViewController: UIViewController {
         taskView.topSafeAreaHeight = self.view.safeAreaInsets.top
         taskView.tag = tag
         scrollView.addSubview(taskView)
+        //次のタブのx座標を用意する
+        self.originX! += taskViewWidth
     }
     
     func taskEdited(attri: String, color: String) {
@@ -414,8 +412,7 @@ extension MainViewController: MainDelegate {
             //タブになるUIVIewを作る
             createTaskView(task: task, tag: index + 1, isInitCreate: true)
             
-            //次のタブのx座標を用意する
-            self.originX! += taskViewWidth
+            
             
             print(taskView.frame.size.width)
             if(index + 1 == 1) {
@@ -435,7 +432,7 @@ extension MainViewController: MainDelegate {
         
         //scrollViewのcontentSizeを，View全体のサイズに合わせる
         //最終的なoriginX = タブ全体の横幅 になります
-        scrollView.contentSize = CGSize(width:self.originX!, height:scrollView.frame.height)
+        scrollView.contentSize = CGSize(width:self.originX! + taskViewWidth, height:scrollView.frame.height)
     }
     
     func setTaskEmptyViewState(isHidden: Bool) {
@@ -447,6 +444,7 @@ extension MainViewController: MainDelegate {
         //一番右のタブもセンターに持ってくることが出来ます
         let headDummyView = UIView()
         headDummyView.frame = CGRect(x:0, y:0, width:dummyViewWidth, height:tabLabelHeight)
+        headDummyView.isUserInteractionEnabled = false
         scrollView.addSubview(headDummyView)
         
         //タブのx座標．
