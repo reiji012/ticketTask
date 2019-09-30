@@ -33,11 +33,12 @@ enum TaskViewSize {
 
 class MainViewController: UIViewController {
     
+    var presenter: MainViewPresenterProtocol!
+    
     // ViewModelの取得
     var taskViewModel = TaskViewModel()
     var centerViewAttri: String?
     var centerViewColor: String?
-    var tableViewArray = [UITableViewCell]()
     var taskViewIndex: Int?
     
     var isShowDetail: Bool = false {
@@ -86,7 +87,7 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        presenter = MainViewPresenter(vc: self)
         // 端末のサイズでタスクカードの大きさを設定
         let myBoundSize: CGSize = UIScreen.main.bounds.size
         
@@ -255,43 +256,11 @@ class MainViewController: UIViewController {
     ///
     /// - Parameter ticket: 追加するチケット
     /// - Returns: エラー
-    func addTicket(ticket: String, view: TaskView) {
+    func didTouchAddTicketButton(ticket: String, view: TaskView) {
         view.taskViewModel?.actionType = .ticketCreate
-        let error = view.taskViewModel?.addTicket(ticketName: ticket)
-        if error != nil {
-            self.showValidateAlert(error: error!)
-        }
+        view.taskViewModel?.addTicket(ticketName: ticket)
         let ticketTableViewCell = UINib(nibName: "TicketTableViewCell", bundle: Bundle.main).instantiate(withOwner: self, options: nil).first as? TicketTableViewCell
-        view.tableViewArray.append(ticketTableViewCell!)
         view.ticketTableView.reloadData()
-    }
-    
-    func showValidateAlert(error: ValidateError){
-        
-        var massage = ""
-        var title = ""
-        switch error {
-        case .taskValidError:
-            title = "データベースエラー"
-            massage = error.rawValue
-        case .ticketValidError:
-            title = "入力エラー"
-            massage = error.rawValue
-        default:
-            title = "保存に失敗しました"
-        }
-        
-        let alert: UIAlertController = UIAlertController(title: title, message: massage, preferredStyle:  UIAlertController.Style.alert)
-        
-        let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{
-            // ボタンが押された時の処理を書く（クロージャ実装）
-            (action: UIAlertAction!) -> Void in
-            print("OK")
-        })
-        
-        alert.addAction(defaultAction)
-        
-        present(alert, animated: true, completion: nil)
     }
     
     /// タスクの削除
@@ -369,7 +338,7 @@ class MainViewController: UIViewController {
     }
 }
 
-extension MainViewController: MainDelegate {
+extension MainViewController: MainViewControllerProtocol {
     func didChangeTaskCount(taskCount: Int) {
         taskEmptyView.isHidden = taskCount < 1
     }
@@ -382,7 +351,7 @@ extension MainViewController: MainDelegate {
         //scrollViewのDelegateを指定
         scrollView.delegate = self
         
-        let tasks = taskViewModel.tasks
+        let tasks = presenter.tasks
         
         //タブの縦幅(UIScrollViewと一緒にします)
         let tabLabelHeight:CGFloat = self.scrollView.frame.size.height
@@ -398,7 +367,7 @@ extension MainViewController: MainDelegate {
         self.originX = dummyViewWidth
         
         //titlesで定義したタブを1つずつ用意していく
-        for (index, task) in tasks!.enumerated() {
+        for (index, task) in tasks.enumerated() {
             //タブになるUIVIewを作る
             createTaskView(task: task, tag: index + 1, isInitCreate: true)
             
@@ -453,6 +422,34 @@ extension MainViewController: MainDelegate {
             
         }
     }
+    
+    func showValidateAlert(error: ValidateError){
+        
+        var massage = ""
+        var title = ""
+        switch error {
+        case .taskValidError:
+            title = "データベースエラー"
+            massage = error.rawValue
+        case .ticketValidError:
+            title = "入力エラー"
+            massage = error.rawValue
+        default:
+            title = "保存に失敗しました"
+        }
+        
+        let alert: UIAlertController = UIAlertController(title: title, message: massage, preferredStyle:  UIAlertController.Style.alert)
+        
+        let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{
+            // ボタンが押された時の処理を書く（クロージャ実装）
+            (action: UIAlertAction!) -> Void in
+            print("OK")
+        })
+        
+        alert.addAction(defaultAction)
+        
+        present(alert, animated: true, completion: nil)
+    }
 }
 
 extension MainViewController: UIScrollViewDelegate {
@@ -472,10 +469,10 @@ extension MainViewController: UIScrollViewDelegate {
             return
         }
         //微妙なスクロール位置でスクロールをやめた場合に
-        //ちょうどいいタブをセンターに持ってくるためのアニメーションです
+        //ちょうどいいタブをセンターに持ってくるためのアニメーション
         
         //現在のスクロールの位置(scrollView.contentOffset.x)から
-        //どこのタブを表示させたいか計算します
+        //どこのタブを表示させたいか計算
         let taskCount: Int = self.taskViewModel.taskCount()
         //スクロール可能最大値
         let maxScrollPoint = (taskCount - 1) * currentWidth
