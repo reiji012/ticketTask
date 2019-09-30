@@ -25,7 +25,7 @@ class TaskViewModel: NSObject {
     var taskAttri: Observable<String> { return taskAttriSubject.asObserver() }
     var weatherIconImage: UIImage?
     
-    var delegate: MainDelegate?
+    var delegate: MainViewControllerProtocol?
 
     var taskID: Int?
     var taskModel: TaskModel?
@@ -111,13 +111,13 @@ class TaskViewModel: NSObject {
         }
     }
     
-    func addTicket(ticketName: String) -> ValidateError? {
+    func addTicket(ticketName: String) {
         let ticketArray = tickets?.keys
         if ticketArray!.index(of: ticketName) != nil {
-            return .ticketValidError
+            delegate?.showValidateAlert(error: .ticketValidError)
+            return
         }
         self.tickets!.updateValue(false, forKey: ticketName)
-        return nil
     }
     
     func changeTicketCompleted(ticketName: String,completed: Bool) {

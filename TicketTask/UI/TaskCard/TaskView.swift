@@ -31,7 +31,6 @@ class TaskView: UIView{
     @IBOutlet weak var progressBarWidthConst: NSLayoutConstraint!
     @IBOutlet weak var tableViewHeightConst: NSLayoutConstraint!
     
-    var tableViewArray = [UITableViewCell]()
     var taskViewModel: TaskViewModel?
     var ticketTaskColor = TicketTaskColor()
     var defoultWidth: CGFloat?
@@ -204,7 +203,7 @@ class TaskView: UIView{
             guard let text = alertController.textFields?.first!.text else {
                 return
             }
-            self.mainViewController?.addTicket(ticket: text, view: self)
+            self.mainViewController?.didTouchAddTicketButton(ticket: text, view: self)
             //追加ボタンを押した時の処理
         }
         
