@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		111F5EBD234203180034548A /* MainViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111F5EBC234203180034548A /* MainViewPresenter.swift */; };
+		111F5EBF2342E7E10034548A /* ScreenType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111F5EBE2342E7E10034548A /* ScreenType.swift */; };
+		111F5EC12342ECE40034548A /* AddTaskViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111F5EC02342ECE40034548A /* AddTaskViewPresenter.swift */; };
 		1122BE2C2330B325001CD87C /* SettingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1122BE2B2330B325001CD87C /* SettingData.swift */; };
 		11B4F99C233DF163008CD2F6 /* TaskEditDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B4F99B233DF162008CD2F6 /* TaskEditDelegate.swift */; };
 		2B84AD5B22A1267F004B484D /* ValidateError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B84AD5A22A1267F004B484D /* ValidateError.swift */; };
@@ -48,6 +50,8 @@
 
 /* Begin PBXFileReference section */
 		111F5EBC234203180034548A /* MainViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewPresenter.swift; sourceTree = "<group>"; };
+		111F5EBE2342E7E10034548A /* ScreenType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenType.swift; sourceTree = "<group>"; };
+		111F5EC02342ECE40034548A /* AddTaskViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskViewPresenter.swift; sourceTree = "<group>"; };
 		1122BE2B2330B325001CD87C /* SettingData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingData.swift; sourceTree = "<group>"; };
 		11B4F99B233DF162008CD2F6 /* TaskEditDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskEditDelegate.swift; sourceTree = "<group>"; };
 		2B84AD5A22A1267F004B484D /* ValidateError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateError.swift; sourceTree = "<group>"; };
@@ -109,6 +113,7 @@
 				11B4F98D233DED26008CD2F6 /* Color */,
 				8E6B2A0D22FF227400113E30 /* Utill.swift */,
 				8E8A0B0D2314161500FFCE15 /* Const.swift */,
+				111F5EBE2342E7E10034548A /* ScreenType.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -152,6 +157,7 @@
 			isa = PBXGroup;
 			children = (
 				2BF5B77B22855657007D0266 /* AddTaskViewController.swift */,
+				111F5EC02342ECE40034548A /* AddTaskViewPresenter.swift */,
 			);
 			path = AddTask;
 			sourceTree = "<group>";
@@ -427,6 +433,7 @@
 				2BF5B76322814974007D0266 /* TaskViewModel.swift in Sources */,
 				2BF5B76C22829DCD007D0266 /* TicketTableViewCell.swift in Sources */,
 				2BF5B7652281498F007D0266 /* TaskModel.swift in Sources */,
+				111F5EBF2342E7E10034548A /* ScreenType.swift in Sources */,
 				2BF5B77C22855657007D0266 /* AddTaskViewController.swift in Sources */,
 				2BE55168229299A100D5AFA9 /* TicketModel.swift in Sources */,
 				111F5EBD234203180034548A /* MainViewPresenter.swift in Sources */,
@@ -437,6 +444,7 @@
 				2BF5B7722282A0AB007D0266 /* UIView+TicketTask.swift in Sources */,
 				2BF5B7692281562D007D0266 /* TaskView.swift in Sources */,
 				8E8A0B12231605E400FFCE15 /* TaskIconImageView.swift in Sources */,
+				111F5EC12342ECE40034548A /* AddTaskViewPresenter.swift in Sources */,
 				11B4F99C233DF163008CD2F6 /* TaskEditDelegate.swift in Sources */,
 				8E8A0B1A2316B04B00FFCE15 /* ColorSelectViewController.swift in Sources */,
 				2BB2EE51228AB97200769AAA /* ActionType.swift in Sources */,
