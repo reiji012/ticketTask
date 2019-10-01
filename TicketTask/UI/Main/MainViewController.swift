@@ -201,7 +201,7 @@ class MainViewController: UIViewController {
         scrollView.contentSize = CGSize(width:self.originX! + taskViewWidth, height:scrollView.frame.height)
         
         HUD.flash(.success, onView: view, delay: 1)
-        let taskCount: Int = self.taskViewModel.taskCount()
+        let taskCount: Int = self.presenter.taskTotalCount
         //スクロール可能最大値
         let maxScrollPoint = (taskCount - 1) * currentWidth
         UIView.animate(withDuration: 0.3, animations: {
@@ -325,7 +325,6 @@ class MainViewController: UIViewController {
         controller.modalPresentationStyle = .custom
         let nextVC = segue.destination as? AddTaskViewController
         nextVC?.mainVC = self
-        nextVC?.taskViewModel = self.taskViewModel
         nextVC?.beforeViewAttri = self.centerViewAttri!
     }
     

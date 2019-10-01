@@ -17,7 +17,7 @@ protocol AddTaskViewControllerProtocol {
     func didAddTicket()
 }
 
-class AddTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPresentationControllerDelegate, TaskEditDalegate{
+class AddTaskViewController: UIViewController, UIPopoverPresentationControllerDelegate, TaskEditDalegate{
     
     var tableView: UITableView = UITableView()
     @IBOutlet weak var scrolView: UIScrollView!
@@ -34,14 +34,10 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPre
     @IBOutlet weak var colorView: UIView!
     
     var pickerView: UIPickerView = UIPickerView()
-    let attris: [String] = ["生活", "仕事"]
     var gradientLayer: CAGradientLayer = CAGradientLayer()
-    var tickets: [String] = []
-    var taskViewModel = TaskViewModel()
     var beforeViewAttri: String?
     var ticketTaskColor = TicketTaskColor()
     var mainVC: MainViewController?
-    var ticketArray = [String]()
     let navBar = SPFakeBarView.init(style: .stork)
     // Screenの高さ
     var screenHeight:CGFloat!
@@ -58,6 +54,7 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPre
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter = AddTaskViewPresenter(vc: self)
+        presenter.viewDidLoad()
         titleTextField.delegate = self
         ticketTextField.delegate = self
         ticketTableView.delegate = self
@@ -166,7 +163,7 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPre
                                                      attri: "",
                                                      colorStr: currentColorStr,
                                                      iconStr: currentIconStr,
-                                                     tickets: tickets,
+                                                     tickets: presenter.tickets,
                                                      resetType: self.resetType)
     }
     
@@ -203,48 +200,6 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPre
             self.ticketAddBtn.setTitleColor(self.currentColor, for: .normal)
             self.view.layer.insertSublayer(self.gradientLayer, at: 0)
         })
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        // キーボードを閉じる
-        textField.resignFirstResponder()
-        return true
-    }
-
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
-    }
-
-
-    
-    @objc private func onKeyboardWillShow(_ notification: Notification) {
-        guard
-            let userInfo = notification.userInfo,
-            let keyboardInfo = UIKeyboardInfo(info: userInfo),
-            let inputView = view.findFirstResponder(),
-            let scrollView = inputView.findSuperView(ofType: UIScrollView.self)
-            else { return }
-        
-        let inputRect = inputView.convert(inputView.bounds, to: scrollView)
-        let keyboardRect = scrollView.convert(keyboardInfo.frame, from: nil)
-        let offsetY = inputRect.maxY - keyboardRect.minY
-        if offsetY > 0 {
-            let contentOffset = CGPoint(x: scrollView.contentOffset.x, y: scrollView.contentOffset.y + offsetY)
-            scrollView.contentOffset = contentOffset
-        }
-        // 例えば iPhoneX の Portrait 表示だと bottom に34ptほど隙間ができるのでその分を差し引く
-        let contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardInfo.frame.height - view.safeAreaInsets.bottom, right: 0)
-        scrollView.contentInset = contentInset
-        scrollView.scrollIndicatorInsets = contentInset
-    }
-    
-    @objc private func onKeyboardWillHide(_ notification: Notification) {
-        guard
-            let inputView = view.findFirstResponder(),
-            let scrollView = inputView.findSuperView(ofType: UIScrollView.self)
-            else { return }
-        scrollView.contentInset = .zero
-        scrollView.scrollIndicatorInsets = .zero
     }
 }
 
@@ -319,5 +274,50 @@ extension AddTaskViewController: AddTaskViewControllerProtocol {
         alert.addAction(defaultAction)
         
         present(alert, animated: true, completion: nil)
+    }
+}
+
+extension AddTaskViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        // キーボードを閉じる
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    
+    
+    @objc private func onKeyboardWillShow(_ notification: Notification) {
+        guard
+            let userInfo = notification.userInfo,
+            let keyboardInfo = UIKeyboardInfo(info: userInfo),
+            let inputView = view.findFirstResponder(),
+            let scrollView = inputView.findSuperView(ofType: UIScrollView.self)
+            else { return }
+        
+        let inputRect = inputView.convert(inputView.bounds, to: scrollView)
+        let keyboardRect = scrollView.convert(keyboardInfo.frame, from: nil)
+        let offsetY = inputRect.maxY - keyboardRect.minY
+        if offsetY > 0 {
+            let contentOffset = CGPoint(x: scrollView.contentOffset.x, y: scrollView.contentOffset.y + offsetY)
+            scrollView.contentOffset = contentOffset
+        }
+        // 例えば iPhoneX の Portrait 表示だと bottom に34ptほど隙間ができるのでその分を差し引く
+        let contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardInfo.frame.height - view.safeAreaInsets.bottom, right: 0)
+        scrollView.contentInset = contentInset
+        scrollView.scrollIndicatorInsets = contentInset
+    }
+    
+    @objc private func onKeyboardWillHide(_ notification: Notification) {
+        guard
+            let inputView = view.findFirstResponder(),
+            let scrollView = inputView.findSuperView(ofType: UIScrollView.self)
+            else { return }
+        scrollView.contentInset = .zero
+        scrollView.scrollIndicatorInsets = .zero
     }
 }

@@ -50,8 +50,8 @@ class AddTaskViewPresenter: AddTaskViewPresenterProtocol {
         
         if isEmptyTaskName, isEmptyTicketCount {
             var massage = ""
-            massage += isEmptyTaskName ? "タイトルが入力されていません" : ""
-            massage += isEmptyTicketCount ? "チケットを一つ以上追加してください" : ""
+            massage += isEmptyTaskName ? "タイトルが入力されていません/n" : ""
+            massage += isEmptyTicketCount ? "チケットを一つ以上追加してください/n" : ""
             createErrorMassgate(error: .inputValidError, massage: massage)
             return
         }
