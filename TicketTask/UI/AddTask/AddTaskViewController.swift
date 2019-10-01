@@ -11,6 +11,12 @@ import SPStorkController
 import SparrowKit
 import SPFakeBar
 
+protocol AddTaskViewControllerProtocol {
+    func showValidateAlert(title: String, massage: String)
+    func didTaskCreated()
+    func didAddTicket()
+}
+
 class AddTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPresentationControllerDelegate, TaskEditDalegate{
     
     var tableView: UITableView = UITableView()
@@ -42,6 +48,7 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPre
     // Screenの幅
     var screenWidth:CGFloat!
     
+    private var presenter: AddTaskViewPresenterProtocol!
     private var currentColor: UIColor!
     private var currentColorStr: String!
     private var currentIcon: UIImage!
@@ -50,6 +57,7 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPre
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter = AddTaskViewPresenter(vc: self)
         titleTextField.delegate = self
         ticketTextField.delegate = self
         ticketTableView.delegate = self
@@ -86,9 +94,9 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPre
         
         self.navBar.titleLabel.text = "タスクを追加"
         self.navBar.leftButton.setTitle("キャンセル", for: .normal)
-        self.navBar.leftButton.addTarget(self, action: #selector(self.cansel), for: .touchUpInside)
+        self.navBar.leftButton.addTarget(self, action: #selector(self.touchCanselButton), for: .touchUpInside)
         self.navBar.rightButton.setTitle("追加", for: .normal)
-        self.navBar.rightButton.addTarget(self, action: #selector(self.create), for: .touchUpInside)
+        self.navBar.rightButton.addTarget(self, action: #selector(self.touchCreateButton), for: .touchUpInside)
         self.navBar.backgroundColor = UIColor.lightGray
         self.view.addSubview(self.navBar)
     }
@@ -145,43 +153,21 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPre
         if text == "" {
             return
         }
-        if ticketArray.index(of: text!) == nil {
-            self.tickets.append(ticketTextField.text!)
-            ticketTableView.reloadData()
-            ticketTextField.text = ""
-            ticketArray.append(text!)
-        } else {
-            showValidateAlert(error: .ticketValidError)
-        }
-        
+        presenter.touchAddTicketButton(text: text!)
     }
     
-    @objc func cansel() {
+    @objc func touchCanselButton() {
         self.dismiss(animated: true, completion: nil)
     }
     
     // Taskの作成
-    @objc func create() {
-        if (titleTextField.text == "" || tickets.count == 0) {
-            showValidateAlert(error: .inputValidError)
-            return
-        }
-        let error = mainVC!.taskViewModel.createTask(taskName: titleTextField.text!,
+    @objc func touchCreateButton() {
+        presenter.touchCreateButton(taskName: titleTextField.text!,
                                                      attri: "",
                                                      colorStr: currentColorStr,
                                                      iconStr: currentIconStr,
                                                      tickets: tickets,
                                                      resetType: self.resetType)
-        if (error != nil) {
-            self.showValidateAlert(error: error!)
-            return
-        }
-        dismiss(animated: true, completion: {
-            guard let vc = self.mainVC else {
-                return
-            }
-            vc.addNewTaskView()
-        })
     }
     
     func selectedColor(color: UIColor, colorStr: String) {
@@ -217,43 +203,6 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPre
             self.ticketAddBtn.setTitleColor(self.currentColor, for: .normal)
             self.view.layer.insertSublayer(self.gradientLayer, at: 0)
         })
-    }
-
-    
-    func showValidateAlert(error: ValidateError){
-
-        var massage = ""
-        var title = ""
-        switch error {
-        case .inputValidError:
-            title = "入力エラー"
-            if titleTextField.text == "" {
-                massage += "タイトルを入力してください\n"
-            }
-            if tickets.count == 0 {
-                massage += "チケットを一つ以上追加してください\n"
-            }
-        case .taskValidError:
-            title = "データベースエラー"
-            massage = error.rawValue
-        case .ticketValidError:
-            title = "入力エラー"
-            massage = error.rawValue
-        default:
-            title = "保存に失敗しました"
-        }
-        
-        let alert: UIAlertController = UIAlertController(title: title, message: massage, preferredStyle:  UIAlertController.Style.alert)
-
-        let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{
-            // ボタンが押された時の処理を書く（クロージャ実装）
-            (action: UIAlertAction!) -> Void in
-            print("OK")
-        })
-
-        alert.addAction(defaultAction)
-        
-        present(alert, animated: true, completion: nil)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -301,20 +250,20 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPre
 
 extension AddTaskViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tickets.count
+        return presenter.tickets.count
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         // セルに表示する値を設定する
-        cell.textLabel!.text = tickets[indexPath.row]
+        cell.textLabel!.text = presenter.tickets[indexPath.row]
         return cell
     }
     
     internal func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            tickets.remove(at: indexPath.row)
+            presenter.removeTicket(index: indexPath)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
@@ -338,5 +287,37 @@ extension UIScrollView {
     override open func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.next?.touchesEnded(touches, with: event)
         print("touchesEnded")
+    }
+}
+
+extension AddTaskViewController: AddTaskViewControllerProtocol {
+    func didTaskCreated() {
+        dismiss(animated: true, completion: {
+            guard let vc = self.mainVC else {
+                return
+            }
+            vc.addNewTaskView()
+        })
+    }
+    
+    func didAddTicket() {
+        ticketTableView.reloadData()
+        ticketTextField.text = ""
+    }
+    
+    func showValidateAlert(title: String, massage: String) {
+        
+        
+        let alert: UIAlertController = UIAlertController(title: title, message: massage, preferredStyle:  UIAlertController.Style.alert)
+        
+        let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{
+            // ボタンが押された時の処理を書く（クロージャ実装）
+            (action: UIAlertAction!) -> Void in
+            print("OK")
+        })
+        
+        alert.addAction(defaultAction)
+        
+        present(alert, animated: true, completion: nil)
     }
 }

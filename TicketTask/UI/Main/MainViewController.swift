@@ -108,7 +108,6 @@ class MainViewController: UIViewController {
         scrollViewHeight = scrollView.frame.size.height
         
         taskViewModel.getTaskData()
-//        taskViewModel.setupWetherInfo()
         scrollView.delegate = self
         
         scrollView.showsVerticalScrollIndicator = false
@@ -123,7 +122,7 @@ class MainViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         self.tabbarHeight = self.tabBarController!.tabBar.frame.size.height
-        for i in 0..<self.taskViewModel.taskCount() {
+        for i in 0..<presenter.taskTotalCount {
             let taskView = self.view.viewWithTag(i + 1) as! TaskView
             let myBoundSize: CGSize = UIScreen.main.bounds.size
             taskView.frame.size.height = self.taskViewHeight
@@ -476,7 +475,7 @@ extension MainViewController: UIScrollViewDelegate {
         
         //現在のスクロールの位置(scrollView.contentOffset.x)から
         //どこのタブを表示させたいか計算
-        let taskCount: Int = self.taskViewModel.taskCount()
+        let taskCount: Int = presenter.taskTotalCount
         //スクロール可能最大値
         let maxScrollPoint = (taskCount - 1) * currentWidth
         //どれくらいスクロールしたのか

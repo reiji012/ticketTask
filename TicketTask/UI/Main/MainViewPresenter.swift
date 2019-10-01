@@ -11,6 +11,7 @@ import UIKit
 
 protocol MainViewPresenterProtocol {
     var tasks: [[String:Any]] { get }
+    var taskTotalCount: Int { get }
     var weatherIconImage: UIImage? { get }
     func viewDidLoad()
     func getTodayWeatherMaxTemp() -> String
@@ -24,7 +25,9 @@ class MainViewPresenter: MainViewPresenterProtocol {
     var tasks: [[String:Any]] {
         return taskModel!.tasks!
     }
-    
+    var taskTotalCount: Int {
+        return taskModel!.tasks!.count
+    }
     var weatherIconImage: UIImage?
     
     private var taskModel: TaskModel!

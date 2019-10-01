@@ -14,4 +14,14 @@ enum ValidateError: String {
     case taskDeleteValidError = "これ以上タスクを削除できません"
     case ticketDeleteValidError = "これ以上チケットを削除できません"
     case inputValidError = "入力エラーです"
+    
+    var massage: String {
+        switch self {
+        case .inputValidError:
+            return ""
+        default:
+            return ""
+        }
+    }
+    
 }
