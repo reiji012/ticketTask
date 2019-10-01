@@ -64,7 +64,13 @@ class WeatherLabel: UILabel {
     
     //MARK: - Functions
     
-    //アニメーションを伴って値を代入する
+    /// アニメーションを伴って値を代入する
+    ///
+    /// - Parameters:
+    ///   - value: <#value description#>
+    ///   - duration: <#duration description#>
+    ///   - animationType: <#animationType description#>
+    ///   - counterType: <#counterType description#>
     func changeCountValueWithAnimation(_ value: Float, withDuration duration: TimeInterval, andAnimationType animationType: CounterAnimationType, andCounterType counterType: CounterType) {
         
         self.startNumber = Float(0.0)
