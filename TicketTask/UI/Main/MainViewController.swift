@@ -88,6 +88,7 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter = MainViewPresenter(vc: self)
+        presenter.viewDidLoad()
         // 端末のサイズでタスクカードの大きさを設定
         let myBoundSize: CGSize = UIScreen.main.bounds.size
         
@@ -107,7 +108,7 @@ class MainViewController: UIViewController {
         scrollViewHeight = scrollView.frame.size.height
         
         taskViewModel.getTaskData()
-        taskViewModel.setupWetherInfo()
+//        taskViewModel.setupWetherInfo()
         scrollView.delegate = self
         
         scrollView.showsVerticalScrollIndicator = false
@@ -414,11 +415,13 @@ extension MainViewController: MainViewControllerProtocol {
     /// 天気情報のセット
     func setWeatherInfo() {
         DispatchQueue.main.async {
-            self.descriptionLabel.text = "(\(self.taskViewModel.todayWetherInfo![WetherInfoConst.DESCRIPTION.rawValue]!))"
-            self.weatherImgView.image = self.taskViewModel.weatherIconImage
+            self.descriptionLabel.text = "(\(self.presenter.getDescripiton()))"
+            self.weatherImgView.image = self.presenter.weatherIconImage
+            let maxTemp = self.presenter.getTodayWeatherMaxTemp()
+            let minTemp = self.presenter.getTodayWeatherMinTemp()
             
-            self.maxTempLabel.changeCountValueWithAnimation(Float("\(self.taskViewModel.todayWetherInfo![WetherInfoConst.TEMP_MAX.rawValue]!)")!, withDuration: self.counterAnimationLabelDuration, andAnimationType: .EaseOut, andCounterType: .Float)
-            self.minTempLabel.changeCountValueWithAnimation(Float("\(self.taskViewModel.todayWetherInfo![WetherInfoConst.TEMP_MIN.rawValue]!)")!, withDuration: self.counterAnimationLabelDuration, andAnimationType: .EaseOut, andCounterType: .Float)
+            self.maxTempLabel.changeCountValueWithAnimation(Float(maxTemp)!, withDuration: self.counterAnimationLabelDuration, andAnimationType: .EaseOut, andCounterType: .Float)
+            self.minTempLabel.changeCountValueWithAnimation(Float(minTemp)!, withDuration: self.counterAnimationLabelDuration, andAnimationType: .EaseOut, andCounterType: .Float)
             
         }
     }
