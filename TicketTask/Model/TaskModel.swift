@@ -52,6 +52,12 @@ class TaskModel {
     
     /*タスクを作成する*/
     func createTask(taskName: String, attri: String, colorStr: String, iconStr: String, tickets:Array<String>, resetType: Int) -> ValidateError? {
+        
+        if taskName.isEmpty, tickets.count == 0 {
+            var error: ValidateError = .inputValidError
+            return error
+        }
+        
         var taskArray = ["title":"","attri":"","icon":"","color":"","category":"","tickets":[], "id":0] as [String : Any]
         var ticketsArray: [String : Bool] = [:]
         var ticketsRealmArray: [[String : Any]] = []
