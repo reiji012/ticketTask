@@ -15,6 +15,7 @@
 		11B4F99C233DF163008CD2F6 /* TaskEditDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B4F99B233DF162008CD2F6 /* TaskEditDelegate.swift */; };
 		11B5E4432345F6F300DBCB14 /* UIStoryboardExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B5E4422345F6F300DBCB14 /* UIStoryboardExtensions.swift */; };
 		11B5E4462345F90300DBCB14 /* Routable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B5E4452345F90300DBCB14 /* Routable.swift */; };
+		11B5E4482345FC5F00DBCB14 /* EditTaskViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B5E4472345FC5F00DBCB14 /* EditTaskViewPresenter.swift */; };
 		2B84AD5B22A1267F004B484D /* ValidateError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B84AD5A22A1267F004B484D /* ValidateError.swift */; };
 		2BB2EE51228AB97200769AAA /* ActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB2EE50228AB97200769AAA /* ActionType.swift */; };
 		2BE551662292695000D5AFA9 /* TaskItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE551652292695000D5AFA9 /* TaskItem.swift */; };
@@ -60,6 +61,7 @@
 		11B4F99B233DF162008CD2F6 /* TaskEditDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskEditDelegate.swift; sourceTree = "<group>"; };
 		11B5E4422345F6F300DBCB14 /* UIStoryboardExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStoryboardExtensions.swift; sourceTree = "<group>"; };
 		11B5E4452345F90300DBCB14 /* Routable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routable.swift; sourceTree = "<group>"; };
+		11B5E4472345FC5F00DBCB14 /* EditTaskViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTaskViewPresenter.swift; sourceTree = "<group>"; };
 		2B84AD5A22A1267F004B484D /* ValidateError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateError.swift; sourceTree = "<group>"; };
 		2BB2EE50228AB97200769AAA /* ActionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionType.swift; sourceTree = "<group>"; };
 		2BE551652292695000D5AFA9 /* TaskItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskItem.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 				2BF44282229CC63C00F32613 /* Edit.storyboard */,
 				11B4F99B233DF162008CD2F6 /* TaskEditDelegate.swift */,
 				2BF44280229BEB8C00F32613 /* EditTaskViewController.swift */,
+				11B5E4472345FC5F00DBCB14 /* EditTaskViewPresenter.swift */,
 			);
 			path = EditTask;
 			sourceTree = "<group>";
@@ -447,6 +450,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1122BE2C2330B325001CD87C /* SettingData.swift in Sources */,
+				11B5E4482345FC5F00DBCB14 /* EditTaskViewPresenter.swift in Sources */,
 				2BF5B74F22814521007D0266 /* MainViewController.swift in Sources */,
 				2BF5B76322814974007D0266 /* TaskViewModel.swift in Sources */,
 				2BF5B76C22829DCD007D0266 /* TicketTableViewCell.swift in Sources */,

@@ -13,9 +13,15 @@ import PKHUD
 import RxSwift
 import SPFakeBar
 
-class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPresentationControllerDelegate, TaskEditDalegate {
+protocol EditTaskViewControllerProtocol {
+    
+}
+
+class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPresentationControllerDelegate, TaskEditDalegate, EditTaskViewControllerProtocol {
 
     let disposeBag = DisposeBag()
+    
+    private var presenter: EditTaskViewPresenterProtocol!
     
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var colorView: UIView!
@@ -39,6 +45,13 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
     var currentIcon: UIImage?
     
     let attris: [String] = ["生活", "仕事"]
+    
+    // MARK: - Initilizer
+    static func initiate() -> EditTaskViewController {
+        let viewController = UIStoryboard.instantiateInitialViewController(from: self)
+        viewController.presenter = EditTaskViewPresenter(viewController: viewController)
+        return viewController
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
