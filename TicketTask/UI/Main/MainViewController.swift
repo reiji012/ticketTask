@@ -134,14 +134,13 @@ class MainViewController: UIViewController {
         }
     }
 
-    @IBAction func pushAddBtn(_ sender: Any) {
-        let storyboard = self.storyboard
-        let addTaskVC = storyboard!.instantiateViewController(withIdentifier: "addView") as! AddTaskViewController
+    @IBAction func touchAddButton(_ sender: Any) {
+        let viewContreoller = AddTaskViewController.initiate()
+        viewContreoller.mainVC = self
         let transitionDelegate = SPStorkTransitioningDelegate()
-        addTaskVC.mainVC = self
-        addTaskVC.transitioningDelegate = transitionDelegate
-        addTaskVC.modalPresentationStyle = .custom
-        self.present(addTaskVC, animated: true, completion: nil)
+        viewContreoller.transitioningDelegate = transitionDelegate
+        viewContreoller.modalPresentationStyle = .custom
+        self.present(viewContreoller, animated: true, completion: nil)
     }
     
     func bindUI() {

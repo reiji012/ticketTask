@@ -51,6 +51,13 @@ class AddTaskViewController: UIViewController, UIPopoverPresentationControllerDe
     private var currentIconStr: String!
     private var resetType: Int = 0
     
+    // MARK: - Initilizer
+    static func initiate() -> AddTaskViewController {
+        let viewController = UIStoryboard.instantiateInitialViewController(from: self)
+        viewController.presenter = AddTaskViewPresenter(vc: viewController)
+        return viewController
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter = AddTaskViewPresenter(vc: self)

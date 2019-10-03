@@ -17,9 +17,10 @@ protocol MainViewPresenterProtocol {
     func getTodayWeatherMaxTemp() -> String
     func getTodayWeatherMinTemp() -> String
     func getDescripiton() -> String
+    func touchAddButton()
 }
 
-class MainViewPresenter: MainViewPresenterProtocol {
+class MainViewPresenter: MainViewPresenterProtocol, Routable {
     
     var viewController: MainViewControllerProtocol!
     var tasks: [[String:Any]] {
@@ -43,6 +44,13 @@ class MainViewPresenter: MainViewPresenterProtocol {
     func viewDidLoad() {
         getTaskData()
         setupWetherInfo()
+    }
+    
+    func touchAddButton() {
+        guard let viewController = viewController as? MainViewController else {
+            return
+        }
+        present(.addTaskViewController, from: viewController, animated: true)
     }
     
     /// タスクデータの取得
