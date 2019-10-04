@@ -47,9 +47,9 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
     let attris: [String] = ["生活", "仕事"]
     
     // MARK: - Initilizer
-    static func initiate() -> EditTaskViewController {
+    static func initiate(taskView: TaskView) -> EditTaskViewController {
         let viewController = UIStoryboard.instantiateInitialViewController(from: self)
-        viewController.presenter = EditTaskViewPresenter(view: viewController)
+        viewController.presenter = EditTaskViewPresenter(view: viewController, taskView: taskView)
         return viewController
     }
     
@@ -94,7 +94,7 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
         )
         
         self.dismiss(animated: true, completion: {
-//            HUD.flash(.success, onView: self.mainVC!.view, delay: 0.5)
+            HUD.flash(.success, onView: self.mainVC!.view, delay: 0.5)
         })
         self.mainVC?.taskEdited(attri: "", color: currentColorStr!)
     }
