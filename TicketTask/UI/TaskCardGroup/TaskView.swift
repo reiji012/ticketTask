@@ -12,6 +12,9 @@ import RxCocoa
 import PopMenu
 import SPStorkController
 
+protocol TaskViewProtocol {
+    
+}
 
 class TaskView: UIView{
 
@@ -60,7 +63,7 @@ class TaskView: UIView{
 
         let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(
             target: self,
-            action: #selector(self.tapped(_:)))
+            action: #selector(self.touchView(_:)))
         self.addGestureRecognizer(tapGesture)
         print(self.frame.size.width)
         
@@ -70,7 +73,7 @@ class TaskView: UIView{
         ticketTableView.register(UINib(nibName: "TicketTableViewCell", bundle: nil), forCellReuseIdentifier: "TicketTableViewCell")
     }
 
-    @IBAction func tapMenuBtn(_ sender: Any) {
+    @IBAction func touchMenuButton(_ sender: Any) {
 
         var selectIndex = 0
         let actions = [
@@ -89,9 +92,9 @@ class TaskView: UIView{
         menu.didDismiss = { selected in
             switch selectIndex {
             case 1:
-                self.showAlert()
+                self.touchDeleteButton()
             case 2:
-                self.showEditView()
+                self.touchEditButton()
             default:
                 break
             }
@@ -101,7 +104,7 @@ class TaskView: UIView{
         }
     }
     
-    func showEditView() {
+    func touchEditButton() {
         let storyboard = UIStoryboard(name: "Edit", bundle: nil)
         let editViewController = storyboard.instantiateInitialViewController() as! EditTaskViewController
         let trantisionDelegate = SPStorkTransitioningDelegate()
@@ -110,7 +113,7 @@ class TaskView: UIView{
         self.mainViewController?.showEditView(editTaskVC: editViewController, taskVM: self.taskViewModel!)
     }
     
-    func showAlert() {
+    func touchDeleteButton() {
         let alert: UIAlertController = UIAlertController(title: "タスクを削除しますか？", message: "", preferredStyle:  UIAlertController.Style.alert)
         
         // ② Actionの設定
@@ -176,7 +179,7 @@ class TaskView: UIView{
         
     }
     
-    @objc func tapped(_ sender: UITapGestureRecognizer){
+    @objc func touchView(_ sender: UITapGestureRecognizer){
         if isShowDetail {
             return
         }
@@ -374,23 +377,6 @@ class TaskView: UIView{
     }
 }
 
-
-
-extension UIView {
-    public var parent: UIView? {
-        get {
-            return self.superview
-        }
-        set(v) {
-            if let view = v {
-                view.addSubview(self)
-            } else {
-                self.removeFromSuperview()
-            }
-        }
-    }
-
-}
 extension MainViewController: PopMenuViewControllerDelegate {
     
     // This will be called when a menu action was selected
@@ -438,5 +424,9 @@ extension TaskView: UITableViewDataSource {
             self.ticketTableView.reloadData()
         }
     }
+    
+}
+
+extension TaskView: TaskViewProtocol {
     
 }

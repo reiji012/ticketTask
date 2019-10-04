@@ -142,7 +142,7 @@
 				11B4F997233DEF54008CD2F6 /* SelectIcon */,
 				11B4F996233DEF3C008CD2F6 /* SelectColor */,
 				11B4F995233DEECE008CD2F6 /* EditTask */,
-				11B4F994233DEE7F008CD2F6 /* TaskCard */,
+				11B4F994233DEE7F008CD2F6 /* TaskCardGroup */,
 				11B4F993233DEE56008CD2F6 /* AddTask */,
 				11B4F992233DEDCD008CD2F6 /* Main */,
 			);
@@ -172,16 +172,15 @@
 			path = AddTask;
 			sourceTree = "<group>";
 		};
-		11B4F994233DEE7F008CD2F6 /* TaskCard */ = {
+		11B4F994233DEE7F008CD2F6 /* TaskCardGroup */ = {
 			isa = PBXGroup;
 			children = (
+				11B5E44923472DE100DBCB14 /* TicketTable */,
 				8E8A0B11231605E400FFCE15 /* TaskIconImageView.swift */,
 				2BF5B766228155EC007D0266 /* TaskView.xib */,
 				2BF5B7682281562D007D0266 /* TaskView.swift */,
-				2BF5B76A22829DCD007D0266 /* TicketTableViewCell.swift */,
-				2BF5B76B22829DCD007D0266 /* TicketTableViewCell.xib */,
 			);
-			path = TaskCard;
+			path = TaskCardGroup;
 			sourceTree = "<group>";
 		};
 		11B4F995233DEECE008CD2F6 /* EditTask */ = {
@@ -257,6 +256,15 @@
 				11B5E4452345F90300DBCB14 /* Routable.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		11B5E44923472DE100DBCB14 /* TicketTable */ = {
+			isa = PBXGroup;
+			children = (
+				2BF5B76A22829DCD007D0266 /* TicketTableViewCell.swift */,
+				2BF5B76B22829DCD007D0266 /* TicketTableViewCell.xib */,
+			);
+			path = TicketTable;
 			sourceTree = "<group>";
 		};
 		2BF5B74022814521007D0266 = {
