@@ -16,14 +16,13 @@ protocol EditTaskViewPresenterProtocol {
 class EditTaskViewPresenter: EditTaskViewPresenterProtocol {
     
     private var view: EditTaskViewControllerProtocol!
-    private var taskView: TaskView!
+    private var taskView: TaskViewProtocol!
     
-    init(view: EditTaskViewControllerProtocol, taskView: TaskView) {
+    init(view: EditTaskViewControllerProtocol, taskView: TaskViewProtocol) {
         self.view = view
         self.taskView = taskView
     }
     
     func touchSaveButton(afterTaskName: String, afterTaskAttr: String, color: UIColor, colorStr: String, image: UIImage, imageStr: String) {
-        
     }
 }

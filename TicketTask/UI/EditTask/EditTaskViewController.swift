@@ -47,7 +47,7 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
     let attris: [String] = ["生活", "仕事"]
     
     // MARK: - Initilizer
-    static func initiate(taskView: TaskView) -> EditTaskViewController {
+    static func initiate(taskView: TaskViewProtocol) -> EditTaskViewController {
         let viewController = UIStoryboard.instantiateInitialViewController(from: self)
         viewController.presenter = EditTaskViewPresenter(view: viewController, taskView: taskView)
         return viewController
