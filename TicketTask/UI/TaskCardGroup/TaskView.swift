@@ -34,6 +34,8 @@ class TaskView: UIView{
     @IBOutlet weak var progressBarWidthConst: NSLayoutConstraint!
     @IBOutlet weak var tableViewHeightConst: NSLayoutConstraint!
     
+    private var presenter: TaskViewPresenterProtocol!
+    
     var taskViewModel: TaskViewModel?
     var ticketTaskColor = TicketTaskColor()
     var defoultWidth: CGFloat?
@@ -50,6 +52,13 @@ class TaskView: UIView{
     var mainViewController: MainViewController? = nil
     var isShowDetail: Bool = false
     let disposeBag = DisposeBag()
+    
+    // MARK: - Initilizer
+    static func initiate(mainViewController: MainViewControllerProtocol) -> TaskView {
+        let view = TaskView()
+        view.presenter = TaskViewPresenter(view: self as! TaskViewProtocol, mainViewController: mainViewController)
+        return view
+    }
     
     func setViewModel(task:Dictionary<String, Any>, mainVC: MainViewController) {
         self.mainViewController = mainVC
