@@ -44,7 +44,7 @@ class AddTaskViewController: UIViewController, UIPopoverPresentationControllerDe
     // Screenの幅
     var screenWidth:CGFloat!
     
-    private var presenter: AddTaskViewPresenterProtocol!
+    var presenter: AddTaskViewPresenterProtocol!
     private var currentColor: UIColor!
     private var currentColorStr: String!
     private var currentIcon: UIImage!
