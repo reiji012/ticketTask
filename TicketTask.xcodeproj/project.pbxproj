@@ -17,6 +17,7 @@
 		11B5E4462345F90300DBCB14 /* Routable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B5E4452345F90300DBCB14 /* Routable.swift */; };
 		11B5E4482345FC5F00DBCB14 /* EditTaskViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B5E4472345FC5F00DBCB14 /* EditTaskViewPresenter.swift */; };
 		11B5E44B2347317600DBCB14 /* TaskViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B5E44A2347317600DBCB14 /* TaskViewPresenter.swift */; };
+		11B5E44D234734FA00DBCB14 /* UINibExtentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B5E44C234734FA00DBCB14 /* UINibExtentions.swift */; };
 		2B84AD5B22A1267F004B484D /* ValidateError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B84AD5A22A1267F004B484D /* ValidateError.swift */; };
 		2BB2EE51228AB97200769AAA /* ActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB2EE50228AB97200769AAA /* ActionType.swift */; };
 		2BE551662292695000D5AFA9 /* TaskItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE551652292695000D5AFA9 /* TaskItem.swift */; };
@@ -64,6 +65,7 @@
 		11B5E4452345F90300DBCB14 /* Routable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routable.swift; sourceTree = "<group>"; };
 		11B5E4472345FC5F00DBCB14 /* EditTaskViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTaskViewPresenter.swift; sourceTree = "<group>"; };
 		11B5E44A2347317600DBCB14 /* TaskViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewPresenter.swift; sourceTree = "<group>"; };
+		11B5E44C234734FA00DBCB14 /* UINibExtentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINibExtentions.swift; sourceTree = "<group>"; };
 		2B84AD5A22A1267F004B484D /* ValidateError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateError.swift; sourceTree = "<group>"; };
 		2BB2EE50228AB97200769AAA /* ActionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionType.swift; sourceTree = "<group>"; };
 		2BE551652292695000D5AFA9 /* TaskItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskItem.swift; sourceTree = "<group>"; };
@@ -318,6 +320,7 @@
 			children = (
 				2BF5B7712282A0AB007D0266 /* UIView+TicketTask.swift */,
 				11B5E4422345F6F300DBCB14 /* UIStoryboardExtensions.swift */,
+				11B5E44C234734FA00DBCB14 /* UINibExtentions.swift */,
 			);
 			path = extention;
 			sourceTree = "<group>";
@@ -485,6 +488,7 @@
 				8E8A0B1A2316B04B00FFCE15 /* ColorSelectViewController.swift in Sources */,
 				2BB2EE51228AB97200769AAA /* ActionType.swift in Sources */,
 				8E9EC2982318FCEE00F9896F /* TicketTaskColor.swift in Sources */,
+				11B5E44D234734FA00DBCB14 /* UINibExtentions.swift in Sources */,
 				8E6DAB9622FFF36A00A72D0D /* MainViewControllerProtocol.swift in Sources */,
 				2BE5516B2292A83700D5AFA9 /* TasksData.swift in Sources */,
 				2BF44281229BEB8C00F32613 /* EditTaskViewController.swift in Sources */,
