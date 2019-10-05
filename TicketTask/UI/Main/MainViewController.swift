@@ -213,6 +213,7 @@ class MainViewController: UIViewController {
     }
     
     func createTaskView(task:Dictionary<String, Any>, tag: Int, isInitCreate: Bool){
+        taskEmptyView.isHidden = true
         // VIewを設置する高さを計算する
         let mainScreenHeight: CGFloat = UIScreen.main.bounds.size.height
         let currentY = mainScreenHeight / 2 - 50
@@ -346,23 +347,8 @@ extension MainViewController: MainViewControllerProtocol {
      タスクを表示するViewを生成する
      */
     func createTaskViews() {
-        //scrollViewのDelegateを指定
-        scrollView.delegate = self
         
         let tasks = presenter.tasks
-        
-        //タブの縦幅(UIScrollViewと一緒にします)
-        let tabLabelHeight:CGFloat = self.scrollView.frame.size.height
-        
-        //右端にダミーViewを置くことで
-        //一番右のタブもセンターに持ってくることが出来ます
-        let headDummyView = UIView()
-        headDummyView.frame = CGRect(x:0, y:0, width:dummyViewWidth, height:tabLabelHeight)
-        scrollView.addSubview(headDummyView)
-        
-        //タブのx座標．
-        //ダミーView分，はじめからずらしてあげましょう．
-        self.originX = dummyViewWidth
         
         //titlesで定義したタブを1つずつ用意していく
         for (index, task) in tasks.enumerated() {
@@ -382,7 +368,7 @@ extension MainViewController: MainViewControllerProtocol {
         
         //左端にダミーのUILabelを置く
         let tailLabel = UILabel()
-        tailLabel.frame = CGRect(x:self.originX!, y:0, width:dummyViewWidth, height:tabLabelHeight)
+        tailLabel.frame = CGRect(x:self.originX!, y:0, width:dummyViewWidth, height:self.scrollView.frame.size.height)
         scrollView.addSubview(tailLabel)
         //ダミーLabel分を足して上げましょう
 //        self.originX! += dummyViewWidth
@@ -407,6 +393,16 @@ extension MainViewController: MainViewControllerProtocol {
         //タブのx座標．
         //ダミーView分，はじめからずらしてあげましょう．
         self.originX = taskViewWidth
+        
+        //右端にダミーViewを置くことで
+        //一番右のタブもセンターに持ってくることが出来ます
+//        let headDummyView = UIView()
+        headDummyView.frame = CGRect(x:0, y:0, width:dummyViewWidth, height:self.scrollView.frame.size.height)
+        scrollView.addSubview(headDummyView)
+        
+        //タブのx座標．
+        //ダミーView分，はじめからずらしてあげましょう．
+        self.originX = dummyViewWidth
     }
     
     /// 天気情報のセット
