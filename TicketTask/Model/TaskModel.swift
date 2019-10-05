@@ -116,7 +116,7 @@ class TaskModel {
     }
     
     /*タスクの更新*/
-    func taskUpdate(id: Int, tickets:[String:Bool], actionType: ActionType) {
+    func taskUpdate(id: Int, tickets:[String:Bool], actionType: ActionType, callback: (() -> Void)? = nil) {
         var indexPath = 0
         for (index, task) in self.tasks!.enumerated(){
             if (task["id"] as! Int) == id {
@@ -131,7 +131,11 @@ class TaskModel {
         case .ticketUpdate:
             self.updateTicket(index: indexPath)
         case .ticketDelete:
-            self.deleteTicket(index: indexPath)
+            self.deleteTicket(index: indexPath, callback: {
+                if let callback = callback {
+                    callback()
+                }
+            })
         case .ticketCreate:
             self.addTicket(tickets: [String](tickets.keys), id: id)
         default:
@@ -166,7 +170,7 @@ class TaskModel {
     }
     
     /*チケットの削除*/
-    func deleteTicket(index: Int) {
+    func deleteTicket(index: Int, callback: (() -> Void)? = nil) {
         guard let tasks = self.tasks else { return }
         let task = tasks[index]
         do {
@@ -178,6 +182,10 @@ class TaskModel {
                     if tickets[ticket.ticketName] == nil {
                         realm.delete(ticket)
                     }
+                }
+                
+                if let callback = callback {
+                    callback()
                 }
             }
         }

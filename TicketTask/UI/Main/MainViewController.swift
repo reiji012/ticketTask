@@ -263,46 +263,6 @@ class MainViewController: UIViewController {
         view.ticketTableView.reloadData()
     }
     
-    /// タスクの削除
-    ///
-    /// - Parameter view: 削除するView
-    func deleteTask(view: TaskView) {
-        view.taskViewModel?.updateModel(actionType: .taskDelete)
-        UIView.animate(withDuration: 0.2, animations: {
-            // Viewを見えなくする
-            view.alpha = 0
-        }) { (completed) in
-            // Animationが完了したら親Viewから削除する
-            let index = view.tag
-            let scrollPoint = self.stopPoint - CGFloat(self.currentWidth)
-            if (self.isLaskTaskView(view: view)) {
-                UIView.animate(withDuration: 0.5, animations: {
-                    self.scrollView.contentOffset = CGPoint(x:scrollPoint, y:0)
-                    self.stopPoint = scrollPoint
-                })
-            } else {
-                UIView.animate(withDuration: 0.5, animations: {
-                    for i in index..<100 {
-                        guard let taskView = self.view.viewWithTag(i) else {
-                            return
-                        }
-                        let currentTaskView = taskView as! TaskView
-                        currentTaskView.tag = i - 1
-                        let frame = currentTaskView.frame
-                        currentTaskView.frame = CGRect(x: frame.origin.x - self.taskViewWidth, y: frame.origin.y, width: frame.size.width, height: frame.size.height)
-                        self.centerViewAttri = currentTaskView.taskViewModel?.attri
-                        self.centerViewColor = currentTaskView.taskViewModel?.colorString
-                        self.setGradationColor()
-                    }
-                })
-                self.scrollView.isScrollEnabled = true
-                self.taskAddButton.isHidden = false
-                view.removeFromSuperview()
-            }
-            self.originX! -= self.taskViewWidth
-        }
-    }
-    
     /// 最後尾のViewかどうか
     ///
     /// - Parameter view: 確認したいView
@@ -338,6 +298,45 @@ class MainViewController: UIViewController {
 }
 
 extension MainViewController: MainViewControllerProtocol {
+    /// タスクの削除
+    ///
+    /// - Parameter view: 削除するView
+    func deleteTask(view: TaskView) {
+        UIView.animate(withDuration: 0.2, animations: {
+            // Viewを見えなくする
+            view.alpha = 0
+        }) { (completed) in
+            // Animationが完了したら親Viewから削除する
+            let index = view.tag
+            let scrollPoint = self.stopPoint - CGFloat(self.currentWidth)
+            if (self.isLaskTaskView(view: view)) {
+                UIView.animate(withDuration: 0.5, animations: {
+                    self.scrollView.contentOffset = CGPoint(x:scrollPoint, y:0)
+                    self.stopPoint = scrollPoint
+                })
+            } else {
+                UIView.animate(withDuration: 0.5, animations: {
+                    for i in index..<100 {
+                        guard let taskView = self.view.viewWithTag(i) else {
+                            return
+                        }
+                        let currentTaskView = taskView as! TaskView
+                        currentTaskView.tag = i - 1
+                        let frame = currentTaskView.frame
+                        currentTaskView.frame = CGRect(x: frame.origin.x - self.taskViewWidth, y: frame.origin.y, width: frame.size.width, height: frame.size.height)
+                        self.centerViewAttri = currentTaskView.presenter.taskViewModel.attri
+                        self.centerViewColor = currentTaskView.presenter.taskViewModel.colorString
+                        self.setGradationColor()
+                    }
+                })
+                self.scrollView.isScrollEnabled = true
+                self.taskAddButton.isHidden = false
+                view.removeFromSuperview()
+            }
+            self.originX! -= self.taskViewWidth
+        }
+    }
+    
     func didChangeTaskCount(taskCount: Int) {
         taskEmptyView.isHidden = taskCount < 1
     }
