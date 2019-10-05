@@ -86,29 +86,6 @@ class AddTaskViewController: UIViewController, UIPopoverPresentationControllerDe
         super.viewWillDisappear(animated)
     }
     
-    func bindUIs() {
-        setGradationColor()
-        
-        self.navBar.titleLabel.text = "タスクを追加"
-        self.navBar.leftButton.setTitle("キャンセル", for: .normal)
-        self.navBar.leftButton.addTarget(self, action: #selector(self.touchCanselButton), for: .touchUpInside)
-        self.navBar.rightButton.setTitle("追加", for: .normal)
-        self.navBar.rightButton.addTarget(self, action: #selector(self.touchCreateButton), for: .touchUpInside)
-        self.navBar.backgroundColor = UIColor.lightGray
-        self.view.addSubview(self.navBar)
-    }
-    
-    func initSetState() {
-        let iconStr = "icon-0"
-        self.currentColor = self.ticketTaskColor.ticketTaskOrange_1
-        self.currentColorStr = ticketTaskColor.ORANGE
-        self.currentIcon = UIImage(named: iconStr)?.withRenderingMode(.alwaysTemplate)
-        self.currentIconStr = iconStr
-        self.setColorView()
-        self.setIconImage()
-        self.setGradationColor()
-    }
-    
     @IBAction func tapIconView(_ sender: Any) {
         let storyboard: UIStoryboard = UIStoryboard(name: "Icon", bundle: nil)
         let iconSelectVC = storyboard.instantiateInitialViewController() as! IconSelectViewController
@@ -160,11 +137,34 @@ class AddTaskViewController: UIViewController, UIPopoverPresentationControllerDe
     // Taskの作成
     @objc func touchCreateButton() {
         presenter.touchCreateButton(taskName: titleTextField.text!,
-                                                     attri: "",
-                                                     colorStr: currentColorStr,
-                                                     iconStr: currentIconStr,
-                                                     tickets: presenter.tickets,
-                                                     resetType: self.resetType)
+                                    attri: "",
+                                    colorStr: currentColorStr,
+                                    iconStr: currentIconStr,
+                                    tickets: presenter.tickets,
+                                    resetType: self.resetType)
+    }
+    
+    func bindUIs() {
+        setGradationColor()
+        
+        self.navBar.titleLabel.text = "タスクを追加"
+        self.navBar.leftButton.setTitle("キャンセル", for: .normal)
+        self.navBar.leftButton.addTarget(self, action: #selector(self.touchCanselButton), for: .touchUpInside)
+        self.navBar.rightButton.setTitle("追加", for: .normal)
+        self.navBar.rightButton.addTarget(self, action: #selector(self.touchCreateButton), for: .touchUpInside)
+        self.navBar.backgroundColor = UIColor.lightGray
+        self.view.addSubview(self.navBar)
+    }
+    
+    func initSetState() {
+        let iconStr = "icon-0"
+        self.currentColor = self.ticketTaskColor.ticketTaskOrange_1
+        self.currentColorStr = ticketTaskColor.ORANGE
+        self.currentIcon = UIImage(named: iconStr)?.withRenderingMode(.alwaysTemplate)
+        self.currentIconStr = iconStr
+        self.setColorView()
+        self.setIconImage()
+        self.setGradationColor()
     }
     
     func selectedColor(color: UIColor, colorStr: String) {
