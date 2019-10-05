@@ -134,14 +134,13 @@ class MainViewController: UIViewController {
         }
     }
 
-    @IBAction func pushAddBtn(_ sender: Any) {
-        let storyboard = self.storyboard
-        let addTaskVC = storyboard!.instantiateViewController(withIdentifier: "addView") as! AddTaskViewController
+    @IBAction func touchAddButton(_ sender: Any) {
+        let viewContreoller = AddTaskViewController.initiate()
+        viewContreoller.mainVC = self
         let transitionDelegate = SPStorkTransitioningDelegate()
-        addTaskVC.mainVC = self
-        addTaskVC.transitioningDelegate = transitionDelegate
-        addTaskVC.modalPresentationStyle = .custom
-        self.present(addTaskVC, animated: true, completion: nil)
+        viewContreoller.transitioningDelegate = transitionDelegate
+        viewContreoller.modalPresentationStyle = .custom
+        self.present(viewContreoller, animated: true, completion: nil)
     }
     
     func bindUI() {
@@ -220,7 +219,7 @@ class MainViewController: UIViewController {
         
         let viewWidth = isInitCreate ? initTaskViewWidth : taskViewSize?.viewWidth
         
-        taskView = UINib(nibName: "TaskView", bundle: Bundle.main).instantiate(withOwner: self, options: nil).first as? TaskView
+        taskView = TaskView.initiate(mainViewController: self, task: task)
         taskView.frame = CGRect.init(x: self.originX! + 25, y: currentY, width: viewWidth!, height: initTaskViewHeight)
         taskView.setViewModel(task: task, mainVC: self)
         taskView.setTableView()
@@ -374,8 +373,8 @@ extension MainViewController: MainViewControllerProtocol {
             
             print(taskView.frame.size.width)
             if(index + 1 == 1) {
-                self.centerViewAttri = taskView.taskViewModel!.attri
-                self.centerViewColor = taskView.taskViewModel!.colorString
+                self.centerViewAttri = taskView.presenter.taskViewModel.attri
+                self.centerViewColor = taskView.presenter.taskViewModel.colorString
                 //グラデーションの作成
                 self.setGradationColor()
             }
@@ -499,8 +498,8 @@ extension MainViewController: UIScrollViewDelegate {
         }
         self.taskViewIndex = (Int(scrollPoint) / self.currentWidth) + 1
         if let currentTaskView = self.getCenterTaskView() {
-            self.centerViewAttri = currentTaskView.taskViewModel!.attri
-            self.centerViewColor = currentTaskView.taskViewModel!.colorString
+            self.centerViewAttri = currentTaskView.presenter.taskViewModel.attri
+            self.centerViewColor = currentTaskView.presenter.taskViewModel.colorString
         }
         UIView.animate(withDuration: 0.3, animations: {
             scrollView.contentOffset = CGPoint(x:scrollPoint, y:0)

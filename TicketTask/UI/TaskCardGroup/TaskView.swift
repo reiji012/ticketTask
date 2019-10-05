@@ -12,8 +12,12 @@ import RxCocoa
 import PopMenu
 import SPStorkController
 
+protocol TaskViewProtocol {
+    var presenter: TaskViewPresenterProtocol! { get }
+}
 
-class TaskView: UIView{
+class TaskView: UIView, TaskViewProtocol{
+    
 
     @IBOutlet weak var buttonTextLabel: UILabel!
     @IBOutlet weak var ticketAddBtn: UIButton!
@@ -30,6 +34,8 @@ class TaskView: UIView{
     @IBOutlet weak var menuButton: UIButton!
     @IBOutlet weak var progressBarWidthConst: NSLayoutConstraint!
     @IBOutlet weak var tableViewHeightConst: NSLayoutConstraint!
+    
+    var presenter: TaskViewPresenterProtocol!
     
     var taskViewModel: TaskViewModel?
     var ticketTaskColor = TicketTaskColor()
@@ -48,29 +54,31 @@ class TaskView: UIView{
     var isShowDetail: Bool = false
     let disposeBag = DisposeBag()
     
+    // MARK: - Initilizer
+    static func initiate(mainViewController: MainViewControllerProtocol, task:Dictionary<String, Any>) -> TaskView {
+        let view = UINib.instantiateInitialView(from: self)
+        view.presenter = TaskViewPresenter(view: view, mainViewController: mainViewController, task: task)
+        return view
+    }
+    
     func setViewModel(task:Dictionary<String, Any>, mainVC: MainViewController) {
         self.mainViewController = mainVC
-        let taskName = (task["title"] as! String)
-        // taskViewModelの取得
-        taskViewModel = TaskViewModel(taskName: taskName)
-        taskViewModel?.countProgress()
         bind()
-        taskViewModel?.getTask(taskName: taskName)
         setLayout()
 
         let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(
             target: self,
-            action: #selector(self.tapped(_:)))
+            action: #selector(self.touchView(_:)))
         self.addGestureRecognizer(tapGesture)
         print(self.frame.size.width)
         
         // UIImageView の場合
         attriImageView.image = attriImageView.image?.withRenderingMode(.alwaysTemplate)
-        attriImageView.tintColor = taskViewModel?.taskColor
+        attriImageView.tintColor = self.presenter.taskViewModel.taskColor
         ticketTableView.register(UINib(nibName: "TicketTableViewCell", bundle: nil), forCellReuseIdentifier: "TicketTableViewCell")
     }
 
-    @IBAction func tapMenuBtn(_ sender: Any) {
+    @IBAction func touchMenuButton(_ sender: Any) {
 
         var selectIndex = 0
         let actions = [
@@ -89,9 +97,9 @@ class TaskView: UIView{
         menu.didDismiss = { selected in
             switch selectIndex {
             case 1:
-                self.showAlert()
+                self.touchDeleteButton()
             case 2:
-                self.showEditView()
+                self.touchEditButton()
             default:
                 break
             }
@@ -101,16 +109,16 @@ class TaskView: UIView{
         }
     }
     
-    func showEditView() {
+    func touchEditButton() {
         let storyboard = UIStoryboard(name: "Edit", bundle: nil)
         let editViewController = storyboard.instantiateInitialViewController() as! EditTaskViewController
         let trantisionDelegate = SPStorkTransitioningDelegate()
         editViewController.transitioningDelegate = trantisionDelegate
         editViewController.modalPresentationStyle = .custom
-        self.mainViewController?.showEditView(editTaskVC: editViewController, taskVM: self.taskViewModel!)
+        self.mainViewController?.showEditView(editTaskVC: editViewController, taskVM: self.presenter.taskViewModel)
     }
     
-    func showAlert() {
+    func touchDeleteButton() {
         let alert: UIAlertController = UIAlertController(title: "タスクを削除しますか？", message: "", preferredStyle:  UIAlertController.Style.alert)
         
         // ② Actionの設定
@@ -150,33 +158,33 @@ class TaskView: UIView{
             }
             .disposed(by: disposeBag)
         
-        ticketProgressBar?.setProgress(Float(taskViewModel!.completedProgress!), animated: true)
+        ticketProgressBar?.setProgress(Float(self.presenter.taskViewModel.completedProgress!), animated: true)
         
-        self.taskViewModel!.progress.subscribe(onNext: { [ticketProgressBar] in
+        self.presenter.taskViewModel.progress.subscribe(onNext: { [ticketProgressBar] in
             let convertProgress = Int(($0)*100)
             self.ticketProgressLabel.text = "\(String(convertProgress))%"
             ticketProgressBar?.setProgress(Float($0), animated: true)
         }).disposed(by: disposeBag)
         
-        self.taskViewModel!.ticketCout.subscribe(onNext: { [ticketCountLabel] in
+        self.presenter.taskViewModel.ticketCout.subscribe(onNext: { [ticketCountLabel] in
             self.ticketsCount = $0
             let ticketCount = "チケット：\($0)"
             ticketCountLabel!.text = ticketCount
         }).disposed(by: disposeBag)
         
-        self.taskViewModel!.taskTitle.subscribe(onNext: { [titleLabel] in
+        self.presenter.taskViewModel.taskTitle.subscribe(onNext: { [titleLabel] in
             let taskTitle = $0
             titleLabel!.text = taskTitle
         }).disposed(by: disposeBag)
         
-        self.taskViewModel!.taskAttri.subscribe(onNext: { [attriImageView] in
+        self.presenter.taskViewModel.taskAttri.subscribe(onNext: { [attriImageView] in
             let taskAttr = $0
-            attriImageView!.image = self.taskViewModel?.iconImage?.withRenderingMode(.alwaysTemplate)
+            attriImageView!.image = self.presenter.taskViewModel.iconImage?.withRenderingMode(.alwaysTemplate)
         }).disposed(by: disposeBag)
         
     }
     
-    @objc func tapped(_ sender: UITapGestureRecognizer){
+    @objc func touchView(_ sender: UITapGestureRecognizer){
         if isShowDetail {
             return
         }
@@ -184,7 +192,7 @@ class TaskView: UIView{
     }
     
     func setImage() {
-        self.attriImageView.image = self.taskViewModel?.iconImage?.withRenderingMode(.alwaysTemplate)
+        self.attriImageView.image = self.presenter.taskViewModel.iconImage?.withRenderingMode(.alwaysTemplate)
     }
     
     func showAddticketView() {
@@ -219,7 +227,7 @@ class TaskView: UIView{
     func setLayout() {
         self.ticketAddBtn.isHidden = true
         self.buttonTextLabel.isHidden = true
-        let convertProgress = Int((taskViewModel!.completedProgress!)*100)
+        let convertProgress = Int((self.presenter.taskViewModel.completedProgress!)*100)
         self.ticketProgressLabel.text = "\(String(convertProgress))%"
         // 初期状態では戻るボタンを非表示にする
         backButton.isHidden = true
@@ -238,7 +246,7 @@ class TaskView: UIView{
         self.progressBarWidthConst.constant = (UIScreen.main.bounds.size.width / 2)
         self.menuBtnLeftConst.constant = (UIScreen.main.bounds.size.width / 1.8) - 70
         
-        self.titleLabel.text = taskViewModel?.taskName
+        self.titleLabel.text = self.presenter.taskViewModel.taskName
         self.setButtonLayout()
         self.setGradationColor()
         self.setImage()
@@ -327,10 +335,10 @@ class TaskView: UIView{
     
     func setGradationColor() {
          let gradientLayer = CAGradientLayer()
-        self.ticketProgressBar.tintColor = self.taskViewModel?.taskColor
+        self.ticketProgressBar.tintColor = self.presenter.taskViewModel.taskColor
         self.attriImageView.image = self.attriImageView.image?.withRenderingMode(.alwaysTemplate)
-        self.attriImageView.tintColor = self.taskViewModel?.taskColor
-        let gradientColors: [CGColor] = ticketTaskColor.getGradation(colorStr: self.taskViewModel!.colorString!)
+        self.attriImageView.tintColor = self.presenter.taskViewModel.taskColor
+        let gradientColors: [CGColor] = ticketTaskColor.getGradation(colorStr: self.presenter.taskViewModel.colorString!)
         gradientLayer.colors = gradientColors
         gradientLayer.bounds = self.ticketAddBtn.bounds
         gradientLayer.frame.origin.x += 20
@@ -374,23 +382,6 @@ class TaskView: UIView{
     }
 }
 
-
-
-extension UIView {
-    public var parent: UIView? {
-        get {
-            return self.superview
-        }
-        set(v) {
-            if let view = v {
-                view.addSubview(self)
-            } else {
-                self.removeFromSuperview()
-            }
-        }
-    }
-
-}
 extension MainViewController: PopMenuViewControllerDelegate {
     
     // This will be called when a menu action was selected
@@ -407,15 +398,15 @@ extension TaskView: UITableViewDelegate {
 
 extension TaskView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (taskViewModel?.tickets?.count)!
+        return (self.presenter.taskViewModel.tickets?.count)!
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "TicketTableViewCell") as? TicketTableViewCell {
-            cell.taskViewModel = self.taskViewModel
+            cell.taskViewModel = self.presenter.taskViewModel
             var ticketName = ""
             var isCompleted: Bool?
-            for (index, ticket) in (self.taskViewModel?.tickets!.keys)!.enumerated() {
+            for (index, ticket) in (self.presenter.taskViewModel.tickets!.keys).enumerated() {
                 if index == indexPath.row {
                     ticketName = ticket
                     isCompleted = (cell.taskViewModel?.tickets![ticketName])!
@@ -432,9 +423,9 @@ extension TaskView: UITableViewDataSource {
     
     internal func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let ticketName = Array(self.taskViewModel!.tickets!.keys)[indexPath.row]
-            self.taskViewModel?.actionType = .ticketDelete
-            self.taskViewModel?.tickets?.removeValue(forKey: ticketName)
+            let ticketName = Array(self.presenter.taskViewModel.tickets!.keys)[indexPath.row]
+            self.presenter.taskViewModel.actionType = .ticketDelete
+            self.presenter.taskViewModel.tickets?.removeValue(forKey: ticketName)
             self.ticketTableView.reloadData()
         }
     }

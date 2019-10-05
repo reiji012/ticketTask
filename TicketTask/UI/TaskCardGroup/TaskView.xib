@@ -138,7 +138,7 @@
                     </constraints>
                     <state key="normal" title="Button" image="hamberger"/>
                     <connections>
-                        <action selector="tapMenuBtn:" destination="iN0-l3-epB" eventType="touchUpInside" id="hRv-dK-6qW"/>
+                        <action selector="touchMenuButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="hRv-dK-6qW"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1aM-GF-ws9">
