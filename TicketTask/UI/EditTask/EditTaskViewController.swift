@@ -13,9 +13,15 @@ import PKHUD
 import RxSwift
 import SPFakeBar
 
-class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPresentationControllerDelegate, TaskEditDalegate {
+protocol EditTaskViewControllerProtocol {
+    
+}
+
+class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPresentationControllerDelegate, TaskEditDalegate, EditTaskViewControllerProtocol {
 
     let disposeBag = DisposeBag()
+    
+    private var presenter: EditTaskViewPresenterProtocol!
     
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var colorView: UIView!
@@ -40,6 +46,13 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
     
     let attris: [String] = ["生活", "仕事"]
     
+    // MARK: - Initilizer
+    static func initiate(taskView: TaskViewProtocol) -> EditTaskViewController {
+        let viewController = UIStoryboard.instantiateInitialViewController(from: self)
+        viewController.presenter = EditTaskViewPresenter(view: viewController, taskView: taskView)
+        return viewController
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         ticketTaskColor = TicketTaskColor()
@@ -49,9 +62,9 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
         
         self.navBar.titleLabel.text = "編集画面"
         self.navBar.leftButton.setTitle("キャンセル", for: .normal)
-        self.navBar.leftButton.addTarget(self, action: #selector(self.cansel), for: .touchUpInside)
+        self.navBar.leftButton.addTarget(self, action: #selector(self.touchCanselButton), for: .touchUpInside)
         self.navBar.rightButton.setTitle("保存", for: .normal)
-        self.navBar.rightButton.addTarget(self, action: #selector(self.save), for: .touchUpInside)
+        self.navBar.rightButton.addTarget(self, action: #selector(self.touchSaveButton), for: .touchUpInside)
         self.navBar.backgroundColor = UIColor.lightGray
         self.view.addSubview(self.navBar)
         
@@ -60,7 +73,7 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
         self.initStateSet()
     }
     
-    @objc func cansel() {
+    @objc func touchCanselButton() {
         if isEdited {
             self.showAlert()
         } else {
@@ -68,7 +81,7 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
         }
     }
     
-    @objc func save() {
+    @objc func touchSaveButton() {
         if (self.titleTextField.text == nil) {
             return
         }
@@ -80,9 +93,9 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
             imageStr: currentIconStr!
         )
         
-        self.dismiss(animated: true, completion:
-            {HUD.flash(.success, onView: self.mainVC!.view, delay: 0.5)}
-        )
+        self.dismiss(animated: true, completion: {
+            HUD.flash(.success, onView: self.mainVC!.view, delay: 0.5)
+        })
         self.mainVC?.taskEdited(attri: "", color: currentColorStr!)
     }
     

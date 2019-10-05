@@ -80,5 +80,18 @@ extension UIView{
         }
         return nil
     }
+    
+    public var parent: UIView? {
+        get {
+            return self.superview
+        }
+        set(v) {
+            if let view = v {
+                view.addSubview(self)
+            } else {
+                self.removeFromSuperview()
+            }
+        }
+    }
 
 }

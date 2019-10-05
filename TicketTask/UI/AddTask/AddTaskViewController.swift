@@ -44,12 +44,19 @@ class AddTaskViewController: UIViewController, UIPopoverPresentationControllerDe
     // Screenの幅
     var screenWidth:CGFloat!
     
-    private var presenter: AddTaskViewPresenterProtocol!
+    var presenter: AddTaskViewPresenterProtocol!
     private var currentColor: UIColor!
     private var currentColorStr: String!
     private var currentIcon: UIImage!
     private var currentIconStr: String!
     private var resetType: Int = 0
+    
+    // MARK: - Initilizer
+    static func initiate() -> AddTaskViewController {
+        let viewController = UIStoryboard.instantiateInitialViewController(from: self)
+        viewController.presenter = AddTaskViewPresenter(vc: viewController)
+        return viewController
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
