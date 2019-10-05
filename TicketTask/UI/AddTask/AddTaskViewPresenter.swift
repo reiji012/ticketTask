@@ -48,10 +48,10 @@ class AddTaskViewPresenter: AddTaskViewPresenterProtocol {
         let isEmptyTaskName = taskName.isEmpty
         let isEmptyTicketCount = tickets.count == 0
         
-        if isEmptyTaskName, isEmptyTicketCount {
+        if isEmptyTaskName || isEmptyTicketCount {
             var massage = ""
-            massage += isEmptyTaskName ? "タイトルが入力されていません/n" : ""
-            massage += isEmptyTicketCount ? "チケットを一つ以上追加してください/n" : ""
+            massage += isEmptyTaskName ? "タイトルが入力されていません\n" : ""
+            massage += isEmptyTicketCount ? "チケットを一つ以上追加してください\n" : ""
             createErrorMassgate(error: .inputValidError, massage: massage)
             return
         }
