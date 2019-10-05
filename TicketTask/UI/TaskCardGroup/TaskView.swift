@@ -243,8 +243,8 @@ class TaskView: UIView, TaskViewProtocol{
         self.layer.shadowColor = UIColor.black.cgColor
         self.layer.shadowOffset = CGSize(width: 1, height: 5)
         
-        self.progressBarWidthConst.constant = (UIScreen.main.bounds.size.width / 2)
-        self.menuBtnLeftConst.constant = (UIScreen.main.bounds.size.width / 1.8) - 70
+        self.progressBarWidthConst.constant = presenter.progressBarWidthConst
+        self.menuBtnLeftConst.constant = presenter.menuLeftConst
         
         self.titleLabel.text = self.presenter.taskViewModel.taskName
         self.setButtonLayout()

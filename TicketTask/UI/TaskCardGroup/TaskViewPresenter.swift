@@ -7,9 +7,12 @@
 //
 
 import Foundation
+import UIKit
 
 protocol TaskViewPresenterProtocol {
     var taskViewModel: TaskViewModel { get }
+    var menuLeftConst: CGFloat { get }
+    var progressBarWidthConst: CGFloat { get }
 }
 
 class TaskViewPresenter: TaskViewPresenterProtocol {
@@ -18,6 +21,8 @@ class TaskViewPresenter: TaskViewPresenterProtocol {
 
     var task: Dictionary<String, Any>?
     var taskViewModel: TaskViewModel
+    var menuLeftConst: CGFloat
+    var progressBarWidthConst: CGFloat
     
     var mainViewController: MainViewControllerProtocol!
     
@@ -31,5 +36,22 @@ class TaskViewPresenter: TaskViewPresenterProtocol {
         taskViewModel = TaskViewModel(taskName: taskName)
         taskViewModel.countProgress()
         taskViewModel.getTask(taskName: taskName)
+        
+        switch screenType {
+        case .iPhone3_5inch, .iPhone4_0inch:
+            menuLeftConst = 107.0
+            progressBarWidthConst = 170
+        case .iPhone4_7inch, .iPhone5_8inch:
+            menuLeftConst = 147.0
+            progressBarWidthConst = 210
+        case .iPhone5_5inch, .iPhone6_1inch, .iPhone6_5inch:
+            menuLeftConst = 185
+            progressBarWidthConst = 235
+        default:
+            menuLeftConst = 107.0
+            progressBarWidthConst = 170
+        }
     }
+    
+    
 }
