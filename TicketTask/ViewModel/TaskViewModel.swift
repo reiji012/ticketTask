@@ -124,8 +124,12 @@ class TaskViewModel: NSObject {
         tickets![ticketName]! = completed
     }
     
-    func updateModel(actionType :ActionType) {
-        taskModel!.taskUpdate(id: self.taskID!,tickets: self.tickets!, actionType: actionType)
+    func updateModel(actionType :ActionType, callback: (() -> Void)? = nil) {
+        taskModel!.taskUpdate(id: self.taskID!,tickets: self.tickets!, actionType: actionType, callback: {
+            if let callback = callback {
+                callback()
+            }
+        })
         task = taskModel?.getTask(taskName: self.taskName!)
         self.countProgress()
         delegate?.didChangeTaskCount(taskCount: self.taskCount())

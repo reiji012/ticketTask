@@ -13,6 +13,7 @@ protocol TaskViewPresenterProtocol {
     var taskViewModel: TaskViewModel { get }
     var menuLeftConst: CGFloat { get }
     var progressBarWidthConst: CGFloat { get }
+    func deleteTask()
 }
 
 class TaskViewPresenter: TaskViewPresenterProtocol {
@@ -53,5 +54,15 @@ class TaskViewPresenter: TaskViewPresenterProtocol {
         }
     }
     
+    func deleteTask() {
+        
+        guard let view = self.view as? TaskView else {
+            return
+        }
+        
+        taskViewModel.updateModel(actionType: .taskDelete, callback: {
+            self.mainViewController.deleteTask(view: view)
+        })
+    }
     
 }

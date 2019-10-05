@@ -129,6 +129,7 @@ class TaskView: UIView, TaskViewProtocol{
             // ボタンが押された時の処理を書く（クロージャ実装）
             (action: UIAlertAction!) -> Void in
             print("OK")
+            self.presenter.deleteTask()
             self.mainViewController?.deleteTask(view: self)
         })
         // キャンセルボタン
