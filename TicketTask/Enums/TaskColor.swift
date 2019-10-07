@@ -45,7 +45,7 @@ enum TaskColor {
         return [gradationColor1.cgColor, gradationColor2.cgColor]
     }
     
-    var ColorString: String {
+    var colorString: String {
         switch self {
         case .blue:
             return  "blue"

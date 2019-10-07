@@ -39,9 +39,7 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
     var isEdited: Bool = false
     var pickerView: UIPickerView = UIPickerView()
     
-    var currentColorStr: String?
     var currentIconStr: String?
-    var currentColor: TaskColor?
     var currentIcon: UIImage?
     
     let attris: [String] = ["生活", "仕事"]
@@ -88,19 +86,19 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
         self.taskViewModel?.taskEdited(
             afterTaskName: self.titleTextField.text!,
             afterTaskAttr: "",
-            color: currentColor!,
-            colorStr: currentColorStr!, image: currentIcon!,
+            color: presenter.currentColor,
+            colorStr: presenter.currentColor.colorString, image: currentIcon!,
             imageStr: currentIconStr!
         )
         
         self.dismiss(animated: true, completion: {
             HUD.flash(.success, onView: self.mainVC!.view, delay: 0.5)
         })
-        self.mainVC?.taskEdited(attri: "", color: currentColorStr!)
+        self.mainVC?.taskEdited(attri: "", color: presenter.currentColor.colorString)
     }
     
     @IBAction func tapIcon(_ sender: Any) {
-        let iconSelectVC = IconSelectViewController.initiate(delegate: self)
+        let iconSelectVC = IconSelectViewController.initiate(delegate: self, color: presenter.currentColor)
         //表示
         present(iconSelectVC, animated: true, completion: nil)
     }
@@ -128,9 +126,7 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
     
     func initStateSet() {
         currentIcon = self.taskViewModel?.iconImage?.withRenderingMode(.alwaysTemplate)
-        currentColor = self.taskViewModel?.taskColor
         currentIconStr = self.taskViewModel?.iconString
-        currentColorStr = self.taskViewModel?.colorString
         
         setPickerView()
         setColorView()
@@ -140,8 +136,9 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
     
     func setGradationColor() {
         UIView.animate(withDuration: 1.5, animations: { () -> Void in
-            let gradationColor: [CGColor] = self.ticketTaskColor!.getGradation(colorStr: self.currentColorStr!)
-            self.timerBtn.tintColor = self.currentColor?.gradationColor1
+            let color = self.presenter.currentColor
+            let gradationColor = color.gradationColor
+            self.timerBtn.tintColor = color.gradationColor1
             self.gradientLayer.colors = gradationColor
             self.gradientLayer.frame = self.view.bounds
 //            self.gradientLayer.locations = [0.3, 0.7]
@@ -149,9 +146,8 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
         })
     }
     
-    func selectedColor(color: TaskColor, colorStr: String) {
-        currentColorStr = colorStr
-        currentColor = color
+    func selectedColor(color: TaskColor) {
+        presenter.currentColor = color
         setColorView()
         setIconImage()
         setGradationColor()
@@ -165,12 +161,12 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
     
     
     func setColorView() {
-        self.colorView.backgroundColor = self.currentColor?.gradationColor1
+        self.colorView.backgroundColor = presenter.currentColor.gradationColor1
     }
     
     func setIconImage() {
         self.iconImageView.image = currentIcon
-        self.iconImageView.tintColor = currentColor?.gradationColor1
+        self.iconImageView.tintColor = presenter.currentColor.gradationColor1
     }
     
     func showAlert() {

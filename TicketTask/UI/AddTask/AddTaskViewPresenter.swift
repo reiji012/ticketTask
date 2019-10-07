@@ -8,6 +8,7 @@
 
 protocol AddTaskViewPresenterProtocol {
     var tickets: [String]! { get }
+    var currentColor: TaskColor { get set }
     func viewDidLoad()
     func touchAddTicketButton(text: String)
     func touchCreateButton(taskName: String, attri: String, colorStr: String, iconStr: String, tickets:Array<String>, resetType: Int)
@@ -22,11 +23,13 @@ class AddTaskViewPresenter: AddTaskViewPresenterProtocol {
     var viewController: AddTaskViewControllerProtocol!
     var taskModel: TaskModel?
     var ticketArray = [String]()
+    var currentColor: TaskColor
     
     init(vc: AddTaskViewControllerProtocol) {
         viewController = vc
         taskModel = TaskModel.sharedManager
         tickets = []
+        currentColor = .orange
     }
     
     func viewDidLoad() {

@@ -24,7 +24,7 @@ class EditTaskViewPresenter: EditTaskViewPresenterProtocol {
     init(view: EditTaskViewControllerProtocol, taskView: TaskViewProtocol) {
         self.view = view
         self.taskView = taskView
-        currentColor = .blue
+        currentColor = taskView.presenter.taskViewModel.taskColor!
     }
     
     func touchSaveButton(afterTaskName: String, afterTaskAttr: String, color: UIColor, colorStr: String, image: UIImage, imageStr: String) {

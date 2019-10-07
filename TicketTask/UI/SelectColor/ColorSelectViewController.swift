@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ColorSelectViewControllerDelegate {
-    func selectedColor(color: TaskColor, colorStr: String)
+    func selectedColor(color: TaskColor)
 }
 
 protocol ColorSelectViewControllerProtocol {
@@ -92,10 +92,8 @@ class ColorSelectViewController: UIViewController, UICollectionViewDelegate, UIC
     
     // Cell が選択された場合
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectColor = ticketTaskColor.colors[indexPath.row].value
-        let selectColorStr = ticketTaskColor.colors[indexPath.row].key
         let color = presenter.selectContent(indexPath: indexPath)
-        delegate!.selectedColor(color: color, colorStr: selectColorStr)
+        delegate!.selectedColor(color: color)
         dismiss(animated: true, completion: nil)
     }
 

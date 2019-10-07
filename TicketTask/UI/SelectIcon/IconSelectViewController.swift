@@ -34,9 +34,9 @@ class IconSelectViewController: UIViewController, UICollectionViewDelegate, UICo
     @IBOutlet weak var cellectionView: UICollectionView!
     
     // MARK: - Initilizer
-    static func initiate(delegate: IconSelectViewControllerDelegate) -> IconSelectViewController {
+    static func initiate(delegate: IconSelectViewControllerDelegate, color: TaskColor) -> IconSelectViewController {
         let viewController = UIStoryboard.instantiateInitialViewController(from: self)
-        viewController.presenter = IconSelectViewPresenter(view: viewController)
+        viewController.presenter = IconSelectViewPresenter(view: viewController, taskColor: color)
         viewController.delegate = delegate
         viewController.modalPresentationStyle = .overFullScreen
         viewController.preferredContentSize = CGSize(width: 200, height: 200)
@@ -65,7 +65,7 @@ class IconSelectViewController: UIViewController, UICollectionViewDelegate, UICo
         let cell: UICollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
         let iconImage = cell.viewWithTag(1) as! UIImageView
         iconImage.image = UIImage(named: "icon-\(indexPath.row)")?.withRenderingMode(.alwaysTemplate)
-        iconImage.tintColor = self.editTaskVC?.currentColor?.gradationColor1
+        iconImage.tintColor = presenter.taskColor.gradationColor1
         cells?.append(cell)
         return cell
     }
