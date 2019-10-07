@@ -73,7 +73,7 @@ class TaskView: UIView, TaskViewProtocol{
         
         // UIImageView の場合
         attriImageView.image = attriImageView.image?.withRenderingMode(.alwaysTemplate)
-        attriImageView.tintColor = self.presenter.taskViewModel.taskColor
+        attriImageView.tintColor = self.presenter.taskViewModel.taskColor?.gradationColor1
         ticketTableView.register(UINib(nibName: "TicketTableViewCell", bundle: nil), forCellReuseIdentifier: "TicketTableViewCell")
     }
 
@@ -334,9 +334,9 @@ class TaskView: UIView, TaskViewProtocol{
     
     func setGradationColor() {
          let gradientLayer = CAGradientLayer()
-        self.ticketProgressBar.tintColor = self.presenter.taskViewModel.taskColor
+        self.ticketProgressBar.tintColor = self.presenter.taskViewModel.taskColor?.gradationColor1
         self.attriImageView.image = self.attriImageView.image?.withRenderingMode(.alwaysTemplate)
-        self.attriImageView.tintColor = self.presenter.taskViewModel.taskColor
+        self.attriImageView.tintColor = self.presenter.taskViewModel.taskColor?.gradationColor1
         let gradientColors: [CGColor] = ticketTaskColor.getGradation(colorStr: self.presenter.taskViewModel.colorString!)
         gradientLayer.colors = gradientColors
         gradientLayer.bounds = self.ticketAddBtn.bounds

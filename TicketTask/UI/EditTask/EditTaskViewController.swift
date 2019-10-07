@@ -17,7 +17,7 @@ protocol EditTaskViewControllerProtocol {
     
 }
 
-class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPresentationControllerDelegate, TaskEditDalegate, EditTaskViewControllerProtocol, ColorSelectViewControllerDelegate, IconSelectViewControllerDelegate {
+class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPresentationControllerDelegate, EditTaskViewControllerProtocol, ColorSelectViewControllerDelegate, IconSelectViewControllerDelegate {
 
     let disposeBag = DisposeBag()
     
@@ -41,7 +41,7 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
     
     var currentColorStr: String?
     var currentIconStr: String?
-    var currentColor: UIColor?
+    var currentColor: TaskColor?
     var currentIcon: UIImage?
     
     let attris: [String] = ["生活", "仕事"]
@@ -141,7 +141,7 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
     func setGradationColor() {
         UIView.animate(withDuration: 1.5, animations: { () -> Void in
             let gradationColor: [CGColor] = self.ticketTaskColor!.getGradation(colorStr: self.currentColorStr!)
-            self.timerBtn.tintColor = self.currentColor
+            self.timerBtn.tintColor = self.currentColor?.gradationColor1
             self.gradientLayer.colors = gradationColor
             self.gradientLayer.frame = self.view.bounds
 //            self.gradientLayer.locations = [0.3, 0.7]
@@ -149,7 +149,7 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
         })
     }
     
-    func selectedColor(color: UIColor, colorStr: String) {
+    func selectedColor(color: TaskColor, colorStr: String) {
         currentColorStr = colorStr
         currentColor = color
         setColorView()
@@ -165,12 +165,12 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
     
     
     func setColorView() {
-        self.colorView.backgroundColor = self.currentColor
+        self.colorView.backgroundColor = self.currentColor?.gradationColor1
     }
     
     func setIconImage() {
         self.iconImageView.image = currentIcon
-        self.iconImageView.tintColor = currentColor
+        self.iconImageView.tintColor = currentColor?.gradationColor1
     }
     
     func showAlert() {
