@@ -14,7 +14,8 @@ import RxSwift
 import SPFakeBar
 
 protocol EditTaskViewControllerProtocol {
-    func setColorView()
+    func setColorView(color: UIColor)
+    func setIconImage(icon: UIImage)
 }
 
 class EditTaskViewController: UIViewController, UIPopoverPresentationControllerDelegate, EditTaskViewControllerProtocol, ColorSelectViewControllerDelegate, IconSelectViewControllerDelegate {
@@ -56,7 +57,6 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        ticketTaskColor = TicketTaskColor()
         bind()
         self.modalPresentationCapturesStatusBarAppearance = true
         self.view.backgroundColor = UIColor.white
@@ -128,47 +128,42 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
     }
     
     func initStateSet() {
-        currentIcon = self.taskViewModel?.iconImage?.withRenderingMode(.alwaysTemplate)
-        currentIconStr = self.taskViewModel?.iconString
-        
-        setColorView()
-        setIconImage()
+        setColorView(color: presenter!.currentColor.gradationColor1)
+        setIconImage(icon: presenter!.currentIcon)
         setGradationColor()
     }
     
     func setGradationColor() {
-        UIView.animate(withDuration: 1.5, animations: { () -> Void in
-            let color = self.presenter.currentColor
-            let gradationColor = color.gradationColor
-            self.timerBtn.tintColor = color.gradationColor1
-            self.gradientLayer.colors = gradationColor
-            self.gradientLayer.frame = self.view.bounds
-//            self.gradientLayer.locations = [0.3, 0.7]
-            self.view.layer.insertSublayer(self.gradientLayer, at: 0)
-        })
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 1.5, animations: { () -> Void in
+                let color = self.presenter.currentColor
+                let gradationColor = color.gradationColor
+                self.timerBtn.tintColor = color.gradationColor1
+                self.gradientLayer.colors = gradationColor
+                self.gradientLayer.frame = self.view.bounds
+                //            self.gradientLayer.locations = [0.3, 0.7]
+                self.view.layer.insertSublayer(self.gradientLayer, at: 0)
+            })
+        }
     }
     
     func selectedColor(color: TaskColor) {
         presenter.currentColor = color
-        setColorView()
-        setIconImage()
+    }
+    
+    func selectedIcon(iconStr: String) {
+        presenter.currentIconString = iconStr
+    }
+    
+    
+    func setColorView(color: UIColor) {
+        self.colorView.backgroundColor = color
+        self.iconImageView.tintColor = color
         setGradationColor()
     }
     
-    func selectedIcon(icon: UIImage, iconStr: String) {
-        currentIconStr = iconStr
-        currentIcon = icon.withRenderingMode(.alwaysTemplate)
-        setIconImage()
-    }
-    
-    
-    func setColorView() {
-        self.colorView.backgroundColor = presenter.currentColor.gradationColor1
-    }
-    
-    func setIconImage() {
-        self.iconImageView.image = currentIcon
-        self.iconImageView.tintColor = presenter.currentColor.gradationColor1
+    func setIconImage(icon: UIImage) {
+        self.iconImageView.image = presenter.currentIcon
     }
     
     func showAlert() {
