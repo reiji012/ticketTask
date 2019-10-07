@@ -11,20 +11,36 @@ import UIKit
 
 protocol EditTaskViewPresenterProtocol {
     var currentColor: TaskColor { get set }
+    var currentIconString: String { get set }
+    var currentIcon: UIImage { get }
     func touchSaveButton(afterTaskName: String, afterTaskAttr: String, color: UIColor, colorStr: String, image: UIImage, imageStr: String)
 }
 
 class EditTaskViewPresenter: EditTaskViewPresenterProtocol {
     
+    
     private var view: EditTaskViewControllerProtocol!
     private var taskView: TaskViewProtocol!
+    var currentIconString: String = "" {
+        didSet {
+            currentIcon = (UIImage(named: currentIconString)?.withRenderingMode(.alwaysTemplate))!
+            view.setIconImage(icon: currentIcon)
+        }
+    }
     
-    var currentColor: TaskColor
+    var currentIcon: UIImage
+    var currentColor: TaskColor {
+        didSet {
+            view.setColorView(color: currentColor.gradationColor1)
+        }
+    }
     
     init(view: EditTaskViewControllerProtocol, taskView: TaskViewProtocol) {
         self.view = view
         self.taskView = taskView
         currentColor = taskView.presenter.taskViewModel.taskColor!
+        currentIcon = taskView.presenter.taskViewModel.iconImage!
+        currentIconString = taskView.presenter.taskViewModel.iconString!
     }
     
     func touchSaveButton(afterTaskName: String, afterTaskAttr: String, color: UIColor, colorStr: String, image: UIImage, imageStr: String) {

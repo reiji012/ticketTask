@@ -9,7 +9,7 @@
 import UIKit
 
 protocol IconSelectViewControllerDelegate {
-    func selectedIcon(icon: UIImage, iconStr: String)
+    func selectedIcon(iconStr: String)
 }
 
 protocol IconSelectViewControllerProtocol {
@@ -90,7 +90,7 @@ class IconSelectViewController: UIViewController, UICollectionViewDelegate, UICo
     
     // Cell が選択された場合
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        delegate!.selectedIcon(icon: (UIImage(named: "icon-\(indexPath.row)")?.withRenderingMode(.alwaysTemplate))!, iconStr: "icon-\(indexPath.row)")
+        delegate!.selectedIcon(iconStr: "icon-\(indexPath.row)")
         dismiss(animated: true, completion: nil)
     }
     
