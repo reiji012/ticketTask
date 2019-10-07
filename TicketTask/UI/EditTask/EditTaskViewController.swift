@@ -14,10 +14,10 @@ import RxSwift
 import SPFakeBar
 
 protocol EditTaskViewControllerProtocol {
-    
+    func setColorView()
 }
 
-class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPresentationControllerDelegate, EditTaskViewControllerProtocol, ColorSelectViewControllerDelegate, IconSelectViewControllerDelegate {
+class EditTaskViewController: UIViewController, UIPopoverPresentationControllerDelegate, EditTaskViewControllerProtocol, ColorSelectViewControllerDelegate, IconSelectViewControllerDelegate {
 
     let disposeBag = DisposeBag()
     
@@ -100,14 +100,14 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
         self.mainVC?.taskEdited(attri: "", color: presenter.currentColor.colorString)
     }
     
-    @IBAction func tapIcon(_ sender: Any) {
+    @IBAction func touchIconView(_ sender: Any) {
         let iconSelectVC = IconSelectViewController.initiate(delegate: self, color: presenter.currentColor)
         //表示
         present(iconSelectVC, animated: true, completion: nil)
     }
     
     
-    @IBAction func tapColorView(_ sender: Any) {
+    @IBAction func touchColorView(_ sender: Any) {
         let colorCollectionVC = ColorSelectViewController.initiate(delegate: self)
         //表示
         present(colorCollectionVC, animated: true, completion: nil)
@@ -131,7 +131,6 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
         currentIcon = self.taskViewModel?.iconImage?.withRenderingMode(.alwaysTemplate)
         currentIconStr = self.taskViewModel?.iconString
         
-        setPickerView()
         setColorView()
         setIconImage()
         setGradationColor()
@@ -196,78 +195,11 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
         self.present(alert, animated: true, completion: nil)
     }
     
-    func setPickerView() {
-        
-        // 決定バーの生成
-        let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 35))
-        let spacelItem = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
-        let doneItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
-        toolbar.setItems([spacelItem, doneItem], animated: true)
-        
-        // デフォルト設定
-        let defoultIndex = self.taskViewModel?.attri == "仕事" ? 1 : 2
-        pickerView.selectRow(defoultIndex, inComponent: 0, animated: false)
-    }
-    
     func changeColor() {
         
-    }
-    
-    
-    // 決定ボタン押下
-    @objc func done() {
-        setGradationColor()
-        self.isEdited = true
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(onKeyboardWillShow(_:)),
-                                               name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(onKeyboardWillHide(_:)),
-                                               name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-        
-        super.viewWillDisappear(animated)
-    }
-    
-    @objc private func onKeyboardWillShow(_ notification: Notification) {
-        guard
-            let userInfo = notification.userInfo,
-            let keyboardInfo = UIKeyboardInfo(info: userInfo),
-            let inputView = view.findFirstResponder(),
-            let scrollView = inputView.findSuperView(ofType: UIScrollView.self)
-            else { return }
-        
-        let inputRect = inputView.convert(inputView.bounds, to: scrollView)
-        let keyboardRect = scrollView.convert(keyboardInfo.frame, from: nil)
-        let offsetY = inputRect.maxY - keyboardRect.minY
-        if offsetY > 0 {
-            let contentOffset = CGPoint(x: scrollView.contentOffset.x, y: scrollView.contentOffset.y + offsetY)
-            scrollView.contentOffset = contentOffset
-        }
-        // 例えば iPhoneX の Portrait 表示だと bottom に34ptほど隙間ができるのでその分を差し引く
-        let contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardInfo.frame.height - view.safeAreaInsets.bottom, right: 0)
-        scrollView.contentInset = contentInset
-        scrollView.scrollIndicatorInsets = contentInset
-    }
-    
-    @objc private func onKeyboardWillHide(_ notification: Notification) {
-        guard
-            let inputView = view.findFirstResponder(),
-            let scrollView = inputView.findSuperView(ofType: UIScrollView.self)
-            else { return }
-        scrollView.contentInset = .zero
-        scrollView.scrollIndicatorInsets = .zero
-    }
-
 }
