@@ -42,7 +42,7 @@ enum TaskColor {
     }
     
     var gradationColor: [CGColor] {
-        return [gradationColor1.cgColor, gradationColor2.cgColor]
+        return [gradationColor2.cgColor, gradationColor1.cgColor]
     }
     
     var colorString: String {
