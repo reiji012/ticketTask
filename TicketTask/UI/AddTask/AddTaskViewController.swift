@@ -257,7 +257,7 @@ extension UIScrollView {
     }
 }
 
-extension AddTaskViewController: UITextFieldDelegate {
+extension AddTaskViewController {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // キーボードを閉じる
