@@ -27,7 +27,7 @@
 		2BE55168229299A100D5AFA9 /* TicketModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE55167229299A100D5AFA9 /* TicketModel.swift */; };
 		2BE5516B2292A83700D5AFA9 /* TasksData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE5516A2292A83700D5AFA9 /* TasksData.swift */; };
 		2BF44281229BEB8C00F32613 /* EditTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF44280229BEB8C00F32613 /* EditTaskViewController.swift */; };
-		2BF44283229CC63C00F32613 /* Edit.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2BF44282229CC63C00F32613 /* Edit.storyboard */; };
+		2BF44283229CC63C00F32613 /* EditTaskViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2BF44282229CC63C00F32613 /* EditTaskViewController.storyboard */; };
 		2BF5B74D22814521007D0266 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF5B74C22814521007D0266 /* AppDelegate.swift */; };
 		2BF5B74F22814521007D0266 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF5B74E22814521007D0266 /* MainViewController.swift */; };
 		2BF5B75222814521007D0266 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2BF5B75022814521007D0266 /* Main.storyboard */; };
@@ -78,7 +78,7 @@
 		2BE55167229299A100D5AFA9 /* TicketModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketModel.swift; sourceTree = "<group>"; };
 		2BE5516A2292A83700D5AFA9 /* TasksData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksData.swift; sourceTree = "<group>"; };
 		2BF44280229BEB8C00F32613 /* EditTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTaskViewController.swift; sourceTree = "<group>"; };
-		2BF44282229CC63C00F32613 /* Edit.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Edit.storyboard; sourceTree = "<group>"; };
+		2BF44282229CC63C00F32613 /* EditTaskViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = EditTaskViewController.storyboard; sourceTree = "<group>"; };
 		2BF5B74922814521007D0266 /* TicketTask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TicketTask.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BF5B74C22814521007D0266 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2BF5B74E22814521007D0266 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -196,7 +196,7 @@
 		11B4F995233DEECE008CD2F6 /* EditTask */ = {
 			isa = PBXGroup;
 			children = (
-				2BF44282229CC63C00F32613 /* Edit.storyboard */,
+				2BF44282229CC63C00F32613 /* EditTaskViewController.storyboard */,
 				11B4F99B233DF162008CD2F6 /* TaskEditDelegate.swift */,
 				2BF44280229BEB8C00F32613 /* EditTaskViewController.swift */,
 				11B5E4472345FC5F00DBCB14 /* EditTaskViewPresenter.swift */,
@@ -425,7 +425,7 @@
 				2BF5B75222814521007D0266 /* Main.storyboard in Resources */,
 				8E8A0B182316A36F00FFCE15 /* ColorSelectViewController.storyboard in Resources */,
 				8E8A0B1C2318D55E00FFCE15 /* IconSelectViewController.storyboard in Resources */,
-				2BF44283229CC63C00F32613 /* Edit.storyboard in Resources */,
+				2BF44283229CC63C00F32613 /* EditTaskViewController.storyboard in Resources */,
 				2BF5B767228155EC007D0266 /* TaskView.xib in Resources */,
 				11085FF92345F49800BA9A61 /* AddTaskViewController.storyboard in Resources */,
 			);

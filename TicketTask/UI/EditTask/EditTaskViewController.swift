@@ -48,6 +48,9 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
     static func initiate(taskView: TaskViewProtocol) -> EditTaskViewController {
         let viewController = UIStoryboard.instantiateInitialViewController(from: self)
         viewController.presenter = EditTaskViewPresenter(view: viewController, taskView: taskView)
+        let trantisionDelegate = SPStorkTransitioningDelegate()
+        viewController.transitioningDelegate = trantisionDelegate
+        viewController.modalPresentationStyle = .custom
         return viewController
     }
     
