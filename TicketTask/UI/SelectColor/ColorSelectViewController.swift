@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol ColorSelectViewControllerProtocol {
+    
+}
+
 class ColorSelectViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    private var presenter: ColorSelectViewPresenterProtocol!
     
     // レイアウト設定　UIEdgeInsets については下記の参考図を参照。
     private let sectionInsets = UIEdgeInsets(top: 10.0, left: 30.0, bottom: 15.0, right: 30.0)
@@ -24,6 +30,13 @@ class ColorSelectViewController: UIViewController, UICollectionViewDelegate, UIC
     open var delegate: TaskEditDalegate?
     
     @IBOutlet weak var cellectionView: UICollectionView!
+    
+    // MARK: - Initilizer
+    static func initiate() -> ColorSelectViewController {
+        let viewController = UIStoryboard.instantiateInitialViewController(from: self)
+        viewController.presenter = ColorSelectViewPresenter(view: viewController)
+        return viewController
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,4 +88,8 @@ class ColorSelectViewController: UIViewController, UICollectionViewDelegate, UIC
         dismiss(animated: true, completion: nil)
     }
 
+}
+
+extension ColorSelectViewController: ColorSelectViewControllerProtocol {
+    
 }

@@ -135,8 +135,7 @@ class AddTaskViewController: UIViewController, UIPopoverPresentationControllerDe
     }
     
     @IBAction func tapColorView(_ sender: Any) {
-        let storyboard: UIStoryboard = UIStoryboard(name: "Color", bundle: nil)
-        let colorCollectionVC = storyboard.instantiateInitialViewController() as! ColorSelectViewController
+        let colorCollectionVC = ColorSelectViewController.initiate()
         colorCollectionVC.delegate = self
         colorCollectionVC.modalPresentationStyle = .overFullScreen
         
