@@ -18,6 +18,7 @@
 		11B5E4482345FC5F00DBCB14 /* EditTaskViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B5E4472345FC5F00DBCB14 /* EditTaskViewPresenter.swift */; };
 		11B5E44B2347317600DBCB14 /* TaskViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B5E44A2347317600DBCB14 /* TaskViewPresenter.swift */; };
 		11B5E44D234734FA00DBCB14 /* UINibExtentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B5E44C234734FA00DBCB14 /* UINibExtentions.swift */; };
+		11EC7B93234B13970099D444 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EC7B92234B13970099D444 /* File.swift */; };
 		2B84AD5B22A1267F004B484D /* ValidateError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B84AD5A22A1267F004B484D /* ValidateError.swift */; };
 		2BB2EE51228AB97200769AAA /* ActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB2EE50228AB97200769AAA /* ActionType.swift */; };
 		2BE551662292695000D5AFA9 /* TaskItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE551652292695000D5AFA9 /* TaskItem.swift */; };
@@ -66,6 +67,7 @@
 		11B5E4472345FC5F00DBCB14 /* EditTaskViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTaskViewPresenter.swift; sourceTree = "<group>"; };
 		11B5E44A2347317600DBCB14 /* TaskViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewPresenter.swift; sourceTree = "<group>"; };
 		11B5E44C234734FA00DBCB14 /* UINibExtentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINibExtentions.swift; sourceTree = "<group>"; };
+		11EC7B92234B13970099D444 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		2B84AD5A22A1267F004B484D /* ValidateError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateError.swift; sourceTree = "<group>"; };
 		2BB2EE50228AB97200769AAA /* ActionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionType.swift; sourceTree = "<group>"; };
 		2BE551652292695000D5AFA9 /* TaskItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskItem.swift; sourceTree = "<group>"; };
@@ -126,7 +128,6 @@
 				11B4F98D233DED26008CD2F6 /* Color */,
 				8E6B2A0D22FF227400113E30 /* Utill.swift */,
 				8E8A0B0D2314161500FFCE15 /* Const.swift */,
-				111F5EBE2342E7E10034548A /* ScreenType.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -272,6 +273,15 @@
 			path = TicketTable;
 			sourceTree = "<group>";
 		};
+		11EC7B91234B13600099D444 /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				111F5EBE2342E7E10034548A /* ScreenType.swift */,
+				11EC7B92234B13970099D444 /* File.swift */,
+			);
+			path = Enums;
+			sourceTree = "<group>";
+		};
 		2BF5B74022814521007D0266 = {
 			isa = PBXGroup;
 			children = (
@@ -295,6 +305,7 @@
 			children = (
 				11B4F99D233DF268008CD2F6 /* API */,
 				11B4F999233DF05E008CD2F6 /* Model */,
+				11EC7B91234B13600099D444 /* Enums */,
 				11B4F98C233DECF8008CD2F6 /* Util */,
 				11B4F998233DF032008CD2F6 /* Service */,
 				11B4F991233DEDC4008CD2F6 /* UI */,
@@ -488,6 +499,7 @@
 				8E8A0B1A2316B04B00FFCE15 /* ColorSelectViewController.swift in Sources */,
 				2BB2EE51228AB97200769AAA /* ActionType.swift in Sources */,
 				8E9EC2982318FCEE00F9896F /* TicketTaskColor.swift in Sources */,
+				11EC7B93234B13970099D444 /* File.swift in Sources */,
 				11B5E44D234734FA00DBCB14 /* UINibExtentions.swift in Sources */,
 				8E6DAB9622FFF36A00A72D0D /* MainViewControllerProtocol.swift in Sources */,
 				2BE5516B2292A83700D5AFA9 /* TasksData.swift in Sources */,
