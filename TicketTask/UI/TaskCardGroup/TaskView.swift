@@ -68,8 +68,6 @@ class TaskView: UIView, TaskViewProtocol{
     
     func setViewModel(task:Dictionary<String, Any>, mainVC: MainViewController) {
         self.mainViewController = mainVC
-        bind()
-        setLayout()
 
         let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(
             target: self,

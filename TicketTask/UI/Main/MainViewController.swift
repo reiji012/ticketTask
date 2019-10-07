@@ -221,6 +221,8 @@ class MainViewController: UIViewController {
         
         taskView = TaskView.initiate(mainViewController: self, task: task)
         taskView.frame = CGRect.init(x: self.originX! + 25, y: currentY, width: viewWidth!, height: initTaskViewHeight)
+        taskView.bind()
+        taskView.setLayout()
         taskView.topSafeAreaHeight = self.view.safeAreaInsets.top
         taskView.tag = tag
         scrollView.addSubview(taskView)
