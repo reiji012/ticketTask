@@ -57,6 +57,12 @@ class TaskView: UIView, TaskViewProtocol{
     static func initiate(mainViewController: MainViewControllerProtocol, task:Dictionary<String, Any>) -> TaskView {
         let view = UINib.instantiateInitialView(from: self)
         view.presenter = TaskViewPresenter(view: view, mainViewController: mainViewController, task: task)
+        
+        guard let mainViewController = mainViewController as? MainViewController else {
+            return view
+        }
+        view.setViewModel(task: task, mainVC: mainViewController)
+        view.setTableView()
         return view
     }
     
@@ -109,8 +115,7 @@ class TaskView: UIView, TaskViewProtocol{
     }
     
     func touchEditButton() {
-        let storyboard = UIStoryboard(name: "Edit", bundle: nil)
-        let editViewController = storyboard.instantiateInitialViewController() as! EditTaskViewController
+        let editViewController = EditTaskViewController.initiate(taskView: self)
         let trantisionDelegate = SPStorkTransitioningDelegate()
         editViewController.transitioningDelegate = trantisionDelegate
         editViewController.modalPresentationStyle = .custom

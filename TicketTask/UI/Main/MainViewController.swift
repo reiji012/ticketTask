@@ -221,8 +221,6 @@ class MainViewController: UIViewController {
         
         taskView = TaskView.initiate(mainViewController: self, task: task)
         taskView.frame = CGRect.init(x: self.originX! + 25, y: currentY, width: viewWidth!, height: initTaskViewHeight)
-        taskView.setViewModel(task: task, mainVC: self)
-        taskView.setTableView()
         taskView.topSafeAreaHeight = self.view.safeAreaInsets.top
         taskView.tag = tag
         scrollView.addSubview(taskView)
@@ -328,8 +326,6 @@ class MainViewController: UIViewController {
     }
     
     func showEditView(editTaskVC: EditTaskViewController, taskVM: TaskViewModel) {
-        editTaskVC.mainVC = self
-        editTaskVC.taskViewModel = taskVM
         UIView.animate(withDuration: 2, animations: {
             self.present(editTaskVC, animated: true, completion: nil)
         })
