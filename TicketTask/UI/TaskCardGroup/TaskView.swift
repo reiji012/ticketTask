@@ -37,7 +37,6 @@ class TaskView: UIView, TaskViewProtocol{
     
     var presenter: TaskViewPresenterProtocol!
     
-    var taskViewModel: TaskViewModel?
     var ticketTaskColor = TicketTaskColor()
     var defoultWidth: CGFloat?
     var defoultHeight: CGFloat?
@@ -58,13 +57,17 @@ class TaskView: UIView, TaskViewProtocol{
     static func initiate(mainViewController: MainViewControllerProtocol, task:Dictionary<String, Any>) -> TaskView {
         let view = UINib.instantiateInitialView(from: self)
         view.presenter = TaskViewPresenter(view: view, mainViewController: mainViewController, task: task)
+        
+        guard let mainViewController = mainViewController as? MainViewController else {
+            return view
+        }
+        view.setViewModel(task: task, mainVC: mainViewController)
+        view.setTableView()
         return view
     }
     
     func setViewModel(task:Dictionary<String, Any>, mainVC: MainViewController) {
         self.mainViewController = mainVC
-        bind()
-        setLayout()
 
         let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(
             target: self,
@@ -74,7 +77,7 @@ class TaskView: UIView, TaskViewProtocol{
         
         // UIImageView の場合
         attriImageView.image = attriImageView.image?.withRenderingMode(.alwaysTemplate)
-        attriImageView.tintColor = self.presenter.taskViewModel.taskColor
+        attriImageView.tintColor = self.presenter.taskViewModel.taskColor?.gradationColor1
         ticketTableView.register(UINib(nibName: "TicketTableViewCell", bundle: nil), forCellReuseIdentifier: "TicketTableViewCell")
     }
 
@@ -110,8 +113,7 @@ class TaskView: UIView, TaskViewProtocol{
     }
     
     func touchEditButton() {
-        let storyboard = UIStoryboard(name: "Edit", bundle: nil)
-        let editViewController = storyboard.instantiateInitialViewController() as! EditTaskViewController
+        let editViewController = EditTaskViewController.initiate(taskView: self)
         let trantisionDelegate = SPStorkTransitioningDelegate()
         editViewController.transitioningDelegate = trantisionDelegate
         editViewController.modalPresentationStyle = .custom
@@ -336,9 +338,9 @@ class TaskView: UIView, TaskViewProtocol{
     
     func setGradationColor() {
          let gradientLayer = CAGradientLayer()
-        self.ticketProgressBar.tintColor = self.presenter.taskViewModel.taskColor
+        self.ticketProgressBar.tintColor = self.presenter.taskViewModel.taskColor?.gradationColor1
         self.attriImageView.image = self.attriImageView.image?.withRenderingMode(.alwaysTemplate)
-        self.attriImageView.tintColor = self.presenter.taskViewModel.taskColor
+        self.attriImageView.tintColor = self.presenter.taskViewModel.taskColor?.gradationColor1
         let gradientColors: [CGColor] = ticketTaskColor.getGradation(colorStr: self.presenter.taskViewModel.colorString!)
         gradientLayer.colors = gradientColors
         gradientLayer.bounds = self.ticketAddBtn.bounds

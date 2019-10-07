@@ -8,7 +8,17 @@
 
 import UIKit
 
+protocol ColorSelectViewControllerDelegate {
+    func selectedColor(color: TaskColor)
+}
+
+protocol ColorSelectViewControllerProtocol {
+    
+}
+
 class ColorSelectViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    private var presenter: ColorSelectViewPresenterProtocol!
     
     // レイアウト設定　UIEdgeInsets については下記の参考図を参照。
     private let sectionInsets = UIEdgeInsets(top: 10.0, left: 30.0, bottom: 15.0, right: 30.0)
@@ -21,9 +31,22 @@ class ColorSelectViewController: UIViewController, UICollectionViewDelegate, UIC
     
     var editTaskVC: EditTaskViewController?
     
-    open var delegate: TaskEditDalegate?
+    open var delegate: ColorSelectViewControllerDelegate?
     
     @IBOutlet weak var cellectionView: UICollectionView!
+    
+    // MARK: - Initilizer
+    static func initiate(delegate: ColorSelectViewControllerDelegate) -> ColorSelectViewController {
+        let viewController = UIStoryboard.instantiateInitialViewController(from: self)
+        viewController.presenter = ColorSelectViewPresenter(view: viewController)
+        viewController.delegate = delegate
+        viewController.modalPresentationStyle = .overFullScreen
+        
+        viewController.preferredContentSize = CGSize(width: 200, height: 200)
+        // 矢印が出る方向の指定
+        viewController.popoverPresentationController?.permittedArrowDirections = .any
+        return viewController
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,10 +92,13 @@ class ColorSelectViewController: UIViewController, UICollectionViewDelegate, UIC
     
     // Cell が選択された場合
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectColor = ticketTaskColor.colors[indexPath.row].value
-        let selectColorStr = ticketTaskColor.colors[indexPath.row].key
-        delegate!.selectedColor(color: selectColor, colorStr: selectColorStr)
+        let color = presenter.selectContent(indexPath: indexPath)
+        delegate!.selectedColor(color: color)
         dismiss(animated: true, completion: nil)
     }
 
+}
+
+extension ColorSelectViewController: ColorSelectViewControllerProtocol {
+    
 }

@@ -18,6 +18,7 @@ protocol MainViewPresenterProtocol {
     func getTodayWeatherMinTemp() -> String
     func getDescripiton() -> String
     func touchAddButton()
+    func checkIsTaskEmpty()
 }
 
 class MainViewPresenter: MainViewPresenterProtocol, Routable {
@@ -92,5 +93,13 @@ class MainViewPresenter: MainViewPresenterProtocol, Routable {
     func getDescripiton() -> String {
         let description = todayWetherInfo![WetherInfoConst.DESCRIPTION.rawValue]!
         return "\(description)"
+    }
+    
+    func checkIsTaskEmpty() {
+        let isTaskEmpty = self.taskModel!.tasks?.isEmpty
+        self.viewController?.setTaskEmptyViewState(isHidden: !(isTaskEmpty!))
+        if !(isTaskEmpty!) {
+            self.viewController?.createAllTaskViews()
+        }
     }
 }

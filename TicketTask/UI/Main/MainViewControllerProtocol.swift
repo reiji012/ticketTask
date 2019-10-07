@@ -11,7 +11,7 @@ import Foundation
 protocol MainViewControllerProtocol {
     func setWeatherInfo()
     func setTaskEmptyViewState(isHidden: Bool)
-    func createTaskViews()
+    func createAllTaskViews()
     func didChangeTaskCount(taskCount: Int)
     func showValidateAlert(error: ValidateError)
     func deleteTask(view: TaskView)

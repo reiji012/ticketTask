@@ -14,10 +14,11 @@ import RxSwift
 import SPFakeBar
 
 protocol EditTaskViewControllerProtocol {
-    
+    func setColorView(color: UIColor)
+    func setIconImage(icon: UIImage)
 }
 
-class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPresentationControllerDelegate, TaskEditDalegate, EditTaskViewControllerProtocol {
+class EditTaskViewController: UIViewController, UIPopoverPresentationControllerDelegate, EditTaskViewControllerProtocol, ColorSelectViewControllerDelegate, IconSelectViewControllerDelegate {
 
     let disposeBag = DisposeBag()
     
@@ -39,9 +40,7 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
     var isEdited: Bool = false
     var pickerView: UIPickerView = UIPickerView()
     
-    var currentColorStr: String?
     var currentIconStr: String?
-    var currentColor: UIColor?
     var currentIcon: UIImage?
     
     let attris: [String] = ["生活", "仕事"]
@@ -50,12 +49,14 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
     static func initiate(taskView: TaskViewProtocol) -> EditTaskViewController {
         let viewController = UIStoryboard.instantiateInitialViewController(from: self)
         viewController.presenter = EditTaskViewPresenter(view: viewController, taskView: taskView)
+        let trantisionDelegate = SPStorkTransitioningDelegate()
+        viewController.transitioningDelegate = trantisionDelegate
+        viewController.modalPresentationStyle = .custom
         return viewController
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        ticketTaskColor = TicketTaskColor()
         bind()
         self.modalPresentationCapturesStatusBarAppearance = true
         self.view.backgroundColor = UIColor.white
@@ -88,52 +89,27 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
         self.taskViewModel?.taskEdited(
             afterTaskName: self.titleTextField.text!,
             afterTaskAttr: "",
-            color: currentColor!,
-            colorStr: currentColorStr!, image: currentIcon!,
-            imageStr: currentIconStr!
+            color: presenter.currentColor,
+            colorStr: presenter.currentColor.colorString,
+            image: presenter.currentIcon,
+            imageStr: presenter.currentIconString
         )
         
         self.dismiss(animated: true, completion: {
             HUD.flash(.success, onView: self.mainVC!.view, delay: 0.5)
         })
-        self.mainVC?.taskEdited(attri: "", color: currentColorStr!)
+        self.mainVC?.taskEdited(attri: "", color: presenter.currentColor.colorString)
     }
     
-    @IBAction func tapIcon(_ sender: Any) {
-        let storyboard: UIStoryboard = UIStoryboard(name: "Icon", bundle: nil)
-        let iconSelectVC = storyboard.instantiateInitialViewController() as! IconSelectViewController
-        iconSelectVC.editTaskVC = self
-        iconSelectVC.delegate = self
-        iconSelectVC.modalPresentationStyle = .overFullScreen
-        
-        iconSelectVC.preferredContentSize = CGSize(width: 200, height: 200)
-        iconSelectVC.popoverPresentationController?.sourceView = view
-        // ピヨッと表示する位置の指定
-        iconSelectVC.popoverPresentationController?.sourceRect = (sender as AnyObject).frame
-        // 矢印が出る方向の指定
-        iconSelectVC.popoverPresentationController?.permittedArrowDirections = .any
-        // デリゲートの設定
-        iconSelectVC.popoverPresentationController?.delegate = self
+    @IBAction func touchIconView(_ sender: Any) {
+        let iconSelectVC = IconSelectViewController.initiate(delegate: self, color: presenter.currentColor)
         //表示
         present(iconSelectVC, animated: true, completion: nil)
     }
     
     
-    @IBAction func tapColorView(_ sender: Any) {
-        let storyboard: UIStoryboard = UIStoryboard(name: "Color", bundle: nil)
-        let colorCollectionVC = storyboard.instantiateInitialViewController() as! ColorSelectViewController
-        colorCollectionVC.delegate = self
-        colorCollectionVC.editTaskVC = self
-        colorCollectionVC.modalPresentationStyle = .overFullScreen
-        
-        colorCollectionVC.preferredContentSize = CGSize(width: 200, height: 200)
-        colorCollectionVC.popoverPresentationController?.sourceView = view
-        // ピヨッと表示する位置の指定
-        colorCollectionVC.popoverPresentationController?.sourceRect = (sender as AnyObject).frame
-        // 矢印が出る方向の指定
-        colorCollectionVC.popoverPresentationController?.permittedArrowDirections = .any
-        // デリゲートの設定
-        colorCollectionVC.popoverPresentationController?.delegate = self
+    @IBAction func touchColorView(_ sender: Any) {
+        let colorCollectionVC = ColorSelectViewController.initiate(delegate: self)
         //表示
         present(colorCollectionVC, animated: true, completion: nil)
     }
@@ -153,50 +129,44 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
     }
     
     func initStateSet() {
-        currentIcon = self.taskViewModel?.iconImage?.withRenderingMode(.alwaysTemplate)
-        currentColor = self.taskViewModel?.taskColor
-        currentIconStr = self.taskViewModel?.iconString
-        currentColorStr = self.taskViewModel?.colorString
-        
-        setPickerView()
-        setColorView()
-        setIconImage()
+        setColorView(color: presenter!.currentColor.gradationColor1)
+        setIconImage(icon: presenter!.currentIcon)
         setGradationColor()
     }
     
     func setGradationColor() {
-        UIView.animate(withDuration: 1.5, animations: { () -> Void in
-            let gradationColor: [CGColor] = self.ticketTaskColor!.getGradation(colorStr: self.currentColorStr!)
-            self.timerBtn.tintColor = self.currentColor
-            self.gradientLayer.colors = gradationColor
-            self.gradientLayer.frame = self.view.bounds
-//            self.gradientLayer.locations = [0.3, 0.7]
-            self.view.layer.insertSublayer(self.gradientLayer, at: 0)
-        })
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 1.5, animations: { () -> Void in
+                let color = self.presenter.currentColor
+                let gradationColor = color.gradationColor
+                self.timerBtn.tintColor = color.gradationColor1
+                self.gradientLayer.colors = gradationColor
+                self.gradientLayer.frame = self.view.bounds
+                //            self.gradientLayer.locations = [0.3, 0.7]
+                self.view.layer.insertSublayer(self.gradientLayer, at: 0)
+            })
+        }
     }
     
-    func selectedColor(color: UIColor, colorStr: String) {
-        currentColorStr = colorStr
-        currentColor = color
-        setColorView()
-        setIconImage()
+    func selectedColor(color: TaskColor) {
+        presenter.currentColor = color
+    }
+    
+    func selectedIcon(iconStr: String) {
+        presenter.currentIconString = iconStr
+    }
+    
+    
+    func setColorView(color: UIColor) {
+        self.colorView.backgroundColor = color
+        self.iconImageView.tintColor = color
         setGradationColor()
     }
     
-    func selectedIcon(icon: UIImage, iconStr: String) {
-        currentIconStr = iconStr
-        currentIcon = icon.withRenderingMode(.alwaysTemplate)
-        setIconImage()
-    }
-    
-    
-    func setColorView() {
-        self.colorView.backgroundColor = self.currentColor
-    }
-    
-    func setIconImage() {
-        self.iconImageView.image = currentIcon
-        self.iconImageView.tintColor = currentColor
+    func setIconImage(icon: UIImage) {
+        DispatchQueue.main.async {
+            self.iconImageView.image = self.presenter.currentIcon
+        }
     }
     
     func showAlert() {
@@ -223,123 +193,11 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
         self.present(alert, animated: true, completion: nil)
     }
     
-    func setPickerView() {
-        // ピッカー設定
-        pickerView.delegate = self
-        pickerView.dataSource = self
-        pickerView.showsSelectionIndicator = true
-        
-        // 決定バーの生成
-        let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 35))
-        let spacelItem = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
-        let doneItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
-        toolbar.setItems([spacelItem, doneItem], animated: true)
-        
-        // デフォルト設定
-        let defoultIndex = self.taskViewModel?.attri == "仕事" ? 1 : 2
-        pickerView.selectRow(defoultIndex, inComponent: 0, animated: false)
-    }
-    
     func changeColor() {
         
-    }
-    
-    
-    // 決定ボタン押下
-    @objc func done() {
-        setGradationColor()
-        self.isEdited = true
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(onKeyboardWillShow(_:)),
-                                               name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(onKeyboardWillHide(_:)),
-                                               name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-        
-        super.viewWillDisappear(animated)
-    }
-    
-    @objc private func onKeyboardWillShow(_ notification: Notification) {
-        guard
-            let userInfo = notification.userInfo,
-            let keyboardInfo = UIKeyboardInfo(info: userInfo),
-            let inputView = view.findFirstResponder(),
-            let scrollView = inputView.findSuperView(ofType: UIScrollView.self)
-            else { return }
-        
-        let inputRect = inputView.convert(inputView.bounds, to: scrollView)
-        let keyboardRect = scrollView.convert(keyboardInfo.frame, from: nil)
-        let offsetY = inputRect.maxY - keyboardRect.minY
-        if offsetY > 0 {
-            let contentOffset = CGPoint(x: scrollView.contentOffset.x, y: scrollView.contentOffset.y + offsetY)
-            scrollView.contentOffset = contentOffset
-        }
-        // 例えば iPhoneX の Portrait 表示だと bottom に34ptほど隙間ができるのでその分を差し引く
-        let contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardInfo.frame.height - view.safeAreaInsets.bottom, right: 0)
-        scrollView.contentInset = contentInset
-        scrollView.scrollIndicatorInsets = contentInset
-    }
-    
-    @objc private func onKeyboardWillHide(_ notification: Notification) {
-        guard
-            let inputView = view.findFirstResponder(),
-            let scrollView = inputView.findSuperView(ofType: UIScrollView.self)
-            else { return }
-        scrollView.contentInset = .zero
-        scrollView.scrollIndicatorInsets = .zero
-    }
-
-}
-
-extension EditTaskViewController : UIPickerViewDelegate, UIPickerViewDataSource {
-    
-    // ドラムロールの列数
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    // ドラムロールの行数
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        /*
-         列が複数ある場合は
-         if component == 0 {
-         } else {
-         ...
-         }
-         こんな感じで分岐が可能
-         */
-        return attris.count
-    }
-    
-    // ドラムロールの各タイトル
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        /*
-         列が複数ある場合は
-         if component == 0 {
-         } else {
-         ...
-         }
-         こんな感じで分岐が可能
-         */
-        return attris[row]
-    }
-    
-    /*
-     // ドラムロール選択時
-     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-     self.textField.text = list[row]
-     }
-     */
 }
