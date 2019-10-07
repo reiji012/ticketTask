@@ -101,6 +101,5 @@ class MainViewPresenter: MainViewPresenterProtocol, Routable {
         if !(isTaskEmpty!) {
             self.viewController?.createAllTaskViews()
         }
-        
     }
 }
