@@ -49,7 +49,7 @@
 		8E8A0B12231605E400FFCE15 /* TaskIconImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8A0B11231605E400FFCE15 /* TaskIconImageView.swift */; };
 		8E8A0B182316A36F00FFCE15 /* ColorSelectViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E8A0B172316A36F00FFCE15 /* ColorSelectViewController.storyboard */; };
 		8E8A0B1A2316B04B00FFCE15 /* ColorSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8A0B192316B04B00FFCE15 /* ColorSelectViewController.swift */; };
-		8E8A0B1C2318D55E00FFCE15 /* Icon.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E8A0B1B2318D55E00FFCE15 /* Icon.storyboard */; };
+		8E8A0B1C2318D55E00FFCE15 /* IconSelectViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E8A0B1B2318D55E00FFCE15 /* IconSelectViewController.storyboard */; };
 		8E8A0B1E2318D9C900FFCE15 /* IconSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8A0B1D2318D9C900FFCE15 /* IconSelectViewController.swift */; };
 		8E9EC2982318FCEE00F9896F /* TicketTaskColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9EC2972318FCEE00F9896F /* TicketTaskColor.swift */; };
 		8EACD6D823027E7F0095F4A0 /* WeatherLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EACD6D723027E7F0095F4A0 /* WeatherLabel.swift */; };
@@ -102,7 +102,7 @@
 		8E8A0B11231605E400FFCE15 /* TaskIconImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskIconImageView.swift; sourceTree = "<group>"; };
 		8E8A0B172316A36F00FFCE15 /* ColorSelectViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ColorSelectViewController.storyboard; sourceTree = "<group>"; };
 		8E8A0B192316B04B00FFCE15 /* ColorSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSelectViewController.swift; sourceTree = "<group>"; };
-		8E8A0B1B2318D55E00FFCE15 /* Icon.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Icon.storyboard; sourceTree = "<group>"; };
+		8E8A0B1B2318D55E00FFCE15 /* IconSelectViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = IconSelectViewController.storyboard; sourceTree = "<group>"; };
 		8E8A0B1D2318D9C900FFCE15 /* IconSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectViewController.swift; sourceTree = "<group>"; };
 		8E9EC2972318FCEE00F9896F /* TicketTaskColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TicketTaskColor.swift; sourceTree = "<group>"; };
 		8EACD6D723027E7F0095F4A0 /* WeatherLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherLabel.swift; sourceTree = "<group>"; };
@@ -216,7 +216,7 @@
 			isa = PBXGroup;
 			children = (
 				8E8A0B1D2318D9C900FFCE15 /* IconSelectViewController.swift */,
-				8E8A0B1B2318D55E00FFCE15 /* Icon.storyboard */,
+				8E8A0B1B2318D55E00FFCE15 /* IconSelectViewController.storyboard */,
 			);
 			path = SelectIcon;
 			sourceTree = "<group>";
@@ -421,7 +421,7 @@
 				2BF5B75422814521007D0266 /* Assets.xcassets in Resources */,
 				2BF5B75222814521007D0266 /* Main.storyboard in Resources */,
 				8E8A0B182316A36F00FFCE15 /* ColorSelectViewController.storyboard in Resources */,
-				8E8A0B1C2318D55E00FFCE15 /* Icon.storyboard in Resources */,
+				8E8A0B1C2318D55E00FFCE15 /* IconSelectViewController.storyboard in Resources */,
 				2BF44283229CC63C00F32613 /* Edit.storyboard in Resources */,
 				2BF5B767228155EC007D0266 /* TaskView.xib in Resources */,
 				11085FF92345F49800BA9A61 /* AddTaskViewController.storyboard in Resources */,
