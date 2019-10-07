@@ -46,8 +46,6 @@ class AddTaskViewController: UIViewController, IconSelectViewControllerDelegate,
     var screenWidth:CGFloat!
     
     var presenter: AddTaskViewPresenterProtocol!
-    private var currentColor: UIColor!
-    private var currentColorStr: String!
     private var currentIcon: UIImage!
     private var currentIconStr: String!
     private var resetType: Int = 0
@@ -108,8 +106,6 @@ class AddTaskViewController: UIViewController, IconSelectViewControllerDelegate,
     
     func initSetState() {
         let iconStr = "icon-0"
-        self.currentColor = self.ticketTaskColor.ticketTaskOrange_1
-        self.currentColorStr = ticketTaskColor.ORANGE
         self.currentIcon = UIImage(named: iconStr)?.withRenderingMode(.alwaysTemplate)
         self.currentIconStr = iconStr
         self.setColorView()
@@ -118,7 +114,7 @@ class AddTaskViewController: UIViewController, IconSelectViewControllerDelegate,
     }
     
     @IBAction func tapIconView(_ sender: Any) {
-        let iconSelectVC = IconSelectViewController.initiate(delegate: self)
+        let iconSelectVC = IconSelectViewController.initiate(delegate: self, color: presenter.currentColor)
 
         //表示
         present(iconSelectVC, animated: true, completion: nil)
@@ -146,15 +142,14 @@ class AddTaskViewController: UIViewController, IconSelectViewControllerDelegate,
     @objc func touchCreateButton() {
         presenter.touchCreateButton(taskName: titleTextField.text!,
                                                      attri: "",
-                                                     colorStr: currentColorStr,
+                                                     colorStr: presenter.currentColor.colorString,
                                                      iconStr: currentIconStr,
                                                      tickets: presenter.tickets,
                                                      resetType: self.resetType)
     }
     
-    func selectedColor(color: TaskColor, colorStr: String) {
-        currentColorStr = colorStr
-        currentColor = color.gradationColor1
+    func selectedColor(color: TaskColor) {
+        presenter.currentColor = color
         setColorView()
         setIconImage()
         setGradationColor()
@@ -168,21 +163,21 @@ class AddTaskViewController: UIViewController, IconSelectViewControllerDelegate,
     
     
     func setColorView() {
-        self.colorView.backgroundColor = self.currentColor
+        self.colorView.backgroundColor = presenter.currentColor.gradationColor1
     }
     
     func setIconImage() {
         self.iconImageView.image = currentIcon
-        self.iconImageView.tintColor = currentColor
+        self.iconImageView.tintColor = presenter.currentColor.gradationColor1
     }
     
     func setGradationColor() {
         UIView.animate(withDuration: 2, animations: { () -> Void in
-            let gradientColors = self.ticketTaskColor.getGradation(colorStr: self.currentColorStr)
-            self.gradientLayer.colors = gradientColors
+            let color = self.presenter.currentColor
+            self.gradientLayer.colors = color.gradationColor
             self.gradientLayer.frame = self.view.bounds
-            self.timerBtm.tintColor = self.currentColor
-            self.ticketAddBtn.setTitleColor(self.currentColor, for: .normal)
+            self.timerBtm.tintColor = color.gradationColor1
+            self.ticketAddBtn.setTitleColor(color.gradationColor1, for: .normal)
             self.view.layer.insertSublayer(self.gradientLayer, at: 0)
         })
     }

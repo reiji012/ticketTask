@@ -82,11 +82,11 @@ class TaskViewModel: NSObject {
         self.iconString = (task!["icon"] as! String)
         self.colorString = (task!["color"] as! String)
         self.taskID = (task!["id"] as! Int)
-        setColor()
+        setColor(colorString: (task!["color"] as! String))
         countProgress()
     }
     
-    func setColor() {
+    func setColor(colorString: String) {
         switch colorString {
         case "blue":
             taskColor = .blue
@@ -153,7 +153,6 @@ class TaskViewModel: NSObject {
     }
     
     func taskEdited(afterTaskName: String, afterTaskAttr: String, color: TaskColor, colorStr: String, image: UIImage, imageStr: String) {
-//        self.taskModel?.editTask(afterTaskName: afterTaskName, afterTaskAttr: afterTaskAttr, id: self.taskID!)
         self.taskModel?.editTask(afterTaskName: afterTaskName, afterTaskAttr: afterTaskAttr, colorStr: colorStr, imageStr: imageStr, id: self.taskID!)
         self.taskName = afterTaskName
         self.attri = afterTaskAttr
