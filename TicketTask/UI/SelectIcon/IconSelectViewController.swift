@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol IconSelectViewControllerDelegate {
+    func selectedIcon(icon: UIImage, iconStr: String)
+}
+
 protocol IconSelectViewControllerProtocol {
     
 }
@@ -25,14 +29,19 @@ class IconSelectViewController: UIViewController, UICollectionViewDelegate, UICo
     
     var editTaskVC: EditTaskViewController?
     
-    open var delegate: TaskEditDalegate?
+    open var delegate: IconSelectViewControllerDelegate?
     
     @IBOutlet weak var cellectionView: UICollectionView!
     
     // MARK: - Initilizer
-    static func initiate() -> IconSelectViewController {
+    static func initiate(delegate: IconSelectViewControllerDelegate) -> IconSelectViewController {
         let viewController = UIStoryboard.instantiateInitialViewController(from: self)
         viewController.presenter = IconSelectViewPresenter(view: viewController)
+        viewController.delegate = delegate
+        viewController.modalPresentationStyle = .overFullScreen
+        viewController.preferredContentSize = CGSize(width: 200, height: 200)
+        // 矢印が出る方向の指定
+        viewController.popoverPresentationController?.permittedArrowDirections = .any
         return viewController
     }
     

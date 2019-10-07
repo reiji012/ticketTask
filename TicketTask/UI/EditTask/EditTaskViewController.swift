@@ -17,7 +17,7 @@ protocol EditTaskViewControllerProtocol {
     
 }
 
-class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPresentationControllerDelegate, TaskEditDalegate, EditTaskViewControllerProtocol {
+class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPresentationControllerDelegate, TaskEditDalegate, EditTaskViewControllerProtocol, ColorSelectViewControllerDelegate, IconSelectViewControllerDelegate {
 
     let disposeBag = DisposeBag()
     
@@ -100,40 +100,14 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
     }
     
     @IBAction func tapIcon(_ sender: Any) {
-        let storyboard: UIStoryboard = UIStoryboard(name: "Icon", bundle: nil)
-        let iconSelectVC = storyboard.instantiateInitialViewController() as! IconSelectViewController
-        iconSelectVC.editTaskVC = self
-        iconSelectVC.delegate = self
-        iconSelectVC.modalPresentationStyle = .overFullScreen
-        
-        iconSelectVC.preferredContentSize = CGSize(width: 200, height: 200)
-        iconSelectVC.popoverPresentationController?.sourceView = view
-        // ピヨッと表示する位置の指定
-        iconSelectVC.popoverPresentationController?.sourceRect = (sender as AnyObject).frame
-        // 矢印が出る方向の指定
-        iconSelectVC.popoverPresentationController?.permittedArrowDirections = .any
-        // デリゲートの設定
-        iconSelectVC.popoverPresentationController?.delegate = self
+        let iconSelectVC = IconSelectViewController.initiate(delegate: self)
         //表示
         present(iconSelectVC, animated: true, completion: nil)
     }
     
     
     @IBAction func tapColorView(_ sender: Any) {
-        let storyboard: UIStoryboard = UIStoryboard(name: "Color", bundle: nil)
-        let colorCollectionVC = storyboard.instantiateInitialViewController() as! ColorSelectViewController
-        colorCollectionVC.delegate = self
-        colorCollectionVC.editTaskVC = self
-        colorCollectionVC.modalPresentationStyle = .overFullScreen
-        
-        colorCollectionVC.preferredContentSize = CGSize(width: 200, height: 200)
-        colorCollectionVC.popoverPresentationController?.sourceView = view
-        // ピヨッと表示する位置の指定
-        colorCollectionVC.popoverPresentationController?.sourceRect = (sender as AnyObject).frame
-        // 矢印が出る方向の指定
-        colorCollectionVC.popoverPresentationController?.permittedArrowDirections = .any
-        // デリゲートの設定
-        colorCollectionVC.popoverPresentationController?.delegate = self
+        let colorCollectionVC = ColorSelectViewController.initiate(delegate: self)
         //表示
         present(colorCollectionVC, animated: true, completion: nil)
     }
@@ -224,10 +198,6 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
     }
     
     func setPickerView() {
-        // ピッカー設定
-        pickerView.delegate = self
-        pickerView.dataSource = self
-        pickerView.showsSelectionIndicator = true
         
         // 決定バーの生成
         let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 35))
@@ -301,45 +271,4 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate, UIPopoverPr
         scrollView.scrollIndicatorInsets = .zero
     }
 
-}
-
-extension EditTaskViewController : UIPickerViewDelegate, UIPickerViewDataSource {
-    
-    // ドラムロールの列数
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    // ドラムロールの行数
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        /*
-         列が複数ある場合は
-         if component == 0 {
-         } else {
-         ...
-         }
-         こんな感じで分岐が可能
-         */
-        return attris.count
-    }
-    
-    // ドラムロールの各タイトル
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        /*
-         列が複数ある場合は
-         if component == 0 {
-         } else {
-         ...
-         }
-         こんな感じで分岐が可能
-         */
-        return attris[row]
-    }
-    
-    /*
-     // ドラムロール選択時
-     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-     self.textField.text = list[row]
-     }
-     */
 }

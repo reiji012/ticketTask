@@ -10,11 +10,17 @@ import UIKit
 
 enum PresentDestination {
     case addTaskViewController
+    case selectColorViewController(delegate: ColorSelectViewControllerDelegate?)
+    case selectIconViewController(delegate: IconSelectViewControllerDelegate?)
     
     var viewController: UIViewController {
         switch self {
         case .addTaskViewController:
             return AddTaskViewController.initiate()
+        case .selectColorViewController(let delegate):
+            return ColorSelectViewController.initiate(delegate: delegate!)
+        case .selectIconViewController(let delegate):
+            return IconSelectViewController.initiate(delegate: delegate!)
         }
     }
 }

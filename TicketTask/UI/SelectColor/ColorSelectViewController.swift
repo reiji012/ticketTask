@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol ColorSelectViewControllerDelegate {
+    func selectedColor(color: UIColor, colorStr: String)
+}
+
 protocol ColorSelectViewControllerProtocol {
     
 }
@@ -27,14 +31,20 @@ class ColorSelectViewController: UIViewController, UICollectionViewDelegate, UIC
     
     var editTaskVC: EditTaskViewController?
     
-    open var delegate: TaskEditDalegate?
+    open var delegate: ColorSelectViewControllerDelegate?
     
     @IBOutlet weak var cellectionView: UICollectionView!
     
     // MARK: - Initilizer
-    static func initiate() -> ColorSelectViewController {
+    static func initiate(delegate: ColorSelectViewControllerDelegate) -> ColorSelectViewController {
         let viewController = UIStoryboard.instantiateInitialViewController(from: self)
         viewController.presenter = ColorSelectViewPresenter(view: viewController)
+        viewController.delegate = delegate
+        viewController.modalPresentationStyle = .overFullScreen
+        
+        viewController.preferredContentSize = CGSize(width: 200, height: 200)
+        // 矢印が出る方向の指定
+        viewController.popoverPresentationController?.permittedArrowDirections = .any
         return viewController
     }
     

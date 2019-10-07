@@ -17,7 +17,7 @@ protocol AddTaskViewControllerProtocol {
     func didAddTicket()
 }
 
-class AddTaskViewController: UIViewController, UIPopoverPresentationControllerDelegate, TaskEditDalegate{
+class AddTaskViewController: UIViewController, IconSelectViewControllerDelegate, ColorSelectViewControllerDelegate{
     
     var tableView: UITableView = UITableView()
     @IBOutlet weak var scrolView: UIScrollView!
@@ -117,36 +117,14 @@ class AddTaskViewController: UIViewController, UIPopoverPresentationControllerDe
     }
     
     @IBAction func tapIconView(_ sender: Any) {
-        let storyboard: UIStoryboard = UIStoryboard(name: "Icon", bundle: nil)
-        let iconSelectVC = storyboard.instantiateInitialViewController() as! IconSelectViewController
-        iconSelectVC.delegate = self
-        iconSelectVC.modalPresentationStyle = .overFullScreen
-        
-        iconSelectVC.preferredContentSize = CGSize(width: 200, height: 200)
-        iconSelectVC.popoverPresentationController?.sourceView = view
-        // ピヨッと表示する位置の指定
-        iconSelectVC.popoverPresentationController?.sourceRect = (sender as AnyObject).frame
-        // 矢印が出る方向の指定
-        iconSelectVC.popoverPresentationController?.permittedArrowDirections = .any
-        // デリゲートの設定
-        iconSelectVC.popoverPresentationController?.delegate = self
+        let iconSelectVC = IconSelectViewController.initiate(delegate: self)
+
         //表示
         present(iconSelectVC, animated: true, completion: nil)
     }
     
     @IBAction func tapColorView(_ sender: Any) {
-        let colorCollectionVC = ColorSelectViewController.initiate()
-        colorCollectionVC.delegate = self
-        colorCollectionVC.modalPresentationStyle = .overFullScreen
-        
-        colorCollectionVC.preferredContentSize = CGSize(width: 200, height: 200)
-        colorCollectionVC.popoverPresentationController?.sourceView = view
-        // ピヨッと表示する位置の指定
-        colorCollectionVC.popoverPresentationController?.sourceRect = (sender as AnyObject).frame
-        // 矢印が出る方向の指定
-        colorCollectionVC.popoverPresentationController?.permittedArrowDirections = .any
-        // デリゲートの設定
-        colorCollectionVC.popoverPresentationController?.delegate = self
+        let colorCollectionVC = ColorSelectViewController.initiate(delegate: self)
         //表示
         present(colorCollectionVC, animated: true, completion: nil)
     }
@@ -209,6 +187,38 @@ class AddTaskViewController: UIViewController, UIPopoverPresentationControllerDe
     }
 }
 
+extension AddTaskViewController: AddTaskViewControllerProtocol {
+    func didTaskCreated() {
+        dismiss(animated: true, completion: {
+            guard let vc = self.mainVC else {
+                return
+            }
+            vc.addNewTaskView()
+        })
+    }
+    
+    func didAddTicket() {
+        ticketTableView.reloadData()
+        ticketTextField.text = ""
+    }
+    
+    func showValidateAlert(title: String, massage: String) {
+        
+        
+        let alert: UIAlertController = UIAlertController(title: title, message: massage, preferredStyle:  UIAlertController.Style.alert)
+        
+        let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{
+            // ボタンが押された時の処理を書く（クロージャ実装）
+            (action: UIAlertAction!) -> Void in
+            print("OK")
+        })
+        
+        alert.addAction(defaultAction)
+        
+        present(alert, animated: true, completion: nil)
+    }
+}
+
 extension AddTaskViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return presenter.tickets.count
@@ -248,38 +258,6 @@ extension UIScrollView {
     override open func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.next?.touchesEnded(touches, with: event)
         print("touchesEnded")
-    }
-}
-
-extension AddTaskViewController: AddTaskViewControllerProtocol {
-    func didTaskCreated() {
-        dismiss(animated: true, completion: {
-            guard let vc = self.mainVC else {
-                return
-            }
-            vc.addNewTaskView()
-        })
-    }
-    
-    func didAddTicket() {
-        ticketTableView.reloadData()
-        ticketTextField.text = ""
-    }
-    
-    func showValidateAlert(title: String, massage: String) {
-        
-        
-        let alert: UIAlertController = UIAlertController(title: title, message: massage, preferredStyle:  UIAlertController.Style.alert)
-        
-        let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{
-            // ボタンが押された時の処理を書く（クロージャ実装）
-            (action: UIAlertAction!) -> Void in
-            print("OK")
-        })
-        
-        alert.addAction(defaultAction)
-        
-        present(alert, animated: true, completion: nil)
     }
 }
 
