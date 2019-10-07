@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol IconSelectViewControllerProtocol {
+    
+}
+
 class IconSelectViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    private var presenter: IconSelectViewPresenterProtocol!
     
     // レイアウト設定　UIEdgeInsets については下記の参考図を参照。
     private let sectionInsets = UIEdgeInsets(top: 10.0, left: 30.0, bottom: 15.0, right: 30.0)
@@ -22,6 +28,13 @@ class IconSelectViewController: UIViewController, UICollectionViewDelegate, UICo
     open var delegate: TaskEditDalegate?
     
     @IBOutlet weak var cellectionView: UICollectionView!
+    
+    // MARK: - Initilizer
+    static func initiate() -> IconSelectViewController {
+        let viewController = UIStoryboard.instantiateInitialViewController(from: self)
+        viewController.presenter = IconSelectViewPresenter(view: viewController)
+        return viewController
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,5 +84,9 @@ class IconSelectViewController: UIViewController, UICollectionViewDelegate, UICo
         delegate!.selectedIcon(icon: (UIImage(named: "icon-\(indexPath.row)")?.withRenderingMode(.alwaysTemplate))!, iconStr: "icon-\(indexPath.row)")
         dismiss(animated: true, completion: nil)
     }
+    
+}
+
+extension IconSelectViewController: IconSelectViewControllerProtocol {
     
 }

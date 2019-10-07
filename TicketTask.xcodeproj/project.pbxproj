@@ -20,6 +20,7 @@
 		11B5E44D234734FA00DBCB14 /* UINibExtentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B5E44C234734FA00DBCB14 /* UINibExtentions.swift */; };
 		11EC7B93234B13970099D444 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EC7B92234B13970099D444 /* File.swift */; };
 		11EC7B95234B16190099D444 /* ColorSelectViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EC7B94234B16190099D444 /* ColorSelectViewPresenter.swift */; };
+		11EC7B97234B199E0099D444 /* IconSelectViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EC7B96234B199E0099D444 /* IconSelectViewPresenter.swift */; };
 		2B84AD5B22A1267F004B484D /* ValidateError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B84AD5A22A1267F004B484D /* ValidateError.swift */; };
 		2BB2EE51228AB97200769AAA /* ActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB2EE50228AB97200769AAA /* ActionType.swift */; };
 		2BE551662292695000D5AFA9 /* TaskItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE551652292695000D5AFA9 /* TaskItem.swift */; };
@@ -70,6 +71,7 @@
 		11B5E44C234734FA00DBCB14 /* UINibExtentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINibExtentions.swift; sourceTree = "<group>"; };
 		11EC7B92234B13970099D444 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		11EC7B94234B16190099D444 /* ColorSelectViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSelectViewPresenter.swift; sourceTree = "<group>"; };
+		11EC7B96234B199E0099D444 /* IconSelectViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectViewPresenter.swift; sourceTree = "<group>"; };
 		2B84AD5A22A1267F004B484D /* ValidateError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateError.swift; sourceTree = "<group>"; };
 		2BB2EE50228AB97200769AAA /* ActionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionType.swift; sourceTree = "<group>"; };
 		2BE551652292695000D5AFA9 /* TaskItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskItem.swift; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 			isa = PBXGroup;
 			children = (
 				8E8A0B1D2318D9C900FFCE15 /* IconSelectViewController.swift */,
+				11EC7B96234B199E0099D444 /* IconSelectViewPresenter.swift */,
 				8E8A0B1B2318D55E00FFCE15 /* IconSelectViewController.storyboard */,
 			);
 			path = SelectIcon;
@@ -494,6 +497,7 @@
 				2BE551662292695000D5AFA9 /* TaskItem.swift in Sources */,
 				8E8A0B1E2318D9C900FFCE15 /* IconSelectViewController.swift in Sources */,
 				8E6B2A1022FF22E900113E30 /* WetherModel.swift in Sources */,
+				11EC7B97234B199E0099D444 /* IconSelectViewPresenter.swift in Sources */,
 				2B84AD5B22A1267F004B484D /* ValidateError.swift in Sources */,
 				2BF5B7722282A0AB007D0266 /* UIView+TicketTask.swift in Sources */,
 				2BF5B7692281562D007D0266 /* TaskView.swift in Sources */,
