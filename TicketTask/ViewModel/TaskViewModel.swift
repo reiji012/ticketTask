@@ -185,7 +185,7 @@ class TaskViewModel: NSObject {
         let isTaskEmpty = self.taskModel!.tasks?.isEmpty
         self.delegate?.setTaskEmptyViewState(isHidden: !(isTaskEmpty!))
         if !(isTaskEmpty!) {
-            self.delegate?.createTaskViews()
+            self.delegate?.createAllTaskViews()
         }
         
     }

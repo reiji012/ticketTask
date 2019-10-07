@@ -113,7 +113,7 @@ class MainViewController: UIViewController {
         scrollView.showsVerticalScrollIndicator = false
         // Do any additional setup after loading the view.
         bindUI()
-        taskViewModel.checkIsTaskEmpty()
+        presenter.checkIsTaskEmpty()
     }
     
     override func viewWillLayoutSubviews() {
@@ -207,8 +207,8 @@ class MainViewController: UIViewController {
             self.scrollView.contentOffset = CGPoint(x:maxScrollPoint, y:0)
         })
         self.stopPoint = scrollView.contentOffset.x
-        self.centerViewAttri = taskView.taskViewModel?.attri
-        self.centerViewColor = taskView.taskViewModel?.colorString
+        self.centerViewAttri = taskView.presenter.taskViewModel.attri
+        self.centerViewColor = taskView.presenter.taskViewModel.colorString
         setGradationColor()
     }
     
@@ -256,8 +256,8 @@ class MainViewController: UIViewController {
     /// - Parameter ticket: 追加するチケット
     /// - Returns: エラー
     func didTouchAddTicketButton(ticket: String, view: TaskView) {
-        view.taskViewModel?.actionType = .ticketCreate
-        view.taskViewModel?.addTicket(ticketName: ticket)
+        view.presenter.taskViewModel.actionType = .ticketCreate
+        view.presenter.taskViewModel.addTicket(ticketName: ticket)
         let ticketTableViewCell = UINib(nibName: "TicketTableViewCell", bundle: Bundle.main).instantiate(withOwner: self, options: nil).first as? TicketTableViewCell
         view.ticketTableView.reloadData()
     }
@@ -266,7 +266,7 @@ class MainViewController: UIViewController {
     ///
     /// - Parameter view: 削除するView
     func deleteTask(view: TaskView) {
-        view.taskViewModel?.updateModel(actionType: .taskDelete)
+        view.presenter.taskViewModel.updateModel(actionType: .taskDelete)
         UIView.animate(withDuration: 0.2, animations: {
             // Viewを見えなくする
             view.alpha = 0
@@ -289,8 +289,8 @@ class MainViewController: UIViewController {
                         currentTaskView.tag = i - 1
                         let frame = currentTaskView.frame
                         currentTaskView.frame = CGRect(x: frame.origin.x - self.taskViewWidth, y: frame.origin.y, width: frame.size.width, height: frame.size.height)
-                        self.centerViewAttri = currentTaskView.taskViewModel?.attri
-                        self.centerViewColor = currentTaskView.taskViewModel?.colorString
+                        self.centerViewAttri = currentTaskView.presenter.taskViewModel.attri
+                        self.centerViewColor = currentTaskView.presenter.taskViewModel.colorString
                         self.setGradationColor()
                     }
                 })
@@ -345,7 +345,7 @@ extension MainViewController: MainViewControllerProtocol {
     /*
      タスクを表示するViewを生成する
      */
-    func createTaskViews() {
+    func createAllTaskViews() {
         //scrollViewのDelegateを指定
         scrollView.delegate = self
         
