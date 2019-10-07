@@ -113,7 +113,7 @@ class MainViewController: UIViewController {
         scrollView.showsVerticalScrollIndicator = false
         // Do any additional setup after loading the view.
         bindUI()
-        taskViewModel.checkIsTaskEmpty()
+        presenter.checkIsTaskEmpty()
     }
     
     override func viewWillLayoutSubviews() {
@@ -207,8 +207,8 @@ class MainViewController: UIViewController {
             self.scrollView.contentOffset = CGPoint(x:maxScrollPoint, y:0)
         })
         self.stopPoint = scrollView.contentOffset.x
-        self.centerViewAttri = taskView.taskViewModel?.attri
-        self.centerViewColor = taskView.taskViewModel?.colorString
+        self.centerViewAttri = taskView.presenter.taskViewModel.attri
+        self.centerViewColor = taskView.presenter.taskViewModel.colorString
         setGradationColor()
     }
     
@@ -222,8 +222,8 @@ class MainViewController: UIViewController {
         
         taskView = TaskView.initiate(mainViewController: self, task: task)
         taskView.frame = CGRect.init(x: self.originX! + 25, y: currentY, width: viewWidth!, height: initTaskViewHeight)
-        taskView.setViewModel(task: task, mainVC: self)
-        taskView.setTableView()
+        taskView.bind()
+        taskView.setLayout()
         taskView.topSafeAreaHeight = self.view.safeAreaInsets.top
         taskView.tag = tag
         scrollView.addSubview(taskView)
@@ -257,8 +257,8 @@ class MainViewController: UIViewController {
     /// - Parameter ticket: 追加するチケット
     /// - Returns: エラー
     func didTouchAddTicketButton(ticket: String, view: TaskView) {
-        view.taskViewModel?.actionType = .ticketCreate
-        view.taskViewModel?.addTicket(ticketName: ticket)
+        view.presenter.taskViewModel.actionType = .ticketCreate
+        view.presenter.taskViewModel.addTicket(ticketName: ticket)
         let ticketTableViewCell = UINib(nibName: "TicketTableViewCell", bundle: Bundle.main).instantiate(withOwner: self, options: nil).first as? TicketTableViewCell
         view.ticketTableView.reloadData()
     }
@@ -345,16 +345,19 @@ extension MainViewController: MainViewControllerProtocol {
     /*
      タスクを表示するViewを生成する
      */
-    func createTaskViews() {
+    func createAllTaskViews() {
+        //scrollViewのDelegateを指定
+        scrollView.delegate = self
         
         let tasks = presenter.tasks
+        
+        //タブの縦幅(UIScrollViewと一緒にします)
+        let tabLabelHeight:CGFloat = self.scrollView.frame.size.height
         
         //titlesで定義したタブを1つずつ用意していく
         for (index, task) in tasks.enumerated() {
             //タブになるUIVIewを作る
             createTaskView(task: task, tag: index + 1, isInitCreate: true)
-            
-            
             
             print(taskView.frame.size.width)
             if(index + 1 == 1) {
@@ -369,8 +372,6 @@ extension MainViewController: MainViewControllerProtocol {
         let tailLabel = UILabel()
         tailLabel.frame = CGRect(x:self.originX!, y:0, width:dummyViewWidth, height:self.scrollView.frame.size.height)
         scrollView.addSubview(tailLabel)
-        //ダミーLabel分を足して上げましょう
-//        self.originX! += dummyViewWidth
         
         //scrollViewのcontentSizeを，View全体のサイズに合わせる
         //最終的なoriginX = タブ全体の横幅 になります
@@ -381,21 +382,11 @@ extension MainViewController: MainViewControllerProtocol {
         taskEmptyView.isHidden = isHidden
         //タブの縦幅(UIScrollViewと一緒にします)
         let tabLabelHeight:CGFloat = UIScreen.main.bounds.size.height
+
         
         //右端にダミーViewを置くことで
         //一番右のタブもセンターに持ってくることが出来ます
         let headDummyView = UIView()
-        headDummyView.frame = CGRect(x:0, y:0, width:dummyViewWidth, height:tabLabelHeight)
-        headDummyView.isUserInteractionEnabled = false
-        scrollView.addSubview(headDummyView)
-        
-        //タブのx座標．
-        //ダミーView分，はじめからずらしてあげましょう．
-        self.originX = taskViewWidth
-        
-        //右端にダミーViewを置くことで
-        //一番右のタブもセンターに持ってくることが出来ます
-//        let headDummyView = UIView()
         headDummyView.frame = CGRect(x:0, y:0, width:dummyViewWidth, height:self.scrollView.frame.size.height)
         scrollView.addSubview(headDummyView)
         

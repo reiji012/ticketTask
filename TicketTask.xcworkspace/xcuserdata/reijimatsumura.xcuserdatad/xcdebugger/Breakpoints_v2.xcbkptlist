@@ -27,7 +27,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TicketTask/ViewModel/TaskViewModel.swift"
-            timestampString = "591690930.6456029"
+            timestampString = "591988643.830475"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "108"
@@ -91,13 +91,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TicketTask/UI/AddTask/AddTaskViewController.swift"
-            timestampString = "591690930.64571"
+            timestampString = "592145186.830771"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "130"
-            endingLineNumber = "130"
-            landmarkName = "touchAddTicketButton(_:)"
-            landmarkType = "7">
+            startingLineNumber = "127"
+            endingLineNumber = "127"
+            landmarkName = "AddTaskViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -107,12 +107,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TicketTask/UI/AddTask/AddTaskViewPresenter.swift"
-            timestampString = "591690930.645752"
+            timestampString = "591986983.84349"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "37"
             endingLineNumber = "37"
-            landmarkName = "touchAddTicketButton(text:)"
+            landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -123,7 +123,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TicketTask/UI/AddTask/AddTaskViewPresenter.swift"
-            timestampString = "591690930.64579"
+            timestampString = "591986983.843545"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "52"
@@ -139,12 +139,44 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TicketTask/UI/AddTask/AddTaskViewPresenter.swift"
-            timestampString = "591690930.645824"
+            timestampString = "591986983.843591"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "51"
             endingLineNumber = "51"
             landmarkName = "touchCreateButton(taskName:attri:colorStr:iconStr:tickets:resetType:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TicketTask/UI/TaskCardGroup/TaskView.swift"
+            timestampString = "591988643.830623"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "248"
+            endingLineNumber = "248"
+            landmarkName = "setLayout()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TicketTask/Model/TaskModel.swift"
+            timestampString = "591988643.83068"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "222"
+            endingLineNumber = "222"
+            landmarkName = "updateTicket(index:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

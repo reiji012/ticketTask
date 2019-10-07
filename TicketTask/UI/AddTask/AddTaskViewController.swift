@@ -17,7 +17,7 @@ protocol AddTaskViewControllerProtocol {
     func didAddTicket()
 }
 
-class AddTaskViewController: UIViewController, UIPopoverPresentationControllerDelegate, TaskEditDalegate{
+class AddTaskViewController: UIViewController, IconSelectViewControllerDelegate, ColorSelectViewControllerDelegate{
     
     var tableView: UITableView = UITableView()
     @IBOutlet weak var scrolView: UIScrollView!
@@ -45,8 +45,6 @@ class AddTaskViewController: UIViewController, UIPopoverPresentationControllerDe
     var screenWidth:CGFloat!
     
     var presenter: AddTaskViewPresenterProtocol!
-    private var currentColor: UIColor!
-    private var currentColorStr: String!
     private var currentIcon: UIImage!
     private var currentIconStr: String!
     private var resetType: Int = 0
@@ -93,38 +91,36 @@ class AddTaskViewController: UIViewController, UIPopoverPresentationControllerDe
         super.viewWillDisappear(animated)
     }
     
-    @IBAction func tapIconView(_ sender: Any) {
-        let storyboard: UIStoryboard = UIStoryboard(name: "Icon", bundle: nil)
-        let iconSelectVC = storyboard.instantiateInitialViewController() as! IconSelectViewController
-        iconSelectVC.delegate = self
-        iconSelectVC.modalPresentationStyle = .overFullScreen
+    func bindUIs() {
+        setGradationColor()
         
-        iconSelectVC.preferredContentSize = CGSize(width: 200, height: 200)
-        iconSelectVC.popoverPresentationController?.sourceView = view
-        // ピヨッと表示する位置の指定
-        iconSelectVC.popoverPresentationController?.sourceRect = (sender as AnyObject).frame
-        // 矢印が出る方向の指定
-        iconSelectVC.popoverPresentationController?.permittedArrowDirections = .any
-        // デリゲートの設定
-        iconSelectVC.popoverPresentationController?.delegate = self
+        self.navBar.titleLabel.text = "タスクを追加"
+        self.navBar.leftButton.setTitle("キャンセル", for: .normal)
+        self.navBar.leftButton.addTarget(self, action: #selector(self.touchCanselButton), for: .touchUpInside)
+        self.navBar.rightButton.setTitle("追加", for: .normal)
+        self.navBar.rightButton.addTarget(self, action: #selector(self.touchCreateButton), for: .touchUpInside)
+        self.navBar.backgroundColor = UIColor.lightGray
+        self.view.addSubview(self.navBar)
+    }
+    
+    func initSetState() {
+        let iconStr = "icon-0"
+        self.currentIcon = UIImage(named: iconStr)?.withRenderingMode(.alwaysTemplate)
+        self.currentIconStr = iconStr
+        self.setColorView()
+        self.setIconImage()
+        self.setGradationColor()
+    }
+    
+    @IBAction func tapIconView(_ sender: Any) {
+        let iconSelectVC = IconSelectViewController.initiate(delegate: self, color: presenter.currentColor)
+
         //表示
         present(iconSelectVC, animated: true, completion: nil)
     }
     
     @IBAction func tapColorView(_ sender: Any) {
-        let storyboard: UIStoryboard = UIStoryboard(name: "Color", bundle: nil)
-        let colorCollectionVC = storyboard.instantiateInitialViewController() as! ColorSelectViewController
-        colorCollectionVC.delegate = self
-        colorCollectionVC.modalPresentationStyle = .overFullScreen
-        
-        colorCollectionVC.preferredContentSize = CGSize(width: 200, height: 200)
-        colorCollectionVC.popoverPresentationController?.sourceView = view
-        // ピヨッと表示する位置の指定
-        colorCollectionVC.popoverPresentationController?.sourceRect = (sender as AnyObject).frame
-        // 矢印が出る方向の指定
-        colorCollectionVC.popoverPresentationController?.permittedArrowDirections = .any
-        // デリゲートの設定
-        colorCollectionVC.popoverPresentationController?.delegate = self
+        let colorCollectionVC = ColorSelectViewController.initiate(delegate: self)
         //表示
         present(colorCollectionVC, animated: true, completion: nil)
     }
@@ -144,42 +140,22 @@ class AddTaskViewController: UIViewController, UIPopoverPresentationControllerDe
     // Taskの作成
     @objc func touchCreateButton() {
         presenter.touchCreateButton(taskName: titleTextField.text!,
-                                    attri: "",
-                                    colorStr: currentColorStr,
-                                    iconStr: currentIconStr,
-                                    tickets: presenter.tickets,
-                                    resetType: self.resetType)
+                                                     attri: "",
+                                                     colorStr: presenter.currentColor.colorString,
+                                                     iconStr: currentIconStr,
+                                                     tickets: presenter.tickets,
+                                                     resetType: self.resetType)
     }
     
-    func bindUIs() {
-        setGradationColor()
-        
-        self.navBar.titleLabel.text = "タスクを追加"
-        self.navBar.leftButton.setTitle("キャンセル", for: .normal)
-        self.navBar.leftButton.addTarget(self, action: #selector(self.touchCanselButton), for: .touchUpInside)
-        self.navBar.rightButton.setTitle("追加", for: .normal)
-        self.navBar.rightButton.addTarget(self, action: #selector(self.touchCreateButton), for: .touchUpInside)
-        self.navBar.backgroundColor = UIColor.lightGray
-        self.view.addSubview(self.navBar)
-    }
-    
-    func initSetState() {
-        let iconStr = "icon-0"
-        self.currentColor = self.ticketTaskColor.ticketTaskOrange_1
-        self.currentColorStr = ticketTaskColor.ORANGE
-        self.currentIcon = UIImage(named: iconStr)?.withRenderingMode(.alwaysTemplate)
-        self.currentIconStr = iconStr
-        self.setColorView()
-        self.setIconImage()
-        self.setGradationColor()
-    }
-    
-    func selectedColor(color: UIColor, colorStr: String) {
-        currentColorStr = colorStr
-        currentColor = color
+    func selectedColor(color: TaskColor) {
+        presenter.currentColor = color
         setColorView()
         setIconImage()
         setGradationColor()
+    }
+    
+    func selectedIcon(iconStr: String) {
+        
     }
     
     func selectedIcon(icon: UIImage, iconStr: String) {
@@ -190,23 +166,55 @@ class AddTaskViewController: UIViewController, UIPopoverPresentationControllerDe
     
     
     func setColorView() {
-        self.colorView.backgroundColor = self.currentColor
+        self.colorView.backgroundColor = presenter.currentColor.gradationColor1
     }
     
     func setIconImage() {
         self.iconImageView.image = currentIcon
-        self.iconImageView.tintColor = currentColor
+        self.iconImageView.tintColor = presenter.currentColor.gradationColor1
     }
     
     func setGradationColor() {
         UIView.animate(withDuration: 2, animations: { () -> Void in
-            let gradientColors = self.ticketTaskColor.getGradation(colorStr: self.currentColorStr)
-            self.gradientLayer.colors = gradientColors
+            let color = self.presenter.currentColor
+            self.gradientLayer.colors = color.gradationColor
             self.gradientLayer.frame = self.view.bounds
-            self.timerBtm.tintColor = self.currentColor
-            self.ticketAddBtn.setTitleColor(self.currentColor, for: .normal)
+            self.timerBtm.tintColor = color.gradationColor1
+            self.ticketAddBtn.setTitleColor(color.gradationColor1, for: .normal)
             self.view.layer.insertSublayer(self.gradientLayer, at: 0)
         })
+    }
+}
+
+extension AddTaskViewController: AddTaskViewControllerProtocol {
+    func didTaskCreated() {
+        dismiss(animated: true, completion: {
+            guard let vc = self.mainVC else {
+                return
+            }
+            vc.addNewTaskView()
+        })
+    }
+    
+    func didAddTicket() {
+        ticketTableView.reloadData()
+        ticketTextField.text = ""
+    }
+    
+    func showValidateAlert(title: String, massage: String) {
+        
+        
+        let alert: UIAlertController = UIAlertController(title: title, message: massage, preferredStyle:  UIAlertController.Style.alert)
+        
+        let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{
+            // ボタンが押された時の処理を書く（クロージャ実装）
+            (action: UIAlertAction!) -> Void in
+            print("OK")
+        })
+        
+        alert.addAction(defaultAction)
+        
+        present(alert, animated: true, completion: nil)
     }
 }
 
@@ -252,39 +260,7 @@ extension UIScrollView {
     }
 }
 
-extension AddTaskViewController: AddTaskViewControllerProtocol {
-    func didTaskCreated() {
-        dismiss(animated: true, completion: {
-            guard let vc = self.mainVC else {
-                return
-            }
-            vc.addNewTaskView()
-        })
-    }
-    
-    func didAddTicket() {
-        ticketTableView.reloadData()
-        ticketTextField.text = ""
-    }
-    
-    func showValidateAlert(title: String, massage: String) {
-        
-        
-        let alert: UIAlertController = UIAlertController(title: title, message: massage, preferredStyle:  UIAlertController.Style.alert)
-        
-        let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{
-            // ボタンが押された時の処理を書く（クロージャ実装）
-            (action: UIAlertAction!) -> Void in
-            print("OK")
-        })
-        
-        alert.addAction(defaultAction)
-        
-        present(alert, animated: true, completion: nil)
-    }
-}
-
-extension AddTaskViewController: UITextFieldDelegate {
+extension AddTaskViewController {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // キーボードを閉じる

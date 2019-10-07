@@ -40,7 +40,7 @@ class TaskViewModel: NSObject {
     
     var iconImage: UIImage?
     var iconString: String?
-    var taskColor: UIColor?
+    var taskColor: TaskColor?
     var colorString: String?
     
     var actionType: ActionType = .taskUpdate
@@ -82,22 +82,22 @@ class TaskViewModel: NSObject {
         self.iconString = (task!["icon"] as! String)
         self.colorString = (task!["color"] as! String)
         self.taskID = (task!["id"] as! Int)
-        setColor()
+        setColor(colorString: (task!["color"] as! String))
         countProgress()
     }
     
-    func setColor() {
+    func setColor(colorString: String) {
         switch colorString {
-        case gradationColors.BLUE:
-            taskColor = gradationColors.ticketTaskBlue_1
-        case gradationColors.ORANGE:
-            taskColor = gradationColors.ticketTaskOrange_1
-        case gradationColors.RED:
-            taskColor = gradationColors.ticketTaskRed_1
-        case gradationColors.GREEN:
-            taskColor = gradationColors.ticketTaskGreen_1
+        case "blue":
+            taskColor = .blue
+        case "orange":
+            taskColor = .orange
+        case "red":
+            taskColor = .red
+        case "green":
+            taskColor = .green
         default:
-            taskColor = gradationColors.ticketTaskBlue_1
+            taskColor = .blue
         }
     }
     
@@ -156,8 +156,7 @@ class TaskViewModel: NSObject {
         tasks = taskModel!.tasks!
     }
     
-    func taskEdited(afterTaskName: String, afterTaskAttr: String, color: UIColor, colorStr: String, image: UIImage, imageStr: String) {
-//        self.taskModel?.editTask(afterTaskName: afterTaskName, afterTaskAttr: afterTaskAttr, id: self.taskID!)
+    func taskEdited(afterTaskName: String, afterTaskAttr: String, color: TaskColor, colorStr: String, image: UIImage, imageStr: String) {
         self.taskModel?.editTask(afterTaskName: afterTaskName, afterTaskAttr: afterTaskAttr, colorStr: colorStr, imageStr: imageStr, id: self.taskID!)
         self.taskName = afterTaskName
         self.attri = afterTaskAttr
@@ -189,7 +188,7 @@ class TaskViewModel: NSObject {
         let isTaskEmpty = self.taskModel!.tasks?.isEmpty
         self.delegate?.setTaskEmptyViewState(isHidden: !(isTaskEmpty!))
         if !(isTaskEmpty!) {
-            self.delegate?.createTaskViews()
+            self.delegate?.createAllTaskViews()
         }
         
     }

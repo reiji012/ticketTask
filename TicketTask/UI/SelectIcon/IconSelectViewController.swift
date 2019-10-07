@@ -8,7 +8,17 @@
 
 import UIKit
 
+protocol IconSelectViewControllerDelegate {
+    func selectedIcon(iconStr: String)
+}
+
+protocol IconSelectViewControllerProtocol {
+    
+}
+
 class IconSelectViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    private var presenter: IconSelectViewPresenterProtocol!
     
     // レイアウト設定　UIEdgeInsets については下記の参考図を参照。
     private let sectionInsets = UIEdgeInsets(top: 10.0, left: 30.0, bottom: 15.0, right: 30.0)
@@ -19,9 +29,21 @@ class IconSelectViewController: UIViewController, UICollectionViewDelegate, UICo
     
     var editTaskVC: EditTaskViewController?
     
-    open var delegate: TaskEditDalegate?
+    open var delegate: IconSelectViewControllerDelegate?
     
     @IBOutlet weak var cellectionView: UICollectionView!
+    
+    // MARK: - Initilizer
+    static func initiate(delegate: IconSelectViewControllerDelegate, color: TaskColor) -> IconSelectViewController {
+        let viewController = UIStoryboard.instantiateInitialViewController(from: self)
+        viewController.presenter = IconSelectViewPresenter(view: viewController, taskColor: color)
+        viewController.delegate = delegate
+        viewController.modalPresentationStyle = .overFullScreen
+        viewController.preferredContentSize = CGSize(width: 200, height: 200)
+        // 矢印が出る方向の指定
+        viewController.popoverPresentationController?.permittedArrowDirections = .any
+        return viewController
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,7 +65,7 @@ class IconSelectViewController: UIViewController, UICollectionViewDelegate, UICo
         let cell: UICollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
         let iconImage = cell.viewWithTag(1) as! UIImageView
         iconImage.image = UIImage(named: "icon-\(indexPath.row)")?.withRenderingMode(.alwaysTemplate)
-        iconImage.tintColor = self.editTaskVC?.currentColor
+        iconImage.tintColor = presenter.taskColor.gradationColor1
         cells?.append(cell)
         return cell
     }
@@ -68,8 +90,12 @@ class IconSelectViewController: UIViewController, UICollectionViewDelegate, UICo
     
     // Cell が選択された場合
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        delegate!.selectedIcon(icon: (UIImage(named: "icon-\(indexPath.row)")?.withRenderingMode(.alwaysTemplate))!, iconStr: "icon-\(indexPath.row)")
+        delegate!.selectedIcon(iconStr: "icon-\(indexPath.row)")
         dismiss(animated: true, completion: nil)
     }
+    
+}
+
+extension IconSelectViewController: IconSelectViewControllerProtocol {
     
 }
