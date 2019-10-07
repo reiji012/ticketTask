@@ -15,7 +15,7 @@ class TicketTableViewCell: UITableViewCell {
     var isCompleted: Bool = false {
         didSet(value) {
             checkBoxLabel.textColor = isCompleted ? UIColor.white : UIColor.lightGray
-            checkBoxLabel.backgroundColor = self.isCompleted ? self.taskViewModel?.taskColor : UIColor.white
+            checkBoxLabel.backgroundColor = self.isCompleted ? self.taskViewModel?.taskColor?.gradationColor1 : UIColor.white
         }
     }
     

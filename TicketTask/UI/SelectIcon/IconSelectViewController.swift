@@ -65,7 +65,7 @@ class IconSelectViewController: UIViewController, UICollectionViewDelegate, UICo
         let cell: UICollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
         let iconImage = cell.viewWithTag(1) as! UIImageView
         iconImage.image = UIImage(named: "icon-\(indexPath.row)")?.withRenderingMode(.alwaysTemplate)
-        iconImage.tintColor = self.editTaskVC?.currentColor
+        iconImage.tintColor = self.editTaskVC?.currentColor?.gradationColor1
         cells?.append(cell)
         return cell
     }

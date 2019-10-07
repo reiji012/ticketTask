@@ -19,6 +19,7 @@ protocol AddTaskViewControllerProtocol {
 
 class AddTaskViewController: UIViewController, IconSelectViewControllerDelegate, ColorSelectViewControllerDelegate{
     
+    
     var tableView: UITableView = UITableView()
     @IBOutlet weak var scrolView: UIScrollView!
     @IBOutlet weak var timerBtm: UISegmentedControl!
@@ -151,9 +152,9 @@ class AddTaskViewController: UIViewController, IconSelectViewControllerDelegate,
                                                      resetType: self.resetType)
     }
     
-    func selectedColor(color: UIColor, colorStr: String) {
+    func selectedColor(color: TaskColor, colorStr: String) {
         currentColorStr = colorStr
-        currentColor = color
+        currentColor = color.gradationColor1
         setColorView()
         setIconImage()
         setGradationColor()
