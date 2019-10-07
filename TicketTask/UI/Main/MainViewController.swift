@@ -354,22 +354,10 @@ extension MainViewController: MainViewControllerProtocol {
         //タブの縦幅(UIScrollViewと一緒にします)
         let tabLabelHeight:CGFloat = self.scrollView.frame.size.height
         
-        //右端にダミーViewを置くことで
-        //一番右のタブもセンターに持ってくることが出来ます
-        let headDummyView = UIView()
-        headDummyView.frame = CGRect(x:0, y:0, width:dummyViewWidth, height:tabLabelHeight)
-        scrollView.addSubview(headDummyView)
-        
-        //タブのx座標．
-        //ダミーView分，はじめからずらしてあげましょう．
-        self.originX = dummyViewWidth
-        
         //titlesで定義したタブを1つずつ用意していく
         for (index, task) in tasks.enumerated() {
             //タブになるUIVIewを作る
             createTaskView(task: task, tag: index + 1, isInitCreate: true)
-            
-            
             
             print(taskView.frame.size.width)
             if(index + 1 == 1) {
@@ -384,8 +372,6 @@ extension MainViewController: MainViewControllerProtocol {
         let tailLabel = UILabel()
         tailLabel.frame = CGRect(x:self.originX!, y:0, width:dummyViewWidth, height:tabLabelHeight)
         scrollView.addSubview(tailLabel)
-        //ダミーLabel分を足して上げましょう
-//        self.originX! += dummyViewWidth
         
         //scrollViewのcontentSizeを，View全体のサイズに合わせる
         //最終的なoriginX = タブ全体の横幅 になります
@@ -406,7 +392,7 @@ extension MainViewController: MainViewControllerProtocol {
         
         //タブのx座標．
         //ダミーView分，はじめからずらしてあげましょう．
-        self.originX = taskViewWidth
+        self.originX = dummyViewWidth
     }
     
     /// 天気情報のセット
