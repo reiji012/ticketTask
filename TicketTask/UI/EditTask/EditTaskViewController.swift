@@ -163,7 +163,9 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
     }
     
     func setIconImage(icon: UIImage) {
-        self.iconImageView.image = presenter.currentIcon
+        DispatchQueue.main.async {
+            self.iconImageView.image = self.presenter.currentIcon
+        }
     }
     
     func showAlert() {
