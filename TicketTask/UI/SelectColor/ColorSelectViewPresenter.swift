@@ -22,13 +22,13 @@ class ColorSelectViewPresenter: ColorSelectViewPresenterProtocol {
     
     func selectContent(indexPath: IndexPath) -> TaskColor {
         switch indexPath.row {
-        case 1:
+        case 0:
             return .blue
-        case 2:
+        case 1:
             return .orange
-        case 3:
+        case 2:
             return .red
-        case 4:
+        case 3:
             return .green
         default:
             return .orange
