@@ -340,8 +340,7 @@ class TaskView: UIView, TaskViewProtocol{
         self.ticketProgressBar.tintColor = self.presenter.taskViewModel.taskColor?.gradationColor1
         self.attriImageView.image = self.attriImageView.image?.withRenderingMode(.alwaysTemplate)
         self.attriImageView.tintColor = self.presenter.taskViewModel.taskColor?.gradationColor1
-        let gradientColors: [CGColor] = ticketTaskColor.getGradation(colorStr: self.presenter.taskViewModel.colorString!)
-        gradientLayer.colors = gradientColors
+        gradientLayer.colors = presenter.taskViewModel.taskColor?.gradationColor
         gradientLayer.bounds = self.ticketAddBtn.bounds
         gradientLayer.frame.origin.x += 20
         gradientLayer.frame.origin.y += 20

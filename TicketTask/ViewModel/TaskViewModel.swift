@@ -41,7 +41,6 @@ class TaskViewModel: NSObject {
     var iconImage: UIImage?
     var iconString: String?
     var taskColor: TaskColor?
-    var colorString: String?
     
     var actionType: ActionType = .taskUpdate
     
@@ -69,7 +68,6 @@ class TaskViewModel: NSObject {
         self.attri = (task!["attri"] as! String)
         self.tickets = (task!["tickets"] as! [String:Bool])
         self.iconString = (task!["icon"] as! String)
-        self.colorString = (task!["color"] as! String)
         self.taskID = (task!["id"] as! Int)
         self.iconImage = UIImage(named: iconString!)!.withRenderingMode(.alwaysTemplate)
     }
@@ -80,7 +78,6 @@ class TaskViewModel: NSObject {
         self.attri = (task!["attri"] as! String)
         self.tickets = (task!["tickets"] as! [String:Bool])
         self.iconString = (task!["icon"] as! String)
-        self.colorString = (task!["color"] as! String)
         self.taskID = (task!["id"] as! Int)
         setColor(colorString: (task!["color"] as! String))
         countProgress()
@@ -161,7 +158,6 @@ class TaskViewModel: NSObject {
         self.taskName = afterTaskName
         self.attri = afterTaskAttr
         self.taskColor = color
-        self.colorString = colorStr
         self.iconImage = image
         self.iconString = imageStr
         taskTitleSubject.onNext(afterTaskName)
