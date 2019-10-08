@@ -149,7 +149,6 @@
 		11B4F991233DEDC4008CD2F6 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				2BF5B7602281466B007D0266 /* ViewModel */,
 				11B4F997233DEF54008CD2F6 /* SelectIcon */,
 				11B4F996233DEF3C008CD2F6 /* SelectColor */,
 				11B4F995233DEECE008CD2F6 /* EditTask */,
@@ -187,6 +186,7 @@
 			isa = PBXGroup;
 			children = (
 				11B5E44923472DE100DBCB14 /* TicketTable */,
+				2BF5B7602281466B007D0266 /* ViewModel */,
 				8E8A0B11231605E400FFCE15 /* TaskIconImageView.swift */,
 				2BF5B766228155EC007D0266 /* TaskView.xib */,
 				2BF5B7682281562D007D0266 /* TaskView.swift */,
@@ -331,7 +331,7 @@
 				2BF5B76222814974007D0266 /* TaskViewModel.swift */,
 			);
 			name = ViewModel;
-			path = ..;
+			path = ../..;
 			sourceTree = "<group>";
 		};
 		2BF5B76E22829FEF007D0266 /* extention */ = {
@@ -678,7 +678,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = reiji.TicketTask;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -698,7 +698,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = reiji.TicketTask;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
