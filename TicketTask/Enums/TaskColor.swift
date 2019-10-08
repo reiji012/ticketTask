@@ -31,7 +31,7 @@ enum TaskColor {
     var gradationColor2: UIColor {
         switch self {
         case .blue:
-            return  UIColor(red:100/255, green:115/255, blue:255/255, alpha:1)
+            return  UIColor(red:72/255, green:168/255, blue:255/255, alpha:1)
         case .orange:
             return UIColor(red:238/255, green:208/255, blue:93/255, alpha:1)
         case .red:
