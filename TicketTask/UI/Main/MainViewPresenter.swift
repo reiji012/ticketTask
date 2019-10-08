@@ -19,6 +19,7 @@ protocol MainViewPresenterProtocol {
     func getDescripiton() -> String
     func touchAddButton()
     func checkIsTaskEmpty()
+    func isLaskTaskView(view: TaskView) -> Bool
 }
 
 class MainViewPresenter: MainViewPresenterProtocol, Routable {
@@ -100,6 +101,22 @@ class MainViewPresenter: MainViewPresenterProtocol, Routable {
         self.viewController?.setTaskEmptyViewState(isHidden: !(isTaskEmpty!))
         if !(isTaskEmpty!) {
             self.viewController?.createAllTaskViews()
+        }
+    }
+    
+    /// 最後尾のViewかどうか
+    ///
+    /// - Parameter view: 確認したいView
+    /// - Returns: Bool
+    func isLaskTaskView(view: TaskView) -> Bool {
+        //どこのタブを表示させたいか計算します
+        let taskCount: Int = taskTotalCount
+        //スクロール可能最大値
+        let maxScrollPoint = (taskCount - 1) * 400
+        if (maxScrollPoint < Int(viewController.stopPoint)) {
+            return true
+        } else {
+            return false
         }
     }
 }
