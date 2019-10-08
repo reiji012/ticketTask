@@ -13,14 +13,15 @@ protocol EditTaskViewPresenterProtocol {
     var currentColor: TaskColor { get set }
     var currentIconString: String { get set }
     var currentIcon: UIImage { get }
-    func touchSaveButton(afterTaskName: String, afterTaskAttr: String, color: UIColor, colorStr: String, image: UIImage, imageStr: String)
+    func touchSaveButton(afterTaskName: String)
 }
 
-class EditTaskViewPresenter: EditTaskViewPresenterProtocol {
+class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
     
     
     private var view: EditTaskViewControllerProtocol!
     private var taskView: TaskViewProtocol!
+    private var taskModel: TaskModel = TaskModel.sharedManager
     var currentIconString: String = "" {
         didSet {
             currentIcon = (UIImage(named: currentIconString)?.withRenderingMode(.alwaysTemplate))!
@@ -43,6 +44,21 @@ class EditTaskViewPresenter: EditTaskViewPresenterProtocol {
         currentIconString = taskView.presenter.taskViewModel.iconString!
     }
     
-    func touchSaveButton(afterTaskName: String, afterTaskAttr: String, color: UIColor, colorStr: String, image: UIImage, imageStr: String) {
+    func touchSaveButton(afterTaskName: String) {
+        let error = taskModel.editTask(afterTaskName: afterTaskName, afterTaskAttr: "", colorStr: currentColor.colorString, imageStr: currentIconString, id: taskView.presenter.taskViewModel.taskID!, completion: {
+            let vm = self.taskView.presenter.taskViewModel
+            vm.taskName = afterTaskName
+            vm.attri = ""
+            vm.taskColor = currentColor
+            vm.iconImage = currentIcon
+            vm.iconString = currentIconString
+            view.didSaveTask()
+        })
+        if let error = error {
+            guard let viewController = self.view as? EditTaskViewController else {
+                return
+            }
+            createErrorAlert(error: error, massage: "", view: viewController)
+        }
     }
 }

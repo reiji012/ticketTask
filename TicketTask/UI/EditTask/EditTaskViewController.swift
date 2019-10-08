@@ -16,9 +16,11 @@ import SPFakeBar
 protocol EditTaskViewControllerProtocol {
     func setColorView(color: UIColor)
     func setIconImage(icon: UIImage)
+    func didSaveTask()
+    func showValidateAlert(title: String, massage: String)
 }
 
-class EditTaskViewController: UIViewController, UIPopoverPresentationControllerDelegate, EditTaskViewControllerProtocol, ColorSelectViewControllerDelegate, IconSelectViewControllerDelegate {
+class EditTaskViewController: UIViewController, UIPopoverPresentationControllerDelegate, ColorSelectViewControllerDelegate, IconSelectViewControllerDelegate {
 
     let disposeBag = DisposeBag()
     
@@ -85,19 +87,7 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
         if (self.titleTextField.text == nil) {
             return
         }
-        self.taskViewModel?.taskEdited(
-            afterTaskName: self.titleTextField.text!,
-            afterTaskAttr: "",
-            color: presenter.currentColor,
-            colorStr: presenter.currentColor.colorString,
-            image: presenter.currentIcon,
-            imageStr: presenter.currentIconString
-        )
-        
-        self.dismiss(animated: true, completion: {
-            HUD.flash(.success, onView: self.mainVC!.view, delay: 0.5)
-        })
-        self.mainVC?.taskEdited(attri: "", color: presenter.currentColor.colorString)
+        presenter.touchSaveButton(afterTaskName: self.titleTextField.text!)
     }
     
     @IBAction func touchIconView(_ sender: Any) {
@@ -155,19 +145,6 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
         presenter.currentIconString = iconStr
     }
     
-    
-    func setColorView(color: UIColor) {
-        self.colorView.backgroundColor = color
-        self.iconImageView.tintColor = color
-        setGradationColor()
-    }
-    
-    func setIconImage(icon: UIImage) {
-        DispatchQueue.main.async {
-            self.iconImageView.image = self.presenter.currentIcon
-        }
-    }
-    
     func showAlert() {
         let alert: UIAlertController = UIAlertController(title: "変更を破棄しますか？", message: "", preferredStyle:  UIAlertController.Style.alert)
 
@@ -198,5 +175,40 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+    }
+}
+
+extension EditTaskViewController: EditTaskViewControllerProtocol {
+    func didSaveTask() {
+        self.dismiss(animated: true, completion: {
+            HUD.flash(.success, onView: self.mainVC!.view, delay: 0.5)
+        })
+        self.mainVC?.taskEdited(attri: "", color: presenter.currentColor.colorString)
+    }
+    
+    func setIconImage(icon: UIImage) {
+        DispatchQueue.main.async {
+            self.iconImageView.image = self.presenter.currentIcon
+        }
+    }
+    
+    func setColorView(color: UIColor) {
+        self.colorView.backgroundColor = color
+        self.iconImageView.tintColor = color
+        setGradationColor()
+    }
+    
+    func showValidateAlert(title: String, massage: String) {
+        let alert: UIAlertController = UIAlertController(title: title, message: massage, preferredStyle:  UIAlertController.Style.alert)
+        
+        let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{
+            // ボタンが押された時の処理を書く（クロージャ実装）
+            (action: UIAlertAction!) -> Void in
+            print("OK")
+        })
+        
+        alert.addAction(defaultAction)
+        
+        present(alert, animated: true, completion: nil)
     }
 }

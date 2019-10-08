@@ -18,15 +18,15 @@ protocol AddTaskViewPresenterProtocol {
 
 import Foundation
 
-class AddTaskViewPresenter: AddTaskViewPresenterProtocol {
+class AddTaskViewPresenter: AddTaskViewPresenterProtocol, ErrorAlert {
     var tickets: [String]! = [String]()
-    var viewController: AddTaskViewControllerProtocol!
+    var view: AddTaskViewControllerProtocol!
     var taskModel: TaskModel?
     var ticketArray = [String]()
     var currentColor: TaskColor
     
     init(vc: AddTaskViewControllerProtocol) {
-        viewController = vc
+        view = vc
         taskModel = TaskModel.sharedManager
         tickets = []
         currentColor = .orange
@@ -40,9 +40,12 @@ class AddTaskViewPresenter: AddTaskViewPresenterProtocol {
         if ticketArray.index(of: text) == nil {
             self.tickets.append(text)
             ticketArray.append(text)
-            viewController.didAddTicket()
+            view.didAddTicket()
         } else {
-            createErrorMassgate(error: .ticketValidError)
+            guard let viewController = view as? AddTaskViewController else {
+                return
+            }
+            createErrorAlert(error: .ticketValidError, massage: "", view: viewController)
         }
     }
     
@@ -55,40 +58,25 @@ class AddTaskViewPresenter: AddTaskViewPresenterProtocol {
             var massage = ""
             massage += isEmptyTaskName ? "タイトルが入力されていません\n" : ""
             massage += isEmptyTicketCount ? "チケットを一つ以上追加してください\n" : ""
-            createErrorMassgate(error: .inputValidError, massage: massage)
+            guard let viewController = view as? AddTaskViewController else {
+                return
+            }
+            createErrorAlert(error: .inputValidError, massage: massage, view: viewController)
             return
         }
         
         let error = taskModel?.createTask(taskName: taskName, attri: attri, colorStr: colorStr, iconStr:  iconStr, tickets:tickets, resetType: resetType)
         if let error = error {
-            createErrorMassgate(error: error)
+            guard let viewController = view as? AddTaskViewController else {
+                return
+            }
+            createErrorAlert(error: error, massage: "", view: viewController)
             return
         }
-        viewController.didTaskCreated()
+        view.didTaskCreated()
     }
     
     func removeTicket(index: IndexPath) {
         tickets.remove(at: index.row)
-    }
-    
-    private func createErrorMassgate(error: ValidateError, massage: String? = "") {
-        var _massage = ""
-        var title = ""
-        
-        switch error {
-        case .inputValidError:
-            title = "入力エラー"
-            _massage = massage!
-        case .taskValidError:
-            title = "データベースエラー"
-            _massage = error.rawValue
-        case .ticketValidError:
-            title = "入力エラー"
-            _massage = error.rawValue
-        default:
-            title = "保存に失敗しました"
-        }
-        
-        viewController.showValidateAlert(title: title, massage: _massage)
     }
 }

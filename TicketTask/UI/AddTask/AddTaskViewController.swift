@@ -200,8 +200,6 @@ extension AddTaskViewController: AddTaskViewControllerProtocol {
     }
     
     func showValidateAlert(title: String, massage: String) {
-        
-        
         let alert: UIAlertController = UIAlertController(title: title, message: massage, preferredStyle:  UIAlertController.Style.alert)
         
         let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{
