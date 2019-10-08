@@ -342,7 +342,7 @@ class TaskView: UIView, TaskViewProtocol{
         gradientLayer.frame.origin.y = 0
         self.ticketAddBtn.layer.insertSublayer(gradientLayer, at: 0)
         self.ticketAddBtn.setTitle("＋", for: .normal)
-
+        ticketTableView.reloadData()
     }
 
     func getMainViewController() -> MainViewController? {
