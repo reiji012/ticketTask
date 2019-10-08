@@ -14,23 +14,6 @@ import SPStorkController
 import SparrowKit
 import PKHUD
 
-enum TaskViewSize {
-    case small
-    case middle
-    case large
-    
-    var viewWidth: CGFloat {
-        switch self {
-        case .small:
-            return 256
-        case .middle:
-            return 311
-        case .large:
-            return 350
-        }
-    }
-}
-
 class MainViewController: UIViewController {
     
     var presenter: MainViewPresenterProtocol!
@@ -70,8 +53,6 @@ class MainViewController: UIViewController {
     private var dummyViewWidth: CGFloat!
     private var scrollViewHeight: CGFloat!
     
-    private var taskViewSize: TaskViewSize?
-    
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var weatherImgView: UIImageView!
     @IBOutlet weak var weatherView: UIView!
@@ -87,18 +68,7 @@ class MainViewController: UIViewController {
         presenter.viewDidLoad()
         // 端末のサイズでタスクカードの大きさを設定
         let myBoundSize: CGSize = UIScreen.main.bounds.size
-        
-        switch myBoundSize.width {
-        case 320:
-            taskViewSize = .small
-        case 375:
-            taskViewSize = .middle
-        case 414:
-            taskViewSize = .large
-        default:
-            break
-        }
-        
+    
         taskViewHeight = myBoundSize.height <= 600 ? 250 : 300
         dummyViewWidth = scrollView.frame.size.width/2 - taskViewWidth/2
         scrollViewHeight = scrollView.frame.size.height
@@ -210,10 +180,10 @@ class MainViewController: UIViewController {
         let mainScreenHeight: CGFloat = UIScreen.main.bounds.size.height
         let currentY = mainScreenHeight / 2 - 50
         
-        let viewWidth = isInitCreate ? initTaskViewWidth : taskViewSize?.viewWidth
+        let viewWidth = isInitCreate ? initTaskViewWidth : screenType.taskViewCardWidth
         
         taskView = TaskView.initiate(mainViewController: self, task: task)
-        taskView.frame = CGRect.init(x: self.originX! + 25, y: currentY, width: viewWidth!, height: initTaskViewHeight)
+        taskView.frame = CGRect.init(x: self.originX! + 25, y: currentY, width: viewWidth, height: initTaskViewHeight)
         taskView.bind()
         taskView.setLayout()
         taskView.topSafeAreaHeight = self.view.safeAreaInsets.top
