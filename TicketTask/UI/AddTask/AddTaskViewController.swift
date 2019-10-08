@@ -12,7 +12,6 @@ import SparrowKit
 import SPFakeBar
 
 protocol AddTaskViewControllerProtocol {
-    func showValidateAlert(title: String, massage: String)
     func didTaskCreated()
     func didAddTicket()
 }
@@ -197,20 +196,6 @@ extension AddTaskViewController: AddTaskViewControllerProtocol {
     func didAddTicket() {
         ticketTableView.reloadData()
         ticketTextField.text = ""
-    }
-    
-    func showValidateAlert(title: String, massage: String) {
-        let alert: UIAlertController = UIAlertController(title: title, message: massage, preferredStyle:  UIAlertController.Style.alert)
-        
-        let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{
-            // ボタンが押された時の処理を書く（クロージャ実装）
-            (action: UIAlertAction!) -> Void in
-            print("OK")
-        })
-        
-        alert.addAction(defaultAction)
-        
-        present(alert, animated: true, completion: nil)
     }
 }
 

@@ -379,31 +379,7 @@ extension MainViewController: MainViewControllerProtocol {
     }
     
     func showValidateAlert(error: ValidateError){
-        
-        var massage = ""
-        var title = ""
-        switch error {
-        case .taskValidError:
-            title = "データベースエラー"
-            massage = error.rawValue
-        case .ticketValidError:
-            title = "入力エラー"
-            massage = error.rawValue
-        default:
-            title = "保存に失敗しました"
-        }
-        
-        let alert: UIAlertController = UIAlertController(title: title, message: massage, preferredStyle:  UIAlertController.Style.alert)
-        
-        let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{
-            // ボタンが押された時の処理を書く（クロージャ実装）
-            (action: UIAlertAction!) -> Void in
-            print("OK")
-        })
-        
-        alert.addAction(defaultAction)
-        
-        present(alert, animated: true, completion: nil)
+        presenter.catchError(error: error)
     }
 }
 
