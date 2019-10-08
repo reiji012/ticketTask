@@ -46,6 +46,7 @@ class TaskView: UIView, TaskViewProtocol{
     var topSafeAreaHeight: CGFloat = 0
     
     var layerChangeCount: UInt32 = 0
+    var gradientLayer = CAGradientLayer()
     
    
     var mainViewController: MainViewController? = nil
@@ -335,15 +336,13 @@ class TaskView: UIView, TaskViewProtocol{
     }
     
     func setGradationColor() {
-         let gradientLayer = CAGradientLayer()
         self.ticketProgressBar.tintColor = self.presenter.taskViewModel.taskColor?.gradationColor1
-        self.attriImageView.image = self.attriImageView.image?.withRenderingMode(.alwaysTemplate)
+        self.attriImageView.image = self.presenter.taskViewModel.iconImage
         self.attriImageView.tintColor = self.presenter.taskViewModel.taskColor?.gradationColor1
         gradientLayer.colors = presenter.taskViewModel.taskColor?.gradationColor
         gradientLayer.bounds = self.ticketAddBtn.bounds
-        gradientLayer.frame.origin.x += 20
-        gradientLayer.frame.origin.y += 20
-        self.ticketAddBtn.layer.sublayers = nil
+        gradientLayer.frame.origin.x = 0
+        gradientLayer.frame.origin.y = 0
         self.ticketAddBtn.layer.insertSublayer(gradientLayer, at: 0)
         self.ticketAddBtn.setTitle("＋", for: .normal)
 
