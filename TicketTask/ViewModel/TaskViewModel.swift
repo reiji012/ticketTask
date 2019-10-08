@@ -157,7 +157,7 @@ class TaskViewModel: NSObject {
     }
     
     func taskEdited(afterTaskName: String, afterTaskAttr: String, color: TaskColor, colorStr: String, image: UIImage, imageStr: String) {
-        self.taskModel?.editTask(afterTaskName: afterTaskName, afterTaskAttr: afterTaskAttr, colorStr: colorStr, imageStr: imageStr, id: self.taskID!, completion: {
+        self.taskModel?.editTask(afterTaskName: afterTaskName, afterTaskAttr: afterTaskAttr, colorStr: colorStr, imageStr: imageStr, id: self.taskID!, beforeName: "", completion: {
             self.taskName = afterTaskName
             self.attri = afterTaskAttr
             self.taskColor = color

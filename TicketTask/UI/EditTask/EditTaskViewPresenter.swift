@@ -22,6 +22,8 @@ class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
     private var view: EditTaskViewControllerProtocol!
     private var taskView: TaskViewProtocol!
     private var taskModel: TaskModel = TaskModel.sharedManager
+    private var beforeName: String?
+    
     var currentIconString: String = "" {
         didSet {
             currentIcon = (UIImage(named: currentIconString)?.withRenderingMode(.alwaysTemplate))!
@@ -42,10 +44,11 @@ class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
         currentColor = taskView.presenter.taskViewModel.taskColor!
         currentIcon = taskView.presenter.taskViewModel.iconImage!
         currentIconString = taskView.presenter.taskViewModel.iconString!
+        beforeName = taskView.presenter.taskViewModel.taskName!
     }
     
     func touchSaveButton(afterTaskName: String) {
-        let error = taskModel.editTask(afterTaskName: afterTaskName, afterTaskAttr: "", colorStr: currentColor.colorString, imageStr: currentIconString, id: taskView.presenter.taskViewModel.taskID!, completion: {
+        let error = taskModel.editTask(afterTaskName: afterTaskName, afterTaskAttr: "", colorStr: currentColor.colorString, imageStr: currentIconString, id: taskView.presenter.taskViewModel.taskID!, beforeName: beforeName!, completion: {
             let vm = self.taskView.presenter.taskViewModel
             vm.taskName = afterTaskName
             vm.attri = ""
