@@ -209,17 +209,6 @@ class MainViewController: UIViewController {
         }
         return currentTaskView
     }
-
-    
-    /// チケットの追加
-    ///
-    /// - Parameter ticket: 追加するチケット
-    /// - Returns: エラー
-    func didTouchAddTicketButton(ticket: String, view: TaskView) {
-        view.presenter.taskViewModel.actionType = .ticketCreate
-        view.presenter.taskViewModel.addTicket(ticketName: ticket)
-        view.ticketTableView.reloadData()
-    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let controller = segue.destination

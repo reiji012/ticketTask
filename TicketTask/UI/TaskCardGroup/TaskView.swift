@@ -156,7 +156,7 @@ class TaskView: UIView, TaskViewProtocol{
         
         self.ticketAddBtn.rx.tap
             .subscribe { [weak self] _ in
-                self?.showAddticketView()
+                self?.touchAddTicketButton()
             }
             .disposed(by: disposeBag)
         
@@ -197,7 +197,7 @@ class TaskView: UIView, TaskViewProtocol{
         self.attriImageView.image = self.presenter.taskViewModel.iconImage?.withRenderingMode(.alwaysTemplate)
     }
     
-    func showAddticketView() {
+    func touchAddTicketButton() {
         
         //alertの表示文言
         let alertController: UIAlertController = UIAlertController(title: "チケットの追加", message: "", preferredStyle: .alert)
@@ -212,8 +212,9 @@ class TaskView: UIView, TaskViewProtocol{
             guard let text = alertController.textFields?.first!.text else {
                 return
             }
-            self.mainViewController?.didTouchAddTicketButton(ticket: text, view: self)
             //追加ボタンを押した時の処理
+            self.ticketTableView.reloadData()
+            self.presenter.didTouchAddTicketButton(ticket: text)
         }
         
         alertController.addAction(addAction)

@@ -14,6 +14,7 @@ protocol TaskViewPresenterProtocol {
     var menuLeftConst: CGFloat { get }
     var progressBarWidthConst: CGFloat { get }
     func deleteTask()
+    func didTouchAddTicketButton(ticket: String)
 }
 
 class TaskViewPresenter: TaskViewPresenterProtocol {
@@ -38,6 +39,8 @@ class TaskViewPresenter: TaskViewPresenterProtocol {
         taskViewModel.countProgress()
         taskViewModel.getTask(taskName: taskName)
         taskViewModel.delegate = mainViewController
+        
+        // 端末サイズによってメニュー、プログレスバーの長さを調整
         switch screenType {
         case .iPhone3_5inch, .iPhone4_0inch:
             menuLeftConst = 107.0
@@ -54,6 +57,7 @@ class TaskViewPresenter: TaskViewPresenterProtocol {
         }
     }
     
+    /// タスク削除
     func deleteTask() {
         guard let view = self.view as? TaskView else {
             return
@@ -62,6 +66,14 @@ class TaskViewPresenter: TaskViewPresenterProtocol {
         taskViewModel.updateModel(actionType: .taskDelete, callback: {
             self.mainViewController.deleteTask(view: view)
         })
+    }
+    
+    /// チケットの追加
+    ///
+    /// - Parameter ticket: 追加するチケット
+    func didTouchAddTicketButton(ticket: String) {
+        taskViewModel.actionType = .ticketCreate
+        taskViewModel.addTicket(ticketName: ticket)
     }
     
 }
