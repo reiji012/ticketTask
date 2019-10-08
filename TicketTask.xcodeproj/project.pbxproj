@@ -13,6 +13,7 @@
 		111F5EC12342ECE40034548A /* AddTaskViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111F5EC02342ECE40034548A /* AddTaskViewPresenter.swift */; };
 		1122BE2C2330B325001CD87C /* SettingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1122BE2B2330B325001CD87C /* SettingData.swift */; };
 		1181EDC8234C4A02006D6CDD /* ErrorAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1181EDC7234C4A02006D6CDD /* ErrorAlert.swift */; };
+		1181EDCC234C8BD3006D6CDD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1181EDCB234C8BD2006D6CDD /* GoogleService-Info.plist */; };
 		11B4F99C233DF163008CD2F6 /* TaskEditDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B4F99B233DF162008CD2F6 /* TaskEditDelegate.swift */; };
 		11B5E4432345F6F300DBCB14 /* UIStoryboardExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B5E4422345F6F300DBCB14 /* UIStoryboardExtensions.swift */; };
 		11B5E4462345F90300DBCB14 /* Routable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B5E4452345F90300DBCB14 /* Routable.swift */; };
@@ -65,6 +66,7 @@
 		111F5EC02342ECE40034548A /* AddTaskViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskViewPresenter.swift; sourceTree = "<group>"; };
 		1122BE2B2330B325001CD87C /* SettingData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingData.swift; sourceTree = "<group>"; };
 		1181EDC7234C4A02006D6CDD /* ErrorAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAlert.swift; sourceTree = "<group>"; };
+		1181EDCB234C8BD2006D6CDD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		11B4F99B233DF162008CD2F6 /* TaskEditDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskEditDelegate.swift; sourceTree = "<group>"; };
 		11B5E4422345F6F300DBCB14 /* UIStoryboardExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStoryboardExtensions.swift; sourceTree = "<group>"; };
 		11B5E4452345F90300DBCB14 /* Routable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routable.swift; sourceTree = "<group>"; };
@@ -320,6 +322,7 @@
 				2BF5B74C22814521007D0266 /* AppDelegate.swift */,
 				2BF5B75322814521007D0266 /* Assets.xcassets */,
 				2BF5B75522814521007D0266 /* LaunchScreen.storyboard */,
+				1181EDCB234C8BD2006D6CDD /* GoogleService-Info.plist */,
 				2BF5B75822814521007D0266 /* Info.plist */,
 			);
 			path = TicketTask;
@@ -429,6 +432,7 @@
 				8E8A0B182316A36F00FFCE15 /* ColorSelectViewController.storyboard in Resources */,
 				8E8A0B1C2318D55E00FFCE15 /* IconSelectViewController.storyboard in Resources */,
 				2BF44283229CC63C00F32613 /* EditTaskViewController.storyboard in Resources */,
+				1181EDCC234C8BD3006D6CDD /* GoogleService-Info.plist in Resources */,
 				2BF5B767228155EC007D0266 /* TaskView.xib in Resources */,
 				11085FF92345F49800BA9A61 /* AddTaskViewController.storyboard in Resources */,
 			);
