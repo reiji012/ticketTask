@@ -156,18 +156,6 @@ class TaskViewModel: NSObject {
         tasks = taskModel!.tasks!
     }
     
-    func taskEdited(afterTaskName: String, afterTaskAttr: String, color: TaskColor, colorStr: String, image: UIImage, imageStr: String) {
-        self.taskModel?.editTask(afterTaskName: afterTaskName, afterTaskAttr: afterTaskAttr, colorStr: colorStr, imageStr: imageStr, id: self.taskID!, beforeName: "", completion: {
-            self.taskName = afterTaskName
-            self.attri = afterTaskAttr
-            self.taskColor = color
-            self.iconImage = image
-            self.iconString = imageStr
-            taskTitleSubject.onNext(afterTaskName)
-            taskAttriSubject.onNext(afterTaskAttr)
-        })
-    }
-    
     func setupWetherInfo() {
         wetherModel?.fetchWetherInfo(callback: {
             self.todayWetherInfo = self.wetherModel?.getWetherTodayInfo()
@@ -180,7 +168,6 @@ class TaskViewModel: NSObject {
     }
     
     func setupIcon() {
-        let iconString = self.task
         self.iconImage = UIImage(named: "")
     }
     

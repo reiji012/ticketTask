@@ -36,8 +36,7 @@ class SettingData {
     }
     
     func checkDate() -> [Int] {
-        let calendar = Calendar.current
-        let calFrom = calendar.date(from: DateComponents(year: 2010, month: 6, day: 10))
+//        let calendar = Calendar.current
         let date = Date()
         var targetType:[Int] = []
         if date.weekday == UserDefaults.standard.string(forKey: Keys.week.rawValue) {
