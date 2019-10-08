@@ -248,7 +248,7 @@ class TaskView: UIView, TaskViewProtocol{
         
         self.titleLabel.text = self.presenter.taskViewModel.taskName
         self.setButtonLayout()
-        self.setGradationColor()
+        self.setGradationColor(color: presenter.currentColor)
         self.setImage()
         self.ticketTableView.allowsMultipleSelectionDuringEditing = true
     }
@@ -333,11 +333,11 @@ class TaskView: UIView, TaskViewProtocol{
         
     }
     
-    func setGradationColor() {
-        self.ticketProgressBar.tintColor = self.presenter.taskViewModel.taskColor?.gradationColor1
+    func setGradationColor(color: TaskColor) {
+        self.ticketProgressBar.tintColor = color.gradationColor1
         self.attriImageView.image = self.presenter.taskViewModel.iconImage
-        self.attriImageView.tintColor = self.presenter.taskViewModel.taskColor?.gradationColor1
-        gradientLayer.colors = presenter.taskViewModel.taskColor?.gradationColor
+        self.attriImageView.tintColor = color.gradationColor1
+        gradientLayer.colors = color.gradationColor
         gradientLayer.bounds = self.ticketAddBtn.bounds
         gradientLayer.frame.origin.x = 0
         gradientLayer.frame.origin.y = 0

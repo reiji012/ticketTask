@@ -194,7 +194,7 @@ class MainViewController: UIViewController {
     
     func taskEdited(attri: String, color: String) {
         if let currentTaskView = getCenterTaskView() {
-            currentTaskView.setGradationColor()
+            currentTaskView.setGradationColor(color: currentTaskView.presenter.currentColor)
             setGradationColor(color: currentTaskView.presenter.taskViewModel.taskColor!)
         }
     }

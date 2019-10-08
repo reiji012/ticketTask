@@ -12,6 +12,7 @@ import UIKit
 protocol TaskViewPresenterProtocol {
     var taskViewModel: TaskViewModel { get }
     var menuLeftConst: CGFloat { get }
+    var currentColor: TaskColor { get }
     var progressBarWidthConst: CGFloat { get }
     func deleteTask()
     func didTouchAddTicketButton(ticket: String)
@@ -25,6 +26,9 @@ class TaskViewPresenter: TaskViewPresenterProtocol {
     var taskViewModel: TaskViewModel
     var menuLeftConst: CGFloat
     var progressBarWidthConst: CGFloat
+    var currentColor: TaskColor {
+        return taskViewModel.taskColor!
+    }
     
     var mainViewController: MainViewControllerProtocol!
     
