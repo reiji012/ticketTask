@@ -50,7 +50,7 @@ class MainViewController: UIViewController {
     //TaskViewの横幅
     var taskViewHeight: CGFloat!
     let taskViewWidth: CGFloat = 400.0
-    let currentWidth: Int = 400
+    var currentWidth: Int = 400
     var stopPoint: CGFloat = 0.0
     var originX:CGFloat?
     var ticketTaskColor: TicketTaskColor?
@@ -170,8 +170,8 @@ class MainViewController: UIViewController {
 
     func initGradationColor() {
         UIView.animate(withDuration: 2, animations: { () -> Void in
-            let gradientColors: [CGColor] = self.ticketTaskColor!.getGradation(colorStr: self.initColor)
-            self.gradientLayer.colors = gradientColors
+            // 何もタスクがないときはオレンジのグラデーションにする
+            self.gradientLayer.colors = TaskColor.orange.gradationColor
             self.gradientLayer.frame = self.view.bounds
             self.view.layer.insertSublayer(self.gradientLayer, at: 0)
         })
@@ -256,22 +256,6 @@ class MainViewController: UIViewController {
         view.ticketTableView.reloadData()
     }
     
-    /// 最後尾のViewかどうか
-    ///
-    /// - Parameter view: 確認したいView
-    /// - Returns: Bool
-    func isLaskTaskView(view: TaskView) -> Bool {
-        //どこのタブを表示させたいか計算します
-        let taskCount: Int = self.taskViewModel.taskCount()
-        //スクロール可能最大値
-        let maxScrollPoint = (taskCount - 1) * currentWidth
-        if (maxScrollPoint < Int(self.stopPoint)) {
-            return true
-        } else {
-            return false
-        }
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let controller = segue.destination
         controller.transitioningDelegate = (self as UIViewControllerTransitioningDelegate)
@@ -301,7 +285,7 @@ extension MainViewController: MainViewControllerProtocol {
             // Animationが完了したら親Viewから削除する
             let index = view.tag
             let scrollPoint = self.stopPoint - CGFloat(self.currentWidth)
-            if (self.isLaskTaskView(view: view)) {
+            if (self.presenter.isLaskTaskView(view: view)) {
                 UIView.animate(withDuration: 0.5, animations: {
                     self.scrollView.contentOffset = CGPoint(x:scrollPoint, y:0)
                     self.stopPoint = scrollPoint

@@ -7,8 +7,11 @@
 //
 
 import Foundation
+import UIKit
 
 protocol MainViewControllerProtocol {
+    var stopPoint: CGFloat { get }
+    var currentWidth: Int { get }
     func setWeatherInfo()
     func setTaskEmptyViewState(isHidden: Bool)
     func createAllTaskViews()
