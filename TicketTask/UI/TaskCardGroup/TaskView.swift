@@ -132,7 +132,6 @@ class TaskView: UIView, TaskViewProtocol{
             (action: UIAlertAction!) -> Void in
             print("OK")
             self.presenter.deleteTask()
-            self.mainViewController?.deleteTask(view: self)
         })
         // キャンセルボタン
         let cancelAction: UIAlertAction = UIAlertAction(title: "キャンセル", style: UIAlertAction.Style.cancel, handler:{

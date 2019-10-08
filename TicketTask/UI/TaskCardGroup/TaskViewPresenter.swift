@@ -55,7 +55,6 @@ class TaskViewPresenter: TaskViewPresenterProtocol {
     }
     
     func deleteTask() {
-        
         guard let view = self.view as? TaskView else {
             return
         }
