@@ -127,7 +127,11 @@ class TaskModel {
         // アクションによって処理を変える
         switch actionType {
         case .taskDelete:
-            self.deleteTask(index: indexPath)
+            self.deleteTask(index: indexPath, callback:  {
+                if let callback = callback {
+                    callback()
+                }
+            })
         case .ticketUpdate:
             self.updateTicket(index: indexPath)
         case .ticketDelete:
@@ -218,12 +222,15 @@ class TaskModel {
     }
     
     /*タスクの削除*/
-    func deleteTask(index: Int) {
+    func deleteTask(index: Int, callback: (() -> Void)? = nil) {
         self.tasks?.remove(at: index)
         do {
             let results = realm.objects(TaskItem.self)
             try! realm.write {
                 realm.delete(results[index])
+                if let callback = callback {
+                    callback()
+                }
             }
             
         }

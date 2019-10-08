@@ -37,7 +37,7 @@ class TaskViewPresenter: TaskViewPresenterProtocol {
         taskViewModel = TaskViewModel(taskName: taskName)
         taskViewModel.countProgress()
         taskViewModel.getTask(taskName: taskName)
-        
+        taskViewModel.delegate = mainViewController
         switch screenType {
         case .iPhone3_5inch, .iPhone4_0inch:
             menuLeftConst = 107.0

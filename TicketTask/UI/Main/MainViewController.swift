@@ -338,7 +338,7 @@ extension MainViewController: MainViewControllerProtocol {
     }
     
     func didChangeTaskCount(taskCount: Int) {
-        taskEmptyView.isHidden = taskCount < 1
+        taskEmptyView.isHidden = taskCount > 1
     }
     
     
