@@ -20,9 +20,10 @@ protocol MainViewPresenterProtocol {
     func touchAddButton()
     func checkIsTaskEmpty()
     func isLaskTaskView(view: TaskView) -> Bool
+    func catchError(error: ValidateError)
 }
 
-class MainViewPresenter: MainViewPresenterProtocol, Routable {
+class MainViewPresenter: MainViewPresenterProtocol, Routable, ErrorAlert {
     
     var viewController: MainViewControllerProtocol!
     var tasks: [[String:Any]] {
@@ -118,5 +119,12 @@ class MainViewPresenter: MainViewPresenterProtocol, Routable {
         } else {
             return false
         }
+    }
+    
+    func catchError(error: ValidateError) {
+        guard let viewController = viewController as? MainViewController else {
+            return
+        }
+        createErrorAlert(error: error, massage: "", view: viewController)
     }
 }
