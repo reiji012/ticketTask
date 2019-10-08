@@ -35,7 +35,6 @@ class AddTaskViewController: UIViewController, IconSelectViewControllerDelegate,
     
     var pickerView: UIPickerView = UIPickerView()
     var gradientLayer: CAGradientLayer = CAGradientLayer()
-    var beforeViewAttri: String?
     var ticketTaskColor = TicketTaskColor()
     var mainVC: MainViewController?
     let navBar = SPFakeBarView.init(style: .stork)
