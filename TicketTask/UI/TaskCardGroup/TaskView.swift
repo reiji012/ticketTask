@@ -37,7 +37,6 @@ class TaskView: UIView, TaskViewProtocol{
     
     var presenter: TaskViewPresenterProtocol!
     
-    var ticketTaskColor = TicketTaskColor()
     var defoultWidth: CGFloat?
     var defoultHeight: CGFloat?
     var defoultX: CGFloat?

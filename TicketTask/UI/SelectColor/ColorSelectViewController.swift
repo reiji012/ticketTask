@@ -26,9 +26,7 @@ class ColorSelectViewController: UIViewController, UICollectionViewDelegate, UIC
     private let itemsPerRow: CGFloat = 2
     
     private var cells: [UICollectionViewCell]?
-    
-    private let ticketTaskColor: TicketTaskColor = TicketTaskColor()
-    
+        
     var editTaskVC: EditTaskViewController?
     
     open var delegate: ColorSelectViewControllerDelegate?
@@ -61,13 +59,13 @@ class ColorSelectViewController: UIViewController, UICollectionViewDelegate, UIC
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return ticketTaskColor.colors.count
+        return presenter.numberOfRow
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: UICollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
         let colorView = cell.viewWithTag(1)
-        colorView?.backgroundColor = ticketTaskColor.colors![indexPath.row].value
+        colorView?.backgroundColor = presenter.content(indexPath: indexPath).gradationColor1
         cells?.append(cell)
         return cell
     }

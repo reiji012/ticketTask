@@ -33,7 +33,6 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
     @IBOutlet weak var scrollView: UIScrollView!
     
     let navBar = SPFakeBarView.init(style: .stork)
-    var ticketTaskColor: TicketTaskColor?
     var gradientLayer: CAGradientLayer = CAGradientLayer()
     var taskViewModel: TaskViewModel?
     var mainVC: MainViewController?
