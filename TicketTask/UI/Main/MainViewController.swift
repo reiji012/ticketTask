@@ -179,10 +179,9 @@ class MainViewController: UIViewController {
         })
     }
     
-    func setGradationColor() {
+    func setGradationColor(color: TaskColor) {
         UIView.animate(withDuration: 2, animations: { () -> Void in
-            let gradientColors: [CGColor] = self.ticketTaskColor!.getGradation(colorStr: self.centerViewColor!)
-            self.gradientLayer.colors = gradientColors
+            self.gradientLayer.colors = color.gradationColor
             self.gradientLayer.frame = self.view.bounds
             self.view.layer.insertSublayer(self.gradientLayer, at: 0)
         })
@@ -209,7 +208,7 @@ class MainViewController: UIViewController {
         self.stopPoint = scrollView.contentOffset.x
         self.centerViewAttri = taskView.presenter.taskViewModel.attri
         self.centerViewColor = taskView.presenter.taskViewModel.colorString
-        setGradationColor()
+        setGradationColor(color: taskView.presenter.taskViewModel.taskColor!)
     }
     
     func createTaskView(task:Dictionary<String, Any>, tag: Int, isInitCreate: Bool){
@@ -236,7 +235,7 @@ class MainViewController: UIViewController {
         self.centerViewColor = color
         if let currentTaskView = getCenterTaskView() {
             currentTaskView.setGradationColor()
-            setGradationColor()
+            setGradationColor(color: currentTaskView.presenter.taskViewModel.taskColor!)
         }
     }
     
@@ -326,7 +325,7 @@ extension MainViewController: MainViewControllerProtocol {
                         currentTaskView.frame = CGRect(x: frame.origin.x - self.taskViewWidth, y: frame.origin.y, width: frame.size.width, height: frame.size.height)
                         self.centerViewAttri = currentTaskView.presenter.taskViewModel.attri
                         self.centerViewColor = currentTaskView.presenter.taskViewModel.colorString
-                        self.setGradationColor()
+                        self.setGradationColor(color: currentTaskView.presenter.taskViewModel.taskColor!)
                     }
                 })
                 self.scrollView.isScrollEnabled = true
@@ -364,7 +363,7 @@ extension MainViewController: MainViewControllerProtocol {
                 self.centerViewAttri = taskView.presenter.taskViewModel.attri
                 self.centerViewColor = taskView.presenter.taskViewModel.colorString
                 //グラデーションの作成
-                self.setGradationColor()
+                self.setGradationColor(color: taskView.presenter.taskViewModel.taskColor!)
             }
         }
         
@@ -486,12 +485,11 @@ extension MainViewController: UIScrollViewDelegate {
         if let currentTaskView = self.getCenterTaskView() {
             self.centerViewAttri = currentTaskView.presenter.taskViewModel.attri
             self.centerViewColor = currentTaskView.presenter.taskViewModel.colorString
+            self.setGradationColor(color: currentTaskView.presenter.taskViewModel.taskColor!)
         }
         UIView.animate(withDuration: 0.3, animations: {
             scrollView.contentOffset = CGPoint(x:scrollPoint, y:0)
         })
-        print(taskView.frame.size.width)
-        self.setGradationColor()
         self.stopPoint = scrollView.contentOffset.x
     }
     
