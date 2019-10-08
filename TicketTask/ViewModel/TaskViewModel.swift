@@ -12,7 +12,6 @@ import RxSwift
 class TaskViewModel: NSObject {
     
     private let wetherData = WetherAPIRequest()
-    private let gradationColors = TicketTaskColor()
     private let progressSubject = BehaviorSubject(value: 0.0)
     private let ticketCountSubject = BehaviorSubject(value: 0)
     private let taskTitleSubject = BehaviorSubject(value: "")

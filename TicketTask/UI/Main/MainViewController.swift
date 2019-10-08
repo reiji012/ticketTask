@@ -53,7 +53,6 @@ class MainViewController: UIViewController {
     var currentWidth: Int = 400
     var stopPoint: CGFloat = 0.0
     var originX:CGFloat?
-    var ticketTaskColor: TicketTaskColor?
     func topSafeAreaHeight() -> CGFloat {
         return self.view.safeAreaInsets.top
     }
@@ -67,7 +66,6 @@ class MainViewController: UIViewController {
     
     private let initTaskViewHeight: CGFloat = 300
     private let initTaskViewWidth: CGFloat = 350
-    private let initColor: String = TicketTaskColor().ORANGE
     
     private var dummyViewWidth: CGFloat!
     private var scrollViewHeight: CGFloat!
@@ -147,7 +145,6 @@ class MainViewController: UIViewController {
         weatherView.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0) // alpha 0 で色を設定
         weatherImgView.isOpaque = false // 不透明を false
         weatherImgView.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0) // alpha 0 で色を設定
-        ticketTaskColor = TicketTaskColor()
         // 影の設定
         self.taskAddButton.layer.shadowOpacity = 0.5
         self.taskAddButton.layer.shadowRadius = 12
