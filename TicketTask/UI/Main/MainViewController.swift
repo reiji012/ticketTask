@@ -314,7 +314,7 @@ extension MainViewController: MainViewControllerProtocol {
         
         //scrollViewのcontentSizeを，View全体のサイズに合わせる
         //最終的なoriginX = タブ全体の横幅 になります
-        scrollView.contentSize = CGSize(width:self.originX!, height:scrollView.frame.height)
+        scrollView.contentSize = CGSize(width:self.originX! + taskViewWidth, height:scrollView.frame.height)
     }
     
     func setTaskEmptyViewState(isHidden: Bool) {
