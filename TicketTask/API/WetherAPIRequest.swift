@@ -23,9 +23,6 @@ class WetherAPIRequest: NSObject {
                 print(json)
                 callback(json, nil)
             }
-            catch {
-                callback(nil, error)
-            }
         })
         task.resume()
     }

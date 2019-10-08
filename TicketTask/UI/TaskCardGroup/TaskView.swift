@@ -180,8 +180,8 @@ class TaskView: UIView, TaskViewProtocol{
         }).disposed(by: disposeBag)
         
         self.presenter.taskViewModel.taskAttri.subscribe(onNext: { [attriImageView] in
-            let taskAttr = $0
-            attriImageView!.image = self.presenter.taskViewModel.iconImage?.withRenderingMode(.alwaysTemplate)
+            _ = $0
+            attriImageView!.image = self.presenter.taskViewModel.iconImage
         }).disposed(by: disposeBag)
         
     }
@@ -198,7 +198,6 @@ class TaskView: UIView, TaskViewProtocol{
     }
     
     func showAddticketView() {
-        var inputTextField: UITextField?
         
         //alertの表示文言
         let alertController: UIAlertController = UIAlertController(title: "チケットの追加", message: "", preferredStyle: .alert)
@@ -218,9 +217,7 @@ class TaskView: UIView, TaskViewProtocol{
         }
         
         alertController.addAction(addAction)
-        
         alertController.addTextField { textField -> Void in
-            inputTextField = textField
             textField.placeholder = "追加するチケット"
         }
         mainViewController!.present(alertController, animated: true, completion: nil)
@@ -326,7 +323,7 @@ class TaskView: UIView, TaskViewProtocol{
     }
     
     func setButtonLayout() {
-        var view = UIView()
+        let view = UIView()
         view.bounds = ticketAddBtn.bounds
         self.ticketAddBtn.layer.shadowOpacity = 0.5
         self.ticketAddBtn.layer.shadowRadius = 12

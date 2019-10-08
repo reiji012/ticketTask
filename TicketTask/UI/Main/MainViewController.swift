@@ -90,7 +90,6 @@ class MainViewController: UIViewController {
         self.tabbarHeight = self.tabBarController!.tabBar.frame.size.height
         for i in 0..<presenter.taskTotalCount {
             let taskView = self.view.viewWithTag(i + 1) as! TaskView
-            let myBoundSize: CGSize = UIScreen.main.bounds.size
             taskView.frame.size.height = self.taskViewHeight
         }
         
@@ -219,7 +218,6 @@ class MainViewController: UIViewController {
     func didTouchAddTicketButton(ticket: String, view: TaskView) {
         view.presenter.taskViewModel.actionType = .ticketCreate
         view.presenter.taskViewModel.addTicket(ticketName: ticket)
-        let ticketTableViewCell = UINib(nibName: "TicketTableViewCell", bundle: Bundle.main).instantiate(withOwner: self, options: nil).first as? TicketTableViewCell
         view.ticketTableView.reloadData()
     }
     
@@ -292,9 +290,6 @@ extension MainViewController: MainViewControllerProtocol {
         
         let tasks = presenter.tasks
         
-        //タブの縦幅(UIScrollViewと一緒にします)
-        let tabLabelHeight:CGFloat = self.scrollView.frame.size.height
-        
         //titlesで定義したタブを1つずつ用意していく
         for (index, task) in tasks.enumerated() {
             //タブになるUIVIewを作る
@@ -319,10 +314,6 @@ extension MainViewController: MainViewControllerProtocol {
     
     func setTaskEmptyViewState(isHidden: Bool) {
         taskEmptyView.isHidden = isHidden
-        //タブの縦幅(UIScrollViewと一緒にします)
-        let tabLabelHeight:CGFloat = UIScreen.main.bounds.size.height
-
-        
         //右端にダミーViewを置くことで
         //一番右のタブもセンターに持ってくることが出来ます
         let headDummyView = UIView()

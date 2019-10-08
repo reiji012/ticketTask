@@ -54,7 +54,7 @@ class TaskModel {
     func createTask(taskName: String, attri: String, colorStr: String, iconStr: String, tickets:Array<String>, resetType: Int) -> ValidateError? {
         
         if taskName.isEmpty, tickets.count == 0 {
-            var error: ValidateError = .inputValidError
+            let error: ValidateError = .inputValidError
             return error
         }
         
@@ -109,9 +109,6 @@ class TaskModel {
             self.lastCreateTask = taskArray
             return nil
         }
-        catch {
-            return (error as! ValidateError)
-        }
         
     }
     
@@ -151,7 +148,6 @@ class TaskModel {
     func addTicket(tickets:[String], id: Int) {
         do {
             let task = realm.objects(TaskItem.self).filter("id = \(id)").first
-            print(task)
             var ticketArray = [String]()
             ticketArray = task!.tickets.map { $0.ticketName }
             
@@ -165,11 +161,6 @@ class TaskModel {
                 }
             }
             
-            print(task)
-            
-        }
-        catch {
-            print(error)
         }
     }
     
@@ -193,9 +184,6 @@ class TaskModel {
                 }
             }
         }
-        catch {
-            print(error)
-        }
     }
     
     /*チケットの更新*/
@@ -216,9 +204,6 @@ class TaskModel {
                 }
             }
         }
-        catch {
-            print(error)
-        }
     }
     
     /*タスクの削除*/
@@ -233,9 +218,6 @@ class TaskModel {
                 }
             }
             
-        }
-        catch {
-            print (error)
         }
         
     }
@@ -261,9 +243,6 @@ class TaskModel {
                 completion()
             }
             return nil
-        }
-        catch {
-            print(error)
         }
     }
     
@@ -304,8 +283,6 @@ class TaskModel {
             
             print(tasks as Any)
             
-        } catch {
-            print(error)
         }
 
     }
@@ -338,9 +315,6 @@ class TaskModel {
                 idArray.append(task.id)
             }
             nextId = idArray.isEmpty ? 0 : idArray.max()! + 1
-        }
-        catch {
-            print(error)
         }
         return nextId
     }
