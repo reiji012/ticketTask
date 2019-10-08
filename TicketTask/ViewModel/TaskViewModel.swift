@@ -31,7 +31,11 @@ class TaskViewModel: NSObject {
     var wetherModel: WetherModel?
     var todayWetherInfo: Dictionary<String,Any>?
     var tasks: [[String:Any]]?
-    var taskName: String?
+    var taskName: String? {
+        didSet {
+            self.taskTitleSubject.onNext(self.taskName!)
+        }
+    }
     func taskCount() -> Int {
         return taskModel!.tasks!.count
     }
@@ -153,14 +157,15 @@ class TaskViewModel: NSObject {
     }
     
     func taskEdited(afterTaskName: String, afterTaskAttr: String, color: TaskColor, colorStr: String, image: UIImage, imageStr: String) {
-        self.taskModel?.editTask(afterTaskName: afterTaskName, afterTaskAttr: afterTaskAttr, colorStr: colorStr, imageStr: imageStr, id: self.taskID!)
-        self.taskName = afterTaskName
-        self.attri = afterTaskAttr
-        self.taskColor = color
-        self.iconImage = image
-        self.iconString = imageStr
-        taskTitleSubject.onNext(afterTaskName)
-        taskAttriSubject.onNext(afterTaskAttr)
+        self.taskModel?.editTask(afterTaskName: afterTaskName, afterTaskAttr: afterTaskAttr, colorStr: colorStr, imageStr: imageStr, id: self.taskID!, completion: {
+            self.taskName = afterTaskName
+            self.attri = afterTaskAttr
+            self.taskColor = color
+            self.iconImage = image
+            self.iconString = imageStr
+            taskTitleSubject.onNext(afterTaskName)
+            taskAttriSubject.onNext(afterTaskAttr)
+        })
     }
     
     func setupWetherInfo() {

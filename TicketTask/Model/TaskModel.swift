@@ -240,16 +240,27 @@ class TaskModel {
         
     }
     
-    func editTask(afterTaskName: String, afterTaskAttr: String, colorStr: String, imageStr: String, id: Int) {
+    func editTask(afterTaskName: String, afterTaskAttr: String, colorStr: String, imageStr: String, id: Int, completion: (() -> Void)) -> ValidateError? {
         do {
             let results = realm.objects(TaskItem.self).filter("id = \(id)")
+            
+            let result = realm.objects(TaskItem.self)
+            print(result)
+            let tasks = result.map {$0.taskTitle}
+            if tasks.index(of: afterTaskName) != nil {
+                // 同じ名前のタスクが存在した場合はエラーを返す
+                let error = ValidateError.taskValidError
+                return error
+            }
             
             try! realm.write {
                 results.setValue(afterTaskName, forKey: TASK_TITLE)
                 results.setValue(afterTaskAttr, forKey: TASK_ATTRI)
                 results.setValue(colorStr, forKey: TASK_COLOR)
                 results.setValue(imageStr, forKey: TASK_ICON)
+                completion()
             }
+            return nil
         }
         catch {
             print(error)

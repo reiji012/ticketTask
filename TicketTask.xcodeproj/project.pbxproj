@@ -12,6 +12,7 @@
 		111F5EBF2342E7E10034548A /* ScreenType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111F5EBE2342E7E10034548A /* ScreenType.swift */; };
 		111F5EC12342ECE40034548A /* AddTaskViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111F5EC02342ECE40034548A /* AddTaskViewPresenter.swift */; };
 		1122BE2C2330B325001CD87C /* SettingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1122BE2B2330B325001CD87C /* SettingData.swift */; };
+		1181EDC8234C4A02006D6CDD /* ErrorAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1181EDC7234C4A02006D6CDD /* ErrorAlert.swift */; };
 		11B4F99C233DF163008CD2F6 /* TaskEditDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B4F99B233DF162008CD2F6 /* TaskEditDelegate.swift */; };
 		11B5E4432345F6F300DBCB14 /* UIStoryboardExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B5E4422345F6F300DBCB14 /* UIStoryboardExtensions.swift */; };
 		11B5E4462345F90300DBCB14 /* Routable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B5E4452345F90300DBCB14 /* Routable.swift */; };
@@ -63,6 +64,7 @@
 		111F5EBE2342E7E10034548A /* ScreenType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenType.swift; sourceTree = "<group>"; };
 		111F5EC02342ECE40034548A /* AddTaskViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskViewPresenter.swift; sourceTree = "<group>"; };
 		1122BE2B2330B325001CD87C /* SettingData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingData.swift; sourceTree = "<group>"; };
+		1181EDC7234C4A02006D6CDD /* ErrorAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAlert.swift; sourceTree = "<group>"; };
 		11B4F99B233DF162008CD2F6 /* TaskEditDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskEditDelegate.swift; sourceTree = "<group>"; };
 		11B5E4422345F6F300DBCB14 /* UIStoryboardExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStoryboardExtensions.swift; sourceTree = "<group>"; };
 		11B5E4452345F90300DBCB14 /* Routable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routable.swift; sourceTree = "<group>"; };
@@ -124,6 +126,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1181EDC6234C49B3006D6CDD /* ErrorAlert */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ErrorAlert;
+			sourceTree = "<group>";
+		};
 		11B4F98C233DECF8008CD2F6 /* Util */ = {
 			isa = PBXGroup;
 			children = (
@@ -138,6 +147,7 @@
 		11B4F991233DEDC4008CD2F6 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				1181EDC6234C49B3006D6CDD /* ErrorAlert */,
 				11B4F997233DEF54008CD2F6 /* SelectIcon */,
 				11B4F996233DEF3C008CD2F6 /* SelectColor */,
 				11B4F995233DEECE008CD2F6 /* EditTask */,
@@ -257,6 +267,7 @@
 			isa = PBXGroup;
 			children = (
 				11B5E4452345F90300DBCB14 /* Routable.swift */,
+				1181EDC7234C4A02006D6CDD /* ErrorAlert.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -488,6 +499,7 @@
 				11B5E4432345F6F300DBCB14 /* UIStoryboardExtensions.swift in Sources */,
 				2BE551662292695000D5AFA9 /* TaskItem.swift in Sources */,
 				8E8A0B1E2318D9C900FFCE15 /* IconSelectViewController.swift in Sources */,
+				1181EDC8234C4A02006D6CDD /* ErrorAlert.swift in Sources */,
 				11EC7B99234B3AED0099D444 /* UIViewControllerExtensions.swift in Sources */,
 				8E6B2A1022FF22E900113E30 /* WetherModel.swift in Sources */,
 				11EC7B97234B199E0099D444 /* IconSelectViewPresenter.swift in Sources */,
