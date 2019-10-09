@@ -19,7 +19,11 @@ class WetherAPIRequest: NSObject {
         let url = NSURL(string: "\(baseUrl)?q=Tokyo,jp&units=metric&lang=ja&APPID=\(apiKey)")!
         let task = URLSession.shared.dataTask(with: url as URL, completionHandler: {data, response, error in
             do {
-                let json = try! JSON(data: data!)
+                guard let data = data else {
+                    callback(nil, error)
+                    return
+                }
+                let json = try! JSON(data: data)
                 print(json)
                 callback(json, nil)
             }
