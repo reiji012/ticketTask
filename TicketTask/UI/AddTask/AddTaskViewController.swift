@@ -134,6 +134,9 @@ class AddTaskViewController: UIViewController, IconSelectViewControllerDelegate,
         self.dismiss(animated: true, completion: nil)
     }
     
+    @IBAction func touchTimerSetButton(_ sender: Any) {
+        resetType = timerBtm.selectedSegmentIndex
+    }
     // Taskの作成
     @objc func touchCreateButton() {
         presenter.touchCreateButton(taskName: titleTextField.text!,

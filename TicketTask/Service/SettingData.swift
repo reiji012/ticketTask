@@ -35,12 +35,47 @@ class SettingData {
         ])
     }
     
+    /// 次の日を取得
+    ///
+    /// - Parameter date: 日付
+    /// - Returns: 受け取った日付の翌日
+    func getNextDate(date: Date) -> Date {
+        // テンプレートから時刻を表示
+        let f = DateFormatter()
+        f.setTemplate(.date)
+        let days = f.string(from: date)
+        let day = f.date(from: days)
+        return  Calendar.current.date(byAdding: .day, value: 1, to: day!)!
+    }
+    
+    func getToday() -> Date {
+        // テンプレートから時刻を表示
+        let f = DateFormatter()
+        f.setTemplate(.date)
+        let days = f.string(from: Date())
+        return f.date(from: days)!
+    }
+    
+    /// 日付に応じたリセットタイプ配列を渡す
+    ///
+    /// - Returns: リセットタイプ
     func checkDate() -> [Int] {
-//        let calendar = Calendar.current
         let date = Date()
+        let f = DateFormatter()
+        f.setTemplate(.weekDay)
+        let week = f.string(from: date)
         var targetType:[Int] = []
-        if date.weekday == UserDefaults.standard.string(forKey: Keys.week.rawValue) {
-            targetType.append(1)
+        targetType.append(1)
+        if week == UserDefaults.standard.string(forKey: Keys.week.rawValue) {
+            targetType.append(2)
+        }
+        // 現在日時
+        // 年月日時分秒をそれぞれ個別に取得
+        let calendar = Calendar.current
+        let day = calendar.component(.day, from: date)
+        
+        if day == 1 {
+            targetType.append(3)
         }
         return targetType
     }

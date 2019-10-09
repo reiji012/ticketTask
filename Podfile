@@ -18,6 +18,7 @@ target 'TicketTask' do
   pod 'Firebase/Analytics'
   pod 'Firebase/Messaging'
   pod 'Firebase/Core'
+  pod 'Firebase/Functions'
   # add pods for any other desired Firebase products
   # https://firebase.google.com/docs/ios/setup#available-pods
   use_frameworks!

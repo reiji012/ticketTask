@@ -22,6 +22,7 @@ class TaskModel {
     let TASK_RESET_TYPE = "resetType"
     let TICKET_NAME = "ticketName"
     let TICKET_IS_COMPLETED = "isCompleted"
+    let settingData = SettingData()
 
     var tasks: [[String:Any]]?
     var lastCreateTask = ["title":"","attri":"","tickets":[], "id":0] as [String : Any]
@@ -32,7 +33,7 @@ class TaskModel {
         return TaskModel()
     }()
     
-    private init() {
+    public init() {
         var config = Realm.Configuration()
         config.deleteRealmIfMigrationNeeded = true
         self.realm = try! Realm(configuration: config)
@@ -86,12 +87,20 @@ class TaskModel {
                 return error
             }
             
+            // テンプレートから時刻を表示
+            let f = DateFormatter()
+            f.setTemplate(.date)
+            let currentDay = f.string(from: Date())
+            let day = f.date(from: currentDay)
+            
             let taskDictionary:[String:Any] = [
                 TASK_TITLE: taskName,
                 TASK_ATTRI: attri,
                 TASK_COLOR: colorStr,
                 TASK_ICON: iconStr,
                 TASK_TICKETS: ticketsRealmArray,
+                // 作成時は今日の日付を入れる
+                TASK_LASTRESETDATE: day!,
                 TASK_RESET_TYPE: resetType
             ]
             
@@ -104,6 +113,8 @@ class TaskModel {
                 print("データベース追加後", results.count)
                 print(results)
             }
+            // push通知設定
+            Notifications().pushNotificationSet(resetTimeType: resetType, taskID: lastID)
             // タスク追加に成功した時にtasksパラメータにタスクを追加
             self.tasks?.append(taskArray)
             self.lastCreateTask = taskArray
@@ -197,7 +208,7 @@ class TaskModel {
                     var tickets = task["tickets"] as! [String:Bool]
                     // モデルからチケットが削除されていればデータベース上のチケットも削除する
                     if tickets[ticket.ticketName] == nil {
-                        return
+                        continue
                     }
 //                    ticket.ticketName = self.tasks![index]["tickets"] as! String
                     ticket.isCompleted = (tickets[ticket.ticketName])!
@@ -284,17 +295,23 @@ class TaskModel {
             print(tasks as Any)
             
         }
-
+    }
+    
+    
+    func checkResetModel() {
+        for typeIndex in settingData.checkDate() {
+            resetTaskModel(resetType: typeIndex)
+        }
     }
     
     /// タスクの状態のリセット
     ///
     /// - Parameter resetType: リセットタイプ
-    func checkResetModel(resetType: Int) {
+    func resetTaskModel(resetType: Int) {
         let result = realm.objects(TaskItem.self).filter("resetType == %@", resetType)
         for task in result {
             let lastResetDate = task.lastResetDate!
-            let now = Date()
+            let now = settingData.getToday()
             if now > lastResetDate {
                 try! realm.write {
                     for ticket in task.tickets {
@@ -302,9 +319,9 @@ class TaskModel {
                     }
                     task.setValue(now, forKey: TASK_LASTRESETDATE)
                 }
+                updateTicket(index: task.id)
             }
         }
-        
     }
     
     func lastId() -> Int {
