@@ -27,20 +27,20 @@ class MainViewPresenter: MainViewPresenterProtocol, Routable, ErrorAlert {
     
     var viewController: MainViewControllerProtocol!
     var tasks: [[String:Any]] {
-        return taskModel!.tasks!
+        return taskLocalDataModel!.tasks!
     }
     var taskTotalCount: Int {
-        return taskModel!.tasks!.count
+        return taskLocalDataModel!.tasks!.count
     }
     var weatherIconImage: UIImage?
     
-    private var taskModel: TaskModel!
+    private var taskLocalDataModel: TaskLocalDataModel!
     private var wetherModel: WetherModel!
     private var todayWetherInfo: Dictionary<String,Any>?
     
     init(vc: MainViewControllerProtocol) {
         viewController = vc
-        taskModel = TaskModel.sharedManager
+        taskLocalDataModel = TaskLocalDataModel.sharedManager
         wetherModel = WetherModel.sharedManager
     }
     
@@ -58,7 +58,7 @@ class MainViewPresenter: MainViewPresenterProtocol, Routable, ErrorAlert {
     
     /// タスクデータの取得
     func getTaskData() {
-        taskModel?.getTaskData()
+        taskLocalDataModel?.getTaskData()
     }
     
     /// 天気情報の取得
@@ -98,7 +98,7 @@ class MainViewPresenter: MainViewPresenterProtocol, Routable, ErrorAlert {
     }
     
     func checkIsTaskEmpty() {
-        let isTaskEmpty = self.taskModel!.tasks?.isEmpty
+        let isTaskEmpty = self.taskLocalDataModel!.tasks?.isEmpty
         self.viewController?.setTaskEmptyViewState(isHidden: !(isTaskEmpty!))
         if !(isTaskEmpty!) {
             self.viewController?.createAllTaskViews()

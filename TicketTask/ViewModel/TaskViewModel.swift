@@ -27,7 +27,7 @@ class TaskViewModel: NSObject {
     var delegate: MainViewControllerProtocol?
 
     var taskID: Int?
-    var taskModel: TaskModel?
+    var taskLocalDataModel: TaskLocalDataModel?
     var wetherModel: WetherModel?
     var todayWetherInfo: Dictionary<String,Any>?
     var tasks: [[String:Any]]?
@@ -37,13 +37,14 @@ class TaskViewModel: NSObject {
         }
     }
     func taskCount() -> Int {
-        return taskModel!.tasks!.count
+        return taskLocalDataModel!.tasks!.count
     }
     var attri: String?
     
     var iconImage: UIImage?
     var iconString: String?
     var taskColor: TaskColor?
+    var resetTypeIndex: Int?
     
     var actionType: ActionType = .taskUpdate
     
@@ -59,14 +60,14 @@ class TaskViewModel: NSObject {
     var task: Dictionary<String, Any>?
     
     override init() {
-        taskModel = TaskModel.sharedManager
+        taskLocalDataModel = TaskLocalDataModel.sharedManager
         wetherModel = WetherModel.sharedManager
     }
     
     // タスクのModelを取得する
     init(taskName: String) {
-        taskModel = TaskModel.sharedManager
-        task = taskModel?.getTask(taskName: taskName)
+        taskLocalDataModel = TaskLocalDataModel.sharedManager
+        task = taskLocalDataModel?.getTask(taskName: taskName)
         self.taskName = (task!["title"] as! String)
         self.attri = (task!["attri"] as! String)
         self.tickets = (task!["tickets"] as! [String:Bool])
@@ -76,7 +77,7 @@ class TaskViewModel: NSObject {
     }
     
     func getTask(taskName: String) {
-        task = taskModel?.getTask(taskName: taskName)
+        task = taskLocalDataModel?.getTask(taskName: taskName)
         self.taskName = (task!["title"] as! String)
         self.attri = (task!["attri"] as! String)
         self.tickets = (task!["tickets"] as! [String:Bool])
@@ -102,11 +103,11 @@ class TaskViewModel: NSObject {
     }
     
     func createTask(taskName: String, attri: String, colorStr: String, iconStr: String, tickets:Array<String>, resetType: Int) -> ValidateError? {
-        let error = taskModel?.createTask(taskName: taskName, attri: attri, colorStr: colorStr, iconStr:  iconStr, tickets:tickets, resetType: resetType)
+        let error = taskLocalDataModel?.createTask(taskName: taskName, attri: attri, colorStr: colorStr, iconStr:  iconStr, tickets:tickets, resetType: resetType)
         if (error != nil) {
             return error
         } else {
-            self.tasks = self.taskModel!.tasks
+            self.tasks = self.taskLocalDataModel!.tasks
             return nil
         }
     }
@@ -125,13 +126,13 @@ class TaskViewModel: NSObject {
     }
     
     func updateModel(actionType :ActionType, callback: (() -> Void)? = nil) {
-        taskModel!.taskUpdate(id: self.taskID!,tickets: self.tickets!, actionType: actionType, callback: {
+        taskLocalDataModel!.taskUpdate(id: self.taskID!,tickets: self.tickets!, actionType: actionType, callback: {
             if let callback = callback {
                 callback()
                 self.delegate?.didChangeTaskCount(taskCount: self.taskCount())
             }
         })
-        task = taskModel?.getTask(taskName: self.taskName!)
+        task = taskLocalDataModel?.getTask(taskName: self.taskName!)
         self.countProgress()
     }
 
@@ -152,8 +153,8 @@ class TaskViewModel: NSObject {
     }
     
     func getTaskData() {
-        taskModel?.getTaskData()
-        tasks = taskModel!.tasks!
+        taskLocalDataModel?.getTaskData()
+        tasks = taskLocalDataModel!.tasks!
     }
     
     func setupWetherInfo() {
@@ -172,7 +173,7 @@ class TaskViewModel: NSObject {
     }
     
     func checkIsTaskEmpty() {
-        let isTaskEmpty = self.taskModel!.tasks?.isEmpty
+        let isTaskEmpty = self.taskLocalDataModel!.tasks?.isEmpty
         self.delegate?.setTaskEmptyViewState(isHidden: !(isTaskEmpty!))
         if !(isTaskEmpty!) {
             self.delegate?.createAllTaskViews()

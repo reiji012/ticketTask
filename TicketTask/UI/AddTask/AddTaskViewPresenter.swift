@@ -21,13 +21,13 @@ import Foundation
 class AddTaskViewPresenter: AddTaskViewPresenterProtocol, ErrorAlert {
     var tickets: [String]! = [String]()
     var view: AddTaskViewControllerProtocol!
-    var taskModel: TaskModel?
+    var taskLocalDataModel: TaskLocalDataModel?
     var ticketArray = [String]()
     var currentColor: TaskColor
     
     init(vc: AddTaskViewControllerProtocol) {
         view = vc
-        taskModel = TaskModel.sharedManager
+        taskLocalDataModel = TaskLocalDataModel.sharedManager
         tickets = []
         currentColor = .orange
     }
@@ -65,7 +65,7 @@ class AddTaskViewPresenter: AddTaskViewPresenterProtocol, ErrorAlert {
             return
         }
         
-        let error = taskModel?.createTask(taskName: taskName, attri: attri, colorStr: colorStr, iconStr:  iconStr, tickets:tickets, resetType: resetType)
+        let error = taskLocalDataModel?.createTask(taskName: taskName, attri: attri, colorStr: colorStr, iconStr:  iconStr, tickets:tickets, resetType: resetType)
         if let error = error {
             guard let viewController = view as? AddTaskViewController else {
                 return

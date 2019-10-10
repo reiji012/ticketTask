@@ -42,6 +42,7 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
     
     var currentIconStr: String?
     var currentIcon: UIImage?
+    private var resetType: Int = 0
     
     let attris: [String] = ["生活", "仕事"]
     
@@ -100,6 +101,10 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
         let colorCollectionVC = ColorSelectViewController.initiate(delegate: self)
         //表示
         present(colorCollectionVC, animated: true, completion: nil)
+    }
+    
+    @IBAction func touchTimerSetButton(_ sender: Any) {
+        resetType = timerBtn.selectedSegmentIndex
     }
     
     func bind() {

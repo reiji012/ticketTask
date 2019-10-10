@@ -21,7 +21,7 @@ class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
     
     private var view: EditTaskViewControllerProtocol!
     private var taskView: TaskViewProtocol!
-    private var taskModel: TaskModel = TaskModel.sharedManager
+    private var taskLocalDataModel: TaskLocalDataModel = TaskLocalDataModel.sharedManager
     private var beforeName: String?
     
     var currentIconString: String = "" {
@@ -37,6 +37,7 @@ class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
             view.setColorView(color: currentColor.gradationColor1)
         }
     }
+//    var currentResetTypeIndex: Int
     
     init(view: EditTaskViewControllerProtocol, taskView: TaskViewProtocol) {
         self.view = view
@@ -45,10 +46,11 @@ class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
         currentIcon = taskView.presenter.taskViewModel.iconImage!
         currentIconString = taskView.presenter.taskViewModel.iconString!
         beforeName = taskView.presenter.taskViewModel.taskName!
+//        currentResetTypeIndex = taskView.presenter.taskViewModel
     }
     
     func touchSaveButton(afterTaskName: String) {
-        let error = taskModel.editTask(afterTaskName: afterTaskName, afterTaskAttr: "", colorStr: currentColor.colorString, imageStr: currentIconString, id: taskView.presenter.taskViewModel.taskID!, beforeName: beforeName!, completion: {
+        let error = taskLocalDataModel.editTask(afterTaskName: afterTaskName, afterTaskAttr: "", colorStr: currentColor.colorString, imageStr: currentIconString, id: taskView.presenter.taskViewModel.taskID!, beforeName: beforeName!, completion: {
             let vm = self.taskView.presenter.taskViewModel
             vm.taskName = afterTaskName
             vm.attri = ""
