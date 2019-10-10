@@ -54,7 +54,7 @@ class TaskView: UIView, TaskViewProtocol{
     let disposeBag = DisposeBag()
     
     // MARK: - Initilizer
-    static func initiate(mainViewController: MainViewControllerProtocol, task:Dictionary<String, Any>) -> TaskView {
+    static func initiate(mainViewController: MainViewControllerProtocol, task:TaskModel) -> TaskView {
         let view = UINib.instantiateInitialView(from: self)
         view.presenter = TaskViewPresenter(view: view, mainViewController: mainViewController, task: task)
         
@@ -66,7 +66,7 @@ class TaskView: UIView, TaskViewProtocol{
         return view
     }
     
-    func setViewModel(task:Dictionary<String, Any>, mainVC: MainViewController) {
+    func setViewModel(task:TaskModel, mainVC: MainViewController) {
         self.mainViewController = mainVC
 
         let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(
@@ -403,10 +403,10 @@ extension TaskView: UITableViewDataSource {
             cell.taskViewModel = self.presenter.taskViewModel
             var ticketName = ""
             var isCompleted: Bool?
-            for (index, ticket) in (self.presenter.taskViewModel.tickets!.keys).enumerated() {
+            for (index, ticket) in (self.presenter.taskViewModel.tickets!).enumerated() {
                 if index == indexPath.row {
-                    ticketName = ticket
-                    isCompleted = (cell.taskViewModel?.tickets![ticketName])!
+                    ticketName = ticket.ticketName
+                    isCompleted = ticket.isCompleted
                 }
             }
             cell.isCompleted = isCompleted!
@@ -420,9 +420,13 @@ extension TaskView: UITableViewDataSource {
     
     internal func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let ticketName = Array(self.presenter.taskViewModel.tickets!.keys)[indexPath.row]
+            let ticketName = Array(self.presenter.taskViewModel.tickets!.map({$0.ticketName}))[indexPath.row]
             self.presenter.taskViewModel.actionType = .ticketDelete
-            self.presenter.taskViewModel.tickets?.removeValue(forKey: ticketName)
+            for (index, ticket) in (self.presenter.taskViewModel.tickets?.enumerated())! {
+                if ticket.ticketName == ticketName {
+                    self.presenter.taskViewModel.tickets?.remove(at: index)
+                }
+            }
             self.ticketTableView.reloadData()
         }
     }

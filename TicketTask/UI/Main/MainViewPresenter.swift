@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 protocol MainViewPresenterProtocol {
-    var tasks: [[String:Any]] { get }
+    var tasks: [TaskModel] { get }
     var taskTotalCount: Int { get }
     var weatherIconImage: UIImage? { get }
     func viewDidLoad()
@@ -26,11 +26,11 @@ protocol MainViewPresenterProtocol {
 class MainViewPresenter: MainViewPresenterProtocol, Routable, ErrorAlert {
     
     var viewController: MainViewControllerProtocol!
-    var tasks: [[String:Any]] {
-        return taskLocalDataModel!.tasks!
+    var tasks: [TaskModel] {
+        return taskLocalDataModel!.tasks
     }
     var taskTotalCount: Int {
-        return taskLocalDataModel!.tasks!.count
+        return taskLocalDataModel!.tasks.count
     }
     var weatherIconImage: UIImage?
     
@@ -45,7 +45,6 @@ class MainViewPresenter: MainViewPresenterProtocol, Routable, ErrorAlert {
     }
     
     func viewDidLoad() {
-        getTaskData()
         setupWetherInfo()
     }
     
@@ -56,10 +55,6 @@ class MainViewPresenter: MainViewPresenterProtocol, Routable, ErrorAlert {
         present(.addTaskViewController, from: viewController, animated: true)
     }
     
-    /// タスクデータの取得
-    func getTaskData() {
-        taskLocalDataModel?.getTaskData()
-    }
     
     /// 天気情報の取得
     func setupWetherInfo() {
@@ -98,9 +93,9 @@ class MainViewPresenter: MainViewPresenterProtocol, Routable, ErrorAlert {
     }
     
     func checkIsTaskEmpty() {
-        let isTaskEmpty = self.taskLocalDataModel!.tasks?.isEmpty
-        self.viewController?.setTaskEmptyViewState(isHidden: !(isTaskEmpty!))
-        if !(isTaskEmpty!) {
+        let isTaskEmpty = self.taskLocalDataModel!.tasks.isEmpty
+        self.viewController?.setTaskEmptyViewState(isHidden: !(isTaskEmpty))
+        if !(isTaskEmpty) {
             self.viewController?.createAllTaskViews()
         }
     }

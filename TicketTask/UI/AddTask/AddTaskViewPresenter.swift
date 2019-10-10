@@ -7,11 +7,11 @@
 //
 
 protocol AddTaskViewPresenterProtocol {
-    var tickets: [String]! { get }
+    var tickets: [TicketsModel]! { get }
     var currentColor: TaskColor { get set }
     func viewDidLoad()
     func touchAddTicketButton(text: String)
-    func touchCreateButton(taskName: String, attri: String, colorStr: String, iconStr: String, tickets:Array<String>, resetType: Int)
+    func touchCreateButton(taskName: String, attri: String, colorStr: String, iconStr: String, tickets:[TicketsModel], resetType: Int)
     func removeTicket(index: IndexPath)
 }
 
@@ -19,7 +19,7 @@ protocol AddTaskViewPresenterProtocol {
 import Foundation
 
 class AddTaskViewPresenter: AddTaskViewPresenterProtocol, ErrorAlert {
-    var tickets: [String]! = [String]()
+    var tickets: [TicketsModel]! = []
     var view: AddTaskViewControllerProtocol!
     var taskLocalDataModel: TaskLocalDataModel?
     var ticketArray = [String]()
@@ -38,7 +38,7 @@ class AddTaskViewPresenter: AddTaskViewPresenterProtocol, ErrorAlert {
     
     func touchAddTicketButton(text: String) {
         if ticketArray.index(of: text) == nil {
-            self.tickets.append(text)
+            self.tickets.append(TicketsModel().initiate(ticketName: text))
             ticketArray.append(text)
             view.didAddTicket()
         } else {
@@ -49,7 +49,7 @@ class AddTaskViewPresenter: AddTaskViewPresenterProtocol, ErrorAlert {
         }
     }
     
-    func touchCreateButton(taskName: String, attri: String, colorStr: String, iconStr: String, tickets:Array<String>, resetType: Int) {
+    func touchCreateButton(taskName: String, attri: String, colorStr: String, iconStr: String, tickets:[TicketsModel], resetType: Int) {
         
         let isEmptyTaskName = taskName.isEmpty
         let isEmptyTicketCount = tickets.count == 0

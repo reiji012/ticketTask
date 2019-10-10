@@ -143,7 +143,7 @@ class AddTaskViewController: UIViewController, IconSelectViewControllerDelegate,
                                                      attri: "",
                                                      colorStr: presenter.currentColor.colorString,
                                                      iconStr: currentIconStr,
-                                                     tickets: presenter.tickets,
+                                                     tickets: presenter!.tickets,
                                                      resetType: self.resetType)
     }
     
@@ -211,7 +211,7 @@ extension AddTaskViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         // セルに表示する値を設定する
-        cell.textLabel!.text = presenter.tickets[indexPath.row]
+        cell.textLabel!.text = presenter.tickets[indexPath.row].ticketName
         return cell
     }
     

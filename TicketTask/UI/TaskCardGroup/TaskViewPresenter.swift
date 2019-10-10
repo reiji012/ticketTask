@@ -22,7 +22,7 @@ class TaskViewPresenter: TaskViewPresenterProtocol {
     
     private var view: TaskViewProtocol!
 
-    var task: Dictionary<String, Any>?
+    var task: TaskModel?
     var taskViewModel: TaskViewModel
     var menuLeftConst: CGFloat
     var progressBarWidthConst: CGFloat
@@ -32,12 +32,12 @@ class TaskViewPresenter: TaskViewPresenterProtocol {
     
     var mainViewController: MainViewControllerProtocol!
     
-    init(view: TaskViewProtocol, mainViewController: MainViewControllerProtocol, task: Dictionary<String, Any>) {
+    init(view: TaskViewProtocol, mainViewController: MainViewControllerProtocol, task: TaskModel) {
         self.view = view
         self.mainViewController = mainViewController
         self.task = task
         
-        let taskName = (task["title"] as! String)
+        let taskName = task.taskTitle
         // taskViewModelの取得
         taskViewModel = TaskViewModel(taskName: taskName)
         taskViewModel.countProgress()

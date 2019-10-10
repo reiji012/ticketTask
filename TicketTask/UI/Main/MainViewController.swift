@@ -73,7 +73,6 @@ class MainViewController: UIViewController {
         dummyViewWidth = scrollView.frame.size.width/2 - taskViewWidth/2
         scrollViewHeight = scrollView.frame.size.height
         
-        taskViewModel.getTaskData()
         scrollView.delegate = self
         
         scrollView.showsVerticalScrollIndicator = false
@@ -155,7 +154,7 @@ class MainViewController: UIViewController {
         //scrollViewのDelegateを指定
         scrollView.delegate = self
         
-        createTaskView(task: taskViewModel.taskLocalDataModel!.lastCreateTask, tag: taskViewModel.taskLocalDataModel!.tasks!.count, isInitCreate: false)
+        createTaskView(task: taskViewModel.taskLocalDataModel!.lastCreateTask!, tag: taskViewModel.taskLocalDataModel!.tasks.count, isInitCreate: false)
         
         print("self.originX!:\(self.originX!)")
         //scrollViewのcontentSizeを，View全体のサイズに合わせる
@@ -173,7 +172,7 @@ class MainViewController: UIViewController {
         setGradationColor(color: taskView.presenter.taskViewModel.taskColor!)
     }
     
-    func createTaskView(task:Dictionary<String, Any>, tag: Int, isInitCreate: Bool){
+    func createTaskView(task:TaskModel, tag: Int, isInitCreate: Bool){
         taskEmptyView.isHidden = true
         // VIewを設置する高さを計算する
         let mainScreenHeight: CGFloat = UIScreen.main.bounds.size.height

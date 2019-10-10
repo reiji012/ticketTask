@@ -22,6 +22,7 @@
 		11EA118C234D8839003223A7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 11EA118B234D8839003223A7 /* GoogleService-Info.plist */; };
 		11EA118E234DBD17003223A7 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EA118D234DBD17003223A7 /* Notifications.swift */; };
 		11EA1190234DC635003223A7 /* DateFormatterExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EA118F234DC635003223A7 /* DateFormatterExtensions.swift */; };
+		11EA1192234F0AFB003223A7 /* TaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EA1191234F0AFB003223A7 /* TaskModel.swift */; };
 		11EC7B93234B13970099D444 /* TaskColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EC7B92234B13970099D444 /* TaskColor.swift */; };
 		11EC7B95234B16190099D444 /* ColorSelectViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EC7B94234B16190099D444 /* ColorSelectViewPresenter.swift */; };
 		11EC7B97234B199E0099D444 /* IconSelectViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EC7B96234B199E0099D444 /* IconSelectViewPresenter.swift */; };
@@ -39,7 +40,7 @@
 		2BF5B75422814521007D0266 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2BF5B75322814521007D0266 /* Assets.xcassets */; };
 		2BF5B75722814521007D0266 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2BF5B75522814521007D0266 /* LaunchScreen.storyboard */; };
 		2BF5B76322814974007D0266 /* TaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF5B76222814974007D0266 /* TaskViewModel.swift */; };
-		2BF5B7652281498F007D0266 /* TaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF5B7642281498F007D0266 /* TaskModel.swift */; };
+		2BF5B7652281498F007D0266 /* TaskLocalDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF5B7642281498F007D0266 /* TaskLocalDataModel.swift */; };
 		2BF5B767228155EC007D0266 /* TaskView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2BF5B766228155EC007D0266 /* TaskView.xib */; };
 		2BF5B7692281562D007D0266 /* TaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF5B7682281562D007D0266 /* TaskView.swift */; };
 		2BF5B76C22829DCD007D0266 /* TicketTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF5B76A22829DCD007D0266 /* TicketTableViewCell.swift */; };
@@ -78,6 +79,7 @@
 		11EA118B234D8839003223A7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		11EA118D234DBD17003223A7 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		11EA118F234DC635003223A7 /* DateFormatterExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterExtensions.swift; sourceTree = "<group>"; };
+		11EA1191234F0AFB003223A7 /* TaskModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskModel.swift; sourceTree = "<group>"; };
 		11EC7B92234B13970099D444 /* TaskColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskColor.swift; sourceTree = "<group>"; };
 		11EC7B94234B16190099D444 /* ColorSelectViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSelectViewPresenter.swift; sourceTree = "<group>"; };
 		11EC7B96234B199E0099D444 /* IconSelectViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectViewPresenter.swift; sourceTree = "<group>"; };
@@ -97,7 +99,7 @@
 		2BF5B75622814521007D0266 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2BF5B75822814521007D0266 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2BF5B76222814974007D0266 /* TaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TaskViewModel.swift; path = ViewModel/TaskViewModel.swift; sourceTree = "<group>"; };
-		2BF5B7642281498F007D0266 /* TaskModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskModel.swift; sourceTree = "<group>"; };
+		2BF5B7642281498F007D0266 /* TaskLocalDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskLocalDataModel.swift; sourceTree = "<group>"; };
 		2BF5B766228155EC007D0266 /* TaskView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TaskView.xib; sourceTree = "<group>"; };
 		2BF5B7682281562D007D0266 /* TaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskView.swift; sourceTree = "<group>"; };
 		2BF5B76A22829DCD007D0266 /* TicketTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketTableViewCell.swift; sourceTree = "<group>"; };
@@ -157,8 +159,8 @@
 				1181EDC6234C49B3006D6CDD /* ErrorAlert */,
 				11B4F997233DEF54008CD2F6 /* SelectIcon */,
 				11B4F996233DEF3C008CD2F6 /* SelectColor */,
-				11B4F995233DEECE008CD2F6 /* EditTask */,
 				11B4F994233DEE7F008CD2F6 /* TaskCardGroup */,
+				11B4F995233DEECE008CD2F6 /* EditTask */,
 				11B4F993233DEE56008CD2F6 /* AddTask */,
 				11B4F992233DEDCD008CD2F6 /* Main */,
 			);
@@ -247,9 +249,10 @@
 			isa = PBXGroup;
 			children = (
 				11B4F99A233DF0C4008CD2F6 /* Entity */,
-				2BF5B7642281498F007D0266 /* TaskModel.swift */,
+				2BF5B7642281498F007D0266 /* TaskLocalDataModel.swift */,
 				8E6B2A0F22FF22E900113E30 /* WetherModel.swift */,
 				2BE551652292695000D5AFA9 /* TaskItem.swift */,
+				11EA1191234F0AFB003223A7 /* TaskModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -506,9 +509,10 @@
 				11EC7B95234B16190099D444 /* ColorSelectViewPresenter.swift in Sources */,
 				11B5E44B2347317600DBCB14 /* TaskViewPresenter.swift in Sources */,
 				2BF5B74F22814521007D0266 /* MainViewController.swift in Sources */,
+				11EA1192234F0AFB003223A7 /* TaskModel.swift in Sources */,
 				2BF5B76322814974007D0266 /* TaskViewModel.swift in Sources */,
 				2BF5B76C22829DCD007D0266 /* TicketTableViewCell.swift in Sources */,
-				2BF5B7652281498F007D0266 /* TaskModel.swift in Sources */,
+				2BF5B7652281498F007D0266 /* TaskLocalDataModel.swift in Sources */,
 				111F5EBF2342E7E10034548A /* ScreenType.swift in Sources */,
 				2BF5B77C22855657007D0266 /* AddTaskViewController.swift in Sources */,
 				11B5E4462345F90300DBCB14 /* Routable.swift in Sources */,
