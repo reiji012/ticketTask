@@ -19,7 +19,7 @@ class TaskItem: Object {
     @objc dynamic var lastResetDate: Date? = nil
     // 0: 無期限, 1: 一日, 2: 一週間, 3: 一月
     @objc dynamic var resetType: Int = 0
-    let tickets = List<TicketModel>()
+    var tickets = List<TicketModel>()
     
     override static func primaryKey() -> String? {
         return "id"

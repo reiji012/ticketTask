@@ -9,7 +9,7 @@
 import Foundation
 
 class TaskModel: NSObject {
-    var id: Int? = nil
+    let id: Int
     var taskTitle: String = ""
     var attri: String = ""
     var color: String = ""
@@ -18,6 +18,10 @@ class TaskModel: NSObject {
     var lastResetDate: Date? = nil
     
     var tickets: [TicketsModel] = []
+    
+    init(id: Int) {
+        self.id = id
+    }
 }
 
 class TicketsModel: NSObject {
