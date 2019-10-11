@@ -245,24 +245,25 @@ class TaskLocalDataModel {
         
     }
     
-    func editTask(afterTaskName: String, afterTaskAttr: String, colorStr: String, imageStr: String, id: Int, beforeName: String, completion: (() -> Void)) -> ValidateError? {
+    func editTask(currentTaskModel: TaskModel ,beforeName: String, completion: (() -> Void)) -> ValidateError? {
         do {
-            let results = realm.objects(TaskItem.self).filter("id = \(id)")
+            let results = realm.objects(TaskItem.self).filter("id = \(currentTaskModel.id)").first
             
             let result = realm.objects(TaskItem.self)
             print(result)
             let tasks = result.map {$0.taskTitle}
-            if tasks.index(of: afterTaskName) != nil, afterTaskName != beforeName {
+            if currentTaskModel.taskTitle != beforeName, tasks.index(of: currentTaskModel.taskTitle) != nil {
                 // 同じ名前のタスクが存在した場合はエラーを返す
                 let error = ValidateError.taskValidError
                 return error
             }
             
             try! realm.write {
-                results.setValue(afterTaskName, forKey: TASK_TITLE)
-                results.setValue(afterTaskAttr, forKey: TASK_ATTRI)
-                results.setValue(colorStr, forKey: TASK_COLOR)
-                results.setValue(imageStr, forKey: TASK_ICON)
+                results?.taskTitle = currentTaskModel.taskTitle
+                results?.attri = currentTaskModel.attri
+                results?.color = currentTaskModel.color
+                results?.icon = currentTaskModel.icon
+                results?.resetType = currentTaskModel.resetType
                 completion()
             }
             return nil
@@ -281,9 +282,8 @@ class TaskLocalDataModel {
     func resetTaskModel(resetType: Int) {
         let result = realm.objects(TaskItem.self).filter("resetType == %@", resetType)
         for task in result {
-            let lastResetDate = task.lastResetDate!
             let now = settingData.getToday()
-            if now > lastResetDate {
+            if now > task.lastResetDate! {
                 try! realm.write {
                     for ticket in task.tickets {
                         ticket.isCompleted = false

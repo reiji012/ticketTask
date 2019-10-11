@@ -14,6 +14,7 @@ protocol EditTaskViewPresenterProtocol {
     var currentIconString: String { get set }
     var currentIcon: UIImage { get }
     func touchSaveButton(afterTaskName: String)
+    func touchTimerSetButton(resetTypeIndex: Int)
 }
 
 class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
@@ -23,9 +24,12 @@ class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
     private var taskView: TaskViewProtocol!
     private var taskLocalDataModel: TaskLocalDataModel = TaskLocalDataModel.sharedManager
     private var beforeName: String?
+    private var resetTypeIndex: Int?
+    private let currentTaskModel: TaskModel
     
     var currentIconString: String = "" {
         didSet {
+            currentTaskModel.icon = currentIconString
             currentIcon = (UIImage(named: currentIconString)?.withRenderingMode(.alwaysTemplate))!
             view.setIconImage(icon: currentIcon)
         }
@@ -34,6 +38,7 @@ class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
     var currentIcon: UIImage
     var currentColor: TaskColor {
         didSet {
+            currentTaskModel.color = currentColor.colorString
             view.setColorView(color: currentColor.gradationColor1)
         }
     }
@@ -46,11 +51,15 @@ class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
         currentIcon = taskView.presenter.taskViewModel.iconImage!
         currentIconString = taskView.presenter.taskViewModel.iconString!
         beforeName = taskView.presenter.taskViewModel.taskName!
-//        currentResetTypeIndex = taskView.presenter.taskViewModel
+        currentTaskModel = TaskModel(id: taskView.presenter.taskViewModel.taskID!)
     }
     
     func touchSaveButton(afterTaskName: String) {
-        let error = taskLocalDataModel.editTask(afterTaskName: afterTaskName, afterTaskAttr: "", colorStr: currentColor.colorString, imageStr: currentIconString, id: taskView.presenter.taskViewModel.taskID!, beforeName: beforeName!, completion: {
+        let currentTaskModel = TaskModel(id: taskView.presenter.taskViewModel.taskID!)
+        currentTaskModel.taskTitle = afterTaskName
+        currentTaskModel.attri = ""
+        
+        let error = taskLocalDataModel.editTask(currentTaskModel: currentTaskModel, beforeName: beforeName!, completion: {
             let vm = self.taskView.presenter.taskViewModel
             vm.taskName = afterTaskName
             vm.attri = ""
@@ -65,5 +74,9 @@ class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
             }
             createErrorAlert(error: error, massage: "", view: viewController)
         }
+    }
+    
+    func touchTimerSetButton(resetTypeIndex: Int) {
+        currentTaskModel.resetType = resetTypeIndex
     }
 }

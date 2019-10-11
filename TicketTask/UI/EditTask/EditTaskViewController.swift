@@ -104,7 +104,7 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
     }
     
     @IBAction func touchTimerSetButton(_ sender: Any) {
-        resetType = timerBtn.selectedSegmentIndex
+        presenter.touchTimerSetButton(resetTypeIndex: timerBtn.selectedSegmentIndex)
     }
     
     func bind() {
