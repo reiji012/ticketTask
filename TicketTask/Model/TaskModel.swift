@@ -15,6 +15,7 @@ class TaskModel: NSObject {
     var color: String = ""
     var icon: String = ""
     var category: String = ""
+    var resetType: Int = 0
     var lastResetDate: Date? = nil
     
     var tickets: [TicketsModel] = []
