@@ -14,6 +14,9 @@ import SPFakeBar
 protocol AddTaskViewControllerProtocol {
     func didTaskCreated()
     func didAddTicket()
+    func setIconImage()
+    func setColorView()
+    func setGradationColor()
 }
 
 class AddTaskViewController: UIViewController, IconSelectViewControllerDelegate, ColorSelectViewControllerDelegate{
@@ -148,13 +151,12 @@ class AddTaskViewController: UIViewController, IconSelectViewControllerDelegate,
     }
     
     func selectedColor(color: TaskColor) {
-        presenter.currentColor = color
-        setColorView()
-        setIconImage()
-        setGradationColor()
+        presenter.selectedColor(color: color)
+        
     }
     
     func selectedIcon(iconStr: String) {
+        presenter.selectedIcon(iconString: iconStr)
         
     }
     
@@ -170,7 +172,7 @@ class AddTaskViewController: UIViewController, IconSelectViewControllerDelegate,
     }
     
     func setIconImage() {
-        self.iconImageView.image = currentIcon
+        self.iconImageView.image = UIImage(named: presenter.currentTaskModel.icon)?.withRenderingMode(.alwaysTemplate)
         self.iconImageView.tintColor = presenter.currentColor.gradationColor1
     }
     

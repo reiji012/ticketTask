@@ -73,6 +73,7 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
         self.titleTextField.text = taskViewModel?.taskName
         
         self.initStateSet()
+        timerBtn.selectedSegmentIndex = presenter.currentResetType
     }
     
     @objc func touchCanselButton() {

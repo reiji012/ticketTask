@@ -9,27 +9,34 @@
 protocol AddTaskViewPresenterProtocol {
     var tickets: [TicketsModel]! { get }
     var currentColor: TaskColor { get set }
+    var currentTaskModel: TaskModel! { get }
     func viewDidLoad()
     func touchAddTicketButton(text: String)
     func touchCreateButton(taskName: String, attri: String, colorStr: String, iconStr: String, tickets:[TicketsModel], resetType: Int)
     func removeTicket(index: IndexPath)
+    func selectedColor(color: TaskColor)
+    func selectedIcon(iconString: String)
 }
 
 
 import Foundation
 
 class AddTaskViewPresenter: AddTaskViewPresenterProtocol, ErrorAlert {
+
+    
     var tickets: [TicketsModel]! = []
     var view: AddTaskViewControllerProtocol!
     var taskLocalDataModel: TaskLocalDataModel?
     var ticketArray = [String]()
     var currentColor: TaskColor
+    var currentTaskModel: TaskModel!
     
     init(vc: AddTaskViewControllerProtocol) {
         view = vc
         taskLocalDataModel = TaskLocalDataModel.sharedManager
         tickets = []
         currentColor = .orange
+        currentTaskModel = TaskModel(id: (taskLocalDataModel?.lastId())!)
     }
     
     func viewDidLoad() {
@@ -38,7 +45,9 @@ class AddTaskViewPresenter: AddTaskViewPresenterProtocol, ErrorAlert {
     
     func touchAddTicketButton(text: String) {
         if ticketArray.index(of: text) == nil {
-            self.tickets.append(TicketsModel().initiate(ticketName: text))
+            let ticketModel = TicketsModel().initiate(ticketName: text)
+            self.tickets.append(ticketModel)
+            currentTaskModel.tickets.append(ticketModel)
             ticketArray.append(text)
             view.didAddTicket()
         } else {
@@ -78,5 +87,17 @@ class AddTaskViewPresenter: AddTaskViewPresenterProtocol, ErrorAlert {
     
     func removeTicket(index: IndexPath) {
         tickets.remove(at: index.row)
+    }
+    
+    func selectedColor(color: TaskColor) {
+        currentColor = color
+        view.setColorView()
+        view.setIconImage()
+        view.setGradationColor()
+    }
+    
+    func selectedIcon(iconString: String) {
+        currentTaskModel.icon = iconString
+        view.setIconImage()
     }
 }

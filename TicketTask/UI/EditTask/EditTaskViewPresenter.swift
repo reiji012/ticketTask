@@ -13,6 +13,7 @@ protocol EditTaskViewPresenterProtocol {
     var currentColor: TaskColor { get set }
     var currentIconString: String { get set }
     var currentIcon: UIImage { get }
+    var currentResetType: Int { get }
     func touchSaveButton(afterTaskName: String)
     func touchTimerSetButton(resetTypeIndex: Int)
 }
@@ -26,6 +27,7 @@ class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
     private var beforeName: String?
     private var resetTypeIndex: Int?
     private let currentTaskModel: TaskModel
+    private let taskViewModel: TaskViewModel?
     
     var currentIconString: String = "" {
         didSet {
@@ -34,7 +36,9 @@ class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
             view.setIconImage(icon: currentIcon)
         }
     }
-    
+    var currentResetType: Int {
+        return currentTaskModel.resetType
+    }
     var currentIcon: UIImage
     var currentColor: TaskColor {
         didSet {
@@ -47,11 +51,13 @@ class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
     init(view: EditTaskViewControllerProtocol, taskView: TaskViewProtocol) {
         self.view = view
         self.taskView = taskView
-        currentColor = taskView.presenter.taskViewModel.taskColor!
-        currentIcon = taskView.presenter.taskViewModel.iconImage!
-        currentIconString = taskView.presenter.taskViewModel.iconString!
-        beforeName = taskView.presenter.taskViewModel.taskName!
-        currentTaskModel = TaskModel(id: taskView.presenter.taskViewModel.taskID!)
+        taskViewModel = taskView.presenter.taskViewModel
+        currentColor = taskViewModel!.taskColor!
+        currentIcon = taskViewModel!.iconImage!
+        currentIconString = taskViewModel!.iconString!
+        beforeName = taskViewModel!.taskName!
+        currentTaskModel = TaskModel(id: taskViewModel!.taskID!)
+        currentTaskModel.resetType = taskViewModel!.resetTypeIndex!
     }
     
     func touchSaveButton(afterTaskName: String) {
