@@ -73,6 +73,7 @@ class TaskViewModel: NSObject {
         self.tickets = task?.tickets
         self.iconString = task?.icon
         self.taskID = task?.id
+        self.resetTypeIndex = task?.resetType
         self.iconImage = UIImage(named: iconString!)!.withRenderingMode(.alwaysTemplate)
     }
     
@@ -83,6 +84,7 @@ class TaskViewModel: NSObject {
         self.tickets = task?.tickets
         self.iconString = task?.icon
         self.taskID = task?.id
+        self.resetTypeIndex = task?.resetType
         setColor(colorString: task!.color)
         countProgress()
     }
