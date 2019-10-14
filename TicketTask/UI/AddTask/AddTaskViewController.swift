@@ -17,9 +17,10 @@ protocol AddTaskViewControllerProtocol {
     func setIconImage()
     func setColorView()
     func setGradationColor()
+    func initSetState()
 }
 
-class AddTaskViewController: UIViewController, IconSelectViewControllerDelegate, ColorSelectViewControllerDelegate{
+class AddTaskViewController: UIViewController{
     
     var tableView: UITableView = UITableView()
     @IBOutlet weak var scrolView: UIScrollView!
@@ -58,7 +59,6 @@ class AddTaskViewController: UIViewController, IconSelectViewControllerDelegate,
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        presenter = AddTaskViewPresenter(vc: self)
         presenter.viewDidLoad()
         titleTextField.delegate = self
         ticketTextField.delegate = self
@@ -70,7 +70,6 @@ class AddTaskViewController: UIViewController, IconSelectViewControllerDelegate,
         let screenSize: CGRect = UIScreen.main.bounds
         screenWidth = screenSize.width
         screenHeight = screenSize.height
-        initSetState()
         bindUIs()
         
     }
@@ -104,9 +103,6 @@ class AddTaskViewController: UIViewController, IconSelectViewControllerDelegate,
     }
     
     func initSetState() {
-        let iconStr = "icon-0"
-        self.currentIcon = UIImage(named: iconStr)?.withRenderingMode(.alwaysTemplate)
-        self.currentIconStr = iconStr
         self.setColorView()
         self.setIconImage()
         self.setGradationColor()
@@ -138,42 +134,20 @@ class AddTaskViewController: UIViewController, IconSelectViewControllerDelegate,
     }
     
     @IBAction func touchTimerSetButton(_ sender: Any) {
-        resetType = timerBtm.selectedSegmentIndex
+        presenter.selectedResetTypeIndex(index: timerBtm.selectedSegmentIndex)
     }
     // Taskの作成
     @objc func touchCreateButton() {
-        presenter.touchCreateButton(taskName: titleTextField.text!,
-                                                     attri: "",
-                                                     colorStr: presenter.currentColor.colorString,
-                                                     iconStr: currentIconStr,
-                                                     tickets: presenter!.tickets,
-                                                     resetType: self.resetType)
+        presenter.touchCreateButton(taskName: titleTextField.text!)
     }
-    
-    func selectedColor(color: TaskColor) {
-        presenter.selectedColor(color: color)
-        
-    }
-    
-    func selectedIcon(iconStr: String) {
-        presenter.selectedIcon(iconString: iconStr)
-        
-    }
-    
-    func selectedIcon(icon: UIImage, iconStr: String) {
-        currentIconStr = iconStr
-        currentIcon = icon.withRenderingMode(.alwaysTemplate)
-        setIconImage()
-    }
-    
     
     func setColorView() {
         self.colorView.backgroundColor = presenter.currentColor.gradationColor1
+        self.iconImageView.tintColor = presenter.currentColor.gradationColor1
     }
     
     func setIconImage() {
         self.iconImageView.image = UIImage(named: presenter.currentTaskModel.icon)?.withRenderingMode(.alwaysTemplate)
-        self.iconImageView.tintColor = presenter.currentColor.gradationColor1
     }
     
     func setGradationColor() {
@@ -288,5 +262,18 @@ extension AddTaskViewController {
             else { return }
         scrollView.contentInset = .zero
         scrollView.scrollIndicatorInsets = .zero
+    }
+}
+
+extension AddTaskViewController: ColorSelectViewControllerDelegate {
+    func selectedColor(color: TaskColor) {
+        presenter.selectedColor(color: color)
+    }
+}
+
+extension AddTaskViewController: IconSelectViewControllerDelegate {
+    func selectedIcon(iconStr: String) {
+        presenter.selectedIcon(iconString: iconStr)
+        
     }
 }

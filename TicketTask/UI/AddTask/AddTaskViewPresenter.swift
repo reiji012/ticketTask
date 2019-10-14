@@ -12,14 +12,16 @@ protocol AddTaskViewPresenterProtocol {
     var currentTaskModel: TaskModel! { get }
     func viewDidLoad()
     func touchAddTicketButton(text: String)
-    func touchCreateButton(taskName: String, attri: String, colorStr: String, iconStr: String, tickets:[TicketsModel], resetType: Int)
+    func touchCreateButton(taskName: String)
     func removeTicket(index: IndexPath)
     func selectedColor(color: TaskColor)
     func selectedIcon(iconString: String)
+    func selectedResetTypeIndex(index: Int)
 }
 
 
 import Foundation
+import UIKit
 
 class AddTaskViewPresenter: AddTaskViewPresenterProtocol, ErrorAlert {
 
@@ -28,8 +30,22 @@ class AddTaskViewPresenter: AddTaskViewPresenterProtocol, ErrorAlert {
     var view: AddTaskViewControllerProtocol!
     var taskLocalDataModel: TaskLocalDataModel?
     var ticketArray = [String]()
-    var currentColor: TaskColor
     var currentTaskModel: TaskModel!
+    
+    var currentIcon: UIImage?
+    
+    var currentIconString: String? {
+        didSet {
+            currentTaskModel.icon = currentIconString!
+            currentIcon = UIImage(named: currentIconString!)
+        }
+    }
+    
+    var currentColor: TaskColor {
+        didSet {
+            currentTaskModel.color = currentColor.colorString
+        }
+    }
     
     init(vc: AddTaskViewControllerProtocol) {
         view = vc
@@ -37,13 +53,18 @@ class AddTaskViewPresenter: AddTaskViewPresenterProtocol, ErrorAlert {
         tickets = []
         currentColor = .orange
         currentTaskModel = TaskModel(id: (taskLocalDataModel?.lastId())!)
+        currentTaskModel = TaskModel(id: (taskLocalDataModel?.lastId())!)
     }
     
     func viewDidLoad() {
-        
+        currentTaskModel.color = currentColor.colorString
+        currentIconString = "icon-0"
+        currentTaskModel.resetType = 0
+        view.initSetState()
     }
     
     func touchAddTicketButton(text: String) {
+         // TODO: if currentTaskModel.tickets.map({$0.ticketName}).index(of: text) != nil
         if ticketArray.index(of: text) == nil {
             let ticketModel = TicketsModel().initiate(ticketName: text)
             self.tickets.append(ticketModel)
@@ -58,7 +79,7 @@ class AddTaskViewPresenter: AddTaskViewPresenterProtocol, ErrorAlert {
         }
     }
     
-    func touchCreateButton(taskName: String, attri: String, colorStr: String, iconStr: String, tickets:[TicketsModel], resetType: Int) {
+    func touchCreateButton(taskName: String) {
         
         let isEmptyTaskName = taskName.isEmpty
         let isEmptyTicketCount = tickets.count == 0
@@ -73,8 +94,8 @@ class AddTaskViewPresenter: AddTaskViewPresenterProtocol, ErrorAlert {
             createErrorAlert(error: .inputValidError, massage: massage, view: viewController)
             return
         }
-        
-        let error = taskLocalDataModel?.createTask(taskName: taskName, attri: attri, colorStr: colorStr, iconStr:  iconStr, tickets:tickets, resetType: resetType)
+        currentTaskModel.taskTitle = taskName
+        let error = taskLocalDataModel?.createTask(taskModel: currentTaskModel)
         if let error = error {
             guard let viewController = view as? AddTaskViewController else {
                 return
@@ -92,12 +113,15 @@ class AddTaskViewPresenter: AddTaskViewPresenterProtocol, ErrorAlert {
     func selectedColor(color: TaskColor) {
         currentColor = color
         view.setColorView()
-        view.setIconImage()
         view.setGradationColor()
     }
     
     func selectedIcon(iconString: String) {
-        currentTaskModel.icon = iconString
+        currentIconString = iconString
         view.setIconImage()
+    }
+    
+    func selectedResetTypeIndex(index: Int) {
+        currentTaskModel.resetType = index
     }
 }

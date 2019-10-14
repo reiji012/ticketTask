@@ -82,25 +82,18 @@ class TaskLocalDataModel {
     }
     
     /*タスクを作成する*/
-    func createTask(taskName: String, attri: String, colorStr: String, iconStr: String, tickets:[TicketsModel], resetType: Int) -> ValidateError? {
+    func createTask(taskModel: TaskModel) -> ValidateError? {
         
-        if taskName.isEmpty || tickets.count == 0 {
+        if taskModel.taskTitle.isEmpty || taskModel.tickets.count == 0 {
             let error: ValidateError = .inputValidError
             return error
         }
         let lastID = self.lastId()
-        // モデル作成
-        let taskModel = TaskModel(id: lastID)
-        taskModel.taskTitle = taskName
-        taskModel.attri = attri
-        taskModel.color = colorStr
-        taskModel.icon = iconStr
-        taskModel.tickets = tickets
-    
+
         let results = realm.objects(TaskItem.self)
         print(results)
         let tasks = results.map {$0.taskTitle}
-        if tasks.index(of: taskName) != nil {
+        if tasks.index(of: taskModel.taskTitle) != nil {
             // 同じ名前のタスクが存在した場合はエラーを返す
             let error = ValidateError.taskValidError
             return error
@@ -108,7 +101,7 @@ class TaskLocalDataModel {
         
         // Realm用チケットモデル作成
         let ticketsRealmArray = List<TicketModel>()
-        for ticket in tickets {
+        for ticket in taskModel.tickets {
             let ticketRealmModel = TicketModel()
             ticketRealmModel.ticketName = ticket.ticketName
             ticketRealmModel.isCompleted = false
@@ -124,13 +117,13 @@ class TaskLocalDataModel {
         // Realm用タスクモデル作成
         let taskItem = TaskItem()
         taskItem.id = lastID
-        taskItem.taskTitle = taskName
-        taskItem.attri = attri
-        taskItem.color = colorStr
-        taskItem.icon = iconStr
+        taskItem.taskTitle = taskModel.taskTitle
+        taskItem.attri = taskModel.attri
+        taskItem.color = taskModel.color
+        taskItem.icon = taskModel.icon
         taskItem.tickets = ticketsRealmArray
         taskItem.lastResetDate = day!
-        taskItem.resetType = resetType
+        taskItem.resetType = taskModel.resetType
         
         try! realm.write {
             realm.add(taskItem)
@@ -138,7 +131,7 @@ class TaskLocalDataModel {
             print(results)
         }
         // push通知設定
-        Notifications().pushNotificationSet(resetTimeType: resetType, taskID: lastID)
+        Notifications().pushNotificationSet(resetTimeType: taskModel.resetType, taskID: lastID)
         // タスク追加に成功した時にtasksパラメータにタスクを追加
         self.tasks.append(taskModel)
         self.lastCreateTask = taskModel

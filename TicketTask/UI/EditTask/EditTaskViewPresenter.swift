@@ -14,6 +14,7 @@ protocol EditTaskViewPresenterProtocol {
     var currentIconString: String { get set }
     var currentIcon: UIImage { get }
     var currentResetType: Int { get }
+    func viewDidLoad()
     func touchSaveButton(afterTaskName: String)
     func touchTimerSetButton(resetTypeIndex: Int)
 }
@@ -58,6 +59,11 @@ class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
         beforeName = taskViewModel!.taskName!
         currentTaskModel = TaskModel(id: taskViewModel!.taskID!)
         currentTaskModel.resetType = taskViewModel!.resetTypeIndex!
+    }
+    
+    func viewDidLoad() {
+        view.setTimeSelectIndex(index: currentTaskModel.resetType)
+        view.setNavigationBar()
     }
     
     func touchSaveButton(afterTaskName: String) {

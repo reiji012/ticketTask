@@ -17,6 +17,8 @@ protocol EditTaskViewControllerProtocol {
     func setColorView(color: UIColor)
     func setIconImage(icon: UIImage)
     func didSaveTask()
+    func setTimeSelectIndex(index: Int)
+    func setNavigationBar()
 }
 
 class EditTaskViewController: UIViewController, UIPopoverPresentationControllerDelegate, ColorSelectViewControllerDelegate, IconSelectViewControllerDelegate {
@@ -59,9 +61,14 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
     override func viewDidLoad() {
         super.viewDidLoad()
         bind()
+        presenter.viewDidLoad()
         self.modalPresentationCapturesStatusBarAppearance = true
         self.view.backgroundColor = UIColor.white
-        
+        self.titleTextField.text = taskViewModel?.taskName
+        self.initStateSet()
+    }
+    
+    func setNavigationBar() {
         self.navBar.titleLabel.text = "編集画面"
         self.navBar.leftButton.setTitle("キャンセル", for: .normal)
         self.navBar.leftButton.addTarget(self, action: #selector(self.touchCanselButton), for: .touchUpInside)
@@ -69,11 +76,6 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
         self.navBar.rightButton.addTarget(self, action: #selector(self.touchSaveButton), for: .touchUpInside)
         self.navBar.backgroundColor = UIColor.lightGray
         self.view.addSubview(self.navBar)
-        
-        self.titleTextField.text = taskViewModel?.taskName
-        
-        self.initStateSet()
-        timerBtn.selectedSegmentIndex = presenter.currentResetType
     }
     
     @objc func touchCanselButton() {
@@ -176,6 +178,10 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
     
     func changeColor() {
         
+    }
+    
+    func setTimeSelectIndex(index: Int) {
+        timerBtn.selectedSegmentIndex = index
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
