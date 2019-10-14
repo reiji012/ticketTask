@@ -174,7 +174,6 @@ class MainViewController: UIViewController {
             self.scrollView.contentOffset = CGPoint(x:maxScrollPoint, y:0)
         })
         self.stopPoint = scrollView.contentOffset.x
-        setGradationColor(color: taskView.presenter.taskViewModel.taskColor!)
     }
     
     func createTaskView(task:TaskModel, tag: Int, isInitCreate: Bool){
