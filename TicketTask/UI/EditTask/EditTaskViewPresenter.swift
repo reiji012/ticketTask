@@ -55,7 +55,6 @@ class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
         taskViewModel = taskView.presenter.taskViewModel
         currentColor = taskViewModel!.taskColor!
         currentIcon = taskViewModel!.iconImage!
-        currentIconString = taskViewModel!.iconString!
         beforeName = taskViewModel!.taskName!
         currentTaskModel = TaskModel(id: taskViewModel!.taskID!)
         currentTaskModel.resetType = taskViewModel!.resetTypeIndex!
@@ -63,11 +62,11 @@ class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
     
     func viewDidLoad() {
         view.setTimeSelectIndex(index: currentTaskModel.resetType)
+        currentIconString = taskViewModel!.iconString!
         view.setNavigationBar()
     }
     
     func touchSaveButton(afterTaskName: String) {
-        let currentTaskModel = TaskModel(id: taskView.presenter.taskViewModel.taskID!)
         currentTaskModel.taskTitle = afterTaskName
         currentTaskModel.attri = ""
         
