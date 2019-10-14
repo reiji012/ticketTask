@@ -66,6 +66,7 @@ class SettingData {
         let week = f.string(from: date)
         var targetType:[Int] = []
         targetType.append(1)
+        // 設定「１週間の初めの週」が起動時の日付の週と同じならタイプ２を追加
         if week == UserDefaults.standard.string(forKey: Keys.week.rawValue) {
             targetType.append(2)
         }
@@ -74,6 +75,7 @@ class SettingData {
         let calendar = Calendar.current
         let day = calendar.component(.day, from: date)
         
+        // 月初ならタイプ３を追加
         if day == 1 {
             targetType.append(3)
         }
