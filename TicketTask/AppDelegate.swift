@@ -37,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.registerForRemoteNotifications()
         
         // タスクリセット処理
-        TaskLocalDataModel().checkResetModel()
+        TaskLocalDataModel.sharedManager.checkResetModel()
         // [END register_for_notifications]
         return true
     }

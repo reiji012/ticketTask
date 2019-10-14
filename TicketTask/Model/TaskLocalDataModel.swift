@@ -33,7 +33,7 @@ class TaskLocalDataModel {
         return TaskLocalDataModel()
     }()
     
-    public init() {
+    private init() {
         var config = Realm.Configuration()
         config.deleteRealmIfMigrationNeeded = true
         self.realm = try! Realm(configuration: config)
