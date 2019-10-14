@@ -82,7 +82,12 @@ class MainViewController: UIViewController {
     }
     
     override func viewWillLayoutSubviews() {
-        
+        if let currentTaskView = taskView {
+            currentTaskView.setGradationColor(color: currentTaskView.presenter.currentColor)
+            DispatchQueue.main.async {
+                self.setGradationColor(color: currentTaskView.presenter.taskViewModel.taskColor!)
+            }
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -191,11 +196,8 @@ class MainViewController: UIViewController {
         self.originX! += taskViewWidth
     }
     
-    func taskEdited(attri: String, color: String) {
-        if let currentTaskView = getCenterTaskView() {
-            currentTaskView.setGradationColor(color: currentTaskView.presenter.currentColor)
-            setGradationColor(color: currentTaskView.presenter.taskViewModel.taskColor!)
-        }
+    func taskEdited(currentTaskView: TaskView) {
+        taskView = currentTaskView
     }
     
     /// 画面中央のViewを取得
@@ -277,7 +279,7 @@ extension MainViewController: MainViewControllerProtocol {
         scrollView.delegate = self
         
         let tasks = presenter.tasks
-        
+        var firstTaskView = TaskView()
         //titlesで定義したタブを1つずつ用意していく
         for (index, task) in tasks.enumerated() {
             //タブになるUIVIewを作る
@@ -287,9 +289,11 @@ extension MainViewController: MainViewControllerProtocol {
             if(index + 1 == 1) {
                 //グラデーションの作成
                 self.setGradationColor(color: taskView.presenter.taskViewModel.taskColor!)
+                // グラデーションカラーを先頭のViewのカラーにしたいので変数に保持しておく
+                firstTaskView = self.taskView
             }
         }
-        
+        self.taskView = firstTaskView
         //左端にダミーのUILabelを置く
         let tailLabel = UILabel()
         tailLabel.frame = CGRect(x:self.originX!, y:0, width:dummyViewWidth, height:self.scrollView.frame.size.height)

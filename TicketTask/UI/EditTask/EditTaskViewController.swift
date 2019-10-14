@@ -194,7 +194,10 @@ extension EditTaskViewController: EditTaskViewControllerProtocol {
         self.dismiss(animated: true, completion: {
             HUD.flash(.success, onView: self.mainVC!.view, delay: 0.5)
         })
-        self.mainVC?.taskEdited(attri: "", color: presenter.currentColor.colorString)
+        guard let taskView = presenter.taskView as? TaskView else {
+            return
+        }
+        self.mainVC?.taskEdited(currentTaskView: taskView)
     }
     
     func setIconImage(icon: UIImage) {
