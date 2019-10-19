@@ -71,14 +71,14 @@ class TaskLocalDataModel {
     }
     
     /*タスクを取得する*/
-    func getTask(taskName: String) -> TaskModel {
+    func getTask(taskName: String) -> TaskModel? {
         var currentTask: TaskModel?
         for task in tasks {
             if task.taskTitle == taskName {
                 currentTask = task
             }
         }
-        return currentTask!
+        return currentTask
     }
     
     /*タスクを作成する*/
