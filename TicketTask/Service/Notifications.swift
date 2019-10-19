@@ -12,30 +12,34 @@ import UserNotifications
 
 class Notifications {
     
-    func pushNotificationSet(resetTimeType: Int, taskID: Int) {
+    func pushNotificationSet(resetTimeType: Int, taskID: Int, taskTitle: String) {
         //プッシュ通知のインスタンス
         let notification = UNMutableNotificationContent()
         //通知のタイトル
-        notification.title = "push"
+        notification.title = "進捗はどうですか？"
         //通知の本文
-        notification.body = "これはプッシュ通知です"
+        notification.body = "\(taskTitle)のチケットを達成しましょう！"
         //通知の音
         notification.sound = UNNotificationSound.default
         
-        //ナビゲータエリア(ファイルが載っている左)にある画像を指定
-        if let path = Bundle.main.path(forResource: "猫", ofType: "png") {
-            
-            //通知に画像を設定
-            notification.attachments = [try! UNNotificationAttachment(identifier: "\(taskID)",
-                                                                      url: URL(fileURLWithPath: path), options: nil)]
-            
-        }
-        
         //通知タイミングを指定
         var notificationTime = DateComponents()
-        //
-        notificationTime.hour = 16
-        notificationTime.minute = 11
+        switch resetTimeType {
+        case 0:
+            notificationTime.hour = 16
+            notificationTime.minute = 11
+        case 1:
+            notificationTime.hour = 16
+            notificationTime.minute = 11
+        case 2:
+            notificationTime.weekday = 4
+        case 3:
+            notificationTime.day = 1
+        default:
+            break
+        }
+        
+        
         let trigger: UNNotificationTrigger
         trigger = UNCalendarNotificationTrigger(dateMatching: notificationTime, repeats: false)
         //通知のリクエスト

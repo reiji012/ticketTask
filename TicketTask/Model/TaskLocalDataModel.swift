@@ -131,7 +131,7 @@ class TaskLocalDataModel {
             print(results)
         }
         // push通知設定
-        Notifications().pushNotificationSet(resetTimeType: taskModel.resetType, taskID: lastID)
+        Notifications().pushNotificationSet(resetTimeType: taskModel.resetType, taskID: lastID, taskTitle: taskModel.taskTitle)
         // タスク追加に成功した時にtasksパラメータにタスクを追加
         self.tasks.append(taskModel)
         self.lastCreateTask = taskModel
