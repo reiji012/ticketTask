@@ -25,6 +25,12 @@ protocol MainViewPresenterProtocol {
 
 class MainViewPresenter: MainViewPresenterProtocol, Routable, ErrorAlert {
     
+    // MARK: - Private Propaty
+    private var taskLocalDataModel: TaskLocalDataModel!
+    private var wetherModel: WetherModel!
+    private var todayWetherInfo: Dictionary<String,Any>?
+    
+    // MARK: - Public Propaty
     var viewController: MainViewControllerProtocol!
     var tasks: [TaskModel] {
         return taskLocalDataModel!.tasks
@@ -34,20 +40,19 @@ class MainViewPresenter: MainViewPresenterProtocol, Routable, ErrorAlert {
     }
     var weatherIconImage: UIImage?
     
-    private var taskLocalDataModel: TaskLocalDataModel!
-    private var wetherModel: WetherModel!
-    private var todayWetherInfo: Dictionary<String,Any>?
-    
+    // MARK: - Initialize
     init(vc: MainViewControllerProtocol) {
         viewController = vc
         taskLocalDataModel = TaskLocalDataModel.sharedManager
         wetherModel = WetherModel.sharedManager
     }
     
+    // MARK: - Life Cycle
     func viewDidLoad() {
         setupWetherInfo()
     }
     
+    // MARK: - Public Fuction
     func touchAddButton() {
         guard let viewController = viewController as? MainViewController else {
             return

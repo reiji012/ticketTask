@@ -25,7 +25,7 @@ import UIKit
 
 class AddTaskViewPresenter: AddTaskViewPresenterProtocol, ErrorAlert {
 
-    
+    // MARK: - Public Propaty
     var tickets: [TicketsModel]! = []
     var view: AddTaskViewControllerProtocol!
     var taskLocalDataModel: TaskLocalDataModel?
@@ -47,6 +47,7 @@ class AddTaskViewPresenter: AddTaskViewPresenterProtocol, ErrorAlert {
         }
     }
     
+    // MARK: - Initialize
     init(vc: AddTaskViewControllerProtocol) {
         view = vc
         taskLocalDataModel = TaskLocalDataModel.sharedManager
@@ -56,6 +57,7 @@ class AddTaskViewPresenter: AddTaskViewPresenterProtocol, ErrorAlert {
         currentTaskModel = TaskModel(id: (taskLocalDataModel?.lastId())!)
     }
     
+    // MARK: - Life Cycle
     func viewDidLoad() {
         currentTaskModel.color = currentColor.colorString
         currentIconString = "icon-0"
@@ -63,6 +65,7 @@ class AddTaskViewPresenter: AddTaskViewPresenterProtocol, ErrorAlert {
         view.initSetState()
     }
     
+    // MARK: - Public Function
     func touchAddTicketButton(text: String) {
          // TODO: if currentTaskModel.tickets.map({$0.ticketName}).index(of: text) != nil
         if ticketArray.index(of: text) == nil {

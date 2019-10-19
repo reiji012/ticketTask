@@ -23,10 +23,12 @@ protocol EditTaskViewControllerProtocol {
 
 class EditTaskViewController: UIViewController, UIPopoverPresentationControllerDelegate, ColorSelectViewControllerDelegate, IconSelectViewControllerDelegate {
 
-    let disposeBag = DisposeBag()
-    
+    // MARK: - Private Propaty
     private var presenter: EditTaskViewPresenterProtocol!
-    
+    private var resetType: Int = 0
+    private let disposeBag = DisposeBag()
+
+    // MARK: - Public Propaty
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var colorView: UIView!
     @IBOutlet weak var titleTextField: UITextField!
@@ -44,7 +46,6 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
     
     var currentIconStr: String?
     var currentIcon: UIImage?
-    private var resetType: Int = 0
     
     let attris: [String] = ["生活", "仕事"]
     
@@ -58,6 +59,7 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
         return viewController
     }
     
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         bind()
@@ -68,6 +70,7 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
         self.initStateSet()
     }
     
+    // MARK: - Public Function
     func setNavigationBar() {
         self.navBar.titleLabel.text = "編集画面"
         self.navBar.leftButton.setTitle("キャンセル", for: .normal)
@@ -189,6 +192,7 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
     }
 }
 
+// MARK: - Extension
 extension EditTaskViewController: EditTaskViewControllerProtocol {
     func didSaveTask() {
         self.dismiss(animated: true, completion: {

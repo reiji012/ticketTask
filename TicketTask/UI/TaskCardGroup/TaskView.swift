@@ -18,7 +18,7 @@ protocol TaskViewProtocol {
 
 class TaskView: UIView, TaskViewProtocol{
     
-
+    // MARK: - Public Propaty
     @IBOutlet weak var buttonTextLabel: UILabel!
     @IBOutlet weak var ticketAddBtn: UIButton!
     @IBOutlet weak var menuTopConst: NSLayoutConstraint!
@@ -66,6 +66,7 @@ class TaskView: UIView, TaskViewProtocol{
         return view
     }
     
+    // MARK: - Public Funciton
     func setViewModel(task:TaskModel, mainVC: MainViewController) {
         self.mainViewController = mainVC
 
@@ -379,6 +380,7 @@ class TaskView: UIView, TaskViewProtocol{
     }
 }
 
+// MARK: - Extention PopMenuViewControllerDelegate
 extension MainViewController: PopMenuViewControllerDelegate {
     
     // This will be called when a menu action was selected
@@ -389,10 +391,12 @@ extension MainViewController: PopMenuViewControllerDelegate {
     
 }
 
+// MARK: - Extention UITableViewDelegate
 extension TaskView: UITableViewDelegate {
     
 }
 
+// MARK: - Extention UITableViewDataSource
 extension TaskView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return (self.presenter.taskViewModel.tickets?.count)!

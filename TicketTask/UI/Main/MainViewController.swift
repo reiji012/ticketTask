@@ -16,8 +16,19 @@ import PKHUD
 
 class MainViewController: UIViewController {
     
-    var presenter: MainViewPresenterProtocol!
+    // MARK: - Private Propaty
+    //カウンターアニメーションの時間設定
+    private var counterAnimationLabelDuration: TimeInterval = 3.0
     
+    private let initTaskViewHeight: CGFloat = 300
+    private let initTaskViewWidth: CGFloat = 350
+    
+    private var dummyViewWidth: CGFloat!
+    private var scrollViewHeight: CGFloat!
+    
+    private var presenter: MainViewPresenterProtocol!
+    
+    // MARK: - Public Propaty
     // ViewModelの取得
     var taskViewModel = TaskViewModel()
     var taskViewIndex: Int?
@@ -44,14 +55,6 @@ class MainViewController: UIViewController {
     
     var tabbarHeight: CGFloat!
     
-    //カウンターアニメーションの時間設定
-    private var counterAnimationLabelDuration: TimeInterval = 3.0
-    
-    private let initTaskViewHeight: CGFloat = 300
-    private let initTaskViewWidth: CGFloat = 350
-    
-    private var dummyViewWidth: CGFloat!
-    private var scrollViewHeight: CGFloat!
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var weatherImgView: UIImageView!
@@ -62,6 +65,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var taskEmptyView: UIView!
     
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter = MainViewPresenter(vc: self)
@@ -102,7 +106,8 @@ class MainViewController: UIViewController {
             currentTaskView.frame.size.height = self.isShowDetail ? myBoundSize.height : self.taskViewHeight
         }
     }
-
+    
+    // MARK: - Public Function
     @IBAction func touchAddButton(_ sender: Any) {
         let viewContreoller = AddTaskViewController.initiate()
         viewContreoller.mainVC = self
@@ -227,6 +232,7 @@ class MainViewController: UIViewController {
     }
 }
 
+// MARK: - Extension MainViewControllerProtocol
 extension MainViewController: MainViewControllerProtocol {
     /// タスクの削除
     ///
@@ -335,6 +341,7 @@ extension MainViewController: MainViewControllerProtocol {
     }
 }
 
+// MARK: - Extension UIScrollViewDelegate
 extension MainViewController: UIScrollViewDelegate {
 
     /*

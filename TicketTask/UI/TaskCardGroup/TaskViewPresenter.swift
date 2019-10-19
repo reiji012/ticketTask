@@ -20,8 +20,10 @@ protocol TaskViewPresenterProtocol {
 
 class TaskViewPresenter: TaskViewPresenterProtocol {
     
+    // MARK: - Private Propaty
     private var view: TaskViewProtocol!
 
+    // MARK: - Public Propaty
     var task: TaskModel?
     var taskViewModel: TaskViewModel
     var menuLeftConst: CGFloat
@@ -32,6 +34,8 @@ class TaskViewPresenter: TaskViewPresenterProtocol {
     
     var mainViewController: MainViewControllerProtocol!
     
+    
+    // MARK: - InitiaLize
     init(view: TaskViewProtocol, mainViewController: MainViewControllerProtocol, task: TaskModel) {
         self.view = view
         self.mainViewController = mainViewController
@@ -61,6 +65,7 @@ class TaskViewPresenter: TaskViewPresenterProtocol {
         }
     }
     
+    // MARK: - Public Function
     /// タスク削除
     func deleteTask() {
         guard let view = self.view as? TaskView else {

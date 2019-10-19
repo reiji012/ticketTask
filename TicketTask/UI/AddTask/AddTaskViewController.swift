@@ -22,6 +22,12 @@ protocol AddTaskViewControllerProtocol {
 
 class AddTaskViewController: UIViewController{
     
+    // MARK: - Private Propaty
+    private var currentIcon: UIImage!
+    private var currentIconStr: String!
+    private var resetType: Int = 0
+    
+    //MARK: - Public Propaty
     var tableView: UITableView = UITableView()
     @IBOutlet weak var scrolView: UIScrollView!
     @IBOutlet weak var timerBtm: UISegmentedControl!
@@ -46,9 +52,6 @@ class AddTaskViewController: UIViewController{
     var screenWidth:CGFloat!
     
     var presenter: AddTaskViewPresenterProtocol!
-    private var currentIcon: UIImage!
-    private var currentIconStr: String!
-    private var resetType: Int = 0
     
     // MARK: - Initilizer
     static func initiate() -> AddTaskViewController {
@@ -57,6 +60,7 @@ class AddTaskViewController: UIViewController{
         return viewController
     }
     
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.viewDidLoad()
@@ -90,6 +94,7 @@ class AddTaskViewController: UIViewController{
         super.viewWillDisappear(animated)
     }
     
+    // MARK: - Public Function
     func bindUIs() {
         setGradationColor()
         
@@ -162,6 +167,7 @@ class AddTaskViewController: UIViewController{
     }
 }
 
+// MARK: - Extension AddTaskViewControllerProtocol
 extension AddTaskViewController: AddTaskViewControllerProtocol {
     func didTaskCreated() {
         dismiss(animated: true, completion: {
@@ -178,6 +184,7 @@ extension AddTaskViewController: AddTaskViewControllerProtocol {
     }
 }
 
+// MARK: - Extension UITableViewDataSource
 extension AddTaskViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return presenter.tickets.count
@@ -199,6 +206,7 @@ extension AddTaskViewController: UITableViewDataSource {
     }
 }
 
+// MARK: - Extension UITableViewDelegate
 extension AddTaskViewController: UITableViewDelegate {
     
 }

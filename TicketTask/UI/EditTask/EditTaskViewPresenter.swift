@@ -22,7 +22,7 @@ protocol EditTaskViewPresenterProtocol {
 
 class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
     
-    
+    // MARK: - Private Propaty
     private var view: EditTaskViewControllerProtocol!
     private var taskLocalDataModel: TaskLocalDataModel = TaskLocalDataModel.sharedManager
     private var beforeName: String?
@@ -30,6 +30,7 @@ class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
     private let currentTaskModel: TaskModel
     private let taskViewModel: TaskViewModel?
     
+    // MARK: - Public Propaty
     var taskView: TaskViewProtocol!
 
     var currentIconString: String = "" {
@@ -51,6 +52,7 @@ class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
     }
 //    var currentResetTypeIndex: Int
     
+    // MARK: - initialize
     init(view: EditTaskViewControllerProtocol, taskView: TaskViewProtocol) {
         self.view = view
         self.taskView = taskView
@@ -62,6 +64,7 @@ class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
         currentTaskModel.resetType = taskViewModel!.resetTypeIndex!
     }
     
+    // MARK: - Public Function
     func viewDidLoad() {
         view.setTimeSelectIndex(index: currentTaskModel.resetType)
         currentIconString = taskViewModel!.iconString!
