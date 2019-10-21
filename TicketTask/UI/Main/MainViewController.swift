@@ -43,8 +43,8 @@ class MainViewController: UIViewController {
     var gradientLayer: CAGradientLayer = CAGradientLayer()
     //TaskViewの横幅
     var taskViewHeight: CGFloat!
-    let taskViewWidth: CGFloat = 400.0
-    var currentWidth: Int = 400
+    let taskViewWidth: CGFloat = 325.0
+    var currentWidth: Int = 325
     var stopPoint: CGFloat = 0.0
     var originX:CGFloat?
     func topSafeAreaHeight() -> CGFloat {
@@ -190,7 +190,7 @@ class MainViewController: UIViewController {
         let viewWidth = isInitCreate ? initTaskViewWidth : screenType.taskViewCardWidth
         
         taskView = TaskView.initiate(mainViewController: self, task: task)
-        taskView.frame = CGRect.init(x: self.originX! + 25, y: currentY, width: viewWidth, height: initTaskViewHeight)
+        taskView.frame = CGRect.init(x: self.originX! - 12, y: currentY, width: viewWidth, height: initTaskViewHeight)
         taskView.bind()
         taskView.setLayout()
         taskView.topSafeAreaHeight = self.view.safeAreaInsets.top
