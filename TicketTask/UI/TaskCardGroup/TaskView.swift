@@ -14,6 +14,8 @@ import SPStorkController
 
 protocol TaskViewProtocol {
     var presenter: TaskViewPresenterProtocol! { get }
+    var isShowDetail: Bool { get set }
+    func changeViewSize()
 }
 
 class TaskView: UIView, TaskViewProtocol{
@@ -119,6 +121,10 @@ class TaskView: UIView, TaskViewProtocol{
         }
     }
     
+    @objc func touchView(_ sender: UITapGestureRecognizer){
+        presenter.touchView()
+    }
+    
     func touchEditButton() {
         let editViewController = EditTaskViewController.initiate(taskView: self)
         let trantisionDelegate = SPStorkTransitioningDelegate()
@@ -192,13 +198,7 @@ class TaskView: UIView, TaskViewProtocol{
         }).disposed(by: disposeBag)
         
     }
-    
-    @objc func touchView(_ sender: UITapGestureRecognizer){
-        if isShowDetail {
-            return
-        }
-        self.changeViewSize()
-    }
+
     
     func setImage() {
         self.attriImageView.image = self.presenter.taskViewModel.iconImage?.withRenderingMode(.alwaysTemplate)

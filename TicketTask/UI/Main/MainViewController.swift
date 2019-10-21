@@ -99,12 +99,14 @@ class MainViewController: UIViewController {
         for i in 0..<presenter.taskTotalCount {
             let taskView = self.view.viewWithTag(i + 1) as! TaskView
             taskView.frame.size.height = self.taskViewHeight
+            taskView.isCenter = false
         }
         
         if let currentTaskView: TaskView = self.getCenterTaskView() {
             let myBoundSize: CGSize = UIScreen.main.bounds.size
             currentTaskView.frame.size.height = self.isShowDetail ? myBoundSize.height : self.taskViewHeight
             currentTaskView.isCenter = true
+            self.scrollView.bringSubviewToFront(currentTaskView)
         }
     }
     
@@ -199,6 +201,7 @@ class MainViewController: UIViewController {
         scrollView.addSubview(taskView)
         //次のタブのx座標を用意する
         self.originX! += taskViewWidth
+        scrollView.bringSubviewToFront(taskView)
     }
     
     func taskEdited(currentTaskView: TaskView) {
@@ -388,8 +391,14 @@ extension MainViewController: UIScrollViewDelegate {
             scrollPoint = 0
         }
         self.taskViewIndex = (Int(scrollPoint) / self.currentWidth) + 1
+        for i in 0..<presenter.taskTotalCount {
+            let taskView = self.view.viewWithTag(i + 1) as! TaskView
+            taskView.isCenter = false
+        }
         if let currentTaskView = self.getCenterTaskView() {
             self.setGradationColor(color: currentTaskView.presenter.taskViewModel.taskColor!)
+            currentTaskView.isCenter = true
+            self.scrollView.bringSubviewToFront(currentTaskView)
         }
         UIView.animate(withDuration: 0.3, animations: {
             scrollView.contentOffset = CGPoint(x:scrollPoint, y:0)

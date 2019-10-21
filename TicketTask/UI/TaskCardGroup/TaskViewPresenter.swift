@@ -16,6 +16,7 @@ protocol TaskViewPresenterProtocol {
     var progressBarWidthConst: CGFloat { get }
     func deleteTask()
     func didTouchAddTicketButton(ticket: String)
+    func touchView()
 }
 
 class TaskViewPresenter: TaskViewPresenterProtocol {
@@ -85,4 +86,14 @@ class TaskViewPresenter: TaskViewPresenterProtocol {
         taskViewModel.addTicket(ticketName: ticket)
     }
     
+    func touchView() {
+        guard let view = view as? TaskView else {
+            return
+        }
+        
+        if view.isShowDetail {
+            return
+        }
+        view.changeViewSize()
+    }
 }
