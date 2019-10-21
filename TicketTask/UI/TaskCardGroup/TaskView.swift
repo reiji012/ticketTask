@@ -275,13 +275,14 @@ class TaskView: UIView, TaskViewProtocol{
             self.progressBarWidthConst.constant -= (myBoundWidht - self.defoultWidth!)
             
         } else {
+            let topSafeAreaHeight = mainViewController!.view.safeAreaInsets.top
             // 拡大するときの処理
             if 0 < self.mainViewController!.topSafeAreaHeight() {
                 self.menuTopConst.constant = (20 + self.mainViewController!.topSafeAreaHeight())
             } else {
                self.menuTopConst.constant = 40
             }
-            self.titleTopConst.constant = 220
+            self.titleTopConst.constant = 220 + topSafeAreaHeight
             self.menuBtnLeftConst.constant += ((myBoundWidht - self.bounds.size.width))
             self.progressBarWidthConst.constant += (myBoundWidht - self.bounds.size.width)
         }
