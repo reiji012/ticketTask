@@ -183,7 +183,10 @@ class TaskLocalDataModel {
         for ticket in currentTicketArray {
             if ticketArray.index(of: ticket) == nil {
                 try! realm.write {
-                    task!.tickets.append(TicketModel(value: [ticket:false]))
+                    let newTicket = TicketModel()
+                    newTicket.ticketName = ticket
+                    newTicket.isCompleted = false
+                    task!.tickets.append(newTicket)
                 }
             }
         }

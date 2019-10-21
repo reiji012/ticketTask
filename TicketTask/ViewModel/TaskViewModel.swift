@@ -107,7 +107,7 @@ class TaskViewModel: NSObject {
     func addTicket(ticketName: String) {
         
         // 同じ名前のチケットがある場合はバリデーションエラー発生
-        if !((tickets?.map{$0.ticketName}.isEmpty)!) {
+        if !(tickets?.map{$0.ticketName})!.filter({$0 == ticketName}).isEmpty {
             delegate?.showValidateAlert(error: .ticketValidError)
             return
         }
