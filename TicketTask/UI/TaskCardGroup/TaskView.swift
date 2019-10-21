@@ -52,6 +52,11 @@ class TaskView: UIView, TaskViewProtocol{
     var mainViewController: MainViewController? = nil
     var isShowDetail: Bool = false
     let disposeBag = DisposeBag()
+    var isCenter: Bool = false {
+        didSet {
+            self.isUserInteractionEnabled = isCenter
+        }
+    }
     
     // MARK: - Initilizer
     static func initiate(mainViewController: MainViewControllerProtocol, task:TaskModel) -> TaskView {
@@ -80,6 +85,7 @@ class TaskView: UIView, TaskViewProtocol{
         attriImageView.image = attriImageView.image?.withRenderingMode(.alwaysTemplate)
         attriImageView.tintColor = self.presenter.taskViewModel.taskColor?.gradationColor1
         ticketTableView.register(UINib(nibName: "TicketTableViewCell", bundle: nil), forCellReuseIdentifier: "TicketTableViewCell")
+        isCenter = false
     }
 
     @IBAction func touchMenuButton(_ sender: Any) {

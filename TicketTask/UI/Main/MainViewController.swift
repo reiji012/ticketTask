@@ -104,6 +104,7 @@ class MainViewController: UIViewController {
         if let currentTaskView: TaskView = self.getCenterTaskView() {
             let myBoundSize: CGSize = UIScreen.main.bounds.size
             currentTaskView.frame.size.height = self.isShowDetail ? myBoundSize.height : self.taskViewHeight
+            currentTaskView.isCenter = true
         }
     }
     
