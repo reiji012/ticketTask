@@ -322,7 +322,7 @@ class TaskView: UIView, TaskViewProtocol{
     func setTableView() {
         self.ticketTableView.delegate = self
         self.ticketTableView.dataSource = self
-        self.ticketTableView.estimatedRowHeight = 150
+//        self.ticketTableView.estimatedRowHeight = 150
         self.ticketTableView.reloadData()
     }
 

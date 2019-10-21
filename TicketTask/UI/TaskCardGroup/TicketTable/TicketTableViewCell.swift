@@ -41,14 +41,19 @@ class TicketTableViewCell: UITableViewCell {
     
     @objc func changeCompletion() {
         self.isCompleted = !self.isCompleted
-        self.taskViewModel?.changeTicketCompleted(ticketName: ticketNameLabel.text!, completed: isCompleted)
         
-        UIView.animate(withDuration: 0.2, delay: 0.0, options: [.curveEaseIn, .autoreverse], animations: {
+        UIView.animate(withDuration: 0.3, delay: 0.0, options: [.autoreverse], animations: {
             
             self.checkBoxLabel.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
-        }) { _ in
-            self.checkBoxLabel.transform = CGAffineTransform(scaleX: 1, y: 1)
-        }
+        }, completion: { _ in
+            UIView.animate(withDuration: 0.3, animations: {
+              self.checkBoxLabel.transform = CGAffineTransform(scaleX: 1, y: 1)
+            })
+        })
+        
+        self.taskViewModel?.changeTicketCompleted(ticketName: ticketNameLabel.text!, completed: isCompleted)
+        
+        
     }
     
     func setButtonColor() {

@@ -398,6 +398,7 @@ extension MainViewController: UIScrollViewDelegate {
         if let currentTaskView = self.getCenterTaskView() {
             self.setGradationColor(color: currentTaskView.presenter.taskViewModel.taskColor!)
             currentTaskView.isCenter = true
+            self.taskView = currentTaskView
             self.scrollView.bringSubviewToFront(currentTaskView)
         }
         UIView.animate(withDuration: 0.3, animations: {
