@@ -193,7 +193,7 @@ class MainViewController: UIViewController {
         let viewWidth = isInitCreate ? initTaskViewWidth : screenType.taskViewCardWidth
         
         taskView = TaskView.initiate(mainViewController: self, task: task)
-        taskView.frame = CGRect.init(x: self.originX! - 12, y: currentY, width: viewWidth, height: initTaskViewHeight)
+        taskView.frame = CGRect.init(x: self.originX! - 13, y: currentY, width: viewWidth, height: initTaskViewHeight)
         taskView.bind()
         taskView.setLayout()
         taskView.topSafeAreaHeight = self.view.safeAreaInsets.top
