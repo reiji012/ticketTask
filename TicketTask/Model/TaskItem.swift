@@ -21,6 +21,18 @@ class TaskItem: Object {
     @objc dynamic var resetType: Int = 0
     var tickets = List<TicketModel>()
     
+    var taskNotifications = List<TaskNotifications>()
+    
+    override static func primaryKey() -> String? {
+        return "id"
+    }
+}
+
+class TaskNotifications: Object {
+    @objc dynamic var id: Int = 0
+    @objc dynamic var identifier: String = ""
+    @objc dynamic var data: Data? = nil
+    
     override static func primaryKey() -> String? {
         return "id"
     }

@@ -10,6 +10,9 @@ protocol AddTaskViewPresenterProtocol {
     var tickets: [TicketsModel]! { get }
     var currentColor: TaskColor { get set }
     var currentTaskModel: TaskModel! { get }
+    var content: TableCellModel? { get }
+    func numberOfRow(tableView: UITableView) -> Int
+    func cellIdentifier(tableView: UITableView) -> String
     func viewDidLoad()
     func touchAddTicketButton(text: String)
     func touchCreateButton(taskName: String)
@@ -25,14 +28,16 @@ import UIKit
 
 class AddTaskViewPresenter: AddTaskViewPresenterProtocol, ErrorAlert {
 
+    private var notifications: [Data] = []
+    
     // MARK: - Public Propaty
     var tickets: [TicketsModel]! = []
     var view: AddTaskViewControllerProtocol!
     var taskLocalDataModel: TaskLocalDataModel?
     var ticketArray = [String]()
     var currentTaskModel: TaskModel!
-    
     var currentIcon: UIImage?
+    var content: TableCellModel?
     
     var currentIconString: String? {
         didSet {
@@ -46,6 +51,43 @@ class AddTaskViewPresenter: AddTaskViewPresenterProtocol, ErrorAlert {
             currentTaskModel.color = currentColor.colorString
         }
     }
+    
+    /// セルの数を返す
+    /// - Parameter tableView: tableView
+    func numberOfRow(tableView: UITableView) -> Int {
+        switch tableView.tag {
+        case 1:
+            // リマインダーテーブルの時
+            self.content = .reminder
+            return notifications.isEmpty ? 1 : notifications.count
+        case 2:
+            // チケットテーブルの時
+            self.content = .ticket
+            content = .ticket
+            return tickets.count
+        default:
+            return 1
+        }
+    }
+    
+    /// Identifierの数を返す
+    /// - Parameter tableView: tableView
+    func cellIdentifier(tableView: UITableView) -> String {
+        switch tableView.tag {
+        case 1:
+            // リマインダーテーブルの時
+            self.content = .reminder
+            return content!.cellIdentifier
+        case 2:
+            // チケットテーブルの時
+            self.content = .ticket
+            content = .ticket
+            return content!.cellIdentifier
+        default:
+            return "cell"
+        }
+    }
+    
     
     // MARK: - Initialize
     init(vc: AddTaskViewControllerProtocol) {
@@ -126,5 +168,10 @@ class AddTaskViewPresenter: AddTaskViewPresenterProtocol, ErrorAlert {
     
     func selectedResetTypeIndex(index: Int) {
         currentTaskModel.resetType = index
+    }
+    
+    // 処理を分岐するメソッド
+    func checkTableView(_ tableView: UITableView) -> Void{
+       
     }
 }

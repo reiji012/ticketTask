@@ -41,6 +41,7 @@ class AddTaskViewController: UIViewController{
     @IBOutlet weak var ticketAddBtn: UIButton!
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var colorView: UIView!
+    @IBOutlet weak var reminderTableView: UITableView!
     
     var pickerView: UIPickerView = UIPickerView()
     var gradientLayer: CAGradientLayer = CAGradientLayer()
@@ -68,6 +69,8 @@ class AddTaskViewController: UIViewController{
         ticketTextField.delegate = self
         ticketTableView.delegate = self
         ticketTableView.dataSource = self
+        reminderTableView.delegate = self
+        reminderTableView.dataSource = self
         titleTextField.text = ""
         ticketTextField.text = ""
         // 画面サイズ取得
@@ -156,11 +159,11 @@ class AddTaskViewController: UIViewController{
     }
     
     func setGradationColor() {
-        UIView.animate(withDuration: 2, animations: { () -> Void in
+        UIView.animate(withDuration: 0.5, animations: { () -> Void in
             let color = self.presenter.currentColor
             self.gradientLayer.colors = color.gradationColor
             self.gradientLayer.frame = self.view.bounds
-            self.timerBtm.tintColor = color.gradationColor1
+            self.timerBtm.backgroundColor = color.gradationColor1
             self.ticketAddBtn.setTitleColor(color.gradationColor1, for: .normal)
             self.view.layer.insertSublayer(self.gradientLayer, at: 0)
         })
@@ -187,14 +190,23 @@ extension AddTaskViewController: AddTaskViewControllerProtocol {
 // MARK: - Extension UITableViewDataSource
 extension AddTaskViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return presenter.tickets.count
+        return presenter.numberOfRow(tableView: tableView)
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let identifier = presenter.cellIdentifier(tableView: tableView)
+        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
         // セルに表示する値を設定する
-        cell.textLabel!.text = presenter.tickets[indexPath.row].ticketName
+        switch presenter.content {
+        case .ticket:
+            cell.textLabel!.text = presenter.tickets[indexPath.row].ticketName
+        case .reminder:
+            break
+        case .none:
+            break
+        }
+        
         return cell
     }
     
