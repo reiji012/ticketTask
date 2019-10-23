@@ -29,19 +29,19 @@ class AddTaskViewController: UIViewController{
     
     //MARK: - Public Propaty
     var tableView: UITableView = UITableView()
-    @IBOutlet weak var scrolView: UIScrollView!
-    @IBOutlet weak var timerBtm: UISegmentedControl!
-    @IBOutlet weak var taskTicketView: UIView!
-    @IBOutlet weak var taskHeadVIew: UIView!
-    @IBOutlet weak var contentView: UIView!
-    @IBOutlet weak var ticketTableView: UITableView!
-    @IBOutlet weak var titleTextField: UITextField!
-    @IBOutlet weak var ticketTextField: UITextField!
-    @IBOutlet weak var ticketCellLabel: UILabel!
-    @IBOutlet weak var ticketAddBtn: UIButton!
-    @IBOutlet weak var iconImageView: UIImageView!
-    @IBOutlet weak var colorView: UIView!
-    @IBOutlet weak var reminderTableView: UITableView!
+    @IBOutlet private weak var scrolView: UIScrollView!
+    @IBOutlet private weak var timerBtm: UISegmentedControl!
+    @IBOutlet private weak var taskTicketView: UIView!
+    @IBOutlet private weak var taskHeadVIew: UIView!
+    @IBOutlet private weak var contentView: UIView!
+    @IBOutlet private weak var ticketTableView: UITableView!
+    @IBOutlet private weak var titleTextField: UITextField!
+    @IBOutlet private weak var ticketTextField: UITextField!
+    @IBOutlet private weak var ticketCellLabel: UILabel!
+    @IBOutlet private weak var ticketAddBtn: UIButton!
+    @IBOutlet private weak var iconImageView: UIImageView!
+    @IBOutlet private weak var colorView: UIView!
+    @IBOutlet private weak var reminderTableView: UITableView!
     
     var pickerView: UIPickerView = UIPickerView()
     var gradientLayer: CAGradientLayer = CAGradientLayer()

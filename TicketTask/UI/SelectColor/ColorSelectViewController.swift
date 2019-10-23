@@ -31,7 +31,7 @@ class ColorSelectViewController: UIViewController, UICollectionViewDelegate, UIC
     
     open var delegate: ColorSelectViewControllerDelegate?
     
-    @IBOutlet weak var cellectionView: UICollectionView!
+    @IBOutlet private weak var cellectionView: UICollectionView!
     
     // MARK: - Initilizer
     static func initiate(delegate: ColorSelectViewControllerDelegate) -> ColorSelectViewController {

@@ -31,7 +31,7 @@ class IconSelectViewController: UIViewController, UICollectionViewDelegate, UICo
     
     open var delegate: IconSelectViewControllerDelegate?
     
-    @IBOutlet weak var cellectionView: UICollectionView!
+    @IBOutlet private weak var cellectionView: UICollectionView!
     
     // MARK: - Initilizer
     static func initiate(delegate: IconSelectViewControllerDelegate, color: TaskColor) -> IconSelectViewController {

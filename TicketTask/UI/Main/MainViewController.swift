@@ -56,14 +56,14 @@ class MainViewController: UIViewController {
     var tabbarHeight: CGFloat!
     
     
-    @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var weatherImgView: UIImageView!
-    @IBOutlet weak var weatherView: UIView!
-    @IBOutlet weak var taskAddButton: UIButton!
-    @IBOutlet weak var maxTempLabel: WeatherLabel!
-    @IBOutlet weak var minTempLabel: WeatherLabel!
-    @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var taskEmptyView: UIView!
+    @IBOutlet private weak var scrollView: UIScrollView!
+    @IBOutlet private weak var weatherImgView: UIImageView!
+    @IBOutlet private weak var weatherView: UIView!
+    @IBOutlet private weak var taskAddButton: UIButton!
+    @IBOutlet private weak var maxTempLabel: WeatherLabel!
+    @IBOutlet private weak var minTempLabel: WeatherLabel!
+    @IBOutlet private weak var descriptionLabel: UILabel!
+    @IBOutlet private weak var taskEmptyView: UIView!
     
     // MARK: - Lifecycle
     override func viewDidLoad() {

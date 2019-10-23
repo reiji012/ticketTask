@@ -21,21 +21,21 @@ protocol TaskViewProtocol {
 class TaskView: UIView, TaskViewProtocol{
     
     // MARK: - Public Propaty
-    @IBOutlet weak var buttonTextLabel: UILabel!
-    @IBOutlet weak var ticketAddBtn: UIButton!
-    @IBOutlet weak var menuTopConst: NSLayoutConstraint!
-    @IBOutlet weak var titleTopConst: NSLayoutConstraint!
-    @IBOutlet weak var attriImageView: UIImageView!
-    @IBOutlet weak var ticketProgressBar: UIProgressView!
-    @IBOutlet weak var ticketProgressLabel: UILabel!
-    @IBOutlet weak var ticketCountLabel: UILabel!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var backButton: UIButton!
-    @IBOutlet weak var ticketTableView: UITableView!
-    @IBOutlet weak var menuBtnLeftConst: NSLayoutConstraint!
-    @IBOutlet weak var menuButton: UIButton!
-    @IBOutlet weak var progressBarWidthConst: NSLayoutConstraint!
-    @IBOutlet weak var tableViewHeightConst: NSLayoutConstraint!
+    @IBOutlet private weak var buttonTextLabel: UILabel!
+    @IBOutlet private weak var ticketAddBtn: UIButton!
+    @IBOutlet private weak var menuTopConst: NSLayoutConstraint!
+    @IBOutlet private weak var titleTopConst: NSLayoutConstraint!
+    @IBOutlet private weak var attriImageView: UIImageView!
+    @IBOutlet private weak var ticketProgressBar: UIProgressView!
+    @IBOutlet private weak var ticketProgressLabel: UILabel!
+    @IBOutlet private weak var ticketCountLabel: UILabel!
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var backButton: UIButton!
+    @IBOutlet private weak var ticketTableView: UITableView!
+    @IBOutlet private weak var menuBtnLeftConst: NSLayoutConstraint!
+    @IBOutlet private weak var menuButton: UIButton!
+    @IBOutlet private weak var progressBarWidthConst: NSLayoutConstraint!
+    @IBOutlet private weak var tableViewHeightConst: NSLayoutConstraint!
     
     var presenter: TaskViewPresenterProtocol!
     

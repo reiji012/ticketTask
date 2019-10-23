@@ -23,19 +23,19 @@ protocol EditTaskViewControllerProtocol {
 
 class EditTaskViewController: UIViewController, UIPopoverPresentationControllerDelegate, ColorSelectViewControllerDelegate, IconSelectViewControllerDelegate {
 
+    // MARK: - Public Propaty
+    @IBOutlet private weak var iconImageView: UIImageView!
+    @IBOutlet private weak var colorView: UIView!
+    @IBOutlet private weak var titleTextField: UITextField!
+    @IBOutlet private weak var timerBtn: UISegmentedControl!
+    @IBOutlet private weak var headerView: UIView!
+    @IBOutlet private weak var contentsView: UIView!
+    @IBOutlet private weak var scrollView: UIScrollView!
+    
     // MARK: - Private Property
     private var presenter: EditTaskViewPresenterProtocol!
     private var resetType: Int = 0
     private let disposeBag = DisposeBag()
-
-    // MARK: - Public Propaty
-    @IBOutlet weak var iconImageView: UIImageView!
-    @IBOutlet weak var colorView: UIView!
-    @IBOutlet weak var titleTextField: UITextField!
-    @IBOutlet weak var timerBtn: UISegmentedControl!
-    @IBOutlet weak var headerView: UIView!
-    @IBOutlet weak var contentsView: UIView!
-    @IBOutlet weak var scrollView: UIScrollView!
     
     let navBar = SPFakeBarView.init(style: .stork)
     var gradientLayer: CAGradientLayer = CAGradientLayer()
