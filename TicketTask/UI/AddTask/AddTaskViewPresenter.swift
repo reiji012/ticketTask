@@ -99,7 +99,7 @@ class AddTaskViewPresenter: AddTaskViewPresenterProtocol, ErrorAlert {
         currentTaskModel = TaskModel(id: (taskLocalDataModel?.lastId())!)
     }
     
-    // MARK: - Life Cycle
+    // MARK: - Lifecycle
     func viewDidLoad() {
         currentTaskModel.color = currentColor.colorString
         currentIconString = "icon-0"

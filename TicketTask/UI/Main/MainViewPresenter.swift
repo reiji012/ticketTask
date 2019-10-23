@@ -25,7 +25,7 @@ protocol MainViewPresenterProtocol {
 
 class MainViewPresenter: MainViewPresenterProtocol, Routable, ErrorAlert {
     
-    // MARK: - Private Propaty
+    // MARK: - Private Property
     private var taskLocalDataModel: TaskLocalDataModel!
     private var wetherModel: WetherModel!
     private var todayWetherInfo: Dictionary<String,Any>?
@@ -47,7 +47,7 @@ class MainViewPresenter: MainViewPresenterProtocol, Routable, ErrorAlert {
         wetherModel = WetherModel.sharedManager
     }
     
-    // MARK: - Life Cycle
+    // MARK: - Lifecycle
     func viewDidLoad() {
         setupWetherInfo()
     }

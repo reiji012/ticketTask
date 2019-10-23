@@ -22,7 +22,7 @@ protocol AddTaskViewControllerProtocol {
 
 class AddTaskViewController: UIViewController{
     
-    // MARK: - Private Propaty
+    // MARK: - Private Property
     private var currentIcon: UIImage!
     private var currentIconStr: String!
     private var resetType: Int = 0
@@ -61,7 +61,7 @@ class AddTaskViewController: UIViewController{
         return viewController
     }
     
-    // MARK: - Life Cycle
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.viewDidLoad()

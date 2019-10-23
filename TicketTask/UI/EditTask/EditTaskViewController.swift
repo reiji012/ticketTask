@@ -23,7 +23,7 @@ protocol EditTaskViewControllerProtocol {
 
 class EditTaskViewController: UIViewController, UIPopoverPresentationControllerDelegate, ColorSelectViewControllerDelegate, IconSelectViewControllerDelegate {
 
-    // MARK: - Private Propaty
+    // MARK: - Private Property
     private var presenter: EditTaskViewPresenterProtocol!
     private var resetType: Int = 0
     private let disposeBag = DisposeBag()
@@ -59,7 +59,7 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
         return viewController
     }
     
-    // MARK: - Life Cycle
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         bind()

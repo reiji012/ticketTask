@@ -21,7 +21,7 @@ protocol TaskViewPresenterProtocol {
 
 class TaskViewPresenter: TaskViewPresenterProtocol {
     
-    // MARK: - Private Propaty
+    // MARK: - Private Property
     private var view: TaskViewProtocol!
 
     // MARK: - Public Propaty

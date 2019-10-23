@@ -22,7 +22,7 @@ protocol EditTaskViewPresenterProtocol {
 
 class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
     
-    // MARK: - Private Propaty
+    // MARK: - Private Property
     private var view: EditTaskViewControllerProtocol!
     private var taskLocalDataModel: TaskLocalDataModel = TaskLocalDataModel.sharedManager
     private var beforeName: String?

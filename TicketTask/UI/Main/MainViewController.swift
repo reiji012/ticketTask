@@ -16,7 +16,7 @@ import PKHUD
 
 class MainViewController: UIViewController {
     
-    // MARK: - Private Propaty
+    // MARK: - Private Property
     //カウンターアニメーションの時間設定
     private var counterAnimationLabelDuration: TimeInterval = 3.0
     
@@ -65,7 +65,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var taskEmptyView: UIView!
     
-    // MARK: - Life Cycle
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter = MainViewPresenter(vc: self)
