@@ -7,7 +7,7 @@ target 'TicketTask' do
   pod 'RxCocoa', '~> 4.5.0'
   pod 'BubbleTransition', '~> 3.2.0'
   pod 'NewPopMenu', '~> 2.0'
-  pod 'RealmSwift', '~> 3.19.0'
+  pod 'RealmSwift'
   pod 'SPStorkController', '1.1.8'
   pod 'SparrowKit'
   pod 'PKHUD', '~> 5.0'
