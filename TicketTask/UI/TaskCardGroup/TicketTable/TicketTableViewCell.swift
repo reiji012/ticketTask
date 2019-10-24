@@ -19,8 +19,8 @@ class TicketTableViewCell: UITableViewCell {
         }
     }
     
-    @IBOutlet private weak var ticketNameLabel: UILabel!
-    @IBOutlet private weak var checkBoxLabel: UILabel!
+    @IBOutlet weak var ticketNameLabel: UILabel!
+    @IBOutlet weak var checkBoxLabel: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()
