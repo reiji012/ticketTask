@@ -21,6 +21,21 @@ protocol TaskViewProtocol {
 class TaskView: UIView, TaskViewProtocol{
     
     // MARK: - Public Propaty
+    var presenter: TaskViewPresenterProtocol!
+    
+    var topSafeAreaHeight: CGFloat = 0
+    
+    var layerChangeCount: UInt32 = 0
+    var gradientLayer = CAGradientLayer()
+    var mainViewController: MainViewController? = nil
+    var isShowDetail: Bool = false
+    var isCenter: Bool = false {
+        didSet {
+            self.isUserInteractionEnabled = isCenter
+        }
+    }
+    
+    // MARK: - Private Propaty
     @IBOutlet private weak var buttonTextLabel: UILabel!
     @IBOutlet private weak var ticketAddBtn: UIButton!
     @IBOutlet private weak var menuTopConst: NSLayoutConstraint!
@@ -37,28 +52,12 @@ class TaskView: UIView, TaskViewProtocol{
     @IBOutlet private weak var progressBarWidthConst: NSLayoutConstraint!
     @IBOutlet private weak var tableViewHeightConst: NSLayoutConstraint!
     
-    var presenter: TaskViewPresenterProtocol!
-    
-    var defoultWidth: CGFloat?
-    var defoultHeight: CGFloat?
-    var defoultX: CGFloat?
-    var defoultY: CGFloat?
-    var ticketsCount: Int = 0
-    
-    var topSafeAreaHeight: CGFloat = 0
-    
-    var layerChangeCount: UInt32 = 0
-    var gradientLayer = CAGradientLayer()
-    
-   
-    var mainViewController: MainViewController? = nil
-    var isShowDetail: Bool = false
-    let disposeBag = DisposeBag()
-    var isCenter: Bool = false {
-        didSet {
-            self.isUserInteractionEnabled = isCenter
-        }
-    }
+    private var defoultWidth: CGFloat?
+    private var defoultHeight: CGFloat?
+    private var defoultX: CGFloat?
+    private var defoultY: CGFloat?
+    private var ticketsCount: Int = 0
+    private let disposeBag = DisposeBag()
     
     // MARK: - Initilizer
     static func initiate(mainViewController: MainViewControllerProtocol, task:TaskModel) -> TaskView {

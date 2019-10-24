@@ -21,9 +21,6 @@ protocol TaskViewPresenterProtocol {
 
 class TaskViewPresenter: TaskViewPresenterProtocol {
     
-    // MARK: - Private Property
-    private var view: TaskViewProtocol!
-
     // MARK: - Public Propaty
     var task: TaskModel?
     var taskViewModel: TaskViewModel
@@ -35,6 +32,8 @@ class TaskViewPresenter: TaskViewPresenterProtocol {
     
     var mainViewController: MainViewControllerProtocol!
     
+    // MARK: - Private Property
+    private var view: TaskViewProtocol!
     
     // MARK: - InitiaLize
     init(view: TaskViewProtocol, mainViewController: MainViewControllerProtocol, task: TaskModel) {

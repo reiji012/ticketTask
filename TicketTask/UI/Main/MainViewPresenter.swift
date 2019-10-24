@@ -25,11 +25,6 @@ protocol MainViewPresenterProtocol {
 
 class MainViewPresenter: MainViewPresenterProtocol, Routable, ErrorAlert {
     
-    // MARK: - Private Property
-    private var taskLocalDataModel: TaskLocalDataModel!
-    private var wetherModel: WetherModel!
-    private var todayWetherInfo: Dictionary<String,Any>?
-    
     // MARK: - Public Propaty
     var viewController: MainViewControllerProtocol!
     var tasks: [TaskModel] {
@@ -39,6 +34,11 @@ class MainViewPresenter: MainViewPresenterProtocol, Routable, ErrorAlert {
         return taskLocalDataModel!.tasks.count
     }
     var weatherIconImage: UIImage?
+    
+    // MARK: - Private Property
+    private var taskLocalDataModel: TaskLocalDataModel!
+    private var wetherModel: WetherModel!
+    private var todayWetherInfo: Dictionary<String,Any>?
     
     // MARK: - Initialize
     init(vc: MainViewControllerProtocol) {

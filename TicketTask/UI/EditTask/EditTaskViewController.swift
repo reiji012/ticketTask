@@ -24,19 +24,6 @@ protocol EditTaskViewControllerProtocol {
 class EditTaskViewController: UIViewController, UIPopoverPresentationControllerDelegate, ColorSelectViewControllerDelegate, IconSelectViewControllerDelegate {
 
     // MARK: - Public Propaty
-    @IBOutlet private weak var iconImageView: UIImageView!
-    @IBOutlet private weak var colorView: UIView!
-    @IBOutlet private weak var titleTextField: UITextField!
-    @IBOutlet private weak var timerBtn: UISegmentedControl!
-    @IBOutlet private weak var headerView: UIView!
-    @IBOutlet private weak var contentsView: UIView!
-    @IBOutlet private weak var scrollView: UIScrollView!
-    
-    // MARK: - Private Property
-    private var presenter: EditTaskViewPresenterProtocol!
-    private var resetType: Int = 0
-    private let disposeBag = DisposeBag()
-    
     let navBar = SPFakeBarView.init(style: .stork)
     var gradientLayer: CAGradientLayer = CAGradientLayer()
     var taskViewModel: TaskViewModel?
@@ -47,7 +34,18 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
     var currentIconStr: String?
     var currentIcon: UIImage?
     
-    let attris: [String] = ["生活", "仕事"]
+    // MARK: - Private Property
+    @IBOutlet private weak var iconImageView: UIImageView!
+    @IBOutlet private weak var colorView: UIView!
+    @IBOutlet private weak var titleTextField: UITextField!
+    @IBOutlet private weak var timerBtn: UISegmentedControl!
+    @IBOutlet private weak var headerView: UIView!
+    @IBOutlet private weak var contentsView: UIView!
+    @IBOutlet private weak var scrollView: UIScrollView!
+    
+    private var presenter: EditTaskViewPresenterProtocol!
+    private var resetType: Int = 0
+    private let disposeBag = DisposeBag()
     
     // MARK: - Initilizer
     static func initiate(taskView: TaskViewProtocol) -> EditTaskViewController {

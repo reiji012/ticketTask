@@ -21,14 +21,25 @@ protocol AddTaskViewControllerProtocol {
 }
 
 class AddTaskViewController: UIViewController{
+
+    //MARK: - Public Propaty
+    var pickerView: UIPickerView = UIPickerView()
+    var gradientLayer: CAGradientLayer = CAGradientLayer()
+    var mainVC: MainViewController?
+    let navBar = SPFakeBarView.init(style: .stork)
+    // Screenの高さ
+    var screenHeight:CGFloat!
+    // Screenの幅
+    var screenWidth:CGFloat!
     
+    var presenter: AddTaskViewPresenterProtocol!
+    var tableView: UITableView = UITableView()
+
     // MARK: - Private Property
     private var currentIcon: UIImage!
     private var currentIconStr: String!
     private var resetType: Int = 0
     
-    //MARK: - Public Propaty
-    var tableView: UITableView = UITableView()
     @IBOutlet private weak var scrolView: UIScrollView!
     @IBOutlet private weak var timerBtm: UISegmentedControl!
     @IBOutlet private weak var taskTicketView: UIView!
@@ -42,18 +53,7 @@ class AddTaskViewController: UIViewController{
     @IBOutlet private weak var iconImageView: UIImageView!
     @IBOutlet private weak var colorView: UIView!
     @IBOutlet private weak var reminderTableView: UITableView!
-    
-    var pickerView: UIPickerView = UIPickerView()
-    var gradientLayer: CAGradientLayer = CAGradientLayer()
-    var mainVC: MainViewController?
-    let navBar = SPFakeBarView.init(style: .stork)
-    // Screenの高さ
-    var screenHeight:CGFloat!
-    // Screenの幅
-    var screenWidth:CGFloat!
-    
-    var presenter: AddTaskViewPresenterProtocol!
-    
+
     // MARK: - Initilizer
     static func initiate() -> AddTaskViewController {
         let viewController = UIStoryboard.instantiateInitialViewController(from: self)
@@ -294,6 +294,5 @@ extension AddTaskViewController: ColorSelectViewControllerDelegate {
 extension AddTaskViewController: IconSelectViewControllerDelegate {
     func selectedIcon(iconStr: String) {
         presenter.selectedIcon(iconString: iconStr)
-        
     }
 }

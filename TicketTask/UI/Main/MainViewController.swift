@@ -16,18 +16,6 @@ import PKHUD
 
 class MainViewController: UIViewController {
     
-    // MARK: - Private Property
-    //カウンターアニメーションの時間設定
-    private var counterAnimationLabelDuration: TimeInterval = 3.0
-    
-    private let initTaskViewHeight: CGFloat = 300
-    private let initTaskViewWidth: CGFloat = 350
-    
-    private var dummyViewWidth: CGFloat!
-    private var scrollViewHeight: CGFloat!
-    
-    private var presenter: MainViewPresenterProtocol!
-    
     // MARK: - Public Propaty
     // ViewModelの取得
     var taskViewModel = TaskViewModel()
@@ -50,11 +38,18 @@ class MainViewController: UIViewController {
     func topSafeAreaHeight() -> CGFloat {
         return self.view.safeAreaInsets.top
     }
-    
     let transition = BubbleTransition()
     
-    var tabbarHeight: CGFloat!
+    // MARK: - Private Property
+    private var presenter: MainViewPresenterProtocol!
+    //カウンターアニメーションの時間設定
+    private var counterAnimationLabelDuration: TimeInterval = 3.0
     
+    private let initTaskViewHeight: CGFloat = 300
+    private let initTaskViewWidth: CGFloat = 350
+    private var dummyViewWidth: CGFloat!
+    private var scrollViewHeight: CGFloat!
+    private var tabbarHeight: CGFloat!
     
     @IBOutlet private weak var scrollView: UIScrollView!
     @IBOutlet private weak var weatherImgView: UIImageView!

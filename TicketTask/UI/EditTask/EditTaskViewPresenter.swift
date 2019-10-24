@@ -22,13 +22,6 @@ protocol EditTaskViewPresenterProtocol {
 
 class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
     
-    // MARK: - Private Property
-    private var view: EditTaskViewControllerProtocol!
-    private var taskLocalDataModel: TaskLocalDataModel = TaskLocalDataModel.sharedManager
-    private var beforeName: String?
-    private var resetTypeIndex: Int?
-    private let currentTaskModel: TaskModel
-    private let taskViewModel: TaskViewModel?
     
     // MARK: - Public Propaty
     var taskView: TaskViewProtocol!
@@ -50,7 +43,14 @@ class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
             view.setColorView(color: currentColor.gradationColor1)
         }
     }
-//    var currentResetTypeIndex: Int
+    
+    // MARK: - Private Property
+    private var view: EditTaskViewControllerProtocol!
+    private var taskLocalDataModel: TaskLocalDataModel = TaskLocalDataModel.sharedManager
+    private var beforeName: String?
+    private var resetTypeIndex: Int?
+    private let currentTaskModel: TaskModel
+    private let taskViewModel: TaskViewModel?
     
     // MARK: - initialize
     init(view: EditTaskViewControllerProtocol, taskView: TaskViewProtocol) {
