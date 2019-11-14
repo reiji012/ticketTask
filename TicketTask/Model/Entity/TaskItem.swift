@@ -9,8 +9,7 @@
 import Foundation
 import RealmSwift
 
-class TaskItem: Object {
-    @objc dynamic var id: Int = 0
+class TaskItem: EntityItem {
     @objc dynamic var taskTitle: String = ""
     @objc dynamic var attri: String = ""
     @objc dynamic var color: String = ""
@@ -22,19 +21,10 @@ class TaskItem: Object {
     var tickets = List<TicketModel>()
     
     var taskNotifications = List<TaskNotifications>()
-    
-    override static func primaryKey() -> String? {
-        return "id"
-    }
 }
 
-class TaskNotifications: Object {
-    @objc dynamic var id: Int = 0
+class TaskNotifications: EntityItem {
     @objc dynamic var identifier: String = ""
     @objc dynamic var date: Date? = nil
     @objc dynamic var isActive: Bool = false
-    
-    override static func primaryKey() -> String? {
-        return "id"
-    }
 }

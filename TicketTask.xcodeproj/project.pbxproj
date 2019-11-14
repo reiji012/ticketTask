@@ -26,6 +26,7 @@
 		11EBB0D7237D1DC4001FAFC5 /* PickerViewKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EBB0D6237D1DC4001FAFC5 /* PickerViewKeyboard.swift */; };
 		11EBB0D9237D2A65001FAFC5 /* NotificationTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EBB0D8237D2A65001FAFC5 /* NotificationTableCell.swift */; };
 		11EBB0DB237D51D2001FAFC5 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EBB0DA237D51D2001FAFC5 /* StringExtensions.swift */; };
+		11EBB0DD237D57EF001FAFC5 /* EntityItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EBB0DC237D57EF001FAFC5 /* EntityItem.swift */; };
 		11EC7B93234B13970099D444 /* TaskColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EC7B92234B13970099D444 /* TaskColor.swift */; };
 		11EC7B95234B16190099D444 /* ColorSelectViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EC7B94234B16190099D444 /* ColorSelectViewPresenter.swift */; };
 		11EC7B97234B199E0099D444 /* IconSelectViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EC7B96234B199E0099D444 /* IconSelectViewPresenter.swift */; };
@@ -87,6 +88,7 @@
 		11EBB0D6237D1DC4001FAFC5 /* PickerViewKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewKeyboard.swift; sourceTree = "<group>"; };
 		11EBB0D8237D2A65001FAFC5 /* NotificationTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableCell.swift; sourceTree = "<group>"; };
 		11EBB0DA237D51D2001FAFC5 /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
+		11EBB0DC237D57EF001FAFC5 /* EntityItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityItem.swift; sourceTree = "<group>"; };
 		11EC7B92234B13970099D444 /* TaskColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskColor.swift; sourceTree = "<group>"; };
 		11EC7B94234B16190099D444 /* ColorSelectViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSelectViewPresenter.swift; sourceTree = "<group>"; };
 		11EC7B96234B199E0099D444 /* IconSelectViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectViewPresenter.swift; sourceTree = "<group>"; };
@@ -261,7 +263,6 @@
 				11B4F99A233DF0C4008CD2F6 /* Entity */,
 				2BF5B7642281498F007D0266 /* TaskLocalDataModel.swift */,
 				8E6B2A0F22FF22E900113E30 /* WetherModel.swift */,
-				2BE551652292695000D5AFA9 /* TaskItem.swift */,
 				11EA1191234F0AFB003223A7 /* TaskModel.swift */,
 			);
 			path = Model;
@@ -270,8 +271,10 @@
 		11B4F99A233DF0C4008CD2F6 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
+				2BE551652292695000D5AFA9 /* TaskItem.swift */,
 				2BE55167229299A100D5AFA9 /* TicketModel.swift */,
 				2BE5516A2292A83700D5AFA9 /* TasksData.swift */,
+				11EBB0DC237D57EF001FAFC5 /* EntityItem.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -522,6 +525,7 @@
 				11B5E4482345FC5F00DBCB14 /* EditTaskViewPresenter.swift in Sources */,
 				11EC7B95234B16190099D444 /* ColorSelectViewPresenter.swift in Sources */,
 				11B5E44B2347317600DBCB14 /* TaskViewPresenter.swift in Sources */,
+				11EBB0DD237D57EF001FAFC5 /* EntityItem.swift in Sources */,
 				2BF5B74F22814521007D0266 /* MainViewController.swift in Sources */,
 				11EA1192234F0AFB003223A7 /* TaskModel.swift in Sources */,
 				2BF5B76322814974007D0266 /* TaskViewModel.swift in Sources */,
