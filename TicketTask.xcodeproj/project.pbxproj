@@ -23,6 +23,9 @@
 		11EA118E234DBD17003223A7 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EA118D234DBD17003223A7 /* Notifications.swift */; };
 		11EA1190234DC635003223A7 /* DateFormatterExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EA118F234DC635003223A7 /* DateFormatterExtensions.swift */; };
 		11EA1192234F0AFB003223A7 /* TaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EA1191234F0AFB003223A7 /* TaskModel.swift */; };
+		11EBB0D7237D1DC4001FAFC5 /* PickerViewKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EBB0D6237D1DC4001FAFC5 /* PickerViewKeyboard.swift */; };
+		11EBB0D9237D2A65001FAFC5 /* NotificationTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EBB0D8237D2A65001FAFC5 /* NotificationTableCell.swift */; };
+		11EBB0DB237D51D2001FAFC5 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EBB0DA237D51D2001FAFC5 /* StringExtensions.swift */; };
 		11EC7B93234B13970099D444 /* TaskColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EC7B92234B13970099D444 /* TaskColor.swift */; };
 		11EC7B95234B16190099D444 /* ColorSelectViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EC7B94234B16190099D444 /* ColorSelectViewPresenter.swift */; };
 		11EC7B97234B199E0099D444 /* IconSelectViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EC7B96234B199E0099D444 /* IconSelectViewPresenter.swift */; };
@@ -81,6 +84,9 @@
 		11EA118D234DBD17003223A7 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		11EA118F234DC635003223A7 /* DateFormatterExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterExtensions.swift; sourceTree = "<group>"; };
 		11EA1191234F0AFB003223A7 /* TaskModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskModel.swift; sourceTree = "<group>"; };
+		11EBB0D6237D1DC4001FAFC5 /* PickerViewKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewKeyboard.swift; sourceTree = "<group>"; };
+		11EBB0D8237D2A65001FAFC5 /* NotificationTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableCell.swift; sourceTree = "<group>"; };
+		11EBB0DA237D51D2001FAFC5 /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
 		11EC7B92234B13970099D444 /* TaskColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskColor.swift; sourceTree = "<group>"; };
 		11EC7B94234B16190099D444 /* ColorSelectViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSelectViewPresenter.swift; sourceTree = "<group>"; };
 		11EC7B96234B199E0099D444 /* IconSelectViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectViewPresenter.swift; sourceTree = "<group>"; };
@@ -148,9 +154,9 @@
 			isa = PBXGroup;
 			children = (
 				11B5E4442345F8F200DBCB14 /* Protocols */,
-				2BF5B76E22829FEF007D0266 /* extention */,
 				8E6B2A0D22FF227400113E30 /* Utill.swift */,
 				8E8A0B0D2314161500FFCE15 /* Const.swift */,
+				11EBB0D6237D1DC4001FAFC5 /* PickerViewKeyboard.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -189,6 +195,7 @@
 				2BF5B77B22855657007D0266 /* AddTaskViewController.swift */,
 				111F5EC02342ECE40034548A /* AddTaskViewPresenter.swift */,
 				8E2F45D0235DC7BC000683B4 /* AddTaskModel.swift */,
+				11EBB0D8237D2A65001FAFC5 /* NotificationTableCell.swift */,
 			);
 			path = AddTask;
 			sourceTree = "<group>";
@@ -329,6 +336,7 @@
 				11B4F99D233DF268008CD2F6 /* API */,
 				11B4F999233DF05E008CD2F6 /* Model */,
 				11EC7B91234B13600099D444 /* Enums */,
+				2BF5B76E22829FEF007D0266 /* Extention */,
 				11B4F98C233DECF8008CD2F6 /* Util */,
 				11B4F998233DF032008CD2F6 /* Service */,
 				11B4F991233DEDC4008CD2F6 /* UI */,
@@ -350,7 +358,7 @@
 			path = ../..;
 			sourceTree = "<group>";
 		};
-		2BF5B76E22829FEF007D0266 /* extention */ = {
+		2BF5B76E22829FEF007D0266 /* Extention */ = {
 			isa = PBXGroup;
 			children = (
 				2BF5B7712282A0AB007D0266 /* UIView+TicketTask.swift */,
@@ -358,8 +366,9 @@
 				11B5E44C234734FA00DBCB14 /* UINibExtentions.swift */,
 				11EC7B98234B3AED0099D444 /* UIViewControllerExtensions.swift */,
 				11EA118F234DC635003223A7 /* DateFormatterExtensions.swift */,
+				11EBB0DA237D51D2001FAFC5 /* StringExtensions.swift */,
 			);
-			path = extention;
+			path = Extention;
 			sourceTree = "<group>";
 		};
 		3A10CA04D3E8C7641925AEE6 /* Frameworks */ = {
@@ -507,6 +516,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				11EA118E234DBD17003223A7 /* Notifications.swift in Sources */,
+				11EBB0D7237D1DC4001FAFC5 /* PickerViewKeyboard.swift in Sources */,
 				1122BE2C2330B325001CD87C /* SettingData.swift in Sources */,
 				8E2F45D1235DC7BC000683B4 /* AddTaskModel.swift in Sources */,
 				11B5E4482345FC5F00DBCB14 /* EditTaskViewPresenter.swift in Sources */,
@@ -517,6 +527,7 @@
 				2BF5B76322814974007D0266 /* TaskViewModel.swift in Sources */,
 				2BF5B76C22829DCD007D0266 /* TicketTableViewCell.swift in Sources */,
 				2BF5B7652281498F007D0266 /* TaskLocalDataModel.swift in Sources */,
+				11EBB0DB237D51D2001FAFC5 /* StringExtensions.swift in Sources */,
 				111F5EBF2342E7E10034548A /* ScreenType.swift in Sources */,
 				2BF5B77C22855657007D0266 /* AddTaskViewController.swift in Sources */,
 				11B5E4462345F90300DBCB14 /* Routable.swift in Sources */,
@@ -543,6 +554,7 @@
 				8E6DAB9622FFF36A00A72D0D /* MainViewControllerProtocol.swift in Sources */,
 				2BE5516B2292A83700D5AFA9 /* TasksData.swift in Sources */,
 				2BF44281229BEB8C00F32613 /* EditTaskViewController.swift in Sources */,
+				11EBB0D9237D2A65001FAFC5 /* NotificationTableCell.swift in Sources */,
 				8EACD6D823027E7F0095F4A0 /* WeatherLabel.swift in Sources */,
 				8E6B2A0E22FF227400113E30 /* Utill.swift in Sources */,
 				8E6B2A0B22FD4B0700113E30 /* WetherAPIRequest.swift in Sources */,

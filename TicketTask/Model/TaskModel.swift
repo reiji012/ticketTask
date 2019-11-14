@@ -17,7 +17,7 @@ class TaskModel: NSObject {
     var category: String = ""
     var resetType: Int = 0
     var lastResetDate: Date? = nil
-    
+    var notifications: [TaskNotificationsModel] = []
     var tickets: [TicketsModel] = []
     
     init(id: Int) {
@@ -33,9 +33,16 @@ class TicketsModel: NSObject {
     }
     
     func initiate(ticketName: String) -> TicketsModel {
-        var ticket = TicketsModel()
+        let ticket = TicketsModel()
         ticket.ticketName = ticketName
         ticket.isCompleted = false
         return ticket
     }
+}
+
+class TaskNotificationsModel: NSObject {
+    var id: Int = 0
+    var identifier: String = ""
+    var date: Date? = nil
+    var isActive: Bool? = false
 }

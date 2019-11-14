@@ -58,6 +58,7 @@ class TaskLocalDataModel {
             taskModel.lastResetDate = task.lastResetDate
             taskModel.tickets = []
             var _tickets: [TicketsModel] = []
+            var _notifications: [TaskNotificationsModel] = []
             let tickets = task.tickets
             for ticket in tickets {
                 let _ticket = TicketsModel()
@@ -65,7 +66,16 @@ class TaskLocalDataModel {
                 _ticket.isCompleted = ticket.isCompleted
                 _tickets.append(_ticket)
             }
+            for noticeTime in _notifications {
+                let _notice = TaskNotificationsModel()
+                _notice.id = noticeTime.id
+                _notice.identifier = noticeTime.identifier
+                _notice.date = noticeTime.date
+                _notice.isActive = noticeTime.isActive
+                _notifications.append(_notice)
+            }
             taskModel.tickets = _tickets
+            taskModel.notifications = _notifications
             self.tasks.append(taskModel)
         }
     }
@@ -91,7 +101,6 @@ class TaskLocalDataModel {
         let lastID = self.lastId()
 
         let results = realm.objects(TaskItem.self)
-        print(results)
         let tasks = results.map {$0.taskTitle}
         if tasks.index(of: taskModel.taskTitle) != nil {
             // 同じ名前のタスクが存在した場合はエラーを返す
@@ -106,6 +115,18 @@ class TaskLocalDataModel {
             ticketRealmModel.ticketName = ticket.ticketName
             ticketRealmModel.isCompleted = false
             ticketsRealmArray.append(ticketRealmModel)
+        }
+        // Realm用通知設定モデル作成
+        let notificationsRealmArray = List<TaskNotifications>()
+        for notification in taskModel.notifications {
+            let notificationRealmModel = TaskNotifications()
+            notificationRealmModel.id = notification.id
+            notificationRealmModel.identifier = notification.identifier
+            notificationRealmModel.isActive = notification.isActive!
+            notificationRealmModel.date = notification.date
+            notificationsRealmArray.append(notificationRealmModel)
+            // push通知設定
+            Notifications().pushNotificationSet(resetTimeType: taskModel.resetType, taskID: lastID, taskTitle: taskModel.taskTitle, notificationModel: notification)
         }
         
         // テンプレートから時刻を表示
@@ -124,14 +145,14 @@ class TaskLocalDataModel {
         taskItem.tickets = ticketsRealmArray
         taskItem.lastResetDate = day!
         taskItem.resetType = taskModel.resetType
+        taskItem.taskNotifications = notificationsRealmArray
         
         try! realm.write {
             realm.add(taskItem)
             print("データベース追加後", results.count)
             print(results)
         }
-        // push通知設定
-        Notifications().pushNotificationSet(resetTimeType: taskModel.resetType, taskID: lastID, taskTitle: taskModel.taskTitle)
+        
         // タスク追加に成功した時にtasksパラメータにタスクを追加
         self.tasks.append(taskModel)
         self.lastCreateTask = taskModel

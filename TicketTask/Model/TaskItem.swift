@@ -31,7 +31,8 @@ class TaskItem: Object {
 class TaskNotifications: Object {
     @objc dynamic var id: Int = 0
     @objc dynamic var identifier: String = ""
-    @objc dynamic var data: Data? = nil
+    @objc dynamic var date: Date? = nil
+    @objc dynamic var isActive: Bool = false
     
     override static func primaryKey() -> String? {
         return "id"

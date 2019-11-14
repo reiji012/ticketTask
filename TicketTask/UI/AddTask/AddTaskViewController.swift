@@ -18,12 +18,12 @@ protocol AddTaskViewControllerProtocol {
     func setColorView()
     func setGradationColor()
     func initSetState()
+    func reloadNotificationTable()
 }
 
 class AddTaskViewController: UIViewController{
 
     //MARK: - Public Propaty
-    var pickerView: UIPickerView = UIPickerView()
     var gradientLayer: CAGradientLayer = CAGradientLayer()
     var mainVC: MainViewController?
     let navBar = SPFakeBarView.init(style: .stork)
@@ -40,6 +40,7 @@ class AddTaskViewController: UIViewController{
     private var currentIconStr: String!
     private var resetType: Int = 0
     
+    @IBOutlet weak var addReminderButton: PickerViewKeyboard!
     @IBOutlet private weak var scrolView: UIScrollView!
     @IBOutlet private weak var timerBtm: UISegmentedControl!
     @IBOutlet private weak var taskTicketView: UIView!
@@ -53,6 +54,7 @@ class AddTaskViewController: UIViewController{
     @IBOutlet private weak var iconImageView: UIImageView!
     @IBOutlet private weak var colorView: UIView!
     @IBOutlet private weak var reminderTableView: UITableView!
+
 
     // MARK: - Initilizer
     static func initiate() -> AddTaskViewController {
@@ -73,6 +75,7 @@ class AddTaskViewController: UIViewController{
         reminderTableView.dataSource = self
         titleTextField.text = ""
         ticketTextField.text = ""
+        addReminderButton.delegate = self
         // 画面サイズ取得
         let screenSize: CGRect = UIScreen.main.bounds
         screenWidth = screenSize.width
@@ -149,6 +152,10 @@ class AddTaskViewController: UIViewController{
         presenter.touchCreateButton(taskName: titleTextField.text!)
     }
     
+    @objc func touchAddNotificeButton() {
+        
+    }
+    
     func setColorView() {
         self.colorView.backgroundColor = presenter.currentColor.gradationColor1
         self.iconImageView.tintColor = presenter.currentColor.gradationColor1
@@ -185,6 +192,10 @@ extension AddTaskViewController: AddTaskViewControllerProtocol {
         ticketTableView.reloadData()
         ticketTextField.text = ""
     }
+    
+    func reloadNotificationTable() {
+        reminderTableView.reloadData()
+    }
 }
 
 // MARK: - Extension UITableViewDataSource
@@ -202,7 +213,10 @@ extension AddTaskViewController: UITableViewDataSource {
         case .ticket:
             cell.textLabel!.text = presenter.tickets[indexPath.row].ticketName
         case .reminder:
-            break
+            let _cell = cell as? NotificationTableCell
+            let notice = presenter.currentTaskModel.notifications[indexPath.row]
+            _cell!.dateLabel.text = Util.stringFromDate(date: notice.date!, format: "HH:mm")
+            _cell!.switchButton.isOn = notice.isActive!
         case .none:
             break
         }
@@ -220,7 +234,15 @@ extension AddTaskViewController: UITableViewDataSource {
 
 // MARK: - Extension UITableViewDelegate
 extension AddTaskViewController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 5 // セルの上部のスペース
+    }
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        view.tintColor = .clear // 透明にすることでスペースとする
+    }
+    func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+        view.tintColor = .clear // 透明にすることでスペースとする
+    }
 }
 
 extension UIScrollView {
@@ -294,5 +316,20 @@ extension AddTaskViewController: ColorSelectViewControllerDelegate {
 extension AddTaskViewController: IconSelectViewControllerDelegate {
     func selectedIcon(iconStr: String) {
         presenter.selectedIcon(iconString: iconStr)
+    }
+}
+
+extension AddTaskViewController: PickerViewKeyboardDelegate {
+    func didDone(sender: PickerViewKeyboard, selectedData: Date) {
+        presenter.didDoneDatePicker(selectDate: selectedData)
+        self.view.endEditing(true)
+    }
+    
+    func initSelectedRow(sender: PickerViewKeyboard) -> Int {
+        return 3
+    }
+    func didCancel(sender: PickerViewKeyboard) {
+        print("canceled")
+        self.view.endEditing(true)
     }
 }

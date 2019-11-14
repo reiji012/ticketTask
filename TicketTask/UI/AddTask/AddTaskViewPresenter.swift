@@ -20,6 +20,7 @@ protocol AddTaskViewPresenterProtocol {
     func selectedColor(color: TaskColor)
     func selectedIcon(iconString: String)
     func selectedResetTypeIndex(index: Int)
+    func didDoneDatePicker(selectDate: Date)
 }
 
 
@@ -59,7 +60,7 @@ class AddTaskViewPresenter: AddTaskViewPresenterProtocol, ErrorAlert {
         case 1:
             // リマインダーテーブルの時
             self.content = .reminder
-            return notifications.isEmpty ? 1 : notifications.count
+            return currentTaskModel.notifications.isEmpty ? 0 : currentTaskModel.notifications.count
         case 2:
             // チケットテーブルの時
             self.content = .ticket
@@ -96,7 +97,6 @@ class AddTaskViewPresenter: AddTaskViewPresenterProtocol, ErrorAlert {
         tickets = []
         currentColor = .orange
         currentTaskModel = TaskModel(id: (taskLocalDataModel?.lastId())!)
-        currentTaskModel = TaskModel(id: (taskLocalDataModel?.lastId())!)
     }
     
     // MARK: - Lifecycle
@@ -105,6 +105,7 @@ class AddTaskViewPresenter: AddTaskViewPresenterProtocol, ErrorAlert {
         currentIconString = "icon-0"
         currentTaskModel.resetType = 0
         view.initSetState()
+        createTaskNotification(id: 0, dateString: "18:45")
     }
     
     // MARK: - Public Function
@@ -173,5 +174,20 @@ class AddTaskViewPresenter: AddTaskViewPresenterProtocol, ErrorAlert {
     // 処理を分岐するメソッド
     func checkTableView(_ tableView: UITableView) -> Void{
        
+    }
+    
+    func didDoneDatePicker(selectDate: Date) {
+        let dateString = Util.stringFromDateAsNotice(date: selectDate)
+        createTaskNotification(id: currentTaskModel.notifications.count + 1, dateString: dateString)
+        view.reloadNotificationTable()
+    }
+    
+    private func createTaskNotification(id: Int, dateString: String) {
+        let notice = TaskNotificationsModel()
+        notice.date = Util.dateFromStringAsNotice(string: dateString)
+        notice.id = id
+        notice.identifier = "\(taskLocalDataModel!.lastId())_\(id)"
+        notice.isActive = true
+        currentTaskModel.notifications.append(notice)
     }
 }
