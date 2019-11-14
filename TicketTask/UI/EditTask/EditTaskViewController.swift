@@ -136,7 +136,7 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
             UIView.animate(withDuration: 0.5, animations: { () -> Void in
                 let color = self.presenter.currentColor
                 let gradationColor = color.gradationColor
-                self.timerBtn.backgroundColor = color.gradationColor1
+                self.timerBtn.tintColor = color.gradationColor1
                 self.gradientLayer.colors = gradationColor
                 self.gradientLayer.frame = self.view.bounds
                 //            self.gradientLayer.locations = [0.3, 0.7]

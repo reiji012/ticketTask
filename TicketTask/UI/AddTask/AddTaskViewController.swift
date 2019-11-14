@@ -163,7 +163,7 @@ class AddTaskViewController: UIViewController{
             let color = self.presenter.currentColor
             self.gradientLayer.colors = color.gradationColor
             self.gradientLayer.frame = self.view.bounds
-            self.timerBtm.backgroundColor = color.gradationColor1
+            self.timerBtm.tintColor = color.gradationColor1
             self.ticketAddBtn.setTitleColor(color.gradationColor1, for: .normal)
             self.view.layer.insertSublayer(self.gradientLayer, at: 0)
         })

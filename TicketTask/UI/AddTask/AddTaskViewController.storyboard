@@ -203,14 +203,12 @@
                                                     </label>
                                                     <segmentedControl opaque="NO" alpha="0.90000000000000002" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bordered" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="e7X-fV-Ig5">
                                                         <rect key="frame" x="27" y="95" width="296" height="56"/>
-                                                        <color key="backgroundColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <segments>
                                                             <segment title="ずっと"/>
                                                             <segment title="毎日"/>
                                                             <segment title="毎週"/>
                                                             <segment title="毎月"/>
                                                         </segments>
-                                                        <color key="tintColor" red="1" green="0.47450980390000003" blue="0.47450980390000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <connections>
                                                             <action selector="touchTimerSetButton:" destination="6im-bD-mp2" eventType="valueChanged" id="ILM-rv-Ozx"/>
                                                         </connections>
