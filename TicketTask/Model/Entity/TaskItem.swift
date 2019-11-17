@@ -23,8 +23,13 @@ class TaskItem: EntityItem {
     var taskNotifications = List<TaskNotifications>()
 }
 
-class TaskNotifications: EntityItem {
+class TaskNotifications: Object {
+    @objc dynamic var id: Int = 0
     @objc dynamic var identifier: String = ""
     @objc dynamic var date: Date? = nil
     @objc dynamic var isActive: Bool = false
+    
+    override static func primaryKey() -> String? {
+        return "identifier"
+    }
 }

@@ -100,7 +100,7 @@ class TaskLocalDataModel {
         }
 
         let results = realm.objects(TaskItem.self)
-        let lastID = self.lastId(e: TaskItem())
+        let lastID = self.lastId()
         let tasks = results.map {$0.taskTitle}
         if tasks.index(of: taskModel.taskTitle) != nil {
             // 同じ名前のタスクが存在した場合はエラーを返す
@@ -120,7 +120,7 @@ class TaskLocalDataModel {
         let notificationsRealmArray = List<TaskNotifications>()
         for notification in taskModel.notifications {
             let notificationRealmModel = TaskNotifications()
-            notificationRealmModel.id = self.lastId(e: TaskNotifications())
+            notificationRealmModel.id = notification.id
             notificationRealmModel.identifier = notification.identifier
             notificationRealmModel.isActive = notification.isActive!
             notificationRealmModel.date = notification.date
@@ -313,11 +313,11 @@ class TaskLocalDataModel {
     }
     
     // インクリメント用ID取得
-    func lastId<T: EntityItem>(e: T) -> Int {
+    func lastId() -> Int {
         var nextId = 0
         do {
             var idArray = [Int]()
-            for task in realm.objects(T.self) {
+            for task in realm.objects(TaskItem.self) {
                 idArray.append(task.id)
             }
             nextId = idArray.isEmpty ? 0 : idArray.max()! + 1
