@@ -11,7 +11,7 @@ import UIKit
 
 protocol MainViewControllerProtocol {
     var stopPoint: CGFloat { get }
-    var currentWidth: Int { get }
+    var scrollWidth: Int { get }
     func setWeatherInfo()
     func setTaskEmptyViewState(isHidden: Bool)
     func createAllTaskViews()

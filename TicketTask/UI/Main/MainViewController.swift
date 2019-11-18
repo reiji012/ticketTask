@@ -31,8 +31,8 @@ class MainViewController: UIViewController {
     var gradientLayer: CAGradientLayer = CAGradientLayer()
     //TaskViewの横幅
     var taskViewHeight: CGFloat!
-    let taskViewWidth: CGFloat = 325.0
-    var currentWidth: Int = 325
+    let taskViewWidth: CGFloat = screenType.taskViewCardWidth
+    var scrollWidth: Int = Int(screenType.taskViewCardWidth + 15)
     var stopPoint: CGFloat = 0.0
     var originX:CGFloat?
     func topSafeAreaHeight() -> CGFloat {
@@ -172,7 +172,7 @@ class MainViewController: UIViewController {
         HUD.flash(.success, onView: view, delay: 1)
         let taskCount: Int = self.presenter.taskTotalCount
         //スクロール可能最大値
-        let maxScrollPoint = (taskCount - 1) * currentWidth
+        let maxScrollPoint = (taskCount - 1) * scrollWidth
         UIView.animate(withDuration: 0.3, animations: {
             self.scrollView.contentOffset = CGPoint(x:maxScrollPoint, y:0)
         })
@@ -188,14 +188,14 @@ class MainViewController: UIViewController {
         let viewWidth = isInitCreate ? initTaskViewWidth : screenType.taskViewCardWidth
         
         taskView = TaskView.initiate(mainViewController: self, task: task)
-        taskView.frame = CGRect.init(x: self.originX! - 13, y: currentY, width: viewWidth, height: initTaskViewHeight)
+        taskView.frame = CGRect.init(x: self.originX!, y: currentY, width: viewWidth, height: initTaskViewHeight)
         taskView.bind()
         taskView.setLayout()
         taskView.topSafeAreaHeight = self.view.safeAreaInsets.top
         taskView.tag = tag
         scrollView.addSubview(taskView)
         //次のタブのx座標を用意する
-        self.originX! += taskViewWidth
+        self.originX! += CGFloat(scrollWidth)
         scrollView.bringSubviewToFront(taskView)
     }
     
@@ -243,7 +243,7 @@ extension MainViewController: MainViewControllerProtocol {
         }) { (completed) in
             // Animationが完了したら親Viewから削除する
             let index = view.tag
-            let scrollPoint = self.stopPoint - CGFloat(self.currentWidth)
+            let scrollPoint = self.stopPoint - CGFloat(self.scrollWidth)
             if (self.presenter.isLaskTaskView(view: view)) {
                 UIView.animate(withDuration: 0.5, animations: {
                     self.scrollView.contentOffset = CGPoint(x:scrollPoint, y:0)
@@ -318,7 +318,7 @@ extension MainViewController: MainViewControllerProtocol {
         
         //タブのx座標．
         //ダミーView分，はじめからずらしてあげましょう．
-        self.originX = dummyViewWidth
+        self.originX = 32
     }
     
     /// 天気情報のセット
@@ -364,28 +364,28 @@ extension MainViewController: UIScrollViewDelegate {
         //どこのタブを表示させたいか計算
         let taskCount: Int = presenter.taskTotalCount
         //スクロール可能最大値
-        let maxScrollPoint = (taskCount - 1) * currentWidth
+        let maxScrollPoint = (taskCount - 1) * scrollWidth
         //どれくらいスクロールしたのか
         let currentScroll = self.stopPoint - scrollView.contentOffset.x
         var scrollPoint = self.stopPoint
         if currentScroll < 0 {
             if currentScroll <= -75 {
-                scrollPoint += CGFloat(currentWidth)
+                scrollPoint += CGFloat(scrollWidth)
             }
         } else {
             if currentScroll >= 75 {
-                scrollPoint -= CGFloat(currentWidth)
+                scrollPoint -= CGFloat(scrollWidth)
             }
         }
         //スクロール位置がスクロール可能最大値を超えないようにする
         if Int(scrollPoint) > maxScrollPoint {
-            scrollPoint -= CGFloat(self.currentWidth)
+            scrollPoint -= CGFloat(self.scrollWidth)
         }
         //スクロール位置がマイナスになってしまう時は0を指定
         if Int(scrollPoint) < 0 {
             scrollPoint = 0
         }
-        self.taskViewIndex = (Int(scrollPoint) / self.currentWidth) + 1
+        self.taskViewIndex = (Int(scrollPoint) / self.scrollWidth) + 1
         for i in 0..<presenter.taskTotalCount {
             let taskView = self.view.viewWithTag(i + 1) as! TaskView
             taskView.isCenter = false
