@@ -66,7 +66,8 @@ class TaskLocalDataModel {
                 _ticket.isCompleted = ticket.isCompleted
                 _tickets.append(_ticket)
             }
-            for noticeTime in _notifications {
+            let notifications = task.taskNotifications
+            for noticeTime in notifications {
                 let _notice = TaskNotificationsModel()
                 _notice.id = noticeTime.id
                 _notice.identifier = noticeTime.identifier

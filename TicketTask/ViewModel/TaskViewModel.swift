@@ -45,6 +45,7 @@ class TaskViewModel: NSObject {
     var iconString: String?
     var taskColor: TaskColor?
     var resetTypeIndex: Int?
+    var notifications: [TaskNotificationsModel]?
     
     var actionType: ActionType = .taskUpdate
     
@@ -74,6 +75,7 @@ class TaskViewModel: NSObject {
         self.iconString = task?.icon
         self.taskID = task?.id
         self.resetTypeIndex = task?.resetType
+        self.notifications = task?.notifications
         self.iconImage = UIImage(named: iconString!)!.withRenderingMode(.alwaysTemplate)
     }
     
@@ -85,6 +87,7 @@ class TaskViewModel: NSObject {
         self.iconString = task?.icon
         self.taskID = task?.id
         self.resetTypeIndex = task?.resetType
+        self.notifications = task?.notifications
         setColor(colorString: task!.color)
         countProgress()
     }

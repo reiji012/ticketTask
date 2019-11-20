@@ -26,7 +26,6 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
     // MARK: - Public Propaty
     let navBar = SPFakeBarView.init(style: .stork)
     var gradientLayer: CAGradientLayer = CAGradientLayer()
-    var taskViewModel: TaskViewModel?
     var mainVC: MainViewController?
     var isEdited: Bool = false
     var pickerView: UIPickerView = UIPickerView()
@@ -42,6 +41,7 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
     @IBOutlet private weak var headerView: UIView!
     @IBOutlet private weak var contentsView: UIView!
     @IBOutlet private weak var scrollView: UIScrollView!
+    @IBOutlet private weak var reminderTableView: UITableView!
     
     private var presenter: EditTaskViewPresenterProtocol!
     private var resetType: Int = 0
@@ -64,8 +64,10 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
         presenter.viewDidLoad()
         self.modalPresentationCapturesStatusBarAppearance = true
         self.view.backgroundColor = UIColor.white
-        self.titleTextField.text = taskViewModel?.taskName
+        self.titleTextField.text = presenter.taskViewModel?.taskName
         self.initStateSet()
+        
+        reminderTableView.dataSource = self
     }
     
     // MARK: - Public Function
@@ -214,3 +216,29 @@ extension EditTaskViewController: EditTaskViewControllerProtocol {
         setGradationColor()
     }
 }
+
+// MARK: - Extension UITableViewDataSource
+extension EditTaskViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return presenter.numberOfRow()
+    }
+    
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let identifier = "dataCell"
+        let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! NotificationTableCell
+        
+        let content = presenter.contents(index: indexPath.row)
+        cell.dateLabel!.text = Util.stringFromDate(date: content.date, format: "HH:mm")
+        cell.switchButton.isOn = content.isActive
+        
+        return cell
+    }
+    
+    internal func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
+}
+

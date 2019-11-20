@@ -224,7 +224,6 @@ class MainViewController: UIViewController {
     
     func showEditView(editTaskVC: EditTaskViewController, taskVM: TaskViewModel) {
         editTaskVC.mainVC = self
-        editTaskVC.taskViewModel = taskVM
         UIView.animate(withDuration: 2, animations: {
             self.present(editTaskVC, animated: true, completion: nil)
         })

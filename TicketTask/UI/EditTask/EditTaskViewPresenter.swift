@@ -10,11 +10,14 @@ import Foundation
 import UIKit
 
 protocol EditTaskViewPresenterProtocol {
+    var taskViewModel: TaskViewModel? { get }
     var currentColor: TaskColor { get set }
     var currentIconString: String { get set }
     var currentIcon: UIImage { get }
     var currentResetType: Int { get }
     var taskView: TaskViewProtocol! { get }
+    func numberOfRow() -> Int
+    func contents(index: Int) -> (date: Date, isActive: Bool)
     func viewDidLoad()
     func touchSaveButton(afterTaskName: String)
     func touchTimerSetButton(resetTypeIndex: Int)
@@ -25,7 +28,7 @@ class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
     
     // MARK: - Public Propaty
     var taskView: TaskViewProtocol!
-
+    var taskViewModel: TaskViewModel?
     var currentIconString: String = "" {
         didSet {
             currentTaskModel.icon = currentIconString
@@ -50,7 +53,6 @@ class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
     private var beforeName: String?
     private var resetTypeIndex: Int?
     private let currentTaskModel: TaskModel
-    private let taskViewModel: TaskViewModel?
     
     // MARK: - initialize
     init(view: EditTaskViewControllerProtocol, taskView: TaskViewProtocol) {
@@ -62,6 +64,17 @@ class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
         beforeName = taskViewModel!.taskName!
         currentTaskModel = TaskModel(id: taskViewModel!.taskID!)
         currentTaskModel.resetType = taskViewModel!.resetTypeIndex!
+    }
+    
+    /// セルの数を返す
+    func numberOfRow() -> Int {
+        return taskViewModel!.notifications!.isEmpty ? 0 : taskViewModel!.notifications!.count
+    }
+    
+    /// セルの中身を返す
+    func contents(index: Int) -> (date: Date, isActive: Bool) {
+        let notice = taskViewModel!.notifications![index]
+        return (notice.date!, notice.isActive!)
     }
     
     // MARK: - Public Function
