@@ -180,18 +180,18 @@ class TaskView: UIView, TaskViewProtocol{
             ticketProgressBar?.setProgress(Float($0), animated: true)
         }).disposed(by: disposeBag)
         
-        self.presenter.taskViewModel.ticketCout.subscribe(onNext: { [ticketCountLabel] in
+        self.presenter.taskViewModel.ticketCout.subscribe(onNext: { [weak ticketCountLabel] in
             self.ticketsCount = $0
             let ticketCount = "チケット：\($0)"
             ticketCountLabel!.text = ticketCount
         }).disposed(by: disposeBag)
         
-        self.presenter.taskViewModel.taskTitle.subscribe(onNext: { [titleLabel] in
+        self.presenter.taskViewModel.taskTitle.subscribe(onNext: { [weak titleLabel] in
             let taskTitle = $0
             titleLabel!.text = taskTitle
         }).disposed(by: disposeBag)
         
-        self.presenter.taskViewModel.taskAttri.subscribe(onNext: { [attriImageView] in
+        self.presenter.taskViewModel.taskAttri.subscribe(onNext: { [weak attriImageView] in
             _ = $0
             attriImageView!.image = self.presenter.taskViewModel.iconImage
         }).disposed(by: disposeBag)
