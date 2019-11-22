@@ -95,6 +95,7 @@ class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
             vm.taskColor = currentColor
             vm.iconImage = currentIcon
             vm.iconString = currentIconString
+            vm.resetTypeIndex = currentResetType
             view.didSaveTask()
         })
         if let error = error {

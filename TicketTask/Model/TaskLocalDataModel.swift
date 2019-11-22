@@ -77,6 +77,7 @@ class TaskLocalDataModel {
             }
             taskModel.tickets = _tickets
             taskModel.notifications = _notifications
+            taskModel.resetType = task.resetType
             self.tasks.append(taskModel)
         }
     }
