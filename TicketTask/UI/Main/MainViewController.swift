@@ -60,10 +60,16 @@ class MainViewController: UIViewController {
     @IBOutlet private weak var descriptionLabel: UILabel!
     @IBOutlet private weak var taskEmptyView: UIView!
     
+    // MARK: - Initilizer
+    static func initiate() -> MainViewController {
+        let viewController = UIStoryboard.instantiateInitialViewController(from: self)
+        viewController.presenter = MainViewPresenter(vc: viewController)
+        return viewController
+    }
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        presenter = MainViewPresenter(vc: self)
         presenter.viewDidLoad()
         // 端末のサイズでタスクカードの大きさを設定
         let myBoundSize: CGSize = UIScreen.main.bounds.size
@@ -103,6 +109,10 @@ class MainViewController: UIViewController {
             currentTaskView.isCenter = true
             self.scrollView.bringSubviewToFront(currentTaskView)
         }
+    }
+    
+    func configureViewControllers() {
+        
     }
     
     // MARK: - Public Function

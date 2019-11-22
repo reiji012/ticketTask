@@ -13,6 +13,8 @@ target 'TicketTask' do
   pod 'PKHUD', '~> 5.0'
   pod 'SPFakeBar'
   pod 'SwiftyJSON', '~> 4.0'
+  # ESTabBarController-swift: タブデザイン
+  pod 'ESTabBarController-swift'
   
   # add the Firebase pod for Google Analytics
   pod 'Firebase/Analytics'
