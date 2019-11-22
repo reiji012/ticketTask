@@ -32,6 +32,10 @@ class TicketTabbarController: ESTabBarController, TicketTabbarControllerProtocol
         let historyViewController = HistoryViewController.initiate()
         
         self.viewControllers = [mainViewController, historyViewController, settingViewController]
+        
+        viewControllers![0].tabBarItem = ESTabBarItem.init(HighlightableContentView(), title: nil, image: UIImage(named: "icon-7"), selectedImage: nil)
+        viewControllers![1].tabBarItem = ESTabBarItem.init(HighlightableContentView(), title: nil, image: UIImage(named: "icon-0"), selectedImage: nil)
+        viewControllers![2].tabBarItem = ESTabBarItem.init(HighlightableContentView(), title: nil, image: UIImage(named: "icon-4"), selectedImage: nil)
         selectedIndex = 0
     }
 

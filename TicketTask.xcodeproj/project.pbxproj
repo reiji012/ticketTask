@@ -20,6 +20,7 @@
 		1123EEC02387D8D9005EEFAD /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1123EEBD2387D8D9005EEFAD /* HistoryViewController.swift */; };
 		1123EEC12387D8D9005EEFAD /* HistoryViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1123EEBE2387D8D9005EEFAD /* HistoryViewController.storyboard */; };
 		1123EEC32387DC18005EEFAD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1123EEC22387DC18005EEFAD /* Main.storyboard */; };
+		1123EEC72387E10F005EEFAD /* TabBarItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1123EEC62387E10F005EEFAD /* TabBarItemView.swift */; };
 		1181EDC8234C4A02006D6CDD /* ErrorAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1181EDC7234C4A02006D6CDD /* ErrorAlert.swift */; };
 		11B4F99C233DF163008CD2F6 /* TaskEditDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B4F99B233DF162008CD2F6 /* TaskEditDelegate.swift */; };
 		11B5E4432345F6F300DBCB14 /* UIStoryboardExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B5E4422345F6F300DBCB14 /* UIStoryboardExtensions.swift */; };
@@ -89,6 +90,7 @@
 		1123EEBD2387D8D9005EEFAD /* HistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		1123EEBE2387D8D9005EEFAD /* HistoryViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = HistoryViewController.storyboard; sourceTree = "<group>"; };
 		1123EEC22387DC18005EEFAD /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		1123EEC62387E10F005EEFAD /* TabBarItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItemView.swift; sourceTree = "<group>"; };
 		1181EDC7234C4A02006D6CDD /* ErrorAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAlert.swift; sourceTree = "<group>"; };
 		11B4F99B233DF162008CD2F6 /* TaskEditDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskEditDelegate.swift; sourceTree = "<group>"; };
 		11B5E4422345F6F300DBCB14 /* UIStoryboardExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStoryboardExtensions.swift; sourceTree = "<group>"; };
@@ -167,6 +169,7 @@
 				8E8A0B0F231437D600FFCE15 /* TicketTabbarController.swift */,
 				1123EEAA2387D395005EEFAD /* TicketTabbarViewPresenter.swift */,
 				1123EEC22387DC18005EEFAD /* Main.storyboard */,
+				1123EEC62387E10F005EEFAD /* TabBarItemView.swift */,
 			);
 			path = TabBar;
 			sourceTree = "<group>";
@@ -608,6 +611,7 @@
 				2BB2EE51228AB97200769AAA /* ActionType.swift in Sources */,
 				11EC7B93234B13970099D444 /* TaskColor.swift in Sources */,
 				11EA1190234DC635003223A7 /* DateFormatterExtensions.swift in Sources */,
+				1123EEC72387E10F005EEFAD /* TabBarItemView.swift in Sources */,
 				11B5E44D234734FA00DBCB14 /* UINibExtentions.swift in Sources */,
 				8E6DAB9622FFF36A00A72D0D /* MainViewControllerProtocol.swift in Sources */,
 				2BE5516B2292A83700D5AFA9 /* TasksData.swift in Sources */,
