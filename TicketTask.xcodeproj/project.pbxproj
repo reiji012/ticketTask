@@ -184,14 +184,14 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
-		1123EEAD2387D581005EEFAD /* Other */ = {
+		1123EEAD2387D581005EEFAD /* History */ = {
 			isa = PBXGroup;
 			children = (
 				1123EEBE2387D8D9005EEFAD /* HistoryViewController.storyboard */,
 				1123EEBD2387D8D9005EEFAD /* HistoryViewController.swift */,
 				1123EEBC2387D8D8005EEFAD /* HistoryViewPresenter.swift */,
 			);
-			path = Other;
+			path = History;
 			sourceTree = "<group>";
 		};
 		1181EDC6234C49B3006D6CDD /* ErrorAlert */ = {
@@ -220,7 +220,7 @@
 				11B4F994233DEE7F008CD2F6 /* TaskCardGroup */,
 				11B4F995233DEECE008CD2F6 /* EditTask */,
 				11B4F993233DEE56008CD2F6 /* AddTask */,
-				1123EEAD2387D581005EEFAD /* Other */,
+				1123EEAD2387D581005EEFAD /* History */,
 				1123EEAC2387D56F005EEFAD /* Settings */,
 				11B4F992233DEDCD008CD2F6 /* Main */,
 			);
