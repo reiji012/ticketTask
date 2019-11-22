@@ -252,7 +252,12 @@ class TaskLocalDataModel {
         self.tasks.remove(at: index)
         do {
             let results = realm.objects(TaskItem.self)
+            let resultsOfNotifications = realm.objects(TaskNotifications.self)
             try! realm.write {
+                // 先にタスクデータの中の通知データも削除する
+                results[index].taskNotifications.forEach({
+                    realm.delete($0)
+                })
                 realm.delete(results[index])
                 if let callback = callback {
                     callback()
