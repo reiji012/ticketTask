@@ -402,6 +402,7 @@ extension TaskView: UITableViewDataSource {
                 if index == indexPath.row {
                     ticketName = ticket.ticketName
                     isCompleted = ticket.isCompleted
+                    commentText = ticket.comment
                 }
             }
             cell.isCompleted = isCompleted!

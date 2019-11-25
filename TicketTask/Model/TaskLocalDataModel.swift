@@ -64,6 +64,7 @@ class TaskLocalDataModel {
                 let _ticket = TicketsModel()
                 _ticket.ticketName = ticket.ticketName
                 _ticket.isCompleted = ticket.isCompleted
+                _ticket.comment = ticket.comment
                 _tickets.append(_ticket)
             }
             let notifications = task.taskNotifications
@@ -209,6 +210,7 @@ class TaskLocalDataModel {
                     let newTicket = TicketModel()
                     newTicket.ticketName = ticket
                     newTicket.isCompleted = false
+                    newTicket.comment = tickets.filter({ $0.ticketName == ticket }).first!.comment
                     task!.tickets.append(newTicket)
                 }
             }

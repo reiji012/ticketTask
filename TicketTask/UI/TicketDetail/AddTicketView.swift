@@ -57,6 +57,8 @@ class AddTicketView: UIView{
                 self.alpha = 0
             }, completion: { _ in
                 self.isHidden = true
+                self.memoTextField.text = ""
+                self.titleTextField.text = ""
             })
             guard let delegate = self.delegate else {
                 return
