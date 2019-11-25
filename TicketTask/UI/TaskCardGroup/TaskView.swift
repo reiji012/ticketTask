@@ -16,6 +16,7 @@ protocol TaskViewProtocol {
     var presenter: TaskViewPresenterProtocol! { get }
     var isShowDetail: Bool { get set }
     func changeViewSize()
+    func didCreatedTicketd()
 }
 
 class TaskView: UIView, TaskViewProtocol{
@@ -205,39 +206,9 @@ class TaskView: UIView, TaskViewProtocol{
     
     func touchAddTicketButton() {
         DispatchQueue.main.async {
+            self.mainViewController?.addTicketView!.delegate = self
             self.mainViewController?.didTouchAddTicketButton(taskView: self)
         }
-        
-        return
-        
-        
-        //alertの表示文言
-        let alertController: UIAlertController = UIAlertController(title: "チケットの追加", message: "", preferredStyle: .alert)
-        
-        //キャンセルボタンを押す
-        let cancelAction: UIAlertAction = UIAlertAction(title: "キャンセル", style: .cancel) { action -> Void in
-            // キャンセルを押した時の処理
-        }
-        alertController.addAction(cancelAction)
-        
-        let addAction: UIAlertAction = UIAlertAction(title: "追加", style: .default) { action -> Void in
-            guard let text = alertController.textFields?.first!.text else {
-                return
-            }
-            //追加ボタンを押した時の処理
-            self.ticketTableView.reloadData()
-            self.presenter.didTouchAddTicketButton(ticket: text)
-        }
-        
-        alertController.addAction(addAction)
-        alertController.addTextField { textField -> Void in
-            textField.placeholder = "追加するチケット"
-        }
-        alertController.addChild(SettingViewController.initiate())
-        alertController.addTextField { textField -> Void in
-            textField.placeholder = "メモ"
-        }
-        mainViewController!.present(alertController, animated: true, completion: nil)
     }
     
     func setLayout() {
@@ -346,7 +317,6 @@ class TaskView: UIView, TaskViewProtocol{
         self.ticketAddBtn.layer.shadowRadius = 12
         self.ticketAddBtn.layer.shadowColor = UIColor.black.cgColor
         self.ticketAddBtn.layer.shadowOffset = CGSize(width: 3, height: 4)
-        
     }
     
     func setGradationColor(color: TaskColor) {
@@ -392,6 +362,11 @@ class TaskView: UIView, TaskViewProtocol{
             )
         }
         parent.addConstraints(constraints)
+    }
+    
+    func didCreatedTicketd() {
+        mainViewController?.addTicketView?.hideView()
+        ticketTableView.reloadData()
     }
 }
 
@@ -451,5 +426,19 @@ extension TaskView: UITableViewDataSource {
             self.ticketTableView.reloadData()
         }
     }
+    
+}
+
+extension TaskView: AddTicketViewDelegate {
+    func didTouchCloseButton() {
+        
+    }
+    
+    func didTouchCheckButton(title: String, memo: String) {
+        //追加ボタンを押した時の処理
+        self.ticketTableView.reloadData()
+        self.presenter.didTouchAddTicketButton(ticket: title, memo: memo)
+    }
+    
     
 }

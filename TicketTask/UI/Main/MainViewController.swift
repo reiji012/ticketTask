@@ -437,6 +437,10 @@ extension MainViewController {
 }
 
 extension MainViewController: AddTicketViewDelegate {
+    func didTouchCheckButton(title: String, memo: String) {
+        
+    }
+    
     func didTouchCloseButton() {
     }
 }

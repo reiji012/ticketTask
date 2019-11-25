@@ -53,9 +53,21 @@
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PR1-Hm-Xte">
+                    <rect key="frame" x="404" y="61" width="25" height="25"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="25" id="Ubx-nc-3bF"/>
+                        <constraint firstAttribute="width" secondItem="PR1-Hm-Xte" secondAttribute="height" multiplier="1:1" id="fhb-Ix-Yp3"/>
+                    </constraints>
+                    <state key="normal" image="checkMark"/>
+                    <connections>
+                        <action selector="touchCheckButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="oJh-w5-onO"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="PR1-Hm-Xte" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="17" id="5FE-9G-tHE"/>
                 <constraint firstItem="gYf-MP-j96" firstAttribute="top" secondItem="bkz-P2-VXo" secondAttribute="bottom" constant="23" id="6sV-lu-DZ7"/>
                 <constraint firstItem="u4E-Ar-GLu" firstAttribute="top" secondItem="M0D-5E-xxI" secondAttribute="bottom" constant="23" id="87q-9Y-T4x"/>
                 <constraint firstItem="Ltp-PD-UYa" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="17" id="8If-Mg-eh1"/>
@@ -63,6 +75,7 @@
                 <constraint firstItem="M0D-5E-xxI" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="74" id="PUb-1i-7jc"/>
                 <constraint firstItem="h3v-bw-Z7d" firstAttribute="centerY" secondItem="Ltp-PD-UYa" secondAttribute="centerY" id="QHd-RI-r1x"/>
                 <constraint firstItem="Ltp-PD-UYa" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="17" id="Zzv-c5-lVh"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="PR1-Hm-Xte" secondAttribute="trailing" constant="17" id="cPY-kr-lsk"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="u4E-Ar-GLu" secondAttribute="trailing" constant="74" id="fIL-8a-SoV"/>
                 <constraint firstItem="u4E-Ar-GLu" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="74" id="lNF-dR-CKS"/>
                 <constraint firstItem="gYf-MP-j96" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="74" id="lpa-1x-FaA"/>
@@ -81,6 +94,7 @@
         </view>
     </objects>
     <resources>
+        <image name="checkMark" width="256" height="256"/>
         <image name="close" width="256" height="256"/>
     </resources>
 </document>

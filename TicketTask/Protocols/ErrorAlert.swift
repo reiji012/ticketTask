@@ -20,6 +20,8 @@ extension ErrorAlert {
         var title = ""
         
         switch error {
+        case .titleEmptyError:
+            title = "タイトルを入力してください"
         case .inputValidError:
             title = "入力エラー"
             if let massage = massage {

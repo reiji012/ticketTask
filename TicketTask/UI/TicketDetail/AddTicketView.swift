@@ -10,9 +10,10 @@ import UIKit
 
 protocol AddTicketViewDelegate {
     func didTouchCloseButton()
+    func didTouchCheckButton(title: String, memo: String)
 }
 
-class AddTicketView: UIView {
+class AddTicketView: UIView{
 
     var delegate: AddTicketViewDelegate?
     
@@ -29,6 +30,12 @@ class AddTicketView: UIView {
     @IBAction func touchCloseButton(_ sender: Any) {
         hideView()
     }
+    @IBAction func touchCheckButton(_ sender: Any) {
+        guard let delegate = delegate else {
+            return
+        }
+        delegate.didTouchCheckButton(title: titleTextField.text!, memo: memoTextField.text!)
+    }
     
     func showView() {
         DispatchQueue.main.async {
@@ -42,7 +49,7 @@ class AddTicketView: UIView {
         }
     }
     
-    private func hideView() {
+    func hideView() {
         DispatchQueue.main.async {
             self.endEditing(true)
             UIView.animate(withDuration: 0.5, animations: { () -> Void in

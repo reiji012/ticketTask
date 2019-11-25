@@ -15,7 +15,7 @@ protocol TaskViewPresenterProtocol {
     var currentColor: TaskColor { get }
     var progressBarWidthConst: CGFloat { get }
     func deleteTask()
-    func didTouchAddTicketButton(ticket: String)
+    func didTouchAddTicketButton(ticket: String, memo: String)
     func touchView()
 }
 
@@ -80,9 +80,11 @@ class TaskViewPresenter: TaskViewPresenterProtocol {
     /// チケットの追加
     ///
     /// - Parameter ticket: 追加するチケット
-    func didTouchAddTicketButton(ticket: String) {
+    func didTouchAddTicketButton(ticket: String, memo: String) {
         taskViewModel.actionType = .ticketCreate
-        taskViewModel.addTicket(ticketName: ticket)
+        taskViewModel.addTicket(ticketName: ticket, memo: memo, callback: {
+            self.view.didCreatedTicketd()
+        })
     }
     
     func touchView() {
