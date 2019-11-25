@@ -40,7 +40,7 @@ class MainViewController: UIViewController {
     }
     let transition = BubbleTransition()
     var tabbarHeight: CGFloat!
-
+    var addTicketView: AddTicketView?
     
     // MARK: - Private Property
     private var presenter: MainViewPresenterProtocol!
@@ -112,8 +112,12 @@ class MainViewController: UIViewController {
         }
     }
     
-    func configureViewControllers() {
-        
+    func counfigureAddTicketView() {
+        addTicketView = AddTicketView.initiate(taskModel: TaskModel(id: 0))
+        addTicketView!.delegate = self
+        addTicketView!.frame = self.view.frame
+        self.view.addSubview(addTicketView!)
+        addTicketView!.isHidden = true
     }
     
     // MARK: - Public Function
@@ -424,4 +428,15 @@ extension MainViewController: UIScrollViewDelegate {
 
 extension MainViewController : UIViewControllerTransitioningDelegate{
     
+}
+
+extension MainViewController {
+    func didTouchAddTicketButton(taskView: TaskView) {
+        addTicketView!.showView()
+    }
+}
+
+extension MainViewController: AddTicketViewDelegate {
+    func didTouchCloseButton() {
+    }
 }

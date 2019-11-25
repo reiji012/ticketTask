@@ -14,7 +14,7 @@ protocol AddTaskViewPresenterProtocol {
     func numberOfRow(tableView: UITableView) -> Int
     func cellIdentifier(tableView: UITableView) -> String
     func viewDidLoad()
-    func touchAddTicketButton(text: String)
+    func touchAddTicketButton(text: String, comment: String)
     func touchCreateButton(taskName: String)
     func removeTicket(index: IndexPath)
     func selectedColor(color: TaskColor)
@@ -109,10 +109,10 @@ class AddTaskViewPresenter: AddTaskViewPresenterProtocol, ErrorAlert {
     }
     
     // MARK: - Public Function
-    func touchAddTicketButton(text: String) {
+    func touchAddTicketButton(text: String, comment: String) {
          // TODO: if currentTaskModel.tickets.map({$0.ticketName}).index(of: text) != nil
         if ticketArray.index(of: text) == nil {
-            let ticketModel = TicketsModel().initiate(ticketName: text)
+            let ticketModel = TicketsModel().initiate(ticketName: text, comment: comment)
             self.tickets.append(ticketModel)
             currentTaskModel.tickets.append(ticketModel)
             ticketArray.append(text)

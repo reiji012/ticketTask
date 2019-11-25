@@ -26,7 +26,7 @@ protocol MainViewPresenterProtocol {
 class MainViewPresenter: MainViewPresenterProtocol, Routable, ErrorAlert {
     
     // MARK: - Public Propaty
-    var viewController: MainViewControllerProtocol!
+    var view: MainViewControllerProtocol!
     var tasks: [TaskModel] {
         return taskLocalDataModel!.tasks
     }
@@ -42,7 +42,7 @@ class MainViewPresenter: MainViewPresenterProtocol, Routable, ErrorAlert {
     
     // MARK: - Initialize
     init(vc: MainViewControllerProtocol) {
-        viewController = vc
+        view = vc
         taskLocalDataModel = TaskLocalDataModel.sharedManager
         wetherModel = WetherModel.sharedManager
     }
@@ -50,11 +50,12 @@ class MainViewPresenter: MainViewPresenterProtocol, Routable, ErrorAlert {
     // MARK: - Lifecycle
     func viewDidLoad() {
         setupWetherInfo()
+        view.counfigureAddTicketView()
     }
     
     // MARK: - Public Fuction
     func touchAddButton() {
-        guard let viewController = viewController as? MainViewController else {
+        guard let viewController = view as? MainViewController else {
             return
         }
         present(.addTaskViewController, from: viewController, animated: true)
@@ -65,7 +66,7 @@ class MainViewPresenter: MainViewPresenterProtocol, Routable, ErrorAlert {
     func setupWetherInfo() {
         wetherModel?.fetchWetherInfo(callback: {
             self.todayWetherInfo = self.wetherModel?.getWetherTodayInfo()
-            guard let viewController = self.viewController else {
+            guard let viewController = self.view else {
                 return
             }
             self.weatherIconImage = self.wetherModel.weatherIconImage!
@@ -99,9 +100,9 @@ class MainViewPresenter: MainViewPresenterProtocol, Routable, ErrorAlert {
     
     func checkIsTaskEmpty() {
         let isTaskEmpty = self.taskLocalDataModel!.tasks.isEmpty
-        self.viewController?.setTaskEmptyViewState(isHidden: !(isTaskEmpty))
+        self.view?.setTaskEmptyViewState(isHidden: !(isTaskEmpty))
         if !(isTaskEmpty) {
-            self.viewController?.createAllTaskViews()
+            self.view?.createAllTaskViews()
         }
     }
     
@@ -114,7 +115,7 @@ class MainViewPresenter: MainViewPresenterProtocol, Routable, ErrorAlert {
         let taskCount: Int = taskTotalCount
         //スクロール可能最大値
         let maxScrollPoint = (taskCount - 1) * 400
-        if (maxScrollPoint < Int(viewController.stopPoint)) {
+        if (maxScrollPoint < Int(self.view.stopPoint)) {
             return true
         } else {
             return false
@@ -122,7 +123,7 @@ class MainViewPresenter: MainViewPresenterProtocol, Routable, ErrorAlert {
     }
     
     func catchError(error: ValidateError) {
-        guard let viewController = viewController as? MainViewController else {
+        guard let viewController = view as? MainViewController else {
             return
         }
         createErrorAlert(error: error, massage: "", view: viewController)

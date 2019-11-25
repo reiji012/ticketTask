@@ -134,10 +134,11 @@ class AddTaskViewController: UIViewController{
     
     @IBAction func touchAddTicketButton(_ sender: Any) {
         let text = ticketTextField.text
+        let comment = ""
         if text == "" {
             return
         }
-        presenter.touchAddTicketButton(text: text!)
+        presenter.touchAddTicketButton(text: text!, comment: comment)
     }
     
     @objc func touchCanselButton() {

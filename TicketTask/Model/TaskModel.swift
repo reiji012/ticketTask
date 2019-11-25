@@ -28,14 +28,16 @@ class TaskModel: NSObject {
 class TicketsModel: NSObject {
     var ticketName: String = ""
     var isCompleted: Bool = false
+    var comment: String = ""
     
     override init() {
     }
     
-    func initiate(ticketName: String) -> TicketsModel {
+    func initiate(ticketName: String, comment: String) -> TicketsModel {
         let ticket = TicketsModel()
         ticket.ticketName = ticketName
         ticket.isCompleted = false
+        ticket.comment = comment
         return ticket
     }
 }

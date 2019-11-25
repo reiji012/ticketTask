@@ -21,6 +21,8 @@
 		1123EEC12387D8D9005EEFAD /* HistoryViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1123EEBE2387D8D9005EEFAD /* HistoryViewController.storyboard */; };
 		1123EEC32387DC18005EEFAD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1123EEC22387DC18005EEFAD /* Main.storyboard */; };
 		1123EEC72387E10F005EEFAD /* TabBarItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1123EEC62387E10F005EEFAD /* TabBarItemView.swift */; };
+		1123EECE238BA69A005EEFAD /* AddTicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1123EECD238BA69A005EEFAD /* AddTicketView.swift */; };
+		1123EED0238BA6AF005EEFAD /* AddTicketView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1123EECF238BA6AF005EEFAD /* AddTicketView.xib */; };
 		1181EDC8234C4A02006D6CDD /* ErrorAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1181EDC7234C4A02006D6CDD /* ErrorAlert.swift */; };
 		11B4F99C233DF163008CD2F6 /* TaskEditDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B4F99B233DF162008CD2F6 /* TaskEditDelegate.swift */; };
 		11B5E4432345F6F300DBCB14 /* UIStoryboardExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B5E4422345F6F300DBCB14 /* UIStoryboardExtensions.swift */; };
@@ -91,6 +93,8 @@
 		1123EEBE2387D8D9005EEFAD /* HistoryViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = HistoryViewController.storyboard; sourceTree = "<group>"; };
 		1123EEC22387DC18005EEFAD /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		1123EEC62387E10F005EEFAD /* TabBarItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItemView.swift; sourceTree = "<group>"; };
+		1123EECD238BA69A005EEFAD /* AddTicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTicketView.swift; sourceTree = "<group>"; };
+		1123EECF238BA6AF005EEFAD /* AddTicketView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddTicketView.xib; sourceTree = "<group>"; };
 		1181EDC7234C4A02006D6CDD /* ErrorAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAlert.swift; sourceTree = "<group>"; };
 		11B4F99B233DF162008CD2F6 /* TaskEditDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskEditDelegate.swift; sourceTree = "<group>"; };
 		11B5E4422345F6F300DBCB14 /* UIStoryboardExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStoryboardExtensions.swift; sourceTree = "<group>"; };
@@ -194,6 +198,15 @@
 			path = History;
 			sourceTree = "<group>";
 		};
+		1123EEC8238BA27E005EEFAD /* TicketDetail */ = {
+			isa = PBXGroup;
+			children = (
+				1123EECD238BA69A005EEFAD /* AddTicketView.swift */,
+				1123EECF238BA6AF005EEFAD /* AddTicketView.xib */,
+			);
+			path = TicketDetail;
+			sourceTree = "<group>";
+		};
 		1181EDC6234C49B3006D6CDD /* ErrorAlert */ = {
 			isa = PBXGroup;
 			children = (
@@ -214,6 +227,7 @@
 		11B4F991233DEDC4008CD2F6 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				1123EEC8238BA27E005EEFAD /* TicketDetail */,
 				1181EDC6234C49B3006D6CDD /* ErrorAlert */,
 				11B4F997233DEF54008CD2F6 /* SelectIcon */,
 				11B4F996233DEF3C008CD2F6 /* SelectColor */,
@@ -515,6 +529,7 @@
 				2BF5B75222814521007D0266 /* MainViewController.storyboard in Resources */,
 				8E8A0B182316A36F00FFCE15 /* ColorSelectViewController.storyboard in Resources */,
 				1123EEC32387DC18005EEFAD /* Main.storyboard in Resources */,
+				1123EED0238BA6AF005EEFAD /* AddTicketView.xib in Resources */,
 				8E8A0B1C2318D55E00FFCE15 /* IconSelectViewController.storyboard in Resources */,
 				2BF44283229CC63C00F32613 /* EditTaskViewController.storyboard in Resources */,
 				11EA118C234D8839003223A7 /* GoogleService-Info.plist in Resources */,
@@ -592,6 +607,7 @@
 				11B5E4462345F90300DBCB14 /* Routable.swift in Sources */,
 				2BE55168229299A100D5AFA9 /* TicketModel.swift in Sources */,
 				111F5EBD234203180034548A /* MainViewPresenter.swift in Sources */,
+				1123EECE238BA69A005EEFAD /* AddTicketView.swift in Sources */,
 				11B5E4432345F6F300DBCB14 /* UIStoryboardExtensions.swift in Sources */,
 				2BE551662292695000D5AFA9 /* TaskItem.swift in Sources */,
 				8E8A0B1E2318D9C900FFCE15 /* IconSelectViewController.swift in Sources */,

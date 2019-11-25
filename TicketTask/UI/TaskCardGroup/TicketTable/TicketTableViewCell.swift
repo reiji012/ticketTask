@@ -21,7 +21,8 @@ class TicketTableViewCell: UITableViewCell {
     
     @IBOutlet weak var ticketNameLabel: UILabel!
     @IBOutlet weak var checkBoxLabel: UILabel!
-
+    @IBOutlet weak var commentLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -41,7 +42,6 @@ class TicketTableViewCell: UITableViewCell {
     
     @objc func changeCompletion() {
         self.isCompleted = !self.isCompleted
-        
         UIView.animate(withDuration: 0.3, delay: 0.0, options: [.autoreverse], animations: {
             
             self.checkBoxLabel.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)

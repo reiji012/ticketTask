@@ -204,6 +204,12 @@ class TaskView: UIView, TaskViewProtocol{
     }
     
     func touchAddTicketButton() {
+        DispatchQueue.main.async {
+            self.mainViewController?.didTouchAddTicketButton(taskView: self)
+        }
+        
+        return
+        
         
         //alertの表示文言
         let alertController: UIAlertController = UIAlertController(title: "チケットの追加", message: "", preferredStyle: .alert)
@@ -416,6 +422,7 @@ extension TaskView: UITableViewDataSource {
             cell.taskViewModel = self.presenter.taskViewModel
             var ticketName = ""
             var isCompleted: Bool?
+            var commentText = ""
             for (index, ticket) in (self.presenter.taskViewModel.tickets!).enumerated() {
                 if index == indexPath.row {
                     ticketName = ticket.ticketName
@@ -425,6 +432,7 @@ extension TaskView: UITableViewDataSource {
             cell.isCompleted = isCompleted!
             cell.checkBoxLabel.text = isCompleted! ? "✔️" : ""
             cell.ticketNameLabel.text = ticketName
+            cell.commentLabel.text = commentText
             return cell
         }
         

@@ -18,4 +18,5 @@ protocol MainViewControllerProtocol {
     func didChangeTaskCount(taskCount: Int)
     func showValidateAlert(error: ValidateError)
     func deleteTask(view: TaskView)
+    func counfigureAddTicketView()
 }
