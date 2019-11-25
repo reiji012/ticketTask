@@ -1,4 +1,4 @@
-
+.DS_Store
 # Xcode (from gitignore.io)
 build/
 *.pbxuser

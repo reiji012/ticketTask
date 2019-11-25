@@ -227,6 +227,10 @@ class TaskView: UIView, TaskViewProtocol{
         alertController.addTextField { textField -> Void in
             textField.placeholder = "追加するチケット"
         }
+        alertController.addChild(SettingViewController.initiate())
+        alertController.addTextField { textField -> Void in
+            textField.placeholder = "メモ"
+        }
         mainViewController!.present(alertController, animated: true, completion: nil)
     }
     
@@ -294,7 +298,6 @@ class TaskView: UIView, TaskViewProtocol{
             self.ticketAddBtn.isHidden = self.isShowDetail
             self.buttonTextLabel.isHidden = self.isShowDetail
             self.layer.cornerRadius = self.isShowDetail ? 30 : 0
-            self.mainViewController!.changeTabbarStatus(isFront: self.isShowDetail)
             if self.isShowDetail {
                 // 縮小するときの処理
                 self.ticketTableView.isHidden = true
@@ -308,7 +311,7 @@ class TaskView: UIView, TaskViewProtocol{
                 self.defoultWidth = self.bounds.size.width
                 self.defoultX = self.frame.origin.x
                 self.ticketTableView.reloadData()
-                self.frame = CGRect(x:self.frame.origin.x + currentWidth,y:0,width:(self.parent?.parent?.frame.size.width)!,height:UIScreen.main.bounds.size.height)
+                self.frame = CGRect(x:self.frame.origin.x + currentWidth,y:0,width:(self.parent?.parent?.frame.size.width)!,height:UIScreen.main.bounds.size.height - self.mainViewController!.tabbarHeight)
 
             }
         }, completion: { finished in

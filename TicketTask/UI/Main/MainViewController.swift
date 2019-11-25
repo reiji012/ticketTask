@@ -39,6 +39,8 @@ class MainViewController: UIViewController {
         return self.view.safeAreaInsets.top
     }
     let transition = BubbleTransition()
+    var tabbarHeight: CGFloat!
+
     
     // MARK: - Private Property
     private var presenter: MainViewPresenterProtocol!
@@ -49,7 +51,6 @@ class MainViewController: UIViewController {
     private let initTaskViewWidth: CGFloat = 350
     private var dummyViewWidth: CGFloat!
     private var scrollViewHeight: CGFloat!
-    private var tabbarHeight: CGFloat!
     
     @IBOutlet private weak var scrollView: UIScrollView!
     @IBOutlet private weak var weatherImgView: UIImageView!
@@ -138,17 +139,6 @@ class MainViewController: UIViewController {
         self.taskAddButton.layer.shadowOffset = CGSize(width: 3, height: 4)
         taskViewModel.delegate = self
         initGradationColor()
-    }
-
-    func changeTabbarStatus(isFront: Bool) {
-//        self.tabBarController!.tabBar.isHidden = !isFront
-        UIView.animate(withDuration: 2, animations: { () -> Void in
-            if isFront {
-                self.tabBarController!.tabBar.center.y -= 100
-            } else {
-                self.tabBarController!.tabBar.center.y += 100
-            }
-        })
     }
 
     func initGradationColor() {
