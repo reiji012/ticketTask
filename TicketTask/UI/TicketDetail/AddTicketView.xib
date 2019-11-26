@@ -88,6 +88,8 @@
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
                 <outlet property="memoTextField" destination="gYf-MP-j96" id="ZPN-im-Sgq"/>
+                <outlet property="memoTitleTopConst" destination="xUQ-Kb-zvh" id="dLm-3y-0rO"/>
+                <outlet property="titileTopConst" destination="K7i-FV-BpE" id="AxR-lq-KCG"/>
                 <outlet property="titleTextField" destination="u4E-Ar-GLu" id="3Pt-dz-ozn"/>
             </connections>
             <point key="canvasLocation" x="134.78260869565219" y="-12.388392857142856"/>

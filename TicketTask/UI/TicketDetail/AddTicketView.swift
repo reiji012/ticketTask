@@ -20,15 +20,25 @@ class AddTicketView: UIView{
     
     @IBOutlet weak var memoTextField: UITextField!
     @IBOutlet weak var titleTextField: UITextField!
-    
+    @IBOutlet weak var titileTopConst: NSLayoutConstraint!
+    @IBOutlet weak var memoTitleTopConst: NSLayoutConstraint!
+
     private var isEditMode = false
     private var beforeTitleText = ""
     private var identifier: String?
+    private var defaultCenterY: CGFloat!
     
     // MARK: - Initilizer
     static func initiate(taskModel: TaskModel) -> AddTicketView {
         let view = UINib.instantiateInitialView(from: self)
         view.isHidden = true
+        
+        switch screenType {
+        case .iPhone3_5inch, .iPhone4_0inch:
+            view.titileTopConst.constant = view.titileTopConst.constant / 2
+            view.memoTitleTopConst.constant = view.memoTitleTopConst.constant / 2
+        default: break
+        }
         return view
     }
     
@@ -47,6 +57,8 @@ class AddTicketView: UIView{
     }
     
     func showView(title: String, memo: String, identifier: String? = nil) {
+        defaultCenterY = self.center.y
+        
         if let identifier = identifier {
             // identifierがnilでないときは編集として動作させる
             self.identifier = identifier
@@ -56,9 +68,9 @@ class AddTicketView: UIView{
         self.memoTextField.text = memo
         self.titleTextField.text = title
         DispatchQueue.main.async {
-            self.center.y = 498
+            self.center.y = self.defaultCenterY + 100
             UIView.animate(withDuration: 0.5, animations: { () -> Void in
-               self.center.y = 458
+                self.center.y = self.defaultCenterY
                     self.isHidden = false
                     self.alpha = 1
                     self.titleTextField.becomeFirstResponder()
@@ -70,7 +82,7 @@ class AddTicketView: UIView{
         DispatchQueue.main.async {
             self.endEditing(true)
             UIView.animate(withDuration: 0.5, animations: { () -> Void in
-                self.center.y = 600
+                self.center.y = self.defaultCenterY + 150
                 self.alpha = 0
             }, completion: { _ in
                 self.isHidden = true
