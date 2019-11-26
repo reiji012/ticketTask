@@ -50,7 +50,7 @@ class MainViewPresenter: MainViewPresenterProtocol, Routable, ErrorAlert {
     // MARK: - Lifecycle
     func viewDidLoad() {
         setupWetherInfo()
-        view.counfigureAddTicketView()
+        view.configureAddTicketView()
     }
     
     // MARK: - Public Fuction

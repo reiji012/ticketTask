@@ -112,7 +112,7 @@ class MainViewController: UIViewController {
         }
     }
     
-    func counfigureAddTicketView() {
+    func configureAddTicketView() {
         addTicketView = AddTicketView.initiate(taskModel: TaskModel(id: 0))
         addTicketView!.delegate = self
         addTicketView!.frame = self.view.frame

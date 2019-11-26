@@ -303,7 +303,7 @@ class TaskView: UIView, TaskViewProtocol{
         self.ticketTableView.delegate = self
         self.ticketTableView.dataSource = self
         self.ticketTableView.allowsSelection = true
-//        self.ticketTableView.estimatedRowHeight = 150
+        self.ticketTableView.estimatedRowHeight = 150
         self.ticketTableView.reloadData()
     }
 
@@ -388,14 +388,6 @@ extension TaskView: UITableViewDelegate {
         self.mainViewController?.addTicketView!.delegate = self
         let content = presenter.content(index: indexPath.row)
         self.mainViewController?.didTouchAddTicketButton(title: content.title, memo: content.memo, identifier: content.identifier)
-    }
-
-    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    
-    func tableView(_ tableView: UITableView, willBeginEditingRowAt indexPath: IndexPath) {
-        
     }
 }
 

@@ -19,6 +19,7 @@ protocol AddTaskViewControllerProtocol {
     func setGradationColor()
     func initSetState()
     func reloadNotificationTable()
+    func configureAddTicketView()
 }
 
 class AddTaskViewController: UIViewController{
@@ -34,6 +35,7 @@ class AddTaskViewController: UIViewController{
     
     var presenter: AddTaskViewPresenterProtocol!
     var tableView: UITableView = UITableView()
+    var addTicketView: AddTicketView?
 
     // MARK: - Private Property
     private var currentIcon: UIImage!
@@ -48,9 +50,6 @@ class AddTaskViewController: UIViewController{
     @IBOutlet private weak var contentView: UIView!
     @IBOutlet private weak var ticketTableView: UITableView!
     @IBOutlet private weak var titleTextField: UITextField!
-    @IBOutlet private weak var ticketTextField: UITextField!
-    @IBOutlet private weak var ticketCellLabel: UILabel!
-    @IBOutlet private weak var ticketAddBtn: UIButton!
     @IBOutlet private weak var iconImageView: UIImageView!
     @IBOutlet private weak var colorView: UIView!
     @IBOutlet private weak var reminderTableView: UITableView!
@@ -68,13 +67,11 @@ class AddTaskViewController: UIViewController{
         super.viewDidLoad()
         presenter.viewDidLoad()
         titleTextField.delegate = self
-        ticketTextField.delegate = self
         ticketTableView.delegate = self
         ticketTableView.dataSource = self
         reminderTableView.delegate = self
         reminderTableView.dataSource = self
         titleTextField.text = ""
-        ticketTextField.text = ""
         addReminderButton.delegate = self
         // 画面サイズ取得
         let screenSize: CGRect = UIScreen.main.bounds
@@ -101,6 +98,15 @@ class AddTaskViewController: UIViewController{
     }
     
     // MARK: - Public Function
+    func configureAddTicketView() {
+        addTicketView = AddTicketView.initiate(taskModel: TaskModel(id: 0))
+        addTicketView!.delegate = self
+        addTicketView!.frame = self.view.frame
+        addTicketView!.defaultCenterY = self.view.center.y + 33
+        self.view.addSubview(addTicketView!)
+        addTicketView!.isHidden = true
+    }
+    
     func bindUIs() {
         setGradationColor()
         
@@ -133,12 +139,9 @@ class AddTaskViewController: UIViewController{
     }
     
     @IBAction func touchAddTicketButton(_ sender: Any) {
-        let text = ticketTextField.text
-        let comment = ""
-        if text == "" {
-            return
-        }
-        presenter.touchAddTicketButton(text: text!, comment: comment)
+        addTicketView?.showView(title: "", memo: "")
+        self.navBar.leftButton.isEnabled = false
+        self.navBar.rightButton.isEnabled = false
     }
     
     @objc func touchCanselButton() {
@@ -172,7 +175,6 @@ class AddTaskViewController: UIViewController{
             self.gradientLayer.colors = color.gradationColor
             self.gradientLayer.frame = self.view.bounds
             self.timerBtm.tintColor = color.gradationColor1
-            self.ticketAddBtn.setTitleColor(color.gradationColor1, for: .normal)
             self.view.layer.insertSublayer(self.gradientLayer, at: 0)
         })
     }
@@ -190,8 +192,8 @@ extension AddTaskViewController: AddTaskViewControllerProtocol {
     }
     
     func didAddTicket() {
+        addTicketView?.hideView()
         ticketTableView.reloadData()
-        ticketTextField.text = ""
     }
     
     func reloadNotificationTable() {
@@ -212,12 +214,17 @@ extension AddTaskViewController: UITableViewDataSource {
         // セルに表示する値を設定する
         switch presenter.content {
         case .ticket:
-            cell.textLabel!.text = presenter.tickets[indexPath.row].ticketName
+            // 影の設定
+            let _cell = cell as? TicketsTableViewCell
+            _cell?.titleLabel!.text = presenter.tickets[indexPath.row].ticketName
+            _cell?.memoLabel!.text = presenter.tickets[indexPath.row].comment
+            return _cell!
         case .reminder:
             let _cell = cell as? NotificationTableCell
             let notice = presenter.currentTaskModel.notifications[indexPath.row]
             _cell!.dateLabel.text = Util.stringFromDate(date: notice.date!, format: "HH:mm")
             _cell!.switchButton.isOn = notice.isActive!
+            return _cell!
         case .none:
             break
         }
@@ -333,4 +340,21 @@ extension AddTaskViewController: PickerViewKeyboardDelegate {
         print("canceled")
         self.view.endEditing(true)
     }
+}
+
+extension AddTaskViewController: AddTicketViewDelegate {
+    func didTouchCloseButton() {
+        self.navBar.leftButton.isEnabled = true
+        self.navBar.rightButton.isEnabled = true
+    }
+    
+    func didTouchCheckButton(title: String, memo: String) {
+        presenter.touchAddTicketButton(text: title, comment: memo)
+    }
+    
+    func didTouchCheckButtonAsEdit(title: String, memo: String, identifier: String) {
+        
+    }
+    
+    
 }

@@ -121,8 +121,8 @@ class TaskViewModel: NSObject {
             return
         }
         
-        // identifierはローカル保存の直前で設定する
         let ticket = TicketsModel()
+        ticket.identifier = NSUUID().uuidString
         ticket.ticketName = ticketName
         ticket.isCompleted = false
         ticket.comment = memo

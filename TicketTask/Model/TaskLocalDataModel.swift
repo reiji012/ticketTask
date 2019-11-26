@@ -210,7 +210,7 @@ class TaskLocalDataModel {
             if ticketArray.index(of: ticket) == nil {
                 try! realm.write {
                     let newTicket = TicketModel()
-                    newTicket.identifier = NSUUID().uuidString
+                    newTicket.identifier = tickets[index].identifier
                     newTicket.ticketName = ticket
                     newTicket.isCompleted = false
                     newTicket.comment = tickets.filter({ $0.ticketName == ticket }).first!.comment

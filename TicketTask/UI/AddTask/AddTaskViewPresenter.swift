@@ -106,24 +106,33 @@ class AddTaskViewPresenter: AddTaskViewPresenterProtocol, ErrorAlert {
         currentTaskModel.resetType = 0
         view.initSetState()
         createTaskNotification(id: 0, dateString: "18:45")
+        view.configureAddTicketView()
     }
     
     // MARK: - Public Function
     func touchAddTicketButton(text: String, comment: String) {
+        guard let viewController = view as? AddTaskViewController else {
+            return
+        }
+        
+        if text.isEmpty {
+            // タイトルが入力されていなければエラー処理
+            createErrorAlert(error: .inputValidError, massage: "タイトルを入力してください", view: viewController)
+            return
+        }
+        
         if ticketArray.index(of: text) != nil {
             // 同じ名前のチケットが存在していたらエラー処理
-            guard let viewController = view as? AddTaskViewController else {
-                return
-            }
             createErrorAlert(error: .ticketValidError, massage: "", view: viewController)
-        } else {
-            let ticketModel = TicketsModel().initiate(ticketName: text, comment: comment)
-            ticketModel.identifier = NSUUID().uuidString
-            self.tickets.append(ticketModel)
-            currentTaskModel.tickets.append(ticketModel)
-            ticketArray.append(text)
-            view.didAddTicket()
+            return
         }
+        
+        let ticketModel = TicketsModel().initiate(ticketName: text, comment: comment)
+        ticketModel.identifier = NSUUID().uuidString
+        self.tickets.append(ticketModel)
+        currentTaskModel.tickets.append(ticketModel)
+        ticketArray.append(text)
+        view.didAddTicket()
     }
     
     func touchCreateButton(taskName: String) {
