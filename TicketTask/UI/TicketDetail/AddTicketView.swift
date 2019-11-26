@@ -17,6 +17,7 @@ protocol AddTicketViewDelegate {
 class AddTicketView: UIView{
 
     var delegate: AddTicketViewDelegate?
+    var defaultCenterY: CGFloat!
     
     @IBOutlet weak var memoTextField: UITextField!
     @IBOutlet weak var titleTextField: UITextField!
@@ -26,7 +27,6 @@ class AddTicketView: UIView{
     private var isEditMode = false
     private var beforeTitleText = ""
     private var identifier: String?
-    private var defaultCenterY: CGFloat!
     
     // MARK: - Initilizer
     static func initiate(taskModel: TaskModel) -> AddTicketView {
@@ -57,7 +57,6 @@ class AddTicketView: UIView{
     }
     
     func showView(title: String, memo: String, identifier: String? = nil) {
-        defaultCenterY = self.center.y
         
         if let identifier = identifier {
             // identifierがnilでないときは編集として動作させる

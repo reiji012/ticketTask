@@ -116,6 +116,7 @@ class MainViewController: UIViewController {
         addTicketView = AddTicketView.initiate(taskModel: TaskModel(id: 0))
         addTicketView!.delegate = self
         addTicketView!.frame = self.view.frame
+        addTicketView!.defaultCenterY = self.view.center.y
         self.view.addSubview(addTicketView!)
         addTicketView!.isHidden = true
     }
