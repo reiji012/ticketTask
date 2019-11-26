@@ -121,11 +121,33 @@ class TaskViewModel: NSObject {
             return
         }
         
+        // identifierはローカル保存の直前で設定する
         let ticket = TicketsModel()
         ticket.ticketName = ticketName
         ticket.isCompleted = false
         ticket.comment = memo
         tickets?.append(ticket)
+        callback()
+    }
+    
+    func editTicket(ticketName: String, memo: String, identifier: String, callback: @escaping () -> Void) {
+        // チケットが入力されていない場合はバリデーションエラー発生
+        if ticketName.isEmpty {
+            delegate?.showValidateAlert(error: .titleEmptyError)
+            return
+        }
+        
+        // 同じ名前のチケットがある場合はバリデーションエラー発生
+        if !(tickets?.map{$0.ticketName})!.filter({$0 == ticketName}).isEmpty {
+            delegate?.showValidateAlert(error: .ticketValidError)
+            return
+        }
+        
+        let ticket = tickets?.filter({ $0.identifier == identifier }).first
+        let index = tickets?.index(of: ticket!)
+        ticket?.ticketName = ticketName
+        ticket?.comment = memo
+        tickets?[index!] = ticket!
         callback()
     }
     

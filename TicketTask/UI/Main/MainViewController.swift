@@ -431,12 +431,20 @@ extension MainViewController : UIViewControllerTransitioningDelegate{
 }
 
 extension MainViewController {
-    func didTouchAddTicketButton(taskView: TaskView) {
-        addTicketView!.showView()
+    func didTouchAddTicketButton(title: String, memo: String, identifier: String? = nil) {
+        if let identifier = identifier {
+            addTicketView!.showView(title: title, memo: memo, identifier: identifier)
+        } else {
+            addTicketView!.showView(title: title, memo: memo)
+        }
     }
 }
 
 extension MainViewController: AddTicketViewDelegate {
+    func didTouchCheckButtonAsEdit(title: String, memo: String, identifier: String) {
+        
+    }
+    
     func didTouchCheckButton(title: String, memo: String) {
         
     }

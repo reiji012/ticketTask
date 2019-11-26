@@ -26,6 +26,7 @@ class TaskModel: NSObject {
 }
 
 class TicketsModel: NSObject {
+    var identifier: String = ""
     var ticketName: String = ""
     var isCompleted: Bool = false
     var comment: String = ""

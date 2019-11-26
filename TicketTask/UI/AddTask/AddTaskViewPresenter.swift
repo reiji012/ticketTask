@@ -110,18 +110,19 @@ class AddTaskViewPresenter: AddTaskViewPresenterProtocol, ErrorAlert {
     
     // MARK: - Public Function
     func touchAddTicketButton(text: String, comment: String) {
-         // TODO: if currentTaskModel.tickets.map({$0.ticketName}).index(of: text) != nil
-        if ticketArray.index(of: text) == nil {
-            let ticketModel = TicketsModel().initiate(ticketName: text, comment: comment)
-            self.tickets.append(ticketModel)
-            currentTaskModel.tickets.append(ticketModel)
-            ticketArray.append(text)
-            view.didAddTicket()
-        } else {
+        if ticketArray.index(of: text) != nil {
+            // 同じ名前のチケットが存在していたらエラー処理
             guard let viewController = view as? AddTaskViewController else {
                 return
             }
             createErrorAlert(error: .ticketValidError, massage: "", view: viewController)
+        } else {
+            let ticketModel = TicketsModel().initiate(ticketName: text, comment: comment)
+            ticketModel.identifier = NSUUID().uuidString
+            self.tickets.append(ticketModel)
+            currentTaskModel.tickets.append(ticketModel)
+            ticketArray.append(text)
+            view.didAddTicket()
         }
     }
     
@@ -186,8 +187,8 @@ class AddTaskViewPresenter: AddTaskViewPresenterProtocol, ErrorAlert {
         let notice = TaskNotificationsModel()
         notice.date = Util.dateFromStringAsNotice(string: dateString)
         notice.id = id
-        notice.identifier = "\(taskLocalDataModel!.lastId())_\(id)"
         notice.isActive = true
+        notice.identifier = NSUUID().uuidString
         currentTaskModel.notifications.append(notice)
     }
 }

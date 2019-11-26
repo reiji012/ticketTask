@@ -53,7 +53,7 @@ class Notifications {
         let trigger: UNNotificationTrigger
         trigger = UNCalendarNotificationTrigger(dateMatching: notificationTime, repeats: false)
         //通知のリクエスト
-        let request = UNNotificationRequest(identifier: "\(taskID)_\(notificationModel.id)", content: notification,
+        let request = UNNotificationRequest(identifier: notificationModel.identifier, content: notification,
                                             trigger: trigger)
         //通知を実装
         if notificationModel.isActive! {

@@ -207,7 +207,7 @@ class TaskView: UIView, TaskViewProtocol{
     func touchAddTicketButton() {
         DispatchQueue.main.async {
             self.mainViewController?.addTicketView!.delegate = self
-            self.mainViewController?.didTouchAddTicketButton(taskView: self)
+            self.mainViewController?.didTouchAddTicketButton(title: "", memo: "")
         }
     }
     
@@ -237,7 +237,7 @@ class TaskView: UIView, TaskViewProtocol{
         self.setButtonLayout()
         self.setGradationColor(color: presenter.currentColor)
         self.setImage()
-        self.ticketTableView.allowsMultipleSelectionDuringEditing = true
+//        self.ticketTableView.allowsMultipleSelectionDuringEditing = true
     }
     
     func changeViewSize() {
@@ -302,6 +302,7 @@ class TaskView: UIView, TaskViewProtocol{
     func setTableView() {
         self.ticketTableView.delegate = self
         self.ticketTableView.dataSource = self
+        self.ticketTableView.allowsSelection = true
 //        self.ticketTableView.estimatedRowHeight = 150
         self.ticketTableView.reloadData()
     }
@@ -383,7 +384,19 @@ extension MainViewController: PopMenuViewControllerDelegate {
 
 // MARK: - Extention UITableViewDelegate
 extension TaskView: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.mainViewController?.addTicketView!.delegate = self
+        let content = presenter.content(index: indexPath.row)
+        self.mainViewController?.didTouchAddTicketButton(title: content.title, memo: content.memo, identifier: content.identifier)
+    }
+
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
     
+    func tableView(_ tableView: UITableView, willBeginEditingRowAt indexPath: IndexPath) {
+        
+    }
 }
 
 // MARK: - Extention UITableViewDataSource
@@ -431,6 +444,7 @@ extension TaskView: UITableViewDataSource {
 }
 
 extension TaskView: AddTicketViewDelegate {
+    
     func didTouchCloseButton() {
         
     }
@@ -441,5 +455,7 @@ extension TaskView: AddTicketViewDelegate {
         self.presenter.didTouchAddTicketButton(ticket: title, memo: memo)
     }
     
-    
+    func didTouchCheckButtonAsEdit(title: String, memo: String, identifier: String) {
+        self.presenter.didTouchCheckButtonAsEdit(title: title, memo: memo, identifier: identifier)
+    }
 }

@@ -65,6 +65,7 @@ class TaskLocalDataModel {
                 _ticket.ticketName = ticket.ticketName
                 _ticket.isCompleted = ticket.isCompleted
                 _ticket.comment = ticket.comment
+                _ticket.identifier = ticket.identifier
                 _tickets.append(_ticket)
             }
             let notifications = task.taskNotifications
@@ -115,6 +116,7 @@ class TaskLocalDataModel {
         let ticketsRealmArray = List<TicketModel>()
         for ticket in taskModel.tickets {
             let ticketRealmModel = TicketModel()
+            ticketRealmModel.identifier = ticket.identifier
             ticketRealmModel.ticketName = ticket.ticketName
             ticketRealmModel.isCompleted = false
             ticketsRealmArray.append(ticketRealmModel)
@@ -204,10 +206,11 @@ class TaskLocalDataModel {
         let task = realm.objects(TaskItem.self).filter("id = \(id)").first
         let ticketArray: [String] = task!.tickets.map { $0.ticketName }
         let currentTicketArray: [String] = tickets.map { $0.ticketName }
-        for ticket in currentTicketArray {
+        for (index, ticket) in currentTicketArray.enumerated() {
             if ticketArray.index(of: ticket) == nil {
                 try! realm.write {
                     let newTicket = TicketModel()
+                    newTicket.identifier = NSUUID().uuidString
                     newTicket.ticketName = ticket
                     newTicket.isCompleted = false
                     newTicket.comment = tickets.filter({ $0.ticketName == ticket }).first!.comment
@@ -243,8 +246,10 @@ class TaskLocalDataModel {
             let results = realm.objects(TaskItem.self)
             try! realm.write {
                 for ticket in results[index].tickets {
-                    let currentTicket = task.tickets.filter { $0.ticketName == ticket.ticketName }
+                    let currentTicket = task.tickets.filter { $0.identifier == ticket.identifier }
                     ticket.isCompleted = currentTicket.first!.isCompleted
+                    ticket.ticketName = currentTicket.first!.ticketName
+                    ticket.comment = currentTicket.first!.comment
                 }
             }
         }

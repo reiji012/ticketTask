@@ -16,7 +16,9 @@ protocol TaskViewPresenterProtocol {
     var progressBarWidthConst: CGFloat { get }
     func deleteTask()
     func didTouchAddTicketButton(ticket: String, memo: String)
+    func didTouchCheckButtonAsEdit(title: String, memo: String, identifier: String)
     func touchView()
+    func content(index: Int) -> (title: String, memo: String, identifier: String)
 }
 
 class TaskViewPresenter: TaskViewPresenterProtocol {
@@ -85,6 +87,19 @@ class TaskViewPresenter: TaskViewPresenterProtocol {
         taskViewModel.addTicket(ticketName: ticket, memo: memo, callback: {
             self.view.didCreatedTicketd()
         })
+    }
+    
+    func didTouchCheckButtonAsEdit(title: String, memo: String, identifier: String) {
+        taskViewModel.editTicket(ticketName: title, memo: memo, identifier: identifier, callback: {
+            self.view.didCreatedTicketd()
+        })
+    }
+    
+    func content(index: Int) -> (title: String, memo: String, identifier: String) {
+        let title = taskViewModel.tickets![index].ticketName
+        let memo = taskViewModel.tickets![index].comment
+        let identifier = taskViewModel.tickets![index].identifier
+        return (title: title, memo: memo, identifier: identifier)
     }
     
     func touchView() {
