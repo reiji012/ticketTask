@@ -381,6 +381,7 @@
                         <viewLayoutGuide key="safeArea" id="1B5-eE-j79"/>
                     </view>
                     <connections>
+                        <outlet property="addReminderButton" destination="duN-Kn-H1E" id="CbO-iC-zsr"/>
                         <outlet property="colorView" destination="ElW-AD-N8W" id="U3K-cm-m5a"/>
                         <outlet property="contentsView" destination="hB0-mj-VMc" id="DLC-ni-gKV"/>
                         <outlet property="headerView" destination="td1-t8-ifd" id="nRt-US-GlL"/>

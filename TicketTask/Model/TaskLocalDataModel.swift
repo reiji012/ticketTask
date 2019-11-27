@@ -289,12 +289,31 @@ class TaskLocalDataModel {
                 return error
             }
             
+            // Realm用通知設定モデル作成
+            let notificationsRealmArray = List<TaskNotifications>()
+            for notification in currentTaskModel.notifications {
+                let notificationRealmModel = TaskNotifications()
+                notificationRealmModel.id = notification.id
+                notificationRealmModel.identifier = notification.identifier
+                notificationRealmModel.isActive = notification.isActive!
+                notificationRealmModel.date = notification.date
+                notificationsRealmArray.append(notificationRealmModel)
+                // push通知設定
+                Notifications().pushNotificationSet(resetTimeType: currentTaskModel.resetType, taskID: currentTaskModel.id, taskTitle: currentTaskModel.taskTitle, notificationModel: notification)
+            }
+            let identifires = results?.taskNotifications.map { $0.identifier }
+            // 既存identifierと一致しないnotificationモデルのみを抽出
+            let notifications = notificationsRealmArray.filter { !(identifires?.contains($0.identifier))! }
+            
             try! realm.write {
                 results?.taskTitle = currentTaskModel.taskTitle
                 results?.attri = currentTaskModel.attri
                 results?.color = currentTaskModel.color
                 results?.icon = currentTaskModel.icon
                 results?.resetType = currentTaskModel.resetType
+                for notice in notifications {
+                    results?.taskNotifications.append(notice)
+                }
                 completion()
             }
             return nil

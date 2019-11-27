@@ -21,6 +21,8 @@ class Notifications {
         notification.body = "\(taskTitle)のチケットを達成しましょう！"
         //通知の音
         notification.sound = UNNotificationSound.default
+        let url = "https://google.com"
+        notification.userInfo = ["schemeURL": url]
         
         //通知タイミングを指定
         

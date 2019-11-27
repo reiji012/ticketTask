@@ -19,6 +19,7 @@ protocol EditTaskViewControllerProtocol {
     func didSaveTask()
     func setTimeSelectIndex(index: Int)
     func setNavigationBar()
+    func reloadNotificationTable()
 }
 
 class EditTaskViewController: UIViewController, UIPopoverPresentationControllerDelegate, ColorSelectViewControllerDelegate, IconSelectViewControllerDelegate {
@@ -34,6 +35,7 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
     var currentIcon: UIImage?
     
     // MARK: - Private Property
+    @IBOutlet private weak var addReminderButton: PickerViewKeyboard!
     @IBOutlet private weak var iconImageView: UIImageView!
     @IBOutlet private weak var colorView: UIView!
     @IBOutlet private weak var titleTextField: UITextField!
@@ -66,6 +68,7 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
         self.view.backgroundColor = UIColor.white
         self.titleTextField.text = presenter.taskViewModel?.taskName
         self.initStateSet()
+        addReminderButton.delegate = self
         
         reminderTableView.dataSource = self
     }
@@ -215,6 +218,10 @@ extension EditTaskViewController: EditTaskViewControllerProtocol {
         self.iconImageView.tintColor = color
         setGradationColor()
     }
+    
+    func reloadNotificationTable() {
+        reminderTableView.reloadData()
+    }
 }
 
 // MARK: - Extension UITableViewDataSource
@@ -242,3 +249,17 @@ extension EditTaskViewController: UITableViewDataSource {
     }
 }
 
+extension EditTaskViewController: PickerViewKeyboardDelegate {
+    func didDone(sender: PickerViewKeyboard, selectedData: Date) {
+        presenter.didDoneDatePicker(selectDate: selectedData)
+        self.view.endEditing(true)
+    }
+    
+    func initSelectedRow(sender: PickerViewKeyboard) -> Int {
+        return 3
+    }
+    func didCancel(sender: PickerViewKeyboard) {
+        print("canceled")
+        self.view.endEditing(true)
+    }
+}

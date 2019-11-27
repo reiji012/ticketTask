@@ -21,6 +21,7 @@ protocol EditTaskViewPresenterProtocol {
     func viewDidLoad()
     func touchSaveButton(afterTaskName: String)
     func touchTimerSetButton(resetTypeIndex: Int)
+    func didDoneDatePicker(selectDate: Date)
 }
 
 class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
@@ -64,16 +65,17 @@ class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
         beforeName = taskViewModel!.taskName!
         currentTaskModel = TaskModel(id: taskViewModel!.taskID!)
         currentTaskModel.resetType = taskViewModel!.resetTypeIndex!
+        currentTaskModel.notifications = (taskViewModel?.notifications!)!
     }
     
     /// セルの数を返す
     func numberOfRow() -> Int {
-        return taskViewModel!.notifications!.isEmpty ? 0 : taskViewModel!.notifications!.count
+        return currentTaskModel.notifications.isEmpty ? 0 : currentTaskModel.notifications.count
     }
     
     /// セルの中身を返す
     func contents(index: Int) -> (date: Date, isActive: Bool) {
-        let notice = taskViewModel!.notifications![index]
+        let notice = currentTaskModel.notifications[index]
         return (notice.date!, notice.isActive!)
     }
     
@@ -96,6 +98,7 @@ class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
             vm.iconImage = currentIcon
             vm.iconString = currentIconString
             vm.resetTypeIndex = currentResetType
+            vm.notifications = currentTaskModel.notifications
             view.didSaveTask()
         })
         if let error = error {
@@ -108,5 +111,20 @@ class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
     
     func touchTimerSetButton(resetTypeIndex: Int) {
         currentTaskModel.resetType = resetTypeIndex
+    }
+    
+    func didDoneDatePicker(selectDate: Date) {
+        let dateString = Util.stringFromDateAsNotice(date: selectDate)
+        createTaskNotification(id: currentTaskModel.notifications.count + 1, dateString: dateString)
+        view.reloadNotificationTable()
+    }
+    
+    private func createTaskNotification(id: Int, dateString: String) {
+        let notice = TaskNotificationsModel()
+        notice.date = Util.dateFromStringAsNotice(string: dateString)
+        notice.id = id
+        notice.isActive = true
+        notice.identifier = NSUUID().uuidString
+        currentTaskModel.notifications.append(notice)
     }
 }

@@ -16,10 +16,12 @@ protocol AddTaskViewPresenterProtocol {
     func viewDidLoad()
     func touchAddTicketButton(text: String, comment: String)
     func touchCreateButton(taskName: String)
+    func touchCheckButtonAsEdit(title: String, memo: String, identifier: String)
     func removeTicket(index: IndexPath)
     func selectedColor(color: TaskColor)
     func selectedIcon(iconString: String)
     func selectedResetTypeIndex(index: Int)
+    func selectedTicketCell(index: Int, tableView: UITableView)
     func didDoneDatePicker(selectDate: Date)
 }
 
@@ -132,7 +134,7 @@ class AddTaskViewPresenter: AddTaskViewPresenterProtocol, ErrorAlert {
         self.tickets.append(ticketModel)
         currentTaskModel.tickets.append(ticketModel)
         ticketArray.append(text)
-        view.didAddTicket()
+        view.didAddOrEditTicket()
     }
     
     func touchCreateButton(taskName: String) {
@@ -162,6 +164,26 @@ class AddTaskViewPresenter: AddTaskViewPresenterProtocol, ErrorAlert {
         view.didTaskCreated()
     }
     
+    // 編集モードのチェックボタンをタッチ
+    func touchCheckButtonAsEdit(title: String, memo: String, identifier: String) {
+        guard let viewController = view as? AddTaskViewController else {
+            return
+        }
+        
+        let ticket = self.tickets.filter { $0.identifier == identifier }.first!
+        
+        if ticketArray.index(of: title) != nil, ticket.ticketName != title {
+            // 同じ名前のチケットが存在していたらエラー処理
+            createErrorAlert(error: .ticketValidError, massage: "", view: viewController)
+            return
+        }
+        
+        let index = self.tickets.index(of: ticket)
+        self.tickets[index!].ticketName = title
+        self.tickets[index!].comment = memo
+        view.didAddOrEditTicket()
+    }
+    
     func removeTicket(index: IndexPath) {
         tickets.remove(at: index.row)
     }
@@ -179,6 +201,16 @@ class AddTaskViewPresenter: AddTaskViewPresenterProtocol, ErrorAlert {
     
     func selectedResetTypeIndex(index: Int) {
         currentTaskModel.resetType = index
+    }
+    
+    // チケット選択
+    func selectedTicketCell(index: Int, tableView: UITableView) {
+        if tableView.tag == 1 {
+            // tableViewがリマインダーのときは何もしない
+            return
+        }
+        let ticket = self.tickets[index]
+        view.showAddTicketViewAsEdit(ticketModel: ticket)
     }
     
     // 処理を分岐するメソッド

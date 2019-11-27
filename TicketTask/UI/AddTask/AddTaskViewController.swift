@@ -13,13 +13,14 @@ import SPFakeBar
 
 protocol AddTaskViewControllerProtocol {
     func didTaskCreated()
-    func didAddTicket()
+    func didAddOrEditTicket()
     func setIconImage()
     func setColorView()
     func setGradationColor()
     func initSetState()
     func reloadNotificationTable()
     func configureAddTicketView()
+    func showAddTicketViewAsEdit(ticketModel: TicketsModel)
 }
 
 class AddTaskViewController: UIViewController{
@@ -182,6 +183,10 @@ class AddTaskViewController: UIViewController{
 
 // MARK: - Extension AddTaskViewControllerProtocol
 extension AddTaskViewController: AddTaskViewControllerProtocol {
+    func showAddTicketViewAsEdit(ticketModel: TicketsModel) {
+        addTicketView?.showView(title: ticketModel.ticketName, memo: ticketModel.comment, identifier: ticketModel.identifier)
+    }
+    
     func didTaskCreated() {
         dismiss(animated: true, completion: {
             guard let vc = self.mainVC else {
@@ -191,7 +196,7 @@ extension AddTaskViewController: AddTaskViewControllerProtocol {
         })
     }
     
-    func didAddTicket() {
+    func didAddOrEditTicket() {
         addTicketView?.hideView()
         ticketTableView.reloadData()
     }
@@ -242,6 +247,10 @@ extension AddTaskViewController: UITableViewDataSource {
 
 // MARK: - Extension UITableViewDelegate
 extension AddTaskViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        presenter.selectedTicketCell(index: indexPath.row, tableView: tableView)
+    }
+    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 5 // セルの上部のスペース
     }
@@ -353,7 +362,7 @@ extension AddTaskViewController: AddTicketViewDelegate {
     }
     
     func didTouchCheckButtonAsEdit(title: String, memo: String, identifier: String) {
-        
+        presenter.touchCheckButtonAsEdit(title: title, memo: memo, identifier: identifier)
     }
     
     
