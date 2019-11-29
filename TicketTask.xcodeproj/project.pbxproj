@@ -24,6 +24,9 @@
 		1123EECE238BA69A005EEFAD /* AddTicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1123EECD238BA69A005EEFAD /* AddTicketView.swift */; };
 		1123EED0238BA6AF005EEFAD /* AddTicketView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1123EECF238BA6AF005EEFAD /* AddTicketView.xib */; };
 		1123EED3238CF05B005EEFAD /* TicketsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1123EED2238CF05B005EEFAD /* TicketsTableViewCell.swift */; };
+		1148D4A32390D5F500AE8C81 /* SplashViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1148D4A22390D5F500AE8C81 /* SplashViewController.storyboard */; };
+		1148D4A52390D60A00AE8C81 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1148D4A42390D60A00AE8C81 /* SplashViewController.swift */; };
+		1148D4A72390D61A00AE8C81 /* SplashViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1148D4A62390D61A00AE8C81 /* SplashViewPresenter.swift */; };
 		1181EDC8234C4A02006D6CDD /* ErrorAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1181EDC7234C4A02006D6CDD /* ErrorAlert.swift */; };
 		11B4F99C233DF163008CD2F6 /* TaskEditDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B4F99B233DF162008CD2F6 /* TaskEditDelegate.swift */; };
 		11B5E4432345F6F300DBCB14 /* UIStoryboardExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B5E4422345F6F300DBCB14 /* UIStoryboardExtensions.swift */; };
@@ -97,6 +100,9 @@
 		1123EECD238BA69A005EEFAD /* AddTicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTicketView.swift; sourceTree = "<group>"; };
 		1123EECF238BA6AF005EEFAD /* AddTicketView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddTicketView.xib; sourceTree = "<group>"; };
 		1123EED2238CF05B005EEFAD /* TicketsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketsTableViewCell.swift; sourceTree = "<group>"; };
+		1148D4A22390D5F500AE8C81 /* SplashViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SplashViewController.storyboard; sourceTree = "<group>"; };
+		1148D4A42390D60A00AE8C81 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		1148D4A62390D61A00AE8C81 /* SplashViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewPresenter.swift; sourceTree = "<group>"; };
 		1181EDC7234C4A02006D6CDD /* ErrorAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAlert.swift; sourceTree = "<group>"; };
 		11B4F99B233DF162008CD2F6 /* TaskEditDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskEditDelegate.swift; sourceTree = "<group>"; };
 		11B5E4422345F6F300DBCB14 /* UIStoryboardExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStoryboardExtensions.swift; sourceTree = "<group>"; };
@@ -218,6 +224,16 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		1148D4A12390D5CB00AE8C81 /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+				1148D4A22390D5F500AE8C81 /* SplashViewController.storyboard */,
+				1148D4A42390D60A00AE8C81 /* SplashViewController.swift */,
+				1148D4A62390D61A00AE8C81 /* SplashViewPresenter.swift */,
+			);
+			path = Splash;
+			sourceTree = "<group>";
+		};
 		1181EDC6234C49B3006D6CDD /* ErrorAlert */ = {
 			isa = PBXGroup;
 			children = (
@@ -238,6 +254,7 @@
 		11B4F991233DEDC4008CD2F6 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				1148D4A12390D5CB00AE8C81 /* Splash */,
 				1123EEC8238BA27E005EEFAD /* TicketDetail */,
 				1181EDC6234C49B3006D6CDD /* ErrorAlert */,
 				11B4F997233DEF54008CD2F6 /* SelectIcon */,
@@ -536,6 +553,7 @@
 				1123EEB32387D66E005EEFAD /* SettingViewController.storyboard in Resources */,
 				2BF5B75722814521007D0266 /* LaunchScreen.storyboard in Resources */,
 				2BF5B75422814521007D0266 /* Assets.xcassets in Resources */,
+				1148D4A32390D5F500AE8C81 /* SplashViewController.storyboard in Resources */,
 				1123EEC12387D8D9005EEFAD /* HistoryViewController.storyboard in Resources */,
 				2BF5B75222814521007D0266 /* MainViewController.storyboard in Resources */,
 				8E8A0B182316A36F00FFCE15 /* ColorSelectViewController.storyboard in Resources */,
@@ -625,6 +643,7 @@
 				1181EDC8234C4A02006D6CDD /* ErrorAlert.swift in Sources */,
 				11EC7B99234B3AED0099D444 /* UIViewControllerExtensions.swift in Sources */,
 				8E6B2A1022FF22E900113E30 /* WetherModel.swift in Sources */,
+				1148D4A72390D61A00AE8C81 /* SplashViewPresenter.swift in Sources */,
 				11EC7B97234B199E0099D444 /* IconSelectViewPresenter.swift in Sources */,
 				2B84AD5B22A1267F004B484D /* ValidateError.swift in Sources */,
 				2BF5B7722282A0AB007D0266 /* UIView+TicketTask.swift in Sources */,
@@ -645,6 +664,7 @@
 				2BE5516B2292A83700D5AFA9 /* TasksData.swift in Sources */,
 				2BF44281229BEB8C00F32613 /* EditTaskViewController.swift in Sources */,
 				1123EEC02387D8D9005EEFAD /* HistoryViewController.swift in Sources */,
+				1148D4A52390D60A00AE8C81 /* SplashViewController.swift in Sources */,
 				11EBB0D9237D2A65001FAFC5 /* NotificationTableCell.swift in Sources */,
 				8EACD6D823027E7F0095F4A0 /* WeatherLabel.swift in Sources */,
 				8E6B2A0E22FF227400113E30 /* Utill.swift in Sources */,

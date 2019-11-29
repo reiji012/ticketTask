@@ -54,22 +54,6 @@
             </objects>
             <point key="canvasLocation" x="375.36231884057975" y="1025.8928571428571"/>
         </scene>
-        <!--Ticket Tabbar Controller-->
-        <scene sceneID="uHb-fQ-N2J">
-            <objects>
-                <tabBarController id="yZd-YF-Nhu" customClass="TicketTabbarController" customModule="TicketTask" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="slM-4H-OaE">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <color key="selectedImageTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </tabBar>
-                </tabBarController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="c7l-fh-Gib" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1480" y="221"/>
-        </scene>
         <!--Main View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -175,7 +159,7 @@
                                 </constraints>
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9r5-w2-dd8">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iWg-1l-M3x">
                                 <rect key="frame" x="344" y="74" width="40" height="40"/>
@@ -211,7 +195,7 @@
                             <constraint firstItem="0rI-Uf-9Vh" firstAttribute="trailing" secondItem="j1C-QR-cem" secondAttribute="trailing" id="Jl5-eZ-A01"/>
                             <constraint firstItem="tQk-3S-42W" firstAttribute="trailing" secondItem="0rI-Uf-9Vh" secondAttribute="trailing" id="Ucj-Yk-g4f"/>
                             <constraint firstItem="9r5-w2-dd8" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="WjD-E8-PZD"/>
-                            <constraint firstItem="0rI-Uf-9Vh" firstAttribute="bottom" secondItem="9r5-w2-dd8" secondAttribute="bottom" id="WlH-T4-UmV"/>
+                            <constraint firstAttribute="bottom" secondItem="9r5-w2-dd8" secondAttribute="bottom" id="WlH-T4-UmV"/>
                             <constraint firstItem="iWg-1l-M3x" firstAttribute="top" secondItem="0rI-Uf-9Vh" secondAttribute="top" constant="30" id="Z1z-50-FMw"/>
                             <constraint firstItem="j1C-QR-cem" firstAttribute="top" secondItem="0rI-Uf-9Vh" secondAttribute="top" id="fhl-Vl-zib"/>
                             <constraint firstItem="0rI-Uf-9Vh" firstAttribute="bottom" secondItem="tQk-3S-42W" secondAttribute="bottom" id="g8i-bO-dkz"/>
@@ -221,7 +205,6 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="0rI-Uf-9Vh"/>
                     </view>
-                    <tabBarItem key="tabBarItem" systemItem="featured" id="Q16-U5-hHH"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="descriptionLabel" destination="ju6-8I-7bi" id="oGs-lI-GrM"/>

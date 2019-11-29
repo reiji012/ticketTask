@@ -71,6 +71,7 @@ class MainViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter = MainViewPresenter(vc: self)
         presenter.viewDidLoad()
         // 端末のサイズでタスクカードの大きさを設定
         let myBoundSize: CGSize = UIScreen.main.bounds.size
@@ -97,7 +98,7 @@ class MainViewController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
-        self.tabbarHeight = self.tabBarController!.tabBar.frame.size.height
+        self.tabbarHeight = 0
         for i in 0..<presenter.taskTotalCount {
             let taskView = self.view.viewWithTag(i + 1) as! TaskView
             taskView.frame.size.height = self.taskViewHeight
