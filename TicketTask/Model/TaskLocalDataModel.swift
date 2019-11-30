@@ -337,10 +337,11 @@ class TaskLocalDataModel {
                 try! realm.write {
                     for ticket in task.tickets {
                         ticket.isCompleted = false
+                        // tasksが既に取得されているので、そちらも一緒に反映させる
+                        self.tasks.filter { $0.id == task.id }.first!.tickets.forEach { $0.isCompleted = false }
                     }
                     task.setValue(now, forKey: TASK_LASTRESETDATE)
                 }
-                updateTicket(index: task.id)
             }
         }
     }
