@@ -249,7 +249,7 @@ extension MainViewController: MainViewControllerProtocol {
             // Animationが完了したら親Viewから削除する
             let index = view.tag
             let scrollPoint = self.stopPoint - CGFloat(self.scrollWidth)
-            if (self.presenter.isLaskTaskView(view: view)) {
+            if (self.presenter.isLastTaskView(view: view)) {
                 UIView.animate(withDuration: 0.5, animations: {
                     self.scrollView.contentOffset = CGPoint(x:scrollPoint, y:0)
                     self.stopPoint = scrollPoint
