@@ -183,6 +183,7 @@ class MainViewController: UIViewController {
             self.scrollView.contentOffset = CGPoint(x:maxScrollPoint, y:0)
         })
         self.stopPoint = scrollView.contentOffset.x
+        self.taskViewIndex = (Int(self.stopPoint) / self.scrollWidth) + 1
     }
     
     func createTaskView(task:TaskModel, tag: Int, isInitCreate: Bool){
@@ -256,15 +257,14 @@ extension MainViewController: MainViewControllerProtocol {
                 })
             } else {
                 UIView.animate(withDuration: 0.5, animations: {
-                    for i in index..<100 {
-                        guard let taskView = self.view.viewWithTag(i) else {
+                    for i in index..<self.scrollView.subviews.count {
+                        guard let taskView = self.view.viewWithTag(i) as? TaskView else {
                             return
                         }
-                        let currentTaskView = taskView as! TaskView
-                        currentTaskView.tag = i - 1
-                        let frame = currentTaskView.frame
-                        currentTaskView.frame = CGRect(x: frame.origin.x - self.taskViewWidth, y: frame.origin.y, width: frame.size.width, height: frame.size.height)
-                        self.setGradationColor(color: currentTaskView.presenter.taskViewModel.taskColor!)
+                        taskView.tag = i - 1
+                        let frame = taskView.frame
+                        taskView.frame = CGRect(x: frame.origin.x - CGFloat(self.scrollWidth), y: frame.origin.y, width: frame.size.width, height: frame.size.height)
+                        self.setGradationColor(color: taskView.presenter.taskViewModel.taskColor!)
                     }
                 })
                 self.scrollView.isScrollEnabled = true
