@@ -116,7 +116,7 @@
                                                                 </connections>
                                                             </button>
                                                         </subviews>
-                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstItem="db1-ZL-A4R" firstAttribute="top" secondItem="AtG-bl-WZq" secondAttribute="bottom" constant="20" id="DPp-Kd-Aql"/>
                                                             <constraint firstItem="AtG-bl-WZq" firstAttribute="top" secondItem="M5z-IY-clD" secondAttribute="top" id="Iax-IU-qhF"/>
@@ -161,7 +161,7 @@
                                                                 </connections>
                                                             </button>
                                                         </subviews>
-                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstItem="ElW-AD-N8W" firstAttribute="centerX" secondItem="loz-fY-6sN" secondAttribute="centerX" id="0Bb-Qh-DRv"/>
                                                             <constraint firstAttribute="height" constant="150" id="2be-vp-9tN"/>
@@ -176,7 +176,7 @@
                                                         </constraints>
                                                     </view>
                                                 </subviews>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstItem="Paj-W0-iOs" firstAttribute="top" secondItem="Uwc-HO-tDX" secondAttribute="bottom" constant="18" id="2l9-Au-Yn4"/>
                                                     <constraint firstItem="M5z-IY-clD" firstAttribute="leading" secondItem="td1-t8-ifd" secondAttribute="leading" id="7tr-Ea-aG4"/>
@@ -226,7 +226,7 @@
                                                         </connections>
                                                     </segmentedControl>
                                                 </subviews>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstItem="TZf-2v-svF" firstAttribute="top" secondItem="KCR-hB-d8n" secondAttribute="top" constant="33" id="Fwl-ST-LgM"/>
                                                     <constraint firstAttribute="bottom" secondItem="d1n-aB-KfU" secondAttribute="bottom" constant="50" id="MAl-bj-vuu"/>
@@ -253,7 +253,7 @@
                                                     </label>
                                                     <tableView clipsSubviews="YES" tag="1" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="45" estimatedRowHeight="5" sectionHeaderHeight="28" estimatedSectionHeaderHeight="4" sectionFooterHeight="28" estimatedSectionFooterHeight="5" translatesAutoresizingMaskIntoConstraints="NO" id="c7z-cY-W1j">
                                                         <rect key="frame" x="27" y="75" width="296" height="215"/>
-                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <prototypes>
                                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="dataCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="dataCell" id="WMm-zd-ngE" customClass="NotificationTableCell" customModule="TicketTask" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="28" width="296" height="45"/>
@@ -289,7 +289,7 @@
                                                                             </userDefinedRuntimeAttributes>
                                                                         </view>
                                                                     </subviews>
-                                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <constraints>
                                                                         <constraint firstItem="whp-GJ-wGk" firstAttribute="top" secondItem="c6R-rr-DsF" secondAttribute="top" constant="3" id="1eh-pj-n19"/>
                                                                         <constraint firstAttribute="bottom" secondItem="whp-GJ-wGk" secondAttribute="bottom" constant="3" id="3VY-bn-6e2"/>
@@ -297,7 +297,7 @@
                                                                         <constraint firstItem="whp-GJ-wGk" firstAttribute="leading" secondItem="c6R-rr-DsF" secondAttribute="leading" id="x5q-Aq-HEG"/>
                                                                     </constraints>
                                                                 </tableViewCellContentView>
-                                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="dataCell"/>
                                                                 <userDefinedRuntimeAttributes>
                                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -329,7 +329,7 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </button>
                                                 </subviews>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstItem="c7z-cY-W1j" firstAttribute="top" secondItem="q5H-q5-5c1" secondAttribute="bottom" constant="20" id="64b-a3-1yP"/>
                                                     <constraint firstAttribute="height" constant="300" id="9HP-ZF-IjY"/>

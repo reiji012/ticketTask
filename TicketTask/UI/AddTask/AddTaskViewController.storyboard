@@ -108,7 +108,7 @@
                                                                 </connections>
                                                             </button>
                                                         </subviews>
-                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstItem="Qff-pH-VKa" firstAttribute="centerX" secondItem="JkN-Vc-P5F" secondAttribute="centerX" id="1Wh-PA-7Sd"/>
                                                             <constraint firstItem="ZrY-yq-Dfe" firstAttribute="width" secondItem="rV1-n8-iqf" secondAttribute="width" id="FeG-7h-bvQ"/>
@@ -153,7 +153,7 @@
                                                                 </connections>
                                                             </button>
                                                         </subviews>
-                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstItem="UcE-Cx-6KJ" firstAttribute="width" secondItem="diE-hR-3Pa" secondAttribute="width" id="Gvn-6k-Ep2"/>
                                                             <constraint firstAttribute="height" constant="150" id="K6P-E5-DyT"/>
@@ -168,7 +168,7 @@
                                                         </constraints>
                                                     </view>
                                                 </subviews>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="300" id="1iz-k5-ul6"/>
                                                     <constraint firstItem="RlG-F8-4Fa" firstAttribute="leading" secondItem="D2u-DT-Jmd" secondAttribute="leading" constant="27" id="2hT-bt-JUd"/>
@@ -214,7 +214,7 @@
                                                         </connections>
                                                     </segmentedControl>
                                                 </subviews>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstItem="e7X-fV-Ig5" firstAttribute="leading" secondItem="asY-me-lB0" secondAttribute="leading" constant="27" id="4oH-rQ-iwA"/>
                                                     <constraint firstItem="5F8-ZH-BvI" firstAttribute="top" secondItem="asY-me-lB0" secondAttribute="top" constant="25" id="5im-OP-ZbQ"/>
@@ -241,7 +241,7 @@
                                                     </label>
                                                     <tableView clipsSubviews="YES" tag="2" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="55" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8h1-wh-c9L">
                                                         <rect key="frame" x="0.0" y="75" width="350" height="325"/>
-                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <prototypes>
                                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="cell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="Ld6-ad-TT3" customClass="TicketsTableViewCell" customModule="TicketTask" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="28" width="350" height="55"/>
@@ -319,7 +319,7 @@
                                                         </connections>
                                                     </button>
                                                 </subviews>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstItem="lFo-ss-4SF" firstAttribute="leading" secondItem="Yfo-ed-azJ" secondAttribute="trailing" constant="27" id="RIm-dd-HW6"/>
                                                     <constraint firstItem="Yfo-ed-azJ" firstAttribute="top" secondItem="OVH-xt-BrV" secondAttribute="top" constant="25" id="e6f-5V-U1W"/>
@@ -348,7 +348,7 @@
                                                     </label>
                                                     <tableView clipsSubviews="YES" tag="1" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="45" estimatedRowHeight="5" sectionHeaderHeight="28" estimatedSectionHeaderHeight="4" sectionFooterHeight="28" estimatedSectionFooterHeight="5" translatesAutoresizingMaskIntoConstraints="NO" id="UZ3-1D-hmG">
                                                         <rect key="frame" x="27" y="75" width="296" height="215"/>
-                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <prototypes>
                                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="dataCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="dataCell" id="U0n-jF-FeS" customClass="NotificationTableCell" customModule="TicketTask" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="28" width="296" height="45"/>
@@ -384,7 +384,7 @@
                                                                             </userDefinedRuntimeAttributes>
                                                                         </view>
                                                                     </subviews>
-                                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="trailing" secondItem="l70-24-oEM" secondAttribute="trailing" id="5Az-cw-2Jq"/>
                                                                         <constraint firstItem="l70-24-oEM" firstAttribute="top" secondItem="tmt-iP-tTg" secondAttribute="top" constant="3" id="619-VS-eDI"/>
@@ -424,7 +424,7 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </button>
                                                 </subviews>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstItem="FbH-uo-hgm" firstAttribute="top" secondItem="cJb-HP-TLV" secondAttribute="top" constant="25" id="25s-9h-t8Y"/>
                                                     <constraint firstItem="ZU1-3p-l2m" firstAttribute="leading" secondItem="FbH-uo-hgm" secondAttribute="trailing" constant="27" id="Dc5-Oj-MEj"/>

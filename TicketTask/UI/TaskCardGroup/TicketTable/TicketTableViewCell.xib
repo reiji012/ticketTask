@@ -54,7 +54,7 @@
                                 </userDefinedRuntimeAttributes>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="6CQ-JL-YWA" firstAttribute="top" secondItem="APv-b0-7Dx" secondAttribute="top" id="3Zg-q8-f1g"/>
                             <constraint firstAttribute="height" constant="40" id="Ap0-9n-NMo"/>
@@ -74,6 +74,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
+                <color key="tintColor" systemColor="secondarySystemFillColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.50196078430000002" alpha="0.16" colorSpace="custom" customColorSpace="sRGB"/>
                 <constraints>
                     <constraint firstItem="APv-b0-7Dx" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="30" id="2XA-kn-T5P"/>
                     <constraint firstItem="Mre-VV-uWq" firstAttribute="top" secondItem="lWQ-xc-a9x" secondAttribute="bottom" id="AQL-Ph-1tg"/>

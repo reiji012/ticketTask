@@ -38,7 +38,7 @@
                 </button>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="70" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="I6P-G7-7H8">
                     <rect key="frame" x="0.0" y="260" width="483" height="199"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </tableView>
                 <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="VBp-HC-ndC">
                     <rect key="frame" x="25" y="220" width="348" height="7"/>
@@ -86,7 +86,7 @@
                             </userDefinedRuntimeAttributes>
                         </imageView>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="lWg-KI-zIe" firstAttribute="top" secondItem="ll0-GP-Jv7" secondAttribute="top" constant="6" id="2bK-e2-fsh"/>
                         <constraint firstAttribute="width" constant="50" id="aYv-sr-AP4"/>
@@ -134,7 +134,7 @@
                         <constraint firstAttribute="width" constant="50" id="ANl-3n-t4f"/>
                         <constraint firstAttribute="height" constant="50" id="QB1-KP-4i6"/>
                     </constraints>
-                    <state key="normal" title="Button" image="hamberger"/>
+                    <state key="normal" image="hamberger"/>
                     <connections>
                         <action selector="touchMenuButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="hRv-dK-6qW"/>
                     </connections>
@@ -169,7 +169,7 @@
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="vrp-1Z-85c" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="25" id="0ch-3x-IB2"/>
                 <constraint firstItem="3XW-sK-gN9" firstAttribute="leading" secondItem="ll0-GP-Jv7" secondAttribute="trailing" constant="98" id="2uA-p2-DCl"/>
@@ -219,7 +219,7 @@
         </view>
     </objects>
     <resources>
-        <image name="hamberger" width="222" height="219"/>
+        <image name="hamberger" width="32" height="32"/>
         <image name="icon-1" width="256" height="256"/>
     </resources>
 </document>
