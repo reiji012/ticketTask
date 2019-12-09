@@ -61,8 +61,12 @@ class Notifications {
         if notificationModel.isActive! {
             UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
         } else {
-            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["\(taskID)_\(notificationModel.id)"])
+            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [notificationModel.identifier])
         }
+    }
+    
+    func deleteNotifications(notifications: [String]) {
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: notifications)
     }
     
     func splitStringForDate(date: Date) -> (hour: Int, minute: Int) {

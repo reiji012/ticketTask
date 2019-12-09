@@ -23,6 +23,7 @@ protocol EditTaskViewPresenterProtocol {
     func touchTimerSetButton(resetTypeIndex: Int)
     func didDoneDatePicker(selectDate: Date)
     func didChengeNotificationActive(isActive: Bool, identifier: String)
+    func didDeleteNotification(index: Int)
 }
 
 class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
@@ -55,6 +56,9 @@ class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
     private var beforeName: String?
     private var resetTypeIndex: Int?
     private let currentTaskModel: TaskModel
+    
+    // 削除した通知のidentifierを保持しておく
+    private var deleteNotificationsIdentifier: [String] = []
     
     // MARK: - initialize
     init(view: EditTaskViewControllerProtocol, taskView: TaskViewProtocol) {
@@ -92,7 +96,7 @@ class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
         currentTaskModel.taskTitle = afterTaskName
         currentTaskModel.attri = ""
         
-        let error = taskLocalDataModel.editTask(currentTaskModel: currentTaskModel, beforeName: beforeName!, completion: {
+        let error = taskLocalDataModel.editTask(currentTaskModel: currentTaskModel, beforeName: beforeName!, deleteNotifications: deleteNotificationsIdentifier,  completion: {
             let vm = self.taskView.presenter.taskViewModel
             vm.taskName = afterTaskName
             vm.attri = ""
@@ -113,6 +117,13 @@ class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
     
     func touchTimerSetButton(resetTypeIndex: Int) {
         currentTaskModel.resetType = resetTypeIndex
+    }
+    
+    // 通知削除
+    func didDeleteNotification(index: Int) {
+        let noticeIdentifier = currentTaskModel.notifications[index].identifier
+        deleteNotificationsIdentifier.append(noticeIdentifier)
+        currentTaskModel.notifications.remove(at: index)
     }
     
     func didDoneDatePicker(selectDate: Date) {

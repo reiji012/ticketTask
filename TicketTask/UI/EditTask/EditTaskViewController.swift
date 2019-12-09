@@ -71,6 +71,7 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
         addReminderButton.delegate = self
         
         reminderTableView.dataSource = self
+        reminderTableView.delegate = self
     }
     
     // MARK: - Public Function
@@ -224,8 +225,24 @@ extension EditTaskViewController: EditTaskViewControllerProtocol {
     }
 }
 
+extension EditTaskViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool
+    {
+        return true
+    }
+    
+    //スワイプしたセルを削除
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == UITableViewCell.EditingStyle.delete {
+            presenter.didDeleteNotification(index: indexPath.row)
+            tableView.deleteRows(at: [indexPath as IndexPath], with: UITableView.RowAnimation.automatic)
+        }
+    }
+}
+
 // MARK: - Extension UITableViewDataSource
 extension EditTaskViewController: UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return presenter.numberOfRow()
     }
@@ -242,12 +259,6 @@ extension EditTaskViewController: UITableViewDataSource {
         cell.delegate = self
         
         return cell
-    }
-    
-    internal func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        }
     }
 }
 

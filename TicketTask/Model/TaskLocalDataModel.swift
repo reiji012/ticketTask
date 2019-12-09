@@ -276,7 +276,7 @@ class TaskLocalDataModel {
         
     }
     
-    func editTask(currentTaskModel: TaskModel ,beforeName: String, completion: (() -> Void)) -> ValidateError? {
+    func editTask(currentTaskModel: TaskModel ,beforeName: String, deleteNotifications: [String],completion: (() -> Void)) -> ValidateError? {
         do {
             let results = realm.objects(TaskItem.self).filter("id = \(currentTaskModel.id)").first
             
@@ -300,6 +300,7 @@ class TaskLocalDataModel {
                 notificationsRealmArray.append(notificationRealmModel)
                 // push通知設定
                 Notifications().pushNotificationSet(resetTimeType: currentTaskModel.resetType, taskID: currentTaskModel.id, taskTitle: currentTaskModel.taskTitle, notificationModel: notification)
+                Notifications().deleteNotifications(notifications: deleteNotifications)
             }
             let identifires = results?.taskNotifications.map { $0.identifier }
             // 既存identifierと一致しないnotificationモデルのみを抽出
@@ -313,6 +314,15 @@ class TaskLocalDataModel {
                 results?.resetType = currentTaskModel.resetType
                 for notice in notifications {
                     results?.taskNotifications.append(notice)
+                }
+                
+                // 削除した通知をローカルデーからも削除する
+                deleteNotifications.forEach {deleteNotice in
+                    for notice in results!.taskNotifications {
+                        if notice.identifier == deleteNotice {
+                            realm.delete(notice)
+                        }
+                    }
                 }
                 completion()
             }
