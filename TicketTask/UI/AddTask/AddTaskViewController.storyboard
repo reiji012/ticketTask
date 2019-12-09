@@ -108,7 +108,7 @@
                                                                 </connections>
                                                             </button>
                                                         </subviews>
-                                                        <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstItem="Qff-pH-VKa" firstAttribute="centerX" secondItem="JkN-Vc-P5F" secondAttribute="centerX" id="1Wh-PA-7Sd"/>
                                                             <constraint firstItem="ZrY-yq-Dfe" firstAttribute="width" secondItem="rV1-n8-iqf" secondAttribute="width" id="FeG-7h-bvQ"/>
@@ -348,7 +348,7 @@
                                                     </label>
                                                     <tableView clipsSubviews="YES" tag="1" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="45" estimatedRowHeight="5" sectionHeaderHeight="28" estimatedSectionHeaderHeight="4" sectionFooterHeight="28" estimatedSectionFooterHeight="5" translatesAutoresizingMaskIntoConstraints="NO" id="UZ3-1D-hmG">
                                                         <rect key="frame" x="27" y="75" width="296" height="215"/>
-                                                        <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <prototypes>
                                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="dataCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="dataCell" id="U0n-jF-FeS" customClass="NotificationTableCell" customModule="TicketTask" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="28" width="296" height="45"/>
