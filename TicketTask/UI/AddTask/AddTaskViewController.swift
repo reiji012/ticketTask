@@ -229,6 +229,8 @@ extension AddTaskViewController: UITableViewDataSource {
             let notice = presenter.currentTaskModel.notifications[indexPath.row]
             _cell!.dateLabel.text = Util.stringFromDate(date: notice.date!, format: "HH:mm")
             _cell!.switchButton.isOn = notice.isActive!
+            _cell!.identifier = notice.identifier
+            _cell!.delegate = self
             return _cell!
         case .none:
             break
@@ -366,4 +368,10 @@ extension AddTaskViewController: AddTicketViewDelegate {
     }
     
     
+}
+
+extension AddTaskViewController: NotificationTableCellDelegate {
+    func didTouchSwitchButton(isActive: Bool, identifier: String?) {
+        presenter.didChengeNotificationActive(isActive: isActive, identifier: identifier!)
+    }
 }

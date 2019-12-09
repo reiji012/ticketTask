@@ -17,11 +17,12 @@ protocol EditTaskViewPresenterProtocol {
     var currentResetType: Int { get }
     var taskView: TaskViewProtocol! { get }
     func numberOfRow() -> Int
-    func contents(index: Int) -> (date: Date, isActive: Bool)
+    func contents(index: Int) -> (date: Date, isActive: Bool, identifier: String)
     func viewDidLoad()
     func touchSaveButton(afterTaskName: String)
     func touchTimerSetButton(resetTypeIndex: Int)
     func didDoneDatePicker(selectDate: Date)
+    func didChengeNotificationActive(isActive: Bool, identifier: String)
 }
 
 class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
@@ -74,9 +75,9 @@ class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
     }
     
     /// セルの中身を返す
-    func contents(index: Int) -> (date: Date, isActive: Bool) {
+    func contents(index: Int) -> (date: Date, isActive: Bool, identifier: String) {
         let notice = currentTaskModel.notifications[index]
-        return (notice.date!, notice.isActive!)
+        return (notice.date!, notice.isActive!, notice.identifier)
     }
     
     // MARK: - Public Function
@@ -86,6 +87,7 @@ class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
         view.setNavigationBar()
     }
     
+    // 保存ボタン
     func touchSaveButton(afterTaskName: String) {
         currentTaskModel.taskTitle = afterTaskName
         currentTaskModel.attri = ""
@@ -117,6 +119,13 @@ class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
         let dateString = Util.stringFromDateAsNotice(date: selectDate)
         createTaskNotification(id: currentTaskModel.notifications.count + 1, dateString: dateString)
         view.reloadNotificationTable()
+    }
+    
+    // 通知がオン・オフで切り替わった時
+    func didChengeNotificationActive(isActive: Bool, identifier: String) {
+        let notice = currentTaskModel.notifications.filter { $0.identifier == identifier }.first!
+        let index = currentTaskModel.notifications.index(of: notice)
+        currentTaskModel.notifications[index!].isActive = isActive
     }
     
     private func createTaskNotification(id: Int, dateString: String) {

@@ -238,6 +238,8 @@ extension EditTaskViewController: UITableViewDataSource {
         let content = presenter.contents(index: indexPath.row)
         cell.dateLabel!.text = Util.stringFromDate(date: content.date, format: "HH:mm")
         cell.switchButton.isOn = content.isActive
+        cell.identifier = content.identifier
+        cell.delegate = self
         
         return cell
     }
@@ -261,5 +263,11 @@ extension EditTaskViewController: PickerViewKeyboardDelegate {
     func didCancel(sender: PickerViewKeyboard) {
         print("canceled")
         self.view.endEditing(true)
+    }
+}
+
+extension EditTaskViewController: NotificationTableCellDelegate {
+    func didTouchSwitchButton(isActive: Bool, identifier: String?) {
+        presenter.didChengeNotificationActive(isActive: isActive, identifier: identifier!)
     }
 }

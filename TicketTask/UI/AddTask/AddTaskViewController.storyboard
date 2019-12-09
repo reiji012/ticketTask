@@ -368,6 +368,9 @@
                                                                                 </label>
                                                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bM0-dc-i60">
                                                                                     <rect key="frame" x="231" y="4" width="51" height="31"/>
+                                                                                    <connections>
+                                                                                        <action selector="touchSwitchButton:" destination="U0n-jF-FeS" eventType="valueChanged" id="Zfm-gP-DgM"/>
+                                                                                    </connections>
                                                                                 </switch>
                                                                             </subviews>
                                                                             <color key="backgroundColor" systemColor="systemGroupedBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -23,6 +23,7 @@ protocol AddTaskViewPresenterProtocol {
     func selectedResetTypeIndex(index: Int)
     func selectedTicketCell(index: Int, tableView: UITableView)
     func didDoneDatePicker(selectDate: Date)
+    func didChengeNotificationActive(isActive: Bool, identifier: String)
 }
 
 
@@ -222,6 +223,12 @@ class AddTaskViewPresenter: AddTaskViewPresenterProtocol, ErrorAlert {
         let dateString = Util.stringFromDateAsNotice(date: selectDate)
         createTaskNotification(id: currentTaskModel.notifications.count + 1, dateString: dateString)
         view.reloadNotificationTable()
+    }
+    
+    func didChengeNotificationActive(isActive: Bool, identifier: String) {
+        let notice = currentTaskModel.notifications.filter { $0.identifier == identifier }.first!
+        let index = currentTaskModel.notifications.index(of: notice)
+        currentTaskModel.notifications[index!].isActive = isActive
     }
     
     private func createTaskNotification(id: Int, dateString: String) {
