@@ -170,7 +170,7 @@
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
-            <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="vrp-1Z-85c" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="25" id="0ch-3x-IB2"/>
                 <constraint firstItem="3XW-sK-gN9" firstAttribute="leading" secondItem="ll0-GP-Jv7" secondAttribute="trailing" constant="98" id="2uA-p2-DCl"/>
