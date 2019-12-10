@@ -106,10 +106,6 @@ class TaskViewPresenter: TaskViewPresenterProtocol {
         guard let view = view as? TaskView else {
             return
         }
-        
-        if view.isShowDetail {
-            return
-        }
         view.changeViewSize()
     }
 }

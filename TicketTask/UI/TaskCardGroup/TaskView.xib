@@ -14,6 +14,13 @@
             <rect key="frame" x="0.0" y="0.0" width="483" height="459"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i0l-wN-ITK">
+                    <rect key="frame" x="0.0" y="0.0" width="483" height="200"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="483" id="M1u-vC-Wtw"/>
+                    </constraints>
+                </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Occ-Jp-uEZ">
                     <rect key="frame" x="30" y="22" width="60" height="50"/>
                     <constraints>
@@ -172,8 +179,10 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="vrp-1Z-85c" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="25" id="0ch-3x-IB2"/>
+                <constraint firstItem="vrp-1Z-85c" firstAttribute="bottom" secondItem="i0l-wN-ITK" secondAttribute="bottom" id="2R1-0O-ZOZ"/>
                 <constraint firstItem="3XW-sK-gN9" firstAttribute="leading" secondItem="ll0-GP-Jv7" secondAttribute="trailing" constant="98" id="2uA-p2-DCl"/>
                 <constraint firstItem="vrp-1Z-85c" firstAttribute="top" secondItem="cSn-BC-JZ5" secondAttribute="bottom" constant="8" id="4jJ-S3-AV5"/>
+                <constraint firstItem="i0l-wN-ITK" firstAttribute="leading" secondItem="Hzy-Tp-1gk" secondAttribute="leading" id="5BE-mi-NDC"/>
                 <constraint firstAttribute="trailing" secondItem="vrp-1Z-85c" secondAttribute="trailing" constant="50" id="5su-g3-aYP"/>
                 <constraint firstItem="3XW-sK-gN9" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="50" id="7qU-qg-cxw"/>
                 <constraint firstItem="I6P-G7-7H8" firstAttribute="top" secondItem="vrp-1Z-85c" secondAttribute="bottom" constant="60" id="CCC-Xl-kdN"/>
@@ -193,6 +202,7 @@
                 <constraint firstItem="ZYz-sQ-nm6" firstAttribute="top" secondItem="vrp-1Z-85c" secondAttribute="bottom" constant="13" id="thH-SG-9VF"/>
                 <constraint firstItem="VBp-HC-ndC" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="25" id="umV-FA-NMd"/>
                 <constraint firstItem="cSn-BC-JZ5" firstAttribute="top" secondItem="ll0-GP-Jv7" secondAttribute="bottom" constant="34" id="v3m-dw-pjU"/>
+                <constraint firstItem="i0l-wN-ITK" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="vix-Wc-kSW"/>
                 <constraint firstItem="VBp-HC-ndC" firstAttribute="top" secondItem="vrp-1Z-85c" secondAttribute="bottom" constant="20" id="xAh-77-c5k"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
@@ -203,6 +213,8 @@
                 <outlet property="attriImageView" destination="lWg-KI-zIe" id="gz4-oJ-it2"/>
                 <outlet property="backButton" destination="Occ-Jp-uEZ" id="MUv-RW-aUA"/>
                 <outlet property="buttonTextLabel" destination="XtX-dI-mkG" id="8qF-ri-wH3"/>
+                <outlet property="headerView" destination="i0l-wN-ITK" id="iZ3-Vj-VZc"/>
+                <outlet property="headerViewConst" destination="M1u-vC-Wtw" id="m8W-8q-X5v"/>
                 <outlet property="menuBtnLeftConst" destination="2uA-p2-DCl" id="JXU-Xi-nwp"/>
                 <outlet property="menuButton" destination="3XW-sK-gN9" id="vuy-ms-sRc"/>
                 <outlet property="menuTopConst" destination="7qU-qg-cxw" id="C2Q-XT-aYy"/>
@@ -220,7 +232,7 @@
     </objects>
     <resources>
         <image name="backIcon" width="50" height="50"/>
-        <image name="hamberger" width="50" height="50"/>
+        <image name="hamberger" width="60" height="60"/>
         <image name="icon-1" width="256" height="256"/>
     </resources>
 </document>

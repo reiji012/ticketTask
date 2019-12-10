@@ -51,7 +51,8 @@ class TaskView: UIView, TaskViewProtocol{
     @IBOutlet private weak var menuBtnLeftConst: NSLayoutConstraint!
     @IBOutlet private weak var menuButton: UIButton!
     @IBOutlet private weak var progressBarWidthConst: NSLayoutConstraint!
-    @IBOutlet private weak var tableViewHeightConst: NSLayoutConstraint!
+    @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var headerViewConst: NSLayoutConstraint!
     
     private var defoultWidth: CGFloat?
     private var defoultHeight: CGFloat?
@@ -80,8 +81,7 @@ class TaskView: UIView, TaskViewProtocol{
         let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(
             target: self,
             action: #selector(self.touchView(_:)))
-        self.addGestureRecognizer(tapGesture)
-        print(self.frame.size.width)
+        headerView.addGestureRecognizer(tapGesture)
         
         // UIImageView の場合
         attriImageView.image = attriImageView.image?.withRenderingMode(.alwaysTemplate)
@@ -224,6 +224,8 @@ class TaskView: UIView, TaskViewProtocol{
         self.defoultY = self.frame.origin.y
         
         self.layer.cornerRadius = 30
+        self.headerView.layer.cornerRadius = 30
+        self.headerViewConst.constant = self.frame.size.width
         // 影の設定
         self.layer.shadowOpacity = 0.7
         self.layer.shadowRadius = 12
@@ -251,6 +253,7 @@ class TaskView: UIView, TaskViewProtocol{
             // 縮小するときの処理
             self.menuTopConst.constant = 50
             self.titleTopConst.constant = 160
+            self.headerViewConst.constant = self.defoultWidth!
             self.menuBtnLeftConst.constant -= ((myBoundWidht - self.defoultWidth!))
             self.progressBarWidthConst.constant -= (myBoundWidht - self.defoultWidth!)
             
@@ -262,6 +265,7 @@ class TaskView: UIView, TaskViewProtocol{
             } else {
                self.menuTopConst.constant = 40
             }
+            self.headerViewConst.constant = (self.parent?.parent?.frame.size.width)!
             self.titleTopConst.constant = 220 + topSafeAreaHeight
             self.menuBtnLeftConst.constant += ((myBoundWidht - self.bounds.size.width))
             self.progressBarWidthConst.constant += (myBoundWidht - self.bounds.size.width)
@@ -275,6 +279,7 @@ class TaskView: UIView, TaskViewProtocol{
             self.ticketAddBtn.isHidden = self.isShowDetail
             self.buttonTextLabel.isHidden = self.isShowDetail
             self.layer.cornerRadius = self.isShowDetail ? 30 : 0
+            self.headerView.layer.cornerRadius = self.isShowDetail ? 30 : 0
             if self.isShowDetail {
                 // 縮小するときの処理
                 self.ticketTableView.isHidden = true
@@ -302,8 +307,6 @@ class TaskView: UIView, TaskViewProtocol{
     func setTableView() {
         self.ticketTableView.delegate = self
         self.ticketTableView.dataSource = self
-        self.ticketTableView.allowsSelection = true
-        self.ticketTableView.estimatedRowHeight = 150
         self.ticketTableView.reloadData()
     }
 
@@ -389,10 +392,28 @@ extension TaskView: UITableViewDelegate {
         let content = presenter.content(index: indexPath.row)
         self.mainViewController?.didTouchAddTicketButton(title: content.title, memo: content.memo, identifier: content.identifier)
     }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let ticketName = Array(self.presenter.taskViewModel.tickets!.map({$0.ticketName}))[indexPath.row]
+            self.presenter.taskViewModel.actionType = .ticketDelete
+            for (index, ticket) in (self.presenter.taskViewModel.tickets?.enumerated())! {
+                if ticket.ticketName == ticketName {
+                    self.presenter.taskViewModel.tickets?.remove(at: index)
+                }
+            }
+            self.ticketTableView.reloadData()
+        }
+    }
 }
 
 // MARK: - Extention UITableViewDataSource
 extension TaskView: UITableViewDataSource {
+    //セルの編集許可
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return (self.presenter.taskViewModel.tickets?.count)!
     }
@@ -417,19 +438,6 @@ extension TaskView: UITableViewDataSource {
         }
         
         return UITableViewCell()
-    }
-    
-    internal func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            let ticketName = Array(self.presenter.taskViewModel.tickets!.map({$0.ticketName}))[indexPath.row]
-            self.presenter.taskViewModel.actionType = .ticketDelete
-            for (index, ticket) in (self.presenter.taskViewModel.tickets?.enumerated())! {
-                if ticket.ticketName == ticketName {
-                    self.presenter.taskViewModel.tickets?.remove(at: index)
-                }
-            }
-            self.ticketTableView.reloadData()
-        }
     }
     
 }
