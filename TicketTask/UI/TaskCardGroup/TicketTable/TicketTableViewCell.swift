@@ -14,14 +14,15 @@ class TicketTableViewCell: UITableViewCell {
     var taskViewModel: TaskViewModel?
     var isCompleted: Bool = false {
         didSet {
-            checkBoxLabel.textColor = isCompleted ? UIColor.white : UIColor.lightGray
             self.setButtonColor()
         }
     }
+    var checkedImage: UIImage = UIImage(named: "checked_Mark")!.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
+    var unCheckedImage: UIImage = UIImage(named: "unChecked_Mark")!.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
     
     @IBOutlet weak var ticketNameLabel: UILabel!
-    @IBOutlet weak var checkBoxLabel: UILabel!
     @IBOutlet weak var commentLabel: UILabel!
+    @IBOutlet weak var checkButton: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -31,32 +32,27 @@ class TicketTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        checkBoxLabel.text = "✔︎"
-        
-        let gesture = UITapGestureRecognizer(target: self, action: #selector(self.changeCompletion))
-        checkBoxLabel.isUserInteractionEnabled = true
-        checkBoxLabel.addGestureRecognizer(gesture)
         // Configure the view for the selected state
     }
     
-    @objc func changeCompletion() {
+    @IBAction func touchCheckButton(_ sender: UIButton) {
         self.isCompleted = !self.isCompleted
         UIView.animate(withDuration: 0.3, delay: 0.0, options: [.autoreverse], animations: {
             
-            self.checkBoxLabel.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+            sender.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
         }, completion: { _ in
             UIView.animate(withDuration: 0.3, animations: {
-              self.checkBoxLabel.transform = CGAffineTransform(scaleX: 1, y: 1)
+              sender.transform = CGAffineTransform(scaleX: 1, y: 1)
             })
         })
         
         self.taskViewModel?.changeTicketCompleted(ticketName: ticketNameLabel.text!, completed: isCompleted)
         
-        
     }
     
     func setButtonColor() {
-        checkBoxLabel.backgroundColor = self.isCompleted ? self.taskViewModel?.taskColor?.gradationColor1 : UIColor.white
+        let image = self.isCompleted ? checkedImage : unCheckedImage
+        checkButton.setImage(image, for: .normal)
+        checkButton.tintColor = self.isCompleted ? self.taskViewModel?.taskColor?.gradationColor1 : .gray
     }
 }

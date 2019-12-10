@@ -411,7 +411,6 @@ extension TaskView: UITableViewDataSource {
                 }
             }
             cell.isCompleted = isCompleted!
-            cell.checkBoxLabel.text = isCompleted! ? "✔️" : ""
             cell.ticketNameLabel.text = ticketName
             cell.commentLabel.text = commentText
             return cell

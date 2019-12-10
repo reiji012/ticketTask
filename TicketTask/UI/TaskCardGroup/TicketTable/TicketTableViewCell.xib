@@ -29,39 +29,23 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="APv-b0-7Dx">
                         <rect key="frame" x="30" y="10" width="40" height="40"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="✔︎" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6CQ-JL-YWA">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D7b-hw-Aga">
                                 <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
-                                <gestureRecognizers/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="D5Z-hj-jIb"/>
-                                    <constraint firstAttribute="width" constant="40" id="si2-DV-08O"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="30"/>
-                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="highlightedColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                <size key="shadowOffset" width="1" height="1"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="" value="YES"/>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                        <real key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                        <color key="value" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="20"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </label>
+                                <color key="tintColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" image="unChecked_Mark"/>
+                                <connections>
+                                    <action selector="touchCheckButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="50f-MZ-Kru"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="6CQ-JL-YWA" firstAttribute="top" secondItem="APv-b0-7Dx" secondAttribute="top" id="3Zg-q8-f1g"/>
+                            <constraint firstAttribute="bottom" secondItem="D7b-hw-Aga" secondAttribute="bottom" id="5AV-Cc-Nh9"/>
                             <constraint firstAttribute="height" constant="40" id="Ap0-9n-NMo"/>
-                            <constraint firstAttribute="bottom" secondItem="6CQ-JL-YWA" secondAttribute="bottom" id="WFh-84-siT"/>
+                            <constraint firstAttribute="trailing" secondItem="D7b-hw-Aga" secondAttribute="trailing" id="Oga-wk-aLS"/>
+                            <constraint firstItem="D7b-hw-Aga" firstAttribute="top" secondItem="APv-b0-7Dx" secondAttribute="top" id="QjR-QR-c5m"/>
                             <constraint firstAttribute="width" constant="40" id="ZOd-Wh-FKw"/>
-                            <constraint firstAttribute="trailing" secondItem="6CQ-JL-YWA" secondAttribute="trailing" id="vQR-SR-m7u"/>
-                            <constraint firstItem="6CQ-JL-YWA" firstAttribute="leading" secondItem="APv-b0-7Dx" secondAttribute="leading" id="xd3-mE-hyt"/>
+                            <constraint firstItem="D7b-hw-Aga" firstAttribute="leading" secondItem="APv-b0-7Dx" secondAttribute="leading" id="mxd-o0-kQg"/>
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mre-VV-uWq">
@@ -92,11 +76,14 @@
             </accessibility>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="checkBoxLabel" destination="6CQ-JL-YWA" id="Hkt-fm-DKM"/>
+                <outlet property="checkButton" destination="D7b-hw-Aga" id="aFp-8a-8MM"/>
                 <outlet property="commentLabel" destination="Mre-VV-uWq" id="aG6-Da-dib"/>
                 <outlet property="ticketNameLabel" destination="lWQ-xc-a9x" id="1sA-LD-s81"/>
             </connections>
             <point key="canvasLocation" x="215.94202898550725" y="130.24553571428572"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="unChecked_Mark" width="50" height="50"/>
+    </resources>
 </document>
