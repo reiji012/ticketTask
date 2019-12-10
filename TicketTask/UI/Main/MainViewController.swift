@@ -254,7 +254,9 @@ extension MainViewController: MainViewControllerProtocol {
                 UIView.animate(withDuration: 0.5, animations: {
                     self.scrollView.contentOffset = CGPoint(x:scrollPoint, y:0)
                     self.stopPoint = scrollPoint
-                })
+                }) { (completed) in
+                    self.deletedTaskViews()
+                }
             } else {
                 UIView.animate(withDuration: 0.5, animations: {
                     for i in index..<self.scrollView.subviews.count {
@@ -266,12 +268,28 @@ extension MainViewController: MainViewControllerProtocol {
                         taskView.frame = CGRect(x: frame.origin.x - CGFloat(self.scrollWidth), y: frame.origin.y, width: frame.size.width, height: frame.size.height)
                         self.setGradationColor(color: taskView.presenter.taskViewModel.taskColor!)
                     }
-                })
+                }) { (completed) in
+                    self.deletedTaskViews()
+                }
                 self.scrollView.isScrollEnabled = true
                 self.taskAddButton.isHidden = false
                 view.removeFromSuperview()
             }
             self.originX! -= self.taskViewWidth
+        }
+    }
+    
+    func deletedTaskViews() {
+        self.taskViewIndex = (Int(stopPoint) / self.scrollWidth) + 1
+        for i in 0..<presenter.taskTotalCount {
+            let taskView = self.view.viewWithTag(i + 1) as! TaskView
+            taskView.isCenter = false
+        }
+        if let currentTaskView = self.getCenterTaskView() {
+            self.setGradationColor(color: currentTaskView.presenter.taskViewModel.taskColor!)
+            currentTaskView.isCenter = true
+            self.taskView = currentTaskView
+            self.scrollView.bringSubviewToFront(currentTaskView)
         }
     }
     
