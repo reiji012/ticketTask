@@ -129,8 +129,6 @@ class MainViewController: UIViewController {
             currentTaskView.isCenter = true
             self.scrollView.bringSubviewToFront(currentTaskView)
         }
-        circleProgressSuperView.tag = 600
-        progressRing.tag = 700
         
     }
     
