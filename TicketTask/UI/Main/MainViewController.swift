@@ -149,8 +149,8 @@ class MainViewController: UIViewController {
         progressRing.frame = circleProgressSuperView.frame
         progressRing.style = .ontop
         progressRing.value = 0
-        progressRing.outerRingWidth = 5
-        progressRing.outerRingColor = .lightGray
+        progressRing.outerRingWidth = 7
+        progressRing.outerRingColor = UIColor(red: 233/255, green: 233/255, blue: 233/255, alpha: 1)
         progressRing.fontColor = .white
         
         weatherView.addSubview(progressRing)
@@ -205,6 +205,7 @@ class MainViewController: UIViewController {
         UIView.animate(withDuration: 2, animations: { () -> Void in
             self.gradientLayer.colors = color.gradationColor
             self.gradientLayer.frame = self.view.bounds
+            self.progressRing.innerRingColor = color.gradationColor1
             self.view.layer.insertSublayer(self.gradientLayer, at: 0)
         })
     }
