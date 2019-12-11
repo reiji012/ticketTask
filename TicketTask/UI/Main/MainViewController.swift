@@ -26,6 +26,7 @@ protocol MainViewControllerProtocol {
     func deleteTask(view: TaskView)
     func configureAddTicketView()
     func configureProgressRing()
+    func setCircleProgressValue(achievement: CGFloat, compCount: Int, unCompCount: Int)
 }
 
 class MainViewController: UIViewController {
@@ -75,6 +76,8 @@ class MainViewController: UIViewController {
     @IBOutlet private weak var taskEmptyView: UIView!
     @IBOutlet weak var circleProgressSuperView: UIView!
     @IBOutlet weak var progressTitleTopHeightConst: NSLayoutConstraint!
+    @IBOutlet weak var compCountLabel: UILabel!
+    @IBOutlet weak var unCompCountLabel: UILabel!
     
     // MARK: - Initilizer
     static func initiate() -> MainViewController {
@@ -145,7 +148,7 @@ class MainViewController: UIViewController {
         progressRing = UICircularProgressRing()
         progressRing.frame = circleProgressSuperView.frame
         progressRing.style = .ontop
-        progressRing.value = 30
+        progressRing.value = 0
         progressRing.outerRingWidth = 5
         progressRing.outerRingColor = .lightGray
         progressRing.fontColor = .white
@@ -226,6 +229,7 @@ class MainViewController: UIViewController {
         })
         self.stopPoint = scrollView.contentOffset.x
         self.taskViewIndex = (Int(self.stopPoint) / self.scrollWidth) + 1
+        presenter.didChangedTaskProgress()
     }
     
     /// タスクビューを作成して表示させる
@@ -246,6 +250,7 @@ class MainViewController: UIViewController {
         taskView.setLayout()
         taskView.topSafeAreaHeight = self.view.safeAreaInsets.top
         taskView.tag = tag
+        taskView.delegate = self
         scrollView.addSubview(taskView)
         //次のタブのx座標を用意する
         self.originX! += CGFloat(scrollWidth)
@@ -292,6 +297,12 @@ class MainViewController: UIViewController {
         } else {
             self.view.bringSubviewToFront(weatherView)
         }
+    }
+    
+    func setCircleProgressValue(achievement: CGFloat, compCount: Int, unCompCount: Int) {
+        progressRing.value = achievement
+        compCountLabel.text = "\(compCount)"
+        unCompCountLabel.text = "\(unCompCount)"
     }
 }
 
@@ -518,5 +529,11 @@ extension MainViewController: AddTicketViewDelegate {
     }
     
     func didTouchCloseButton() {
+    }
+}
+
+extension MainViewController: TaskViewDelegate {
+    func didChangeTicketCompletion() {
+        presenter.didChangedTaskProgress()
     }
 }

@@ -12,6 +12,10 @@ import RxCocoa
 import PopMenu
 import SPStorkController
 
+protocol TaskViewDelegate {
+    func didChangeTicketCompletion()
+}
+
 protocol TaskViewProtocol {
     var presenter: TaskViewPresenterProtocol! { get }
     var isShowDetail: Bool { get set }
@@ -23,6 +27,7 @@ class TaskView: UIView, TaskViewProtocol{
     
     // MARK: - Public Propaty
     var presenter: TaskViewPresenterProtocol!
+    var delegate: TaskViewDelegate?
     
     var topSafeAreaHeight: CGFloat = 0
     
@@ -175,10 +180,15 @@ class TaskView: UIView, TaskViewProtocol{
         
         ticketProgressBar?.setProgress(Float(self.presenter.taskViewModel.completedProgress!), animated: true)
         
+        // 達成率が変わった時のUI処理
         self.presenter.taskViewModel.progress.subscribe(onNext: { [ticketProgressBar] in
             let convertProgress = Int(($0)*100)
             self.ticketProgressLabel.text = "\(String(convertProgress))%"
             ticketProgressBar?.setProgress(Float($0), animated: true)
+            guard let delegate = self.delegate else {
+                return
+            }
+            delegate.didChangeTicketCompletion()
         }).disposed(by: disposeBag)
         
         self.presenter.taskViewModel.ticketCout.subscribe(onNext: { [weak ticketCountLabel] in

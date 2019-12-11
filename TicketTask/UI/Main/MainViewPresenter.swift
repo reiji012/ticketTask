@@ -20,6 +20,7 @@ protocol MainViewPresenterProtocol {
     func touchAddButton()
     func checkIsTaskEmpty()
     func isLastTaskView(view: TaskView) -> Bool
+    func didChangedTaskProgress()
     func catchError(error: ValidateError)
 }
 
@@ -52,6 +53,7 @@ class MainViewPresenter: MainViewPresenterProtocol, Routable, ErrorAlert {
         setupWetherInfo()
         view.configureAddTicketView()
         view.configureProgressRing()
+        didChangedTaskProgress()
     }
     
     // MARK: - Public Fuction
@@ -121,6 +123,21 @@ class MainViewPresenter: MainViewPresenterProtocol, Routable, ErrorAlert {
         } else {
             return false
         }
+    }
+    
+    func didChangedTaskProgress() {
+        var compTaskCount = 0
+        var unCompTaskCount = 0
+        for task in tasks {
+            if task.tickets.filter({$0.isCompleted != true}).count > 0 {
+                unCompTaskCount += 1
+            } else {
+                compTaskCount += 1
+            }
+        }
+        let num = (Double(compTaskCount)/Double(tasks.count)*100)
+        
+        view.setCircleProgressValue(achievement: CGFloat(num), compCount: compTaskCount, unCompCount: unCompTaskCount)
     }
     
     func catchError(error: ValidateError) {
