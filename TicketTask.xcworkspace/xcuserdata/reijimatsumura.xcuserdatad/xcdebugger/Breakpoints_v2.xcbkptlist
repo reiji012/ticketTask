@@ -5,37 +5,34 @@
    version = "2.0">
    <Breakpoints>
       <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "570FED9F-3A46-49FB-833F-C16709ECEE2E"
+            uuid = "A9ECA2A8-0D85-45DD-A159-4BC269ADC361"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            scope = "1"
-            stopOnStyle = "0">
-            <Actions>
-               <BreakpointActionProxy
-                  ActionExtensionID = "Xcode.BreakpointAction.DebuggerCommand">
-                  <ActionContent
-                     consoleCommand = "po $arg1">
-                  </ActionContent>
-               </BreakpointActionProxy>
-            </Actions>
+            filePath = "TicketTask/UI/TaskCardGroup/TaskView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
+            landmarkName = "setViewModel(task:mainVC:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "18060391-C1BC-4FE5-8155-E8AB90064EB6"
-            shouldBeEnabled = "No"
+            uuid = "3CE12B0A-4177-4ADA-941F-CA600B771EC0"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TicketTask/Model/TaskLocalDataModel.swift"
+            filePath = "TicketTask/UI/Main/MainViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "133"
-            endingLineNumber = "133"
-            landmarkName = "createTask(taskModel:)"
+            startingLineNumber = "245"
+            endingLineNumber = "245"
+            landmarkName = "createTaskView(task:tag:isInitCreate:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
