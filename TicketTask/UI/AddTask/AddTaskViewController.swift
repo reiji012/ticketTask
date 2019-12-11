@@ -54,7 +54,8 @@ class AddTaskViewController: UIViewController{
     @IBOutlet private weak var iconImageView: UIImageView!
     @IBOutlet private weak var colorView: UIView!
     @IBOutlet private weak var reminderTableView: UITableView!
-
+    @IBOutlet weak var ticketAbbButton: UIButton!
+    
 
     // MARK: - Initilizer
     static func initiate() -> AddTaskViewController {
@@ -177,6 +178,8 @@ class AddTaskViewController: UIViewController{
             self.gradientLayer.frame = self.view.bounds
             self.timerBtm.tintColor = color.gradationColor1
             self.view.layer.insertSublayer(self.gradientLayer, at: 0)
+            self.ticketAbbButton.backgroundColor = color.gradationColor1
+            self.addReminderButton.backgroundColor = color.gradationColor1
         })
     }
 }

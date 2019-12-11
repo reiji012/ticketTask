@@ -147,6 +147,7 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
                 self.gradientLayer.frame = self.view.bounds
                 //            self.gradientLayer.locations = [0.3, 0.7]
                 self.view.layer.insertSublayer(self.gradientLayer, at: 0)
+                self.addReminderButton.backgroundColor = color.gradationColor1
             })
         }
     }

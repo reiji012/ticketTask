@@ -492,6 +492,7 @@
                         <outlet property="scrolView" destination="qM4-Ze-bly" id="ifA-Hr-YzB"/>
                         <outlet property="taskHeadVIew" destination="D2u-DT-Jmd" id="vsX-gT-h9v"/>
                         <outlet property="taskTicketView" destination="OVH-xt-BrV" id="3as-zZ-vuJ"/>
+                        <outlet property="ticketAbbButton" destination="lFo-ss-4SF" id="6Ah-ev-C55"/>
                         <outlet property="ticketTableView" destination="8h1-wh-c9L" id="l8P-RG-7LX"/>
                         <outlet property="timerBtm" destination="e7X-fV-Ig5" id="Aof-XT-sQ6"/>
                         <outlet property="titleTextField" destination="khF-gO-74b" id="CUw-9t-cOd"/>
