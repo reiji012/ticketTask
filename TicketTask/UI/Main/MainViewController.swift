@@ -13,6 +13,7 @@ import BubbleTransition
 import SPStorkController
 import SparrowKit
 import PKHUD
+import UICircularProgressRing
 
 class MainViewController: UIViewController {
     
@@ -25,6 +26,11 @@ class MainViewController: UIViewController {
         didSet(value) {
             self.scrollView.isScrollEnabled = value
             self.taskAddButton.isHidden = !value
+            if value {
+                self.view.bringSubviewToFront(weatherView)
+            } else {
+                self.view.bringSubviewToFront(scrollView)
+            }
         }
     }
     weak var taskView: TaskView!
@@ -53,13 +59,12 @@ class MainViewController: UIViewController {
     private var scrollViewHeight: CGFloat!
     
     @IBOutlet private weak var scrollView: UIScrollView!
-    @IBOutlet private weak var weatherImgView: UIImageView!
     @IBOutlet private weak var weatherView: UIView!
     @IBOutlet private weak var taskAddButton: UIButton!
     @IBOutlet private weak var maxTempLabel: WeatherLabel!
     @IBOutlet private weak var minTempLabel: WeatherLabel!
-    @IBOutlet private weak var descriptionLabel: UILabel!
     @IBOutlet private weak var taskEmptyView: UIView!
+    @IBOutlet weak var circleProgressSuperView: UIView!
     
     // MARK: - Initilizer
     static func initiate() -> MainViewController {
@@ -86,6 +91,17 @@ class MainViewController: UIViewController {
         // Do any additional setup after loading the view.
         bindUI()
         presenter.checkIsTaskEmpty()
+        
+        // create the view
+        let progressRing = UICircularProgressRing()
+        progressRing.frame = circleProgressSuperView.frame
+        progressRing.style = .ontop
+        progressRing.value = 30
+        progressRing.outerRingWidth = 5
+        progressRing.outerRingColor = .lightGray
+        progressRing.fontColor = .white
+        
+        weatherView.addSubview(progressRing)
     }
     
     override func viewWillLayoutSubviews() {
@@ -136,8 +152,6 @@ class MainViewController: UIViewController {
         
         weatherView.isOpaque = false // 不透明を false
         weatherView.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0) // alpha 0 で色を設定
-        weatherImgView.isOpaque = false // 不透明を false
-        weatherImgView.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0) // alpha 0 で色を設定
         // 影の設定
         self.taskAddButton.layer.shadowOpacity = 0.5
         self.taskAddButton.layer.shadowRadius = 12
@@ -346,16 +360,6 @@ extension MainViewController: MainViewControllerProtocol {
     
     /// 天気情報のセット
     func setWeatherInfo() {
-        DispatchQueue.main.async {
-            self.descriptionLabel.text = "(\(self.presenter.getDescripiton()))"
-            self.weatherImgView.image = self.presenter.weatherIconImage
-            let maxTemp = self.presenter.getTodayWeatherMaxTemp()
-            let minTemp = self.presenter.getTodayWeatherMinTemp()
-            
-            self.maxTempLabel.changeCountValueWithAnimation(Float(maxTemp)!, withDuration: self.counterAnimationLabelDuration, andAnimationType: .EaseOut, andCounterType: .Float)
-            self.minTempLabel.changeCountValueWithAnimation(Float(minTemp)!, withDuration: self.counterAnimationLabelDuration, andAnimationType: .EaseOut, andCounterType: .Float)
-            
-        }
     }
     
     func showValidateAlert(error: ValidateError){

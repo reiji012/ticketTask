@@ -15,6 +15,8 @@ target 'TicketTask' do
   pod 'SwiftyJSON', '~> 4.0'
   # ESTabBarController-swift: タブデザイン
   pod 'ESTabBarController-swift'
+  # 'UICircularProgressRing': プログレスバーサークル
+  pod 'UICircularProgressRing'
   
   # add the Firebase pod for Google Analytics
   pod 'Firebase/Analytics'
