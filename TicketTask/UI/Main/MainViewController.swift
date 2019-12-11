@@ -308,7 +308,6 @@ class MainViewController: UIViewController {
 // MARK: - Extension MainViewControllerProtocol
 extension MainViewController: MainViewControllerProtocol {
     /// タスクの削除
-    ///
     /// - Parameter view: 削除するView
     func deleteTask(view: TaskView) {
         UIView.animate(withDuration: 0.2, animations: {
@@ -343,7 +342,7 @@ extension MainViewController: MainViewControllerProtocol {
                 self.taskAddButton.isHidden = false
                 view.removeFromSuperview()
             }
-            self.originX! -= self.taskViewWidth
+            self.originX! -= CGFloat(self.scrollWidth)
         }
     }
     
