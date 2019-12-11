@@ -135,8 +135,7 @@ class MainViewPresenter: MainViewPresenterProtocol, Routable, ErrorAlert {
                 compTaskCount += 1
             }
         }
-        let num = (Double(compTaskCount)/Double(tasks.count)*100)
-        
+        let num = tasks.count == 0 ? 0 : (Double(compTaskCount)/Double(tasks.count)*100)
         view.setCircleProgressValue(achievement: CGFloat(num), compCount: compTaskCount, unCompCount: unCompTaskCount)
     }
     
