@@ -225,7 +225,7 @@ class TaskView: UIView, TaskViewProtocol{
         
         self.layer.cornerRadius = 30
         self.headerView.layer.cornerRadius = 30
-        self.headerViewConst.constant = self.frame.size.width
+        self.headerViewConst.constant = screenType.taskViewCardWidth
         // 影の設定
         self.layer.shadowOpacity = 0.7
         self.layer.shadowRadius = 12
@@ -247,6 +247,7 @@ class TaskView: UIView, TaskViewProtocol{
         if (self.mainViewController != nil) {
             self.mainViewController?.isShowDetail = !self.isShowDetail
         }
+        self.mainViewController?.willTaskViewSizeChanged()
         let myBoundWidht: CGFloat = UIScreen.main.bounds.size.width
         let currentWidth = (self.frame.size.width - myBoundWidht)/2
         if isShowDetail {
@@ -301,6 +302,7 @@ class TaskView: UIView, TaskViewProtocol{
             self.ticketTableView.isHidden = !self.isShowDetail
             self.backButton.isHidden = !self.isShowDetail
             // ViewConrtollerに状態の変更を伝える
+            self.mainViewController?.didTaskViewSizeChanged()
         })
     }
     

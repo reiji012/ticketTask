@@ -39,11 +39,6 @@ class MainViewController: UIViewController {
         didSet(value) {
             self.scrollView.isScrollEnabled = value
             self.taskAddButton.isHidden = !value
-            if value {
-                self.view.bringSubviewToFront(weatherView)
-            } else {
-                self.view.bringSubviewToFront(scrollView)
-            }
         }
     }
     weak var taskView: TaskView!
@@ -233,6 +228,10 @@ class MainViewController: UIViewController {
         self.taskViewIndex = (Int(self.stopPoint) / self.scrollWidth) + 1
     }
     
+    /// タスクビューを作成して表示させる
+    /// - Parameter task: タスクデータ
+    /// - Parameter tag: タスクViewタグ
+    /// - Parameter isInitCreate: 初回表示時の作成フラグ
     func createTaskView(task:TaskModel, tag: Int, isInitCreate: Bool){
         taskEmptyView.isHidden = true
         // VIewを設置する高さを計算する
@@ -281,6 +280,18 @@ class MainViewController: UIViewController {
         UIView.animate(withDuration: 2, animations: {
             self.present(editTaskVC, animated: true, completion: nil)
         })
+    }
+    
+    func willTaskViewSizeChanged() {
+        self.view.bringSubviewToFront(scrollView)
+    }
+    
+    func didTaskViewSizeChanged() {
+        if isShowDetail {
+            self.view.bringSubviewToFront(scrollView)
+        } else {
+            self.view.bringSubviewToFront(weatherView)
+        }
     }
 }
 
