@@ -15,6 +15,19 @@ import SparrowKit
 import PKHUD
 import UICircularProgressRing
 
+protocol MainViewControllerProtocol {
+    var stopPoint: CGFloat { get }
+    var scrollWidth: Int { get }
+    func setWeatherInfo()
+    func setTaskEmptyViewState(isHidden: Bool)
+    func createAllTaskViews()
+    func didChangeTaskCount(taskCount: Int)
+    func showValidateAlert(error: ValidateError)
+    func deleteTask(view: TaskView)
+    func configureAddTicketView()
+    func configureProgressRing()
+}
+
 class MainViewController: UIViewController {
     
     // MARK: - Public Propaty
@@ -58,13 +71,15 @@ class MainViewController: UIViewController {
     private var dummyViewWidth: CGFloat!
     private var scrollViewHeight: CGFloat!
     
+    private var progressRing: UICircularProgressRing!
+    
     @IBOutlet private weak var scrollView: UIScrollView!
     @IBOutlet private weak var weatherView: UIView!
     @IBOutlet private weak var taskAddButton: UIButton!
     @IBOutlet private weak var maxTempLabel: WeatherLabel!
-    @IBOutlet private weak var minTempLabel: WeatherLabel!
     @IBOutlet private weak var taskEmptyView: UIView!
     @IBOutlet weak var circleProgressSuperView: UIView!
+    @IBOutlet weak var progressTitleTopHeightConst: NSLayoutConstraint!
     
     // MARK: - Initilizer
     static func initiate() -> MainViewController {
@@ -91,17 +106,6 @@ class MainViewController: UIViewController {
         // Do any additional setup after loading the view.
         bindUI()
         presenter.checkIsTaskEmpty()
-        
-        // create the view
-        let progressRing = UICircularProgressRing()
-        progressRing.frame = circleProgressSuperView.frame
-        progressRing.style = .ontop
-        progressRing.value = 30
-        progressRing.outerRingWidth = 5
-        progressRing.outerRingColor = .lightGray
-        progressRing.fontColor = .white
-        
-        weatherView.addSubview(progressRing)
     }
     
     override func viewWillLayoutSubviews() {
@@ -126,6 +130,35 @@ class MainViewController: UIViewController {
             currentTaskView.frame.size.height = self.isShowDetail ? myBoundSize.height : self.taskViewHeight
             currentTaskView.isCenter = true
             self.scrollView.bringSubviewToFront(currentTaskView)
+        }
+        circleProgressSuperView.tag = 600
+        progressRing.tag = 700
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        progressRing.frame = circleProgressSuperView.frame
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        progressRing.frame = circleProgressSuperView.frame
+        
+    }
+    
+    func configureProgressRing() {
+        // create the view
+        progressRing = UICircularProgressRing()
+        progressRing.frame = circleProgressSuperView.frame
+        progressRing.style = .ontop
+        progressRing.value = 30
+        progressRing.outerRingWidth = 5
+        progressRing.outerRingColor = .lightGray
+        progressRing.fontColor = .white
+        
+        weatherView.addSubview(progressRing)
+        
+        if screenType == .iPhone4_0inch {
+            progressTitleTopHeightConst.constant = 20
         }
     }
     

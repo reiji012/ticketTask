@@ -8,15 +8,3 @@
 
 import Foundation
 import UIKit
-
-protocol MainViewControllerProtocol {
-    var stopPoint: CGFloat { get }
-    var scrollWidth: Int { get }
-    func setWeatherInfo()
-    func setTaskEmptyViewState(isHidden: Bool)
-    func createAllTaskViews()
-    func didChangeTaskCount(taskCount: Int)
-    func showValidateAlert(error: ValidateError)
-    func deleteTask(view: TaskView)
-    func configureAddTicketView()
-}

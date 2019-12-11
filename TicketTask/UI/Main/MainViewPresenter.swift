@@ -51,6 +51,7 @@ class MainViewPresenter: MainViewPresenterProtocol, Routable, ErrorAlert {
     func viewDidLoad() {
         setupWetherInfo()
         view.configureAddTicketView()
+        view.configureProgressRing()
     }
     
     // MARK: - Public Fuction
