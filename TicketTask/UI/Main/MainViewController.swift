@@ -316,7 +316,10 @@ extension MainViewController: MainViewControllerProtocol {
             // Animationが完了したら親Viewから削除する
             let index = view.tag
             let scrollPoint = self.stopPoint - CGFloat(self.scrollWidth)
+            
+            // 最後尾のViewかどうかで処理を分ける
             if (self.presenter.isLastTaskView(view: view)) {
+                // 最後尾のViewの削除
                 UIView.animate(withDuration: 0.5, animations: {
                     self.scrollView.contentOffset = CGPoint(x:scrollPoint, y:0)
                     self.stopPoint = scrollPoint
@@ -324,6 +327,7 @@ extension MainViewController: MainViewControllerProtocol {
                     self.deletedTaskViews()
                 }
             } else {
+                // 最後尾以前のViewの削除
                 UIView.animate(withDuration: 0.5, animations: {
                     for i in index..<self.scrollView.subviews.count {
                         guard let taskView = self.view.viewWithTag(i) as? TaskView else {
@@ -341,6 +345,7 @@ extension MainViewController: MainViewControllerProtocol {
                 self.taskAddButton.isHidden = false
                 view.removeFromSuperview()
             }
+            // 次にViewを作成する時のためX座標の更新
             self.originX! -= CGFloat(self.scrollWidth)
         }
     }
