@@ -257,7 +257,7 @@ class TaskView: UIView, TaskViewProtocol{
         if (self.mainViewController != nil) {
             self.mainViewController?.isShowDetail = !self.isShowDetail
         }
-        self.mainViewController?.willTaskViewSizeChanged()
+        self.mainViewController?.willChangedTaskViewSize()
         let myBoundWidht: CGFloat = UIScreen.main.bounds.size.width
         let currentWidth = (self.frame.size.width - myBoundWidht)/2
         if isShowDetail {
@@ -312,7 +312,7 @@ class TaskView: UIView, TaskViewProtocol{
             self.ticketTableView.isHidden = !self.isShowDetail
             self.backButton.isHidden = !self.isShowDetail
             // ViewConrtollerに状態の変更を伝える
-            self.mainViewController?.didTaskViewSizeChanged()
+            self.mainViewController?.didChangedTaskViewSize()
         })
     }
     

@@ -67,9 +67,7 @@
 		2BF5B7722282A0AB007D0266 /* UIView+TicketTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF5B7712282A0AB007D0266 /* UIView+TicketTask.swift */; };
 		2BF5B77C22855657007D0266 /* AddTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF5B77B22855657007D0266 /* AddTaskViewController.swift */; };
 		8E2F45D1235DC7BC000683B4 /* AddTaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2F45D0235DC7BC000683B4 /* AddTaskModel.swift */; };
-		8E6B2A0B22FD4B0700113E30 /* WetherAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6B2A0A22FD4B0700113E30 /* WetherAPIRequest.swift */; };
 		8E6B2A0E22FF227400113E30 /* Utill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6B2A0D22FF227400113E30 /* Utill.swift */; };
-		8E6B2A1022FF22E900113E30 /* WetherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6B2A0F22FF22E900113E30 /* WetherModel.swift */; };
 		8E6DAB9622FFF36A00A72D0D /* MainViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6DAB9522FFF36A00A72D0D /* MainViewControllerProtocol.swift */; };
 		8E8A0B0E2314161500FFCE15 /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8A0B0D2314161500FFCE15 /* Const.swift */; };
 		8E8A0B10231437D600FFCE15 /* TicketTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8A0B0F231437D600FFCE15 /* TicketTabbarController.swift */; };
@@ -78,7 +76,6 @@
 		8E8A0B1A2316B04B00FFCE15 /* ColorSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8A0B192316B04B00FFCE15 /* ColorSelectViewController.swift */; };
 		8E8A0B1C2318D55E00FFCE15 /* IconSelectViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E8A0B1B2318D55E00FFCE15 /* IconSelectViewController.storyboard */; };
 		8E8A0B1E2318D9C900FFCE15 /* IconSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8A0B1D2318D9C900FFCE15 /* IconSelectViewController.swift */; };
-		8EACD6D823027E7F0095F4A0 /* WeatherLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EACD6D723027E7F0095F4A0 /* WeatherLabel.swift */; };
 		B101601FF534DC3B8EE3D6CD /* Pods_TicketTask.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9175C5698A5BEEEE5CF1DB20 /* Pods_TicketTask.framework */; };
 /* End PBXBuildFile section */
 
@@ -147,9 +144,7 @@
 		2BF5B77B22855657007D0266 /* AddTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskViewController.swift; sourceTree = "<group>"; };
 		37CFDF9363A1FC7BF7495C74 /* Pods-TicketTask.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TicketTask.release.xcconfig"; path = "Target Support Files/Pods-TicketTask/Pods-TicketTask.release.xcconfig"; sourceTree = "<group>"; };
 		8E2F45D0235DC7BC000683B4 /* AddTaskModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskModel.swift; sourceTree = "<group>"; };
-		8E6B2A0A22FD4B0700113E30 /* WetherAPIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WetherAPIRequest.swift; sourceTree = "<group>"; };
 		8E6B2A0D22FF227400113E30 /* Utill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utill.swift; sourceTree = "<group>"; };
-		8E6B2A0F22FF22E900113E30 /* WetherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WetherModel.swift; sourceTree = "<group>"; };
 		8E6DAB9522FFF36A00A72D0D /* MainViewControllerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewControllerProtocol.swift; sourceTree = "<group>"; };
 		8E8A0B0D2314161500FFCE15 /* Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
 		8E8A0B0F231437D600FFCE15 /* TicketTabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketTabbarController.swift; sourceTree = "<group>"; };
@@ -158,7 +153,6 @@
 		8E8A0B192316B04B00FFCE15 /* ColorSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSelectViewController.swift; sourceTree = "<group>"; };
 		8E8A0B1B2318D55E00FFCE15 /* IconSelectViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = IconSelectViewController.storyboard; sourceTree = "<group>"; };
 		8E8A0B1D2318D9C900FFCE15 /* IconSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectViewController.swift; sourceTree = "<group>"; };
-		8EACD6D723027E7F0095F4A0 /* WeatherLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherLabel.swift; sourceTree = "<group>"; };
 		9175C5698A5BEEEE5CF1DB20 /* Pods_TicketTask.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TicketTask.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3E7EA07422E788A8A52AC14 /* Pods-TicketTask.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TicketTask.debug.xcconfig"; path = "Target Support Files/Pods-TicketTask/Pods-TicketTask.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -273,7 +267,6 @@
 			isa = PBXGroup;
 			children = (
 				1123EEA92387D360005EEFAD /* TabBar */,
-				8EACD6D723027E7F0095F4A0 /* WeatherLabel.swift */,
 				2BF5B74E22814521007D0266 /* MainViewController.swift */,
 				8E6DAB9522FFF36A00A72D0D /* MainViewControllerProtocol.swift */,
 				2BF5B75022814521007D0266 /* MainViewController.storyboard */,
@@ -354,7 +347,6 @@
 			children = (
 				11B4F99A233DF0C4008CD2F6 /* Entity */,
 				2BF5B7642281498F007D0266 /* TaskLocalDataModel.swift */,
-				8E6B2A0F22FF22E900113E30 /* WetherModel.swift */,
 				11EA1191234F0AFB003223A7 /* TaskModel.swift */,
 			);
 			path = Model;
@@ -369,14 +361,6 @@
 				11EBB0DC237D57EF001FAFC5 /* EntityItem.swift */,
 			);
 			path = Entity;
-			sourceTree = "<group>";
-		};
-		11B4F99D233DF268008CD2F6 /* API */ = {
-			isa = PBXGroup;
-			children = (
-				8E6B2A0A22FD4B0700113E30 /* WetherAPIRequest.swift */,
-			);
-			path = API;
 			sourceTree = "<group>";
 		};
 		11B5E4442345F8F200DBCB14 /* Protocols */ = {
@@ -428,7 +412,6 @@
 			isa = PBXGroup;
 			children = (
 				11EA118A234D80E3003223A7 /* TicketTask.entitlements */,
-				11B4F99D233DF268008CD2F6 /* API */,
 				11B4F999233DF05E008CD2F6 /* Model */,
 				11EC7B91234B13600099D444 /* Enums */,
 				2BF5B76E22829FEF007D0266 /* Extention */,
@@ -642,7 +625,6 @@
 				8E8A0B1E2318D9C900FFCE15 /* IconSelectViewController.swift in Sources */,
 				1181EDC8234C4A02006D6CDD /* ErrorAlert.swift in Sources */,
 				11EC7B99234B3AED0099D444 /* UIViewControllerExtensions.swift in Sources */,
-				8E6B2A1022FF22E900113E30 /* WetherModel.swift in Sources */,
 				1148D4A72390D61A00AE8C81 /* SplashViewPresenter.swift in Sources */,
 				11EC7B97234B199E0099D444 /* IconSelectViewPresenter.swift in Sources */,
 				2B84AD5B22A1267F004B484D /* ValidateError.swift in Sources */,
@@ -666,9 +648,7 @@
 				1123EEC02387D8D9005EEFAD /* HistoryViewController.swift in Sources */,
 				1148D4A52390D60A00AE8C81 /* SplashViewController.swift in Sources */,
 				11EBB0D9237D2A65001FAFC5 /* NotificationTableCell.swift in Sources */,
-				8EACD6D823027E7F0095F4A0 /* WeatherLabel.swift in Sources */,
 				8E6B2A0E22FF227400113E30 /* Utill.swift in Sources */,
-				8E6B2A0B22FD4B0700113E30 /* WetherAPIRequest.swift in Sources */,
 				8E8A0B10231437D600FFCE15 /* TicketTabbarController.swift in Sources */,
 				2BF5B74D22814521007D0266 /* AppDelegate.swift in Sources */,
 				1123EEB02387D63E005EEFAD /* SettingViewController.swift in Sources */,

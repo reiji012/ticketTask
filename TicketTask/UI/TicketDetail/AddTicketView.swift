@@ -45,6 +45,7 @@ class AddTicketView: UIView{
     @IBAction func touchCloseButton(_ sender: Any) {
         hideView()
     }
+    
     @IBAction func touchCheckButton(_ sender: Any) {
         guard let delegate = delegate else {
             return

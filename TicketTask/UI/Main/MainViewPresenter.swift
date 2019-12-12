@@ -12,11 +12,7 @@ import UIKit
 protocol MainViewPresenterProtocol {
     var tasks: [TaskModel] { get }
     var taskTotalCount: Int { get }
-    var weatherIconImage: UIImage? { get }
     func viewDidLoad()
-    func getTodayWeatherMaxTemp() -> String
-    func getTodayWeatherMinTemp() -> String
-    func getDescripiton() -> String
     func touchAddButton()
     func checkIsTaskEmpty()
     func isLastTaskView(view: TaskView) -> Bool
@@ -34,23 +30,18 @@ class MainViewPresenter: MainViewPresenterProtocol, Routable, ErrorAlert {
     var taskTotalCount: Int {
         return taskLocalDataModel!.tasks.count
     }
-    var weatherIconImage: UIImage?
     
     // MARK: - Private Property
     private var taskLocalDataModel: TaskLocalDataModel!
-    private var wetherModel: WetherModel!
-    private var todayWetherInfo: Dictionary<String,Any>?
     
     // MARK: - Initialize
     init(vc: MainViewControllerProtocol) {
         view = vc
         taskLocalDataModel = TaskLocalDataModel.sharedManager
-        wetherModel = WetherModel.sharedManager
     }
     
     // MARK: - Lifecycle
     func viewDidLoad() {
-        setupWetherInfo()
         view.configureAddTicketView()
         view.configureProgressRing()
         didChangedTaskProgress()
@@ -62,43 +53,6 @@ class MainViewPresenter: MainViewPresenterProtocol, Routable, ErrorAlert {
             return
         }
         present(.addTaskViewController, from: viewController, animated: true)
-    }
-    
-    
-    /// 天気情報の取得
-    func setupWetherInfo() {
-        wetherModel?.fetchWetherInfo(callback: {
-            self.todayWetherInfo = self.wetherModel?.getWetherTodayInfo()
-            guard let viewController = self.view else {
-                return
-            }
-            self.weatherIconImage = self.wetherModel.weatherIconImage!
-            viewController.setWeatherInfo()
-        })
-    }
-    
-    /// 今日の最高気温文字列を取得
-    ///
-    /// - Returns: 最高気温文字列
-    func getTodayWeatherMaxTemp() -> String {
-        let maxTempString = todayWetherInfo![WetherInfoConst.TEMP_MAX.rawValue]!
-        return "\(maxTempString)"
-    }
-    
-    /// 今日の最低気温文字列を取得
-    ///
-    /// - Returns: 最低気温文字列
-    func getTodayWeatherMinTemp() -> String {
-        let minTempString = todayWetherInfo![WetherInfoConst.TEMP_MIN.rawValue]!
-        return "\(minTempString)"
-    }
-    
-    /// 天気文字列取得
-    ///
-    /// - Returns: 天気文字列
-    func getDescripiton() -> String {
-        let description = todayWetherInfo![WetherInfoConst.DESCRIPTION.rawValue]!
-        return "\(description)"
     }
     
     func checkIsTaskEmpty() {

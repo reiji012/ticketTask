@@ -18,7 +18,6 @@ import UICircularProgressRing
 protocol MainViewControllerProtocol {
     var stopPoint: CGFloat { get }
     var scrollWidth: Int { get }
-    func setWeatherInfo()
     func setTaskEmptyViewState(isHidden: Bool)
     func createAllTaskViews()
     func didChangeTaskCount(taskCount: Int)
@@ -72,7 +71,6 @@ class MainViewController: UIViewController {
     @IBOutlet private weak var scrollView: UIScrollView!
     @IBOutlet private weak var weatherView: UIView!
     @IBOutlet private weak var taskAddButton: UIButton!
-    @IBOutlet private weak var maxTempLabel: WeatherLabel!
     @IBOutlet private weak var taskEmptyView: UIView!
     @IBOutlet weak var circleProgressSuperView: UIView!
     @IBOutlet weak var progressTitleTopHeightConst: NSLayoutConstraint!
@@ -286,13 +284,14 @@ class MainViewController: UIViewController {
         })
     }
     
-    func willTaskViewSizeChanged() {
+    func willChangedTaskViewSize() {
         self.view.bringSubviewToFront(scrollView)
     }
     
-    func didTaskViewSizeChanged() {
+    func didChangedTaskViewSize() {
         if isShowDetail {
             self.view.bringSubviewToFront(scrollView)
+            self.view.bringSubviewToFront(addTicketView!)
         } else {
             self.view.bringSubviewToFront(weatherView)
         }
@@ -409,10 +408,6 @@ extension MainViewController: MainViewControllerProtocol {
         //タブのx座標．
         //ダミーView分，はじめからずらしてあげましょう．
         self.originX = 32
-    }
-    
-    /// 天気情報のセット
-    func setWeatherInfo() {
     }
     
     func showValidateAlert(error: ValidateError){

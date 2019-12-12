@@ -11,7 +11,6 @@ import RxSwift
 
 class TaskViewModel: NSObject {
     
-    private let wetherData = WetherAPIRequest()
     private let progressSubject = BehaviorSubject(value: 0.0)
     private let ticketCountSubject = BehaviorSubject(value: 0)
     private let taskTitleSubject = BehaviorSubject(value: "")
@@ -22,14 +21,11 @@ class TaskViewModel: NSObject {
     var ticketCout: Observable<Int> { return ticketCountSubject.asObserver() }
     var taskTitle: Observable<String> { return taskTitleSubject.asObserver() }
     var taskAttri: Observable<String> { return taskAttriSubject.asObserver() }
-    var weatherIconImage: UIImage?
     
     var delegate: MainViewControllerProtocol?
 
     var taskID: Int?
     var taskLocalDataModel: TaskLocalDataModel?
-    var wetherModel: WetherModel?
-    var todayWetherInfo: Dictionary<String,Any>?
     var tasks: [TaskModel]?
     var taskName: String? {
         didSet {
@@ -62,7 +58,6 @@ class TaskViewModel: NSObject {
     
     override init() {
         taskLocalDataModel = TaskLocalDataModel.sharedManager
-        wetherModel = WetherModel.sharedManager
     }
     
     // タスクのModelを取得する
@@ -188,17 +183,6 @@ class TaskViewModel: NSObject {
     
     func getTaskData() {
         tasks = taskLocalDataModel!.tasks
-    }
-    
-    func setupWetherInfo() {
-        wetherModel?.fetchWetherInfo(callback: {
-            self.todayWetherInfo = self.wetherModel?.getWetherTodayInfo()
-            guard let delegate = self.delegate else {
-                return
-            }
-            self.weatherIconImage = self.wetherModel?.weatherIconImage
-            delegate.setWeatherInfo()
-        })
     }
     
     func setupIcon() {
