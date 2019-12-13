@@ -37,8 +37,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         application.registerForRemoteNotifications()
         
-        // タスクリセット処理
-        TaskLocalDataModel.sharedManager.checkResetModel()
         // [END register_for_notifications]
         return true
     }
@@ -91,8 +89,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Messaging.messaging().apnsToken = deviceToken
     }
     
-    func applicationWillEnterForeground(_ application: UIApplication) {
-        
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        // タスクリセット処理
+        TaskLocalDataModel.sharedManager.checkResetModel()
     }
 }
 

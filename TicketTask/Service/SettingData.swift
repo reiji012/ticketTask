@@ -67,7 +67,7 @@ class SettingData {
         var targetType:[Int] = []
         targetType.append(1)
         // 設定「１週間の初めの週」が起動時の日付の週と同じならタイプ２を追加
-        if week == UserDefaults.standard.string(forKey: Keys.week.rawValue) {
+        if week == "Mounday" {
             targetType.append(2)
         }
         // 現在日時
