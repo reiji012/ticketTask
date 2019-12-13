@@ -87,6 +87,8 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
+                <outlet property="checkButton" destination="PR1-Hm-Xte" id="UCx-GB-1Yj"/>
+                <outlet property="closeButton" destination="Ltp-PD-UYa" id="VnG-Km-SqD"/>
                 <outlet property="memoTextField" destination="gYf-MP-j96" id="ZPN-im-Sgq"/>
                 <outlet property="memoTitleTopConst" destination="xUQ-Kb-zvh" id="dLm-3y-0rO"/>
                 <outlet property="titileTopConst" destination="K7i-FV-BpE" id="AxR-lq-KCG"/>
@@ -96,7 +98,7 @@
         </view>
     </objects>
     <resources>
-        <image name="checkMark" width="256" height="256"/>
-        <image name="close" width="256" height="256"/>
+        <image name="checkMark" width="50" height="50"/>
+        <image name="close" width="50" height="50"/>
     </resources>
 </document>

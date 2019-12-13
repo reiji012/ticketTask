@@ -250,6 +250,17 @@ class TaskView: UIView, TaskViewProtocol{
         self.setGradationColor(color: presenter.currentColor)
         self.setImage()
 //        self.ticketTableView.allowsMultipleSelectionDuringEditing = true
+        
+        
+        if #available(iOS 13.0, *) {
+            let menuImage = menuButton.imageView!.image!.withRenderingMode(.alwaysTemplate)
+            menuButton.setImage(menuImage, for: .normal)
+            menuButton.tintColor = .dynamicColor
+            
+            let backButtonImage = backButton.imageView!.image!.withRenderingMode(.alwaysTemplate)
+            backButton.setImage(backButtonImage, for: .normal)
+            backButton.tintColor = .dynamicColor
+        }
     }
     
     func changeViewSize() {

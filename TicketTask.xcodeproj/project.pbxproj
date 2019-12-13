@@ -38,6 +38,7 @@
 		11EA118E234DBD17003223A7 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EA118D234DBD17003223A7 /* Notifications.swift */; };
 		11EA1190234DC635003223A7 /* DateFormatterExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EA118F234DC635003223A7 /* DateFormatterExtensions.swift */; };
 		11EA1192234F0AFB003223A7 /* TaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EA1191234F0AFB003223A7 /* TaskModel.swift */; };
+		11EB777923A3947600ABD716 /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EB777823A3947600ABD716 /* UIColorExtensions.swift */; };
 		11EBB0D7237D1DC4001FAFC5 /* PickerViewKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EBB0D6237D1DC4001FAFC5 /* PickerViewKeyboard.swift */; };
 		11EBB0D9237D2A65001FAFC5 /* NotificationTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EBB0D8237D2A65001FAFC5 /* NotificationTableCell.swift */; };
 		11EBB0DB237D51D2001FAFC5 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EBB0DA237D51D2001FAFC5 /* StringExtensions.swift */; };
@@ -112,6 +113,7 @@
 		11EA118D234DBD17003223A7 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		11EA118F234DC635003223A7 /* DateFormatterExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterExtensions.swift; sourceTree = "<group>"; };
 		11EA1191234F0AFB003223A7 /* TaskModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskModel.swift; sourceTree = "<group>"; };
+		11EB777823A3947600ABD716 /* UIColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtensions.swift; sourceTree = "<group>"; };
 		11EBB0D6237D1DC4001FAFC5 /* PickerViewKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewKeyboard.swift; sourceTree = "<group>"; };
 		11EBB0D8237D2A65001FAFC5 /* NotificationTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableCell.swift; sourceTree = "<group>"; };
 		11EBB0DA237D51D2001FAFC5 /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
@@ -446,6 +448,7 @@
 				11EC7B98234B3AED0099D444 /* UIViewControllerExtensions.swift */,
 				11EA118F234DC635003223A7 /* DateFormatterExtensions.swift */,
 				11EBB0DA237D51D2001FAFC5 /* StringExtensions.swift */,
+				11EB777823A3947600ABD716 /* UIColorExtensions.swift */,
 			);
 			path = Extention;
 			sourceTree = "<group>";
@@ -638,6 +641,7 @@
 				11B4F99C233DF163008CD2F6 /* TaskEditDelegate.swift in Sources */,
 				8E8A0B1A2316B04B00FFCE15 /* ColorSelectViewController.swift in Sources */,
 				2BB2EE51228AB97200769AAA /* ActionType.swift in Sources */,
+				11EB777923A3947600ABD716 /* UIColorExtensions.swift in Sources */,
 				11EC7B93234B13970099D444 /* TaskColor.swift in Sources */,
 				11EA1190234DC635003223A7 /* DateFormatterExtensions.swift in Sources */,
 				1123EEC72387E10F005EEFAD /* TabBarItemView.swift in Sources */,

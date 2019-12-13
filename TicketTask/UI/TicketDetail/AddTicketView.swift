@@ -23,7 +23,9 @@ class AddTicketView: UIView{
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var titileTopConst: NSLayoutConstraint!
     @IBOutlet weak var memoTitleTopConst: NSLayoutConstraint!
-
+    @IBOutlet weak var checkButton: UIButton!
+    @IBOutlet weak var closeButton: UIButton!
+    
     private var isEditMode = false
     private var beforeTitleText = ""
     private var identifier: String?
@@ -39,6 +41,18 @@ class AddTicketView: UIView{
             view.memoTitleTopConst.constant = view.memoTitleTopConst.constant / 2
         default: break
         }
+        
+        if #available(iOS 13.0, *) {
+            let menuImage = view.checkButton.imageView!.image!.withRenderingMode(.alwaysTemplate)
+            view.checkButton.setImage(menuImage, for: .normal)
+            view.checkButton.tintColor = .dynamicColor
+            
+            let backButtonImage = view.closeButton.imageView!.image!.withRenderingMode(.alwaysTemplate)
+            view.closeButton.setImage(backButtonImage, for: .normal)
+            view.closeButton.tintColor = .dynamicColor
+        }
+        
+        
         return view
     }
     
