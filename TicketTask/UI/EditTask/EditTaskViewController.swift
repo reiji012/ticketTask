@@ -106,7 +106,6 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
         present(iconSelectVC, animated: true, completion: nil)
     }
     
-    
     @IBAction func touchColorView(_ sender: Any) {
         let colorCollectionVC = ColorSelectViewController.initiate(delegate: self)
         //表示

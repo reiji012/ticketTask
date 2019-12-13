@@ -254,7 +254,6 @@
                     <connections>
                         <outlet property="circleProgressSuperView" destination="DUT-Ad-soL" id="T9t-eG-WRG"/>
                         <outlet property="compCountLabel" destination="bhz-Cf-rgg" id="g89-Pe-Fst"/>
-                        <outlet property="maxTempLabel" destination="gGC-8B-Bg4" id="3Hx-aH-NlI"/>
                         <outlet property="progressTitleTopHeightConst" destination="Mdd-fL-0zr" id="rAK-rJ-aRG"/>
                         <outlet property="scrollView" destination="9r5-w2-dd8" id="qCU-w3-CSb"/>
                         <outlet property="taskAddButton" destination="iWg-1l-M3x" id="IXx-ba-zPM"/>

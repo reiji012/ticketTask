@@ -28,7 +28,6 @@ protocol EditTaskViewPresenterProtocol {
 
 class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
     
-    
     // MARK: - Public Propaty
     var taskView: TaskViewProtocol!
     var taskViewModel: TaskViewModel?
