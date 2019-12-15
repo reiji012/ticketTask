@@ -17,7 +17,7 @@ protocol AddTaskViewPresenterProtocol {
     func touchAddTicketButton(text: String, comment: String)
     func touchCreateButton(taskName: String)
     func touchCheckButtonAsEdit(title: String, memo: String, identifier: String)
-    func removeTicket(index: IndexPath)
+    func removeIndex(indexPath: IndexPath, tableView: UITableView)
     func selectedColor(color: TaskColor)
     func selectedIcon(iconString: String)
     func selectedResetTypeIndex(index: Int)
@@ -185,8 +185,14 @@ class AddTaskViewPresenter: AddTaskViewPresenterProtocol, ErrorAlert {
         view.didAddOrEditTicket()
     }
     
-    func removeTicket(index: IndexPath) {
-        tickets.remove(at: index.row)
+    func removeIndex(indexPath: IndexPath, tableView: UITableView) {
+        if tableView.tag == 1 {
+            // リマインダー
+            currentTaskModel.notifications.remove(at: indexPath.row)
+            return
+        }
+        // チケット
+        tickets.remove(at: indexPath.row)
     }
     
     func selectedColor(color: TaskColor) {

@@ -249,7 +249,7 @@ extension AddTaskViewController: UITableViewDataSource {
     
     internal func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            presenter.removeTicket(index: indexPath)
+            presenter.removeIndex(indexPath: indexPath, tableView: tableView)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
