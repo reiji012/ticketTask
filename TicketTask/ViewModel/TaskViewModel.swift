@@ -97,6 +97,10 @@ class TaskViewModel: NSObject {
             taskColor = .red
         case "green":
             taskColor = .green
+        case "purple":
+            taskColor = .purple
+        case "yello":
+            taskColor = .yello
         default:
             taskColor = .blue
         }

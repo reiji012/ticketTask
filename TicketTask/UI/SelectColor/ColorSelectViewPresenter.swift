@@ -21,9 +21,11 @@ class ColorSelectViewPresenter: ColorSelectViewPresenterProtocol {
     private var contents: [TaskColor] {
         return [
             .orange,
-            .blue,
             .red,
-            .green
+            .yello,
+            .blue,
+            .purple,
+            .green,
         ]
     }
     
@@ -44,10 +46,14 @@ class ColorSelectViewPresenter: ColorSelectViewPresenterProtocol {
         case 0:
             return .orange
         case 1:
-            return .blue
-        case 2:
             return .red
+        case 2:
+            return .yello
         case 3:
+            return .blue
+        case 4:
+            return .purple
+        case 4:
             return .green
         default:
             return .orange
