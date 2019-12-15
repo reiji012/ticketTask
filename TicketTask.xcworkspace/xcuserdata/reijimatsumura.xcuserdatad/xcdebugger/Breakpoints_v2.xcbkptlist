@@ -5,49 +5,130 @@
    version = "2.0">
    <Breakpoints>
       <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
          <BreakpointContent
-            uuid = "6F66FCC4-E4F9-4B71-8388-DB8D4D653CF8"
+            uuid = "063EE605-33B5-47B9-9371-306895A248E1"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TicketTask/UI/AddTask/AddTaskViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "385"
-            endingLineNumber = "385">
+            scope = "1"
+            stopOnStyle = "0">
+            <Actions>
+               <BreakpointActionProxy
+                  ActionExtensionID = "Xcode.BreakpointAction.DebuggerCommand">
+                  <ActionContent
+                     consoleCommand = "po $arg1">
+                  </ActionContent>
+               </BreakpointActionProxy>
+            </Actions>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "33D0C543-FCE3-4A0A-BCFC-7E32C00E51A6"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TicketTask/UI/AddTask/AddTaskViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "252"
-            endingLineNumber = "252"
-            landmarkName = "tableView(_:commit:forRowAt:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "764985E4-3BDA-49E8-A1B0-AC9B67D58533"
-            shouldBeEnabled = "Yes"
+            uuid = "24353069-1AB5-41E7-A928-9420202F892C"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TicketTask/UI/Main/MainViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "469"
-            endingLineNumber = "469"
-            landmarkName = "scrollViewDidEndDragging(_:willDecelerate:)"
-            landmarkType = "7">
+            startingLineNumber = "78"
+            endingLineNumber = "78"
+            landmarkName = "MainViewController"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "24353069-1AB5-41E7-A928-9420202F892C - 5ea44b8286bb88fe"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TicketTask.MainViewController.compCountLabel.getter : Swift.Optional&lt;__C.UILabel&gt;"
+                  moduleName = "TicketTask"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/reijimatsumura/Develop/private-app/ticketTask/TicketTask/UI/Main/MainViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "78"
+                  endingLineNumber = "78"
+                  offsetFromSymbolStart = "132">
+               </Location>
+               <Location
+                  uuid = "24353069-1AB5-41E7-A928-9420202F892C - 6fb1727cf6b864c2"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TicketTask.MainViewController.compCountLabel.setter : Swift.Optional&lt;__C.UILabel&gt;"
+                  moduleName = "TicketTask"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/reijimatsumura/Develop/private-app/ticketTask/TicketTask/UI/Main/MainViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "78"
+                  endingLineNumber = "78"
+                  offsetFromSymbolStart = "188">
+               </Location>
+               <Location
+                  uuid = "24353069-1AB5-41E7-A928-9420202F892C - b489e64ca0fe61fd"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TicketTask.MainViewController.compCountLabel.modify : Swift.Optional&lt;__C.UILabel&gt;"
+                  moduleName = "TicketTask"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/reijimatsumura/Develop/private-app/ticketTask/TicketTask/UI/Main/MainViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "72">
+               </Location>
+               <Location
+                  uuid = "24353069-1AB5-41E7-A928-9420202F892C - 1fca6f8ee8403224"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TicketTask.MainViewController.compCountLabel.modify : Swift.Optional&lt;__C.UILabel&gt; with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "TicketTask"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/reijimatsumura/Develop/private-app/ticketTask/TicketTask/UI/Main/MainViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "78"
+                  endingLineNumber = "78"
+                  offsetFromSymbolStart = "80">
+               </Location>
+               <Location
+                  uuid = "24353069-1AB5-41E7-A928-9420202F892C - 741a7f81c35e16e3"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TicketTask.MainViewController.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; TicketTask.MainViewController"
+                  moduleName = "TicketTask"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/reijimatsumura/Develop/private-app/ticketTask/TicketTask/UI/Main/MainViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "78"
+                  endingLineNumber = "78"
+                  offsetFromSymbolStart = "2172">
+               </Location>
+               <Location
+                  uuid = "24353069-1AB5-41E7-A928-9420202F892C - c5b3e909c7104e2f"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TicketTask.MainViewController.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;TicketTask.MainViewController&gt;"
+                  moduleName = "TicketTask"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/reijimatsumura/Develop/private-app/ticketTask/TicketTask/UI/Main/MainViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "78"
+                  endingLineNumber = "78"
+                  offsetFromSymbolStart = "2120">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

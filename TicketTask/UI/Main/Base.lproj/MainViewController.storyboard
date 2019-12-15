@@ -103,12 +103,6 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gGC-8B-Bg4" customClass="WeatherLabel" customModule="TicketTask" customModuleProvider="target">
-                                        <rect key="frame" x="102.5" y="162.5" width="0.0" height="0.0"/>
-                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="19"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IzX-c5-mF7">
                                         <rect key="frame" x="237" y="127" width="157" height="130"/>
                                         <subviews>
@@ -186,14 +180,12 @@
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="IzX-c5-mF7" secondAttribute="trailing" constant="20" id="6QP-aK-UZc"/>
                                     <constraint firstItem="DUT-Ad-soL" firstAttribute="height" secondItem="j1C-QR-cem" secondAttribute="height" multiplier="0.4" priority="900" id="6dV-sS-FUY"/>
-                                    <constraint firstItem="gGC-8B-Bg4" firstAttribute="leading" secondItem="j1C-QR-cem" secondAttribute="leading" constant="102.5" id="9gc-63-aLD"/>
                                     <constraint firstItem="DUT-Ad-soL" firstAttribute="leading" secondItem="j1C-QR-cem" secondAttribute="leading" constant="40" id="LEk-AH-CkT"/>
                                     <constraint firstItem="drW-ht-H27" firstAttribute="leading" secondItem="j1C-QR-cem" secondAttribute="leading" constant="40" id="LMu-lC-eXC"/>
                                     <constraint firstItem="drW-ht-H27" firstAttribute="top" secondItem="j1C-QR-cem" secondAttribute="top" constant="60" id="Mdd-fL-0zr"/>
                                     <constraint firstItem="IzX-c5-mF7" firstAttribute="top" secondItem="DUT-Ad-soL" secondAttribute="top" id="MrN-bu-glF"/>
                                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="DUT-Ad-soL" secondAttribute="bottom" id="WgY-BG-WMW"/>
                                     <constraint firstItem="DUT-Ad-soL" firstAttribute="top" secondItem="drW-ht-H27" secondAttribute="bottom" constant="30" id="XPy-kj-Ai4"/>
-                                    <constraint firstItem="gGC-8B-Bg4" firstAttribute="centerY" secondItem="j1C-QR-cem" secondAttribute="centerY" id="ZbD-0O-oWI"/>
                                     <constraint firstItem="IzX-c5-mF7" firstAttribute="height" secondItem="DUT-Ad-soL" secondAttribute="height" id="wcM-KX-u2N"/>
                                 </constraints>
                             </view>

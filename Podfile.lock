@@ -54,6 +54,8 @@ PODS:
     - GoogleUtilities/Reachability (~> 6.2)
     - GoogleUtilities/UserDefaults (~> 6.2)
     - Protobuf (>= 3.9.2, ~> 3.9)
+  - Google-Mobile-Ads-SDK (7.52.0):
+    - GoogleAppMeasurement (~> 6.0)
   - GoogleAppMeasurement (6.1.6):
     - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
     - GoogleUtilities/MethodSwizzler (~> 6.0)
@@ -112,6 +114,7 @@ DEPENDENCIES:
   - Firebase/Core
   - Firebase/Functions
   - Firebase/Messaging
+  - Google-Mobile-Ads-SDK
   - NewPopMenu (~> 2.0)
   - PKHUD (~> 5.0)
   - RealmSwift
@@ -137,6 +140,7 @@ SPEC REPOS:
     - FirebaseFunctions
     - FirebaseInstanceID
     - FirebaseMessaging
+    - Google-Mobile-Ads-SDK
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleDataTransportCCTSupport
@@ -169,6 +173,7 @@ SPEC CHECKSUMS:
   FirebaseFunctions: 5af7c35d1c5e41608fecbb667eb6c4e672e318d0
   FirebaseInstanceID: ebd2ea79ee38db0cb5f5167b17a0d387e1cc7b6e
   FirebaseMessaging: e8d71368a5c579083da02203146c953f3386d503
+  Google-Mobile-Ads-SDK: 62f6244637306cb60a1b4adda067f53224c7a860
   GoogleAppMeasurement: dfe55efa543e899d906309eaaac6ca26d249862f
   GoogleDataTransport: 8e9b210c97d55fbff306cc5468ff91b9cb32dcf5
   GoogleDataTransportCCTSupport: ef79a4728b864946a8aafdbab770d5294faf3b5f
@@ -188,6 +193,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
   UICircularProgressRing: 907613633e76e561b972a3868c95517d14c71006
 
-PODFILE CHECKSUM: 76f051ad9708ca164295522dbc028740681b1364
+PODFILE CHECKSUM: f250e93b26dc0012dddd3c5bf238aba962fd8d90
 
 COCOAPODS: 1.7.5

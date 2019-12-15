@@ -14,6 +14,7 @@ import SPStorkController
 import SparrowKit
 import PKHUD
 import UICircularProgressRing
+import GoogleMobileAds
 
 protocol MainViewControllerProtocol {
     var stopPoint: CGFloat { get }
@@ -77,6 +78,8 @@ class MainViewController: UIViewController {
     @IBOutlet weak var compCountLabel: UILabel!
     @IBOutlet weak var unCompCountLabel: UILabel!
     
+    var bannerView: GADBannerView!
+    
     // MARK: - Initilizer
     static func initiate() -> MainViewController {
         let viewController = UIStoryboard.instantiateInitialViewController(from: self)
@@ -102,7 +105,41 @@ class MainViewController: UIViewController {
         // Do any additional setup after loading the view.
         bindUI()
         presenter.checkIsTaskEmpty()
+        
+        bannerView = GADBannerView(adSize: kGADAdSizeBanner)
+
+        addBannerViewToView(bannerView)
+        
+        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+        bannerView.rootViewController = self
+        let request = GADRequest()
+        request.testDevices = ["d23b07b44930454621bf128502978077"]
+        bannerView.load(request)
+        bannerView.delegate = self
+        
     }
+    
+    func addBannerViewToView(_ bannerView: GADBannerView) {
+     bannerView.translatesAutoresizingMaskIntoConstraints = false
+     view.addSubview(bannerView)
+     view.addConstraints(
+       [NSLayoutConstraint(item: bannerView,
+                           attribute: .bottom,
+                           relatedBy: .equal,
+                           toItem: bottomLayoutGuide,
+                           attribute: .top,
+                           multiplier: 1,
+                           constant: 0),
+        NSLayoutConstraint(item: bannerView,
+                           attribute: .centerX,
+                           relatedBy: .equal,
+                           toItem: view,
+                           attribute: .centerX,
+                           multiplier: 1,
+                           constant: 0)
+       ])
+    }
+    
     
     override func viewWillLayoutSubviews() {
         if let currentTaskView = taskView {
@@ -528,5 +565,40 @@ extension MainViewController: AddTicketViewDelegate {
 extension MainViewController: TaskViewDelegate {
     func didChangeTicketCompletion() {
         presenter.didChangedTaskProgress()
+    }
+}
+
+extension MainViewController: GADBannerViewDelegate {
+    /// Tells the delegate an ad request loaded an ad.
+    func adViewDidReceiveAd(_ bannerView: GADBannerView) {
+      print("adViewDidReceiveAd")
+    }
+
+    /// Tells the delegate an ad request failed.
+    func adView(_ bannerView: GADBannerView,
+        didFailToReceiveAdWithError error: GADRequestError) {
+      print("adView:didFailToReceiveAdWithError: \(error.localizedDescription)")
+    }
+
+    /// Tells the delegate that a full-screen view will be presented in response
+    /// to the user clicking on an ad.
+    func adViewWillPresentScreen(_ bannerView: GADBannerView) {
+      print("adViewWillPresentScreen")
+    }
+
+    /// Tells the delegate that the full-screen view will be dismissed.
+    func adViewWillDismissScreen(_ bannerView: GADBannerView) {
+      print("adViewWillDismissScreen")
+    }
+
+    /// Tells the delegate that the full-screen view has been dismissed.
+    func adViewDidDismissScreen(_ bannerView: GADBannerView) {
+      print("adViewDidDismissScreen")
+    }
+
+    /// Tells the delegate that a user click will open another app (such as
+    /// the App Store), backgrounding the current app.
+    func adViewWillLeaveApplication(_ bannerView: GADBannerView) {
+      print("adViewWillLeaveApplication")
     }
 }

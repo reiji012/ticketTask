@@ -130,6 +130,11 @@ class TaskViewModel: NSObject {
     }
     
     func editTicket(ticketName: String, memo: String, identifier: String, callback: @escaping () -> Void) {
+    
+        let ticket = tickets?.filter({ $0.identifier == identifier }).first
+        let index = tickets?.index(of: ticket!)
+        let afterTicketName = ticket?.ticketName
+        
         // チケットが入力されていない場合はバリデーションエラー発生
         if ticketName.isEmpty {
             delegate?.showValidateAlert(error: .titleEmptyError)
@@ -137,13 +142,11 @@ class TaskViewModel: NSObject {
         }
         
         // 同じ名前のチケットがある場合はバリデーションエラー発生
-        if !(tickets?.map{$0.ticketName})!.filter({$0 == ticketName}).isEmpty {
+        if !(tickets?.map{$0.ticketName})!.filter({$0 == ticketName}).isEmpty, afterTicketName != ticketName {
             delegate?.showValidateAlert(error: .ticketValidError)
             return
         }
         
-        let ticket = tickets?.filter({ $0.identifier == identifier }).first
-        let index = tickets?.index(of: ticket!)
         ticket?.ticketName = ticketName
         ticket?.comment = memo
         tickets?[index!] = ticket!
