@@ -285,16 +285,10 @@ class MainViewController: UIViewController {
     }
     
     func willChangedTaskViewSize() {
-        self.view.bringSubviewToFront(scrollView)
+
     }
     
     func didChangedTaskViewSize() {
-        if isShowDetail {
-            self.view.bringSubviewToFront(scrollView)
-            self.view.bringSubviewToFront(addTicketView!)
-        } else {
-            self.view.bringSubviewToFront(weatherView)
-        }
     }
     
     func setCircleProgressValue(achievement: CGFloat, compCount: Int, unCompCount: Int) {
@@ -341,12 +335,13 @@ extension MainViewController: MainViewControllerProtocol {
                 }) { (completed) in
                     self.deletedTaskViews()
                 }
-                self.scrollView.isScrollEnabled = true
-                self.taskAddButton.isHidden = false
-                view.removeFromSuperview()
+                
             }
             // 次にViewを作成する時のためX座標の更新
             self.originX! -= CGFloat(self.scrollWidth)
+            self.scrollView.isScrollEnabled = true
+            self.taskAddButton.isHidden = false
+            view.removeFromSuperview()
         }
     }
     
