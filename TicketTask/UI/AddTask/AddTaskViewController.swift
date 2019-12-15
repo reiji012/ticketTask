@@ -92,6 +92,11 @@ class AddTaskViewController: UIViewController{
                                                name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.view.gestureRecognizers![0].delegate = self
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -359,5 +364,21 @@ extension AddTaskViewController: AddTicketViewDelegate {
 extension AddTaskViewController: NotificationTableCellDelegate {
     func didTouchSwitchButton(isActive: Bool, identifier: String?) {
         presenter.didChengeNotificationActive(isActive: isActive, identifier: identifier!)
+    }
+}
+
+extension AddTaskViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        
+        return true
+    }
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        
+        if otherGestureRecognizer.view is UITableView {
+            return true
+        }
+        
+        return false
     }
 }

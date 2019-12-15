@@ -74,6 +74,11 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
         reminderTableView.delegate = self
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.view.gestureRecognizers![0].delegate = self
+    }
+    
     // MARK: - Public Function
     func setNavigationBar() {
         self.navBar.titleLabel.text = "編集画面"
@@ -280,5 +285,21 @@ extension EditTaskViewController: PickerViewKeyboardDelegate {
 extension EditTaskViewController: NotificationTableCellDelegate {
     func didTouchSwitchButton(isActive: Bool, identifier: String?) {
         presenter.didChengeNotificationActive(isActive: isActive, identifier: identifier!)
+    }
+}
+
+extension EditTaskViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        
+        return true
+    }
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        
+        if otherGestureRecognizer.view is UITableView {
+            return true
+        }
+        
+        return false
     }
 }
