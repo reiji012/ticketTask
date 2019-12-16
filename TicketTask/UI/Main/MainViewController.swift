@@ -322,10 +322,27 @@ class MainViewController: UIViewController {
     }
     
     func willChangedTaskViewSize() {
-
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 0.3, animations: { () -> Void in
+                if self.isShowDetail {
+                    self.bannerView.alpha = 0
+                } else {
+                    self.bannerView.isHidden = false
+                    self.bannerView.alpha = 1
+                }
+            }, completion: { _ in
+                if self.isShowDetail {
+                    self.bannerView.isHidden = true
+                } else {
+                    self.bannerView.isHidden = false
+                }
+            })
+        }
+        
     }
     
     func didChangedTaskViewSize() {
+        
     }
     
     func setCircleProgressValue(achievement: CGFloat, compCount: Int, unCompCount: Int) {
