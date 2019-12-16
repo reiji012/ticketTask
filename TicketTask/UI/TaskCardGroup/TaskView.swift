@@ -88,6 +88,14 @@ class TaskView: UIView, TaskViewProtocol{
             action: #selector(self.touchView(_:)))
         headerView.addGestureRecognizer(tapGesture)
         
+        let upSwipe = UISwipeGestureRecognizer(target: self, action: #selector(self.handleSwipes(_:)))
+        upSwipe.direction = .up
+        headerView.addGestureRecognizer(upSwipe)
+
+        let downSwipe = UISwipeGestureRecognizer(target: self, action: #selector(self.handleSwipes(_:)))
+        downSwipe.direction = .down
+        headerView.addGestureRecognizer(downSwipe)
+        
         // UIImageView の場合
         attriImageView.image = attriImageView.image?.withRenderingMode(.alwaysTemplate)
         attriImageView.tintColor = self.presenter.taskViewModel.taskColor?.gradationColor1
@@ -129,6 +137,21 @@ class TaskView: UIView, TaskViewProtocol{
     @objc func touchView(_ sender: UITapGestureRecognizer){
         presenter.touchView()
     }
+    
+    @objc func handleSwipes(_ sender:UISwipeGestureRecognizer) {
+        print(sender.direction)
+            
+        if (sender.direction == .up), !self.isShowDetail {
+            // 上にスワイプ
+            presenter.touchView()
+        }
+            
+        if (sender.direction == .down), self.isShowDetail {
+            // 下にスワイプ
+            presenter.touchView()
+        }
+    }
+    
     
     func touchEditButton() {
         let editViewController = EditTaskViewController.initiate(taskView: self)
