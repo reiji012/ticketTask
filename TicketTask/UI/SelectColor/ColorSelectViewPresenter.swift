@@ -53,7 +53,7 @@ class ColorSelectViewPresenter: ColorSelectViewPresenterProtocol {
             return .blue
         case 4:
             return .purple
-        case 4:
+        case 5:
             return .green
         default:
             return .orange
