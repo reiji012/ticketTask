@@ -12,3 +12,14 @@ import UIKit
 class Const {
     let TICKET_HEIGHT: CGFloat = 300
 }
+
+#if DEBUG // MARK: - 検証環境
+    struct AdmobId {
+        static let adsenceId = "ca-app-pub-3940256099942544/2934735716"
+    }
+
+#else // MARK: - 本番環境
+    struct AdmobId {
+        static let adsenceId = "ca-app-pub-7426200145056468~2355083259"
+    }
+#endif

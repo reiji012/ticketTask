@@ -110,7 +110,7 @@ class MainViewController: UIViewController {
 
         addBannerViewToView(bannerView)
         
-        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+        bannerView.adUnitID = AdmobId.adsenceId
         bannerView.rootViewController = self
         let request = GADRequest()
         request.testDevices = ["d23b07b44930454621bf128502978077"]
