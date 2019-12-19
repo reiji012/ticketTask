@@ -113,7 +113,11 @@ class MainViewController: UIViewController {
         bannerView.adUnitID = AdmobId.adsenceId
         bannerView.rootViewController = self
         let request = GADRequest()
-        request.testDevices = ["d23b07b44930454621bf128502978077"]
+        
+        #if DEBUG // MARK: - 検証環境
+            request.testDevices = ["d23b07b44930454621bf128502978077"]
+        #endif
+        
         bannerView.load(request)
         bannerView.delegate = self
         
