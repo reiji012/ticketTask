@@ -33,7 +33,7 @@ class RefineViewController: UIViewController, RefineViewControllerProtocol{
     }
 
     func setHeaderView(title: String, color: UIColor) {
-        headerView.backgroundColor = color
+        headerView.backgroundColor =  color
         titleLabel.text = title
     }
 }

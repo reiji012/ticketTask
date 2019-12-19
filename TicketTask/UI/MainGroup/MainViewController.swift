@@ -211,12 +211,11 @@ class MainViewController: UIViewController {
             if button!.tag == 0 {
                 // 完了済
                 let contents = presenter.contents.filter { presenter.completedTasks.contains($0.taskModel!) }
-                viewController?.presenter = RefineViewPresenter(view: viewController!, contents: contents, uiContent: (title: "完了済みのタスク", color: presenter.currentColor.gradationColor1))
+                viewController?.presenter = RefineViewPresenter(view: viewController!, contents: contents, uiContent: (title: "完了済みのタスク", color: TaskColor.orange.gradationColor1))
             } else {
                 // 未完了
                 let contents = presenter.contents.filter { presenter.uncompletedTasks.contains($0.taskModel!) }
-                viewController?.presenter = RefineViewPresenter(view: viewController!, contents: contents, uiContent: (title: "未完了のタスク", color: presenter.currentColor.gradationColor1))
-            }
+                viewController?.presenter = RefineViewPresenter(view: viewController!, contents: contents, uiContent: (title: "未完了のタスク", color: .gray))            }
             return
         }
         
@@ -384,6 +383,7 @@ class MainViewController: UIViewController {
                     // 拡大するとき
                     self.bannerView.alpha = 0
                     self.view.bringSubviewToFront(self.scrollView)
+                    self.view.bringSubviewToFront(self.addTicketView!)
                 } else {
                     // 縮小するとき
                     self.bannerView.isHidden = false
