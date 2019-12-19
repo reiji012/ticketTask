@@ -388,6 +388,7 @@ class MainViewController: UIViewController {
                     // 縮小するとき
                     self.bannerView.isHidden = false
                     self.bannerView.alpha = 1
+                    self.view.bringSubviewToFront(self.bannerView)
                 }
             }, completion: { _ in
                 if self.isShowDetail {
@@ -398,6 +399,7 @@ class MainViewController: UIViewController {
                     self.bannerView.isHidden = false
                     self.view.bringSubviewToFront(self.weatherView)
                     self.view.bringSubviewToFront(self.taskAddButton)
+                    self.view.bringSubviewToFront(self.bannerView)
                 }
             })
         }
