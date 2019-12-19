@@ -173,7 +173,7 @@ class MainViewController: UIViewController {
             taskView.isCenter = false
             let content = TaskViewContentValue()
             content.tag = taskView.tag
-            content.taskModel = presenter.getTaskModel(title: taskView.titleLabel.text!)
+            content.taskModel = presenter.getTaskModel(title: taskView.presenter.taskViewModel.taskName!)
             if content.taskModel != nil {
                 contents.append(content)
             }

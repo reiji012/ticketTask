@@ -283,6 +283,8 @@ class TaskLocalDataModel {
             let result = realm.objects(TaskItem.self)
             print(result)
             let tasks = result.map {$0.taskTitle}
+            let temp = self.tasks.filter { $0.taskTitle == beforeName }.first!
+            let index = self.tasks.index(of: temp)
             if currentTaskModel.taskTitle != beforeName, tasks.index(of: currentTaskModel.taskTitle) != nil {
                 // 同じ名前のタスクが存在した場合はエラーを返す
                 let error = ValidateError.taskValidError
@@ -324,6 +326,7 @@ class TaskLocalDataModel {
                         }
                     }
                 }
+                self.tasks[index!].taskTitle = currentTaskModel.taskTitle
                 completion()
             }
             return nil
