@@ -69,7 +69,6 @@
 		2BF5B77C22855657007D0266 /* AddTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF5B77B22855657007D0266 /* AddTaskViewController.swift */; };
 		8E2F45D1235DC7BC000683B4 /* AddTaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2F45D0235DC7BC000683B4 /* AddTaskModel.swift */; };
 		8E6B2A0E22FF227400113E30 /* Utill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6B2A0D22FF227400113E30 /* Utill.swift */; };
-		8E6DAB9622FFF36A00A72D0D /* MainViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6DAB9522FFF36A00A72D0D /* MainViewControllerProtocol.swift */; };
 		8E8A0B0E2314161500FFCE15 /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8A0B0D2314161500FFCE15 /* Const.swift */; };
 		8E8A0B10231437D600FFCE15 /* TicketTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8A0B0F231437D600FFCE15 /* TicketTabbarController.swift */; };
 		8E8A0B12231605E400FFCE15 /* TaskIconImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8A0B11231605E400FFCE15 /* TaskIconImageView.swift */; };
@@ -147,7 +146,6 @@
 		37CFDF9363A1FC7BF7495C74 /* Pods-TicketTask.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TicketTask.release.xcconfig"; path = "Target Support Files/Pods-TicketTask/Pods-TicketTask.release.xcconfig"; sourceTree = "<group>"; };
 		8E2F45D0235DC7BC000683B4 /* AddTaskModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskModel.swift; sourceTree = "<group>"; };
 		8E6B2A0D22FF227400113E30 /* Utill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utill.swift; sourceTree = "<group>"; };
-		8E6DAB9522FFF36A00A72D0D /* MainViewControllerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewControllerProtocol.swift; sourceTree = "<group>"; };
 		8E8A0B0D2314161500FFCE15 /* Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
 		8E8A0B0F231437D600FFCE15 /* TicketTabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketTabbarController.swift; sourceTree = "<group>"; };
 		8E8A0B11231605E400FFCE15 /* TaskIconImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskIconImageView.swift; sourceTree = "<group>"; };
@@ -270,7 +268,6 @@
 			children = (
 				1123EEA92387D360005EEFAD /* TabBar */,
 				2BF5B74E22814521007D0266 /* MainViewController.swift */,
-				8E6DAB9522FFF36A00A72D0D /* MainViewControllerProtocol.swift */,
 				2BF5B75022814521007D0266 /* MainViewController.storyboard */,
 				111F5EBC234203180034548A /* MainViewPresenter.swift */,
 			);
@@ -646,7 +643,6 @@
 				11EA1190234DC635003223A7 /* DateFormatterExtensions.swift in Sources */,
 				1123EEC72387E10F005EEFAD /* TabBarItemView.swift in Sources */,
 				11B5E44D234734FA00DBCB14 /* UINibExtentions.swift in Sources */,
-				8E6DAB9622FFF36A00A72D0D /* MainViewControllerProtocol.swift in Sources */,
 				2BE5516B2292A83700D5AFA9 /* TasksData.swift in Sources */,
 				2BF44281229BEB8C00F32613 /* EditTaskViewController.swift in Sources */,
 				1123EEC02387D8D9005EEFAD /* HistoryViewController.swift in Sources */,
