@@ -31,14 +31,4 @@ extension UIViewController: UITextFieldDelegate {
         scrollView.contentInset = contentInset
         scrollView.scrollIndicatorInsets = contentInset
     }
-    
-    @objc private func onKeyboardWillHide(_ notification: Notification) {
-        guard
-            let inputView = view.findFirstResponder(),
-            let scrollView = inputView.findSuperView(ofType: UIScrollView.self)
-            else { return }
-        scrollView.contentInset = .zero
-        scrollView.scrollIndicatorInsets = .zero
-    }
-
 }
