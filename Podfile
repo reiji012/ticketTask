@@ -18,6 +18,8 @@ target 'TicketTask' do
   # 'UICircularProgressRing': プログレスバーサークル
   pod 'UICircularProgressRing'
   
+  pod 'SwiftMessages'
+  
   # add the Firebase pod for Google Analytics
   pod 'Firebase/Analytics'
   pod 'Firebase/Messaging'
