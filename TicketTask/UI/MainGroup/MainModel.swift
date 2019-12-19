@@ -7,3 +7,13 @@
 //
 
 import Foundation
+
+enum ButtonContents {
+    case completed
+    case umcompleted
+}
+
+class TaskViewContentValue {
+    var taskModel: TaskModel?
+    var tag: Int?
+}

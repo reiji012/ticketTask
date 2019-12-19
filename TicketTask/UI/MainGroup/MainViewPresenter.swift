@@ -12,6 +12,11 @@ import UIKit
 protocol MainViewPresenterProtocol {
     var tasks: [TaskModel] { get }
     var taskTotalCount: Int { get }
+    var completedTasks: [TaskModel] { get }
+    var uncompletedTasks: [TaskModel] { get }
+    var contents: [TaskViewContentValue] { get set }
+    var currentColor: TaskColor { get set }
+    func getTaskModel(title: String) -> TaskModel?
     func viewDidLoad()
     func touchAddButton()
     func checkIsTaskEmpty()
@@ -30,6 +35,11 @@ class MainViewPresenter: MainViewPresenterProtocol, Routable, ErrorAlert {
     var taskTotalCount: Int {
         return taskLocalDataModel!.tasks.count
     }
+    
+    var completedTasks: [TaskModel] = []
+    var uncompletedTasks: [TaskModel] = []
+    var contents: [TaskViewContentValue] = []
+    var currentColor: TaskColor = .orange
     
     // MARK: - Private Property
     private var taskLocalDataModel: TaskLocalDataModel!
@@ -53,6 +63,20 @@ class MainViewPresenter: MainViewPresenterProtocol, Routable, ErrorAlert {
             return
         }
         present(.addTaskViewController, from: viewController, animated: true)
+    }
+    
+    // 完了済
+    func didTouchCompletedButton() {
+        
+    }
+    
+    // 未完了
+    func didTouchUnompletedButton() {
+        
+    }
+    
+    func getTaskModel(title: String) -> TaskModel? {
+        return tasks.filter { $0.taskTitle == title }.first
     }
     
     func checkIsTaskEmpty() {
@@ -80,15 +104,21 @@ class MainViewPresenter: MainViewPresenterProtocol, Routable, ErrorAlert {
     }
     
     func didChangedTaskProgress() {
+        var _completedTasks = [TaskModel]()
+        var _uncompletedTasks = [TaskModel]()
         var compTaskCount = 0
         var unCompTaskCount = 0
         for task in tasks {
             if task.tickets.filter({$0.isCompleted != true}).count > 0 {
                 unCompTaskCount += 1
+                _uncompletedTasks.append(task)
             } else {
                 compTaskCount += 1
+                _completedTasks.append(task)
             }
         }
+        self.completedTasks = _completedTasks
+        self.uncompletedTasks = _uncompletedTasks
         let num = tasks.count == 0 ? 0 : (Double(compTaskCount)/Double(tasks.count)*100)
         view.setCircleProgressValue(achievement: CGFloat(num), compCount: compTaskCount, unCompCount: unCompTaskCount)
     }

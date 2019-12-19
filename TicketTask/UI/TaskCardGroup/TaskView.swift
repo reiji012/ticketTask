@@ -50,7 +50,7 @@ class TaskView: UIView, TaskViewProtocol{
     @IBOutlet private weak var ticketProgressBar: UIProgressView!
     @IBOutlet private weak var ticketProgressLabel: UILabel!
     @IBOutlet private weak var ticketCountLabel: UILabel!
-    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet private weak var backButton: UIButton!
     @IBOutlet private weak var ticketTableView: UITableView!
     @IBOutlet private weak var menuBtnLeftConst: NSLayoutConstraint!

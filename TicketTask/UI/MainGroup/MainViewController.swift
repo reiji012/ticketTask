@@ -15,6 +15,16 @@ import SparrowKit
 import PKHUD
 import UICircularProgressRing
 import GoogleMobileAds
+import SwiftMessages
+
+class VeryNiceSegue: SwiftMessagesSegue {
+    override public  init(identifier: String?, source: UIViewController, destination: UIViewController) {
+        super.init(identifier: identifier, source: source, destination: destination)
+        configure(layout: .bottomCard)
+        dimMode = .blur(style: .dark, alpha: 0.4, interactive: true)
+        messageView.configureNoDropShadow()
+    }
+}
 
 protocol MainViewControllerProtocol {
     var stopPoint: CGFloat { get }
@@ -156,11 +166,19 @@ class MainViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         self.tabbarHeight = 0
+        var contents = [TaskViewContentValue]()
         for i in 0..<presenter.taskTotalCount {
             let taskView = self.view.viewWithTag(i + 1) as! TaskView
             taskView.frame.size.height = self.taskViewHeight
             taskView.isCenter = false
+            let content = TaskViewContentValue()
+            content.tag = taskView.tag
+            content.taskModel = presenter.getTaskModel(title: taskView.titleLabel.text!)
+            if content.taskModel != nil {
+                contents.append(content)
+            }
         }
+        presenter.contents = contents
         
         if let currentTaskView: TaskView = self.getCenterTaskView() {
             let myBoundSize: CGSize = UIScreen.main.bounds.size
@@ -180,6 +198,55 @@ class MainViewController: UIViewController {
         
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if let segue = segue as? SwiftMessagesSegue {
+            // 絞り込みPopup表示
+            segue.configure(layout: .centered)
+            segue.dimMode = .blur(style: .dark, alpha: 0.5, interactive: true)
+            segue.messageView.configureDropShadow()
+            let viewController = segue.destination as? RefineViewController
+            viewController!.delegate = self
+            let button = sender as? UIButton
+            if button!.tag == 0 {
+                // 完了済
+                let contents = presenter.contents.filter { presenter.completedTasks.contains($0.taskModel!) }
+                viewController?.presenter = RefineViewPresenter(view: viewController!, contents: contents, uiContent: (title: "完了済みのタスク", color: presenter.currentColor.gradationColor1))
+            } else {
+                // 未完了
+                let contents = presenter.contents.filter { presenter.uncompletedTasks.contains($0.taskModel!) }
+                viewController?.presenter = RefineViewPresenter(view: viewController!, contents: contents, uiContent: (title: "未完了のタスク", color: presenter.currentColor.gradationColor1))
+            }
+            return
+        }
+        
+        let controller = segue.destination
+        controller.transitioningDelegate = (self as UIViewControllerTransitioningDelegate)
+        controller.modalPresentationStyle = .custom
+        let nextVC = segue.destination as? AddTaskViewController
+        nextVC?.mainVC = self
+    }
+    
+    
+    // MARK: - @IBAction Function
+    @IBAction func touchAddButton(_ sender: Any) {
+        let viewContreoller = AddTaskViewController.initiate()
+        viewContreoller.mainVC = self
+        let transitionDelegate = SPStorkTransitioningDelegate()
+        viewContreoller.transitioningDelegate = transitionDelegate
+        viewContreoller.modalPresentationStyle = .custom
+        self.present(viewContreoller, animated: true, completion: nil)
+    }
+    
+    @IBAction func touchCompletedButton(_ sender: UIButton) {
+        performSegue(withIdentifier: "refineSegue", sender: sender)
+    }
+    
+    @IBAction func touchUncompletedButton(_ sender: UIButton) {
+        performSegue(withIdentifier: "refineSegue", sender: sender)
+    }
+    
+    // MARK: - Public Function
     func configureProgressRing() {
         // create the view
         progressRing = UICircularProgressRing()
@@ -206,15 +273,6 @@ class MainViewController: UIViewController {
         addTicketView!.isHidden = true
     }
     
-    // MARK: - Public Function
-    @IBAction func touchAddButton(_ sender: Any) {
-        let viewContreoller = AddTaskViewController.initiate()
-        viewContreoller.mainVC = self
-        let transitionDelegate = SPStorkTransitioningDelegate()
-        viewContreoller.transitioningDelegate = transitionDelegate
-        viewContreoller.modalPresentationStyle = .custom
-        self.present(viewContreoller, animated: true, completion: nil)
-    }
     
     func bindUI() {
         
@@ -243,6 +301,7 @@ class MainViewController: UIViewController {
             self.gradientLayer.colors = color.gradationColor
             self.gradientLayer.frame = self.view.bounds
             self.progressRing.innerRingColor = color.gradationColor1
+            self.presenter.currentColor = color
             self.view.layer.insertSublayer(self.gradientLayer, at: 0)
         })
     }
@@ -309,15 +368,7 @@ class MainViewController: UIViewController {
         }
         return currentTaskView
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let controller = segue.destination
-        controller.transitioningDelegate = (self as UIViewControllerTransitioningDelegate)
-        controller.modalPresentationStyle = .custom
-        let nextVC = segue.destination as? AddTaskViewController
-        nextVC?.mainVC = self
-    }
-    
+
     func showEditView(editTaskVC: EditTaskViewController, taskVM: TaskViewModel) {
         editTaskVC.mainVC = self
         UIView.animate(withDuration: 2, animations: {
@@ -325,26 +376,35 @@ class MainViewController: UIViewController {
         })
     }
     
+    // タスクViewのサイズが変わる直前に呼ばれる
     func willChangedTaskViewSize() {
         DispatchQueue.main.async {
             UIView.animate(withDuration: 0.3, animations: { () -> Void in
                 if self.isShowDetail {
+                    // 拡大するとき
                     self.bannerView.alpha = 0
+                    self.view.bringSubviewToFront(self.scrollView)
                 } else {
+                    // 縮小するとき
                     self.bannerView.isHidden = false
                     self.bannerView.alpha = 1
                 }
             }, completion: { _ in
                 if self.isShowDetail {
+                    // 拡大するとき
                     self.bannerView.isHidden = true
                 } else {
+                    // 縮小するとき
                     self.bannerView.isHidden = false
+                    self.view.bringSubviewToFront(self.weatherView)
+                    self.view.bringSubviewToFront(self.taskAddButton)
                 }
             })
         }
         
     }
     
+    // タスクViewのサイズが変わったあとに呼ばれる
     func didChangedTaskViewSize() {
         
     }
@@ -354,6 +414,8 @@ class MainViewController: UIViewController {
         compCountLabel.text = "\(compCount)"
         unCompCountLabel.text = "\(unCompCount)"
     }
+    
+    
 }
 
 // MARK: - Extension MainViewControllerProtocol
@@ -621,5 +683,26 @@ extension MainViewController: GADBannerViewDelegate {
     /// the App Store), backgrounding the current app.
     func adViewWillLeaveApplication(_ bannerView: GADBannerView) {
       print("adViewWillLeaveApplication")
+    }
+}
+
+extension MainViewController: RefineViewDelegate {
+    func didSelected(tag: Int) {
+        let scrollPoint = (tag - 1) * scrollWidth
+        UIView.animate(withDuration: 0.3, animations: {
+            self.scrollView.contentOffset = CGPoint(x:scrollPoint, y:0)
+        })
+        self.stopPoint = scrollView.contentOffset.x
+        self.taskViewIndex = tag
+        for i in 0..<presenter.taskTotalCount {
+            let taskView = self.view.viewWithTag(i + 1) as! TaskView
+            taskView.isCenter = false
+        }
+        if let currentTaskView = self.getCenterTaskView() {
+            self.setGradationColor(color: currentTaskView.presenter.taskViewModel.taskColor!)
+            currentTaskView.isCenter = true
+            self.taskView = currentTaskView
+            self.scrollView.bringSubviewToFront(currentTaskView)
+        }
     }
 }
