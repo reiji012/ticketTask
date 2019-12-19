@@ -20,6 +20,6 @@ class Const {
 
 #else // MARK: - 本番環境
     struct AdmobId {
-        static let adsenceId = "ca-app-pub-7426200145056468~2355083259"
+        static let adsenceId = "ca-app-pub-7426200145056468/1780368183"
     }
 #endif

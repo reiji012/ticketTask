@@ -86,7 +86,7 @@ class AddTaskViewController: UIViewController{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(onKeyboardWillShow(_:)),
+        NotificationCenter.default.addObserver(self, selector: #selector(_onKeyboardWillShow(_:)),
                                                name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(onKeyboardWillHide(_:)),
                                                name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -286,7 +286,7 @@ extension AddTaskViewController {
     
     
     
-    @objc private func onKeyboardWillShow(_ notification: Notification) {
+    @objc private func _onKeyboardWillShow(_ notification: Notification) {
         guard
             let userInfo = notification.userInfo,
             let keyboardInfo = UIKeyboardInfo(info: userInfo),
