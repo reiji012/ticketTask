@@ -60,7 +60,7 @@ class TaskView: UIView, TaskViewProtocol{
     @IBOutlet weak var headerViewConst: NSLayoutConstraint!
     
     private var defoultWidth: CGFloat?
-    private var defoultHeight: CGFloat?
+    var defoultHeight: CGFloat?
     private var defoultX: CGFloat?
     private var defoultY: CGFloat?
     private var ticketsCount: Int = 0

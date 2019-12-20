@@ -451,7 +451,8 @@ extension MainViewController: MainViewControllerProtocol {
                         }
                         taskView.tag = i - 1
                         let frame = taskView.frame
-                        taskView.frame = CGRect(x: frame.origin.x - CGFloat(self.scrollWidth), y: frame.origin.y, width: frame.size.width, height: frame.size.height)
+                        let height = self.isShowDetail ? view.defoultHeight! : frame.size.height
+                        taskView.frame = CGRect(x: frame.origin.x - CGFloat(self.scrollWidth), y: frame.origin.y, width: frame.size.width, height: height)
                         self.setGradationColor(color: taskView.presenter.taskViewModel.taskColor!)
                     }
                 }) { (completed) in
@@ -463,6 +464,7 @@ extension MainViewController: MainViewControllerProtocol {
             self.originX! -= CGFloat(self.scrollWidth)
             self.scrollView.isScrollEnabled = true
             self.taskAddButton.isHidden = false
+            self.isShowDetail = false
             view.removeFromSuperview()
         }
     }
@@ -479,6 +481,8 @@ extension MainViewController: MainViewControllerProtocol {
             self.taskView = currentTaskView
             self.scrollView.bringSubviewToFront(currentTaskView)
         }
+        self.view.bringSubviewToFront(weatherView)
+        self.view.bringSubviewToFront(taskAddButton)
     }
     
     func didChangeTaskCount(taskCount: Int) {
