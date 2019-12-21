@@ -483,6 +483,12 @@ extension MainViewController: MainViewControllerProtocol {
         }
         self.view.bringSubviewToFront(weatherView)
         self.view.bringSubviewToFront(taskAddButton)
+        UIView.animate(withDuration: 0.3, animations: {
+            // 縮小するとき
+            self.bannerView.isHidden = false
+            self.bannerView.alpha = 1
+            self.view.bringSubviewToFront(self.bannerView)
+        })
     }
     
     func didChangeTaskCount(taskCount: Int) {
