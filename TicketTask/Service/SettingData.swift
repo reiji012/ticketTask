@@ -35,8 +35,27 @@ class SettingData {
     }
     
     func getMonthFormat(date: Date) -> Date {
-        let dateString = monthFormat(date: date)
-        return dateFormatToMonth(string: dateString)
+        let calendar = NSCalendar(identifier: NSCalendar.Identifier.gregorian)!
+
+        // 年月日時分秒のNSComponents
+        var comp = calendar.components([.year, .month, .day, .hour, .minute, .second], from: date as Date)
+
+        // 月初の0時0分0秒に設定
+        comp.day = 1
+        comp.hour = 0
+        comp.minute = 0
+        comp.second = 0
+        // ここでcalendar.date(from: comp)!すれば月初のDateが取得できます
+
+        // その月が何日あるかを計算します
+        let range = calendar.range(of: .day, in: .month, for: date as Date)
+        let lastDay = range.length
+
+        // ここで月末の日に変えます
+        comp.day = lastDay
+
+        // Dateを作成
+        return calendar.date(from: comp)!
     }
     
     func getDayFormat(date: Date) -> Date {
@@ -51,23 +70,9 @@ class SettingData {
         return f.string(from: date)
     }
     
-    func monthFormat(date: Date) -> String {
-        let f = DateFormatter()
-        f.dateStyle = .short
-        f.timeStyle = .none
-        return f.string(from: date)
-    }
-    
     func dateFormatToDate(string: String) -> Date {
         let f = DateFormatter()
         f.dateStyle = .long
-        f.timeStyle = .none
-        return f.date(from: string)!
-    }
-    
-    func dateFormatToMonth(string: String) -> Date {
-        let f = DateFormatter()
-        f.dateStyle = .short
         f.timeStyle = .none
         return f.date(from: string)!
     }

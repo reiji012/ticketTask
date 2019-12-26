@@ -340,33 +340,62 @@ class TaskLocalDataModel {
     }
     
     func checkResetModel(callback: @escaping () -> Void) {
-        for typeIndex in 1...3 {
-            resetTaskModel(resetType: typeIndex, callback: {
-                callback()
-            })
-        }
+        resetTaskModel(callback: {
+            callback()
+        })
     }
     
     /// タスクの状態のリセット
     ///
     /// - Parameter resetType: リセットタイプ
-    func resetTaskModel(resetType: Int, callback: @escaping () -> Void) {
-        let result = realm.objects(TaskItem.self).filter("resetType == %@", resetType)
+    func resetTaskModel(callback: @escaping () -> Void) {
+        let result = realm.objects(TaskItem.self)
         for task in result {
-            let now = settingData.getMonthFormat(date: Date())
-            let lastResetDate = settingData.getDayFormat(date: task.lastResetDate!)
-            if now > lastResetDate {
-                try! realm.write {
-                    for ticket in task.tickets {
-                        ticket.isCompleted = false
-                        // tasksが既に取得されているので、そちらも一緒に反映させる
-                        self.tasks.filter { $0.id == task.id }.first!.tickets.forEach { $0.isCompleted = false }
-                    }
-                    task.setValue(now, forKey: TASK_LASTRESETDATE)
+            switch task.resetType {
+            case 1: // 毎日
+                let now = settingData.getDayFormat(date: Date())
+                let lastResetDate = settingData.getDayFormat(date: task.lastResetDate!)
+                if now > lastResetDate {
+                    resetTask(task: task)
                 }
+            case 2: // 毎週
+                let date = Date()
+                let f = DateFormatter()
+                f.setTemplate(.weekDay)
+                let week = f.string(from: date)
+                var targetType:[Int] = []
+                targetType.append(1)
+                // 設定「１週間の初めの週」が起動時の日付の週と同じならタイプ２を追加
+                if week == "Monday" {
+                    let now = settingData.getDayFormat(date: Date())
+                    let lastResetDate = settingData.getDayFormat(date: task.lastResetDate!)
+                    if now > lastResetDate {
+                        resetTask(task: task)
+                    }
+                }
+            case 3: // 毎月
+                let now = settingData.getMonthFormat(date: Date())
+                let lastResetDate = settingData.getMonthFormat(date: task.lastResetDate!)
+                print(now)
+                print(lastResetDate)
+                if now > lastResetDate {
+                    resetTask(task: task)
+                }
+            default: break
             }
         }
         callback()
+    }
+    
+    func resetTask(task: TaskItem) {
+        try! realm.write {
+            for ticket in task.tickets {
+                ticket.isCompleted = false
+                // tasksが既に取得されているので、そちらも一緒に反映させる
+                self.tasks.filter { $0.id == task.id }.first!.tickets.forEach { $0.isCompleted = false }
+            }
+            task.setValue(Date(), forKey: TASK_LASTRESETDATE)
+        }
     }
     
     // インクリメント用ID取得
