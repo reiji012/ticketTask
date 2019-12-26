@@ -9,6 +9,12 @@
 import UIKit
 import RealmSwift
 
+enum ResetType {
+    case day
+    case week
+    case month
+}
+
 class TaskLocalDataModel {
     
     let taskList = List<TaskItem>()
@@ -135,10 +141,10 @@ class TaskLocalDataModel {
         }
         
         // テンプレートから時刻を表示
-        let f = DateFormatter()
-        f.setTemplate(.date)
-        let currentDay = f.string(from: Date())
-        let day = f.date(from: currentDay)
+//        let f = DateFormatter()
+//        f.setTemplate(.date)
+//        let currentDay = f.string(from: Date())
+//        let day = f.date(from: currentDay)
         
         // Realm用タスクモデル作成
         let taskItem = TaskItem()
@@ -148,7 +154,7 @@ class TaskLocalDataModel {
         taskItem.color = taskModel.color
         taskItem.icon = taskModel.icon
         taskItem.tickets = ticketsRealmArray
-        taskItem.lastResetDate = day!
+        taskItem.lastResetDate = Date()
         taskItem.resetType = taskModel.resetType
         taskItem.taskNotifications = notificationsRealmArray
         
@@ -333,20 +339,23 @@ class TaskLocalDataModel {
         }
     }
     
-    func checkResetModel() {
-        for typeIndex in settingData.checkDate() {
-            resetTaskModel(resetType: typeIndex)
+    func checkResetModel(callback: @escaping () -> Void) {
+        for typeIndex in 1...3 {
+            resetTaskModel(resetType: typeIndex, callback: {
+                callback()
+            })
         }
     }
     
     /// タスクの状態のリセット
     ///
     /// - Parameter resetType: リセットタイプ
-    func resetTaskModel(resetType: Int) {
+    func resetTaskModel(resetType: Int, callback: @escaping () -> Void) {
         let result = realm.objects(TaskItem.self).filter("resetType == %@", resetType)
         for task in result {
-            let now = settingData.getToday()
-            if now > task.lastResetDate! {
+            let now = settingData.getMonthFormat(date: Date())
+            let lastResetDate = settingData.getDayFormat(date: task.lastResetDate!)
+            if now > lastResetDate {
                 try! realm.write {
                     for ticket in task.tickets {
                         ticket.isCompleted = false
@@ -357,6 +366,7 @@ class TaskLocalDataModel {
                 }
             }
         }
+        callback()
     }
     
     // インクリメント用ID取得

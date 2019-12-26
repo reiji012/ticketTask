@@ -93,7 +93,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationDidBecomeActive(_ application: UIApplication) {
         // タスクリセット処理
-        TaskLocalDataModel.sharedManager.checkResetModel()
+        TaskLocalDataModel.sharedManager.checkResetModel(callback: {
+            
+            guard case .active = UIApplication.shared.applicationState else {
+                return
+            }
+            
+            guard let view = self.window?.rootViewController as? MainViewController else {
+               return
+            }
+            
+            view.taskUpdated()
+        })
     }
 }
 

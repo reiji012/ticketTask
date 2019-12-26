@@ -19,6 +19,7 @@ protocol TaskViewPresenterProtocol {
     func didTouchCheckButtonAsEdit(title: String, memo: String, identifier: String)
     func touchView()
     func content(index: Int) -> (title: String, memo: String, identifier: String)
+    func taskDidUpdate()
 }
 
 class TaskViewPresenter: TaskViewPresenterProtocol {
@@ -107,5 +108,11 @@ class TaskViewPresenter: TaskViewPresenterProtocol {
             return
         }
         view.changeViewSize()
+    }
+    
+    func taskDidUpdate() {
+        taskViewModel.getTaskData()
+        taskViewModel.countProgress()
+        view.reloadDate()
     }
 }

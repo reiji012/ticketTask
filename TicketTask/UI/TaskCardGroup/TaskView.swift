@@ -21,6 +21,7 @@ protocol TaskViewProtocol {
     var isShowDetail: Bool { get set }
     func changeViewSize()
     func didCreatedTicketd()
+    func reloadDate()
 }
 
 class TaskView: UIView, TaskViewProtocol{
@@ -417,6 +418,15 @@ class TaskView: UIView, TaskViewProtocol{
     func didCreatedTicketd() {
         mainViewController?.addTicketView?.hideView()
         ticketTableView.reloadData()
+    }
+    
+    func taskDidUpdate() {
+        presenter.taskDidUpdate()
+    }
+    
+    func reloadDate() {
+        ticketTableView.reloadData()
+        
     }
 }
 

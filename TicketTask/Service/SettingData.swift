@@ -24,15 +24,52 @@ class SettingData {
     
     init() {
         
-        let tomorrow = Date(timeIntervalSinceNow: 60 * 60 * 24)
         //ディクショナリ形式で初期値を指定できる
         userDefaults.register(defaults: [
             Keys.month.rawValue : "1",
             Keys.week.rawValue : "月曜日",
             Keys.day.rawValue : "6",
             Keys.lastResetDate.rawValue : Date(),
-            Keys.nextResetDatetoMonth.rawValue : tomorrow,
+            Keys.nextResetDatetoMonth.rawValue : Date(),
         ])
+    }
+    
+    func getMonthFormat(date: Date) -> Date {
+        let dateString = monthFormat(date: date)
+        return dateFormatToMonth(string: dateString)
+    }
+    
+    func getDayFormat(date: Date) -> Date {
+        let dateString = dateFormat(date: date)
+        return dateFormatToDate(string: dateString)
+    }
+    
+    func dateFormat(date: Date) -> String {
+        let f = DateFormatter()
+        f.dateStyle = .long
+        f.timeStyle = .none
+        return f.string(from: date)
+    }
+    
+    func monthFormat(date: Date) -> String {
+        let f = DateFormatter()
+        f.dateStyle = .short
+        f.timeStyle = .none
+        return f.string(from: date)
+    }
+    
+    func dateFormatToDate(string: String) -> Date {
+        let f = DateFormatter()
+        f.dateStyle = .long
+        f.timeStyle = .none
+        return f.date(from: string)!
+    }
+    
+    func dateFormatToMonth(string: String) -> Date {
+        let f = DateFormatter()
+        f.dateStyle = .short
+        f.timeStyle = .none
+        return f.date(from: string)!
     }
     
     /// 次の日を取得
@@ -67,7 +104,7 @@ class SettingData {
         var targetType:[Int] = []
         targetType.append(1)
         // 設定「１週間の初めの週」が起動時の日付の週と同じならタイプ２を追加
-        if week == "Mounday" {
+        if week == "Monday" {
             targetType.append(2)
         }
         // 現在日時
@@ -76,6 +113,8 @@ class SettingData {
         let day = calendar.component(.day, from: date)
         
         // 月初ならタイプ３を追加
+        let lastMonth = userDefaults.array(forKey: Keys.nextResetDatetoMonth.rawValue)
+        
         if day == 1 {
             targetType.append(3)
         }

@@ -417,7 +417,13 @@ class MainViewController: UIViewController {
         unCompCountLabel.text = "\(unCompCount)"
     }
     
-    
+    // 起動時タスクが更新された時に呼ばれる
+    func taskUpdated() {
+        for i in 0..<presenter.taskTotalCount {
+            let taskView = self.view.viewWithTag(i + 1) as! TaskView
+            taskView.taskDidUpdate()
+        }
+    }
 }
 
 // MARK: - Extension MainViewControllerProtocol
@@ -463,8 +469,8 @@ extension MainViewController: MainViewControllerProtocol {
             // 次にViewを作成する時のためX座標の更新
             self.originX! -= CGFloat(self.scrollWidth)
             self.scrollView.isScrollEnabled = true
-            self.taskAddButton.isHidden = false
             self.isShowDetail = false
+            self.taskAddButton.isHidden = false
             view.removeFromSuperview()
         }
     }
