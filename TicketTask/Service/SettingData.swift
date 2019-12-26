@@ -98,34 +98,6 @@ class SettingData {
         return f.date(from: days)!
     }
     
-    /// 日付に応じたリセットタイプ配列を渡す
-    ///
-    /// - Returns: リセットタイプ
-    func checkDate() -> [Int] {
-        let date = Date()
-        let f = DateFormatter()
-        f.setTemplate(.weekDay)
-        let week = f.string(from: date)
-        var targetType:[Int] = []
-        targetType.append(1)
-        // 設定「１週間の初めの週」が起動時の日付の週と同じならタイプ２を追加
-        if week == "Monday" {
-            targetType.append(2)
-        }
-        // 現在日時
-        // 年月日時分秒をそれぞれ個別に取得
-        let calendar = Calendar.current
-        let day = calendar.component(.day, from: date)
-        
-        // 月初ならタイプ３を追加
-        let lastMonth = userDefaults.array(forKey: Keys.nextResetDatetoMonth.rawValue)
-        
-        if day == 1 {
-            targetType.append(3)
-        }
-        return targetType
-    }
-    
     func chengeNotificationMonth(dateStr: String) {
         userDefaults.set(dateStr, forKey: Keys.month.rawValue)
     }
