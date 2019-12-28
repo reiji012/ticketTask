@@ -34,6 +34,26 @@ class SettingData {
         ])
     }
     
+    func getNextWeekToMonday(date: Date) -> Date {
+        var currentDate = date
+        for _ in 0...8 {
+            currentDate = getNextDate(date: currentDate)
+            
+            let f = DateFormatter()
+            f.setTemplate(.weekDay)
+            let week = f.string(from: currentDate)
+            // 設定「１週間の初めの週」が起動時の日付の週と同じならタイプ２を追加
+            if week == "Monday" {
+                print(currentDate)
+                print(f.string(from: currentDate))
+                break
+            }
+        }
+        let f = DateFormatter()
+        f.setTemplate(.weekDay)
+        return currentDate
+    }
+    
     func getMonthFormat(date: Date) -> Date {
         let calendar = NSCalendar(identifier: NSCalendar.Identifier.gregorian)!
 

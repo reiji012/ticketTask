@@ -359,19 +359,13 @@ class TaskLocalDataModel {
                     resetTask(task: task)
                 }
             case 2: // 毎週
-                let date = Date()
-                let f = DateFormatter()
-                f.setTemplate(.weekDay)
-                let week = f.string(from: date)
-                var targetType:[Int] = []
-                targetType.append(1)
-                // 設定「１週間の初めの週」が起動時の日付の週と同じならタイプ２を追加
-                if week == "Monday" {
-                    let now = settingData.getDayFormat(date: Date())
-                    let lastResetDate = settingData.getDayFormat(date: task.lastResetDate!)
-                    if now > lastResetDate {
-                        resetTask(task: task)
-                    }
+                let now = settingData.getDayFormat(date: Date())
+                let lastResetDate = settingData.getDayFormat(date: task.lastResetDate!)
+                let lastResetDateNextWeek = settingData.getNextWeekToMonday(date: lastResetDate)
+                print(lastResetDate)
+                print(lastResetDateNextWeek)
+                if now >= lastResetDateNextWeek {
+                    resetTask(task: task)
                 }
             case 3: // 毎月
                 let now = settingData.getMonthFormat(date: Date())
