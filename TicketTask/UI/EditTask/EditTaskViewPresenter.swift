@@ -70,6 +70,7 @@ class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
         currentTaskModel = TaskModel(id: taskViewModel!.taskID!)
         currentTaskModel.resetType = taskViewModel!.resetTypeIndex!
         currentTaskModel.notifications = (taskViewModel?.notifications!)!
+        currentTaskModel.color = taskViewModel!.taskColor!.colorString
     }
     
     /// セルの数を返す
