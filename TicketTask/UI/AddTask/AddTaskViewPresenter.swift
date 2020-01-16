@@ -43,14 +43,14 @@ class AddTaskViewPresenter: AddTaskViewPresenterProtocol, ErrorAlert {
     var currentIcon: UIImage?
     var content: TableCellModel?
     
-    var currentIconString: String? {
+    var currentIconString: String? = "icon-0" {
         didSet {
             currentTaskModel.icon = currentIconString!
             currentIcon = UIImage(named: currentIconString!)
         }
     }
     
-    var currentColor: TaskColor {
+    var currentColor: TaskColor = .orange {
         didSet {
             currentTaskModel.color = currentColor.colorString
         }
@@ -97,19 +97,18 @@ class AddTaskViewPresenter: AddTaskViewPresenterProtocol, ErrorAlert {
     init(vc: AddTaskViewControllerProtocol) {
         view = vc
         taskLocalDataModel = TaskLocalDataModel.sharedManager
-        tickets = []
-        currentColor = .orange
         currentTaskModel = TaskModel(id: (taskLocalDataModel?.lastId())!)
     }
     
     // MARK: - Lifecycle
     func viewDidLoad() {
         currentTaskModel.color = currentColor.colorString
-        currentIconString = "icon-0"
         currentTaskModel.resetType = 0
         view.initSetState()
         createTaskNotification(id: 0, dateString: "18:45")
         view.configureAddTicketView()
+        view.configureDelegates()
+        view.bindUIs()
     }
     
     // MARK: - Public Function

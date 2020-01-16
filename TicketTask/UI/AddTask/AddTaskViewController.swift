@@ -20,6 +20,8 @@ protocol AddTaskViewControllerProtocol {
     func initSetState()
     func reloadNotificationTable()
     func configureAddTicketView()
+    func configureDelegates()
+    func bindUIs()
     func showAddTicketViewAsEdit(ticketModel: TicketsModel)
 }
 
@@ -29,10 +31,6 @@ class AddTaskViewController: UIViewController{
     var gradientLayer: CAGradientLayer = CAGradientLayer()
     var mainVC: MainViewController?
     let navBar = SPFakeBarView.init(style: .stork)
-    // Screenの高さ
-    var screenHeight:CGFloat!
-    // Screenの幅
-    var screenWidth:CGFloat!
     
     var presenter: AddTaskViewPresenterProtocol!
     var tableView: UITableView = UITableView()
@@ -68,19 +66,6 @@ class AddTaskViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.viewDidLoad()
-        titleTextField.delegate = self
-        ticketTableView.delegate = self
-        ticketTableView.dataSource = self
-        reminderTableView.delegate = self
-        reminderTableView.dataSource = self
-        titleTextField.text = ""
-        addReminderButton.delegate = self
-        // 画面サイズ取得
-        let screenSize: CGRect = UIScreen.main.bounds
-        screenWidth = screenSize.width
-        screenHeight = screenSize.height
-        bindUIs()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -102,6 +87,15 @@ class AddTaskViewController: UIViewController{
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
         
         super.viewWillDisappear(animated)
+    }
+    
+    func configureDelegates() {
+        titleTextField.delegate = self
+        ticketTableView.delegate = self
+        ticketTableView.dataSource = self
+        reminderTableView.delegate = self
+        reminderTableView.dataSource = self
+        addReminderButton.delegate = self
     }
     
     // MARK: - Public Function
@@ -191,6 +185,7 @@ class AddTaskViewController: UIViewController{
 
 // MARK: - Extension AddTaskViewControllerProtocol
 extension AddTaskViewController: AddTaskViewControllerProtocol {
+    
     func showAddTicketViewAsEdit(ticketModel: TicketsModel) {
         addTicketView?.showView(title: ticketModel.ticketName, memo: ticketModel.comment, identifier: ticketModel.identifier)
     }
