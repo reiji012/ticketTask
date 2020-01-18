@@ -1,6 +1,9 @@
 PODS:
   - BubbleTransition (3.2.0)
+  - Crashlytics (3.14.0):
+    - Fabric (~> 1.10.2)
   - ESTabBarController-swift (2.7)
+  - Fabric (1.10.2)
   - Firebase/Analytics (6.14.0):
     - Firebase/Core
   - Firebase/Core (6.14.0):
@@ -101,6 +104,7 @@ PODS:
   - RxCocoa (4.5.0):
     - RxSwift (>= 4.4.2, ~> 4.4)
   - RxSwift (4.5.0)
+  - Siren (5.2.3)
   - SparrowKit (2.0.1)
   - SPFakeBar (1.0.9)
   - SPStorkController (1.1.8)
@@ -112,7 +116,9 @@ PODS:
 
 DEPENDENCIES:
   - BubbleTransition (~> 3.2.0)
+  - Crashlytics (~> 3.14.0)
   - ESTabBarController-swift
+  - Fabric (~> 1.10.2)
   - Firebase/Analytics
   - Firebase/Core
   - Firebase/Functions
@@ -123,6 +129,7 @@ DEPENDENCIES:
   - RealmSwift
   - RxCocoa (~> 4.5.0)
   - RxSwift (~> 4.5.0)
+  - Siren
   - SparrowKit
   - SPFakeBar
   - SPStorkController (= 1.1.8)
@@ -133,7 +140,9 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - BubbleTransition
+    - Crashlytics
     - ESTabBarController-swift
+    - Fabric
     - Firebase
     - FirebaseAnalytics
     - FirebaseAnalyticsInterop
@@ -158,6 +167,7 @@ SPEC REPOS:
     - RealmSwift
     - RxCocoa
     - RxSwift
+    - Siren
     - SparrowKit
     - SPFakeBar
     - SPStorkController
@@ -167,7 +177,9 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   BubbleTransition: 2f112cc19772d9ab199bc850de92f5eb34744bce
+  Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
   ESTabBarController-swift: 4fb52ad03d94d0717ef97bc9eb09a5abfdded0a2
+  Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
   Firebase: 0219bb4782eb1406f1b9b0628a2e625484ce910d
   FirebaseAnalytics: f68b9f3f1241385129ae0a83b63627fc420c05e5
   FirebaseAnalyticsInterop: d48b6ab67bcf016a05e55b71fc39c61c0cb6b7f3
@@ -192,6 +204,7 @@ SPEC CHECKSUMS:
   RealmSwift: 402f1e379a8ef82c635313037b043f0f06de880c
   RxCocoa: cbf70265dc65a981d4ac982e513c10cf23df24a0
   RxSwift: f172070dfd1a93d70a9ab97a5a01166206e1c575
+  Siren: 996f37869eae1f343f8c11f17d90c9c8da90bd4c
   SparrowKit: 3cfae4791388f8c9eab867eb7c828d60d650de69
   SPFakeBar: b74ebaa7ff9ca06a39f13dbe668238f15825ee88
   SPStorkController: e92e1100e6ccaab694e38cffe4a44336c10901f6
@@ -199,6 +212,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
   UICircularProgressRing: 907613633e76e561b972a3868c95517d14c71006
 
-PODFILE CHECKSUM: 9c74a8b6fd16e131546b2b4e4ab78bf870cace3d
+PODFILE CHECKSUM: 66b116242fb872b8b65dbd642c0118b0af0dc71f
 
 COCOAPODS: 1.7.5

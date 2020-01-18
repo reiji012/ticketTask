@@ -131,6 +131,8 @@ class MainViewController: UIViewController {
         bannerView.load(request)
         bannerView.delegate = self
         
+        bannerView.isHidden = true
+        
     }
     
     func addBannerViewToView(_ bannerView: GADBannerView) {

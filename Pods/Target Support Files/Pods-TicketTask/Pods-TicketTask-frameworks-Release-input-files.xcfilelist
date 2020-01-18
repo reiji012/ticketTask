@@ -12,6 +12,7 @@ ${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework
 ${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework
 ${BUILT_PRODUCTS_DIR}/SPFakeBar/SPFakeBar.framework
 ${BUILT_PRODUCTS_DIR}/SPStorkController/SPStorkController.framework
+${BUILT_PRODUCTS_DIR}/Siren/Siren.framework
 ${BUILT_PRODUCTS_DIR}/SparrowKit/SparrowKit.framework
 ${BUILT_PRODUCTS_DIR}/SwiftMessages/SwiftMessages.framework
 ${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework

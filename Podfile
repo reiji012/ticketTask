@@ -26,6 +26,13 @@ target 'TicketTask' do
   pod 'Firebase/Core'
   pod 'Firebase/Functions'
   
+  # アップデート通知
+  pod 'Siren'
+  
+  # クラッシュアナリティクス
+  pod 'Fabric', '~> 1.10.2'
+  pod 'Crashlytics', '~> 3.14.0'
+  
   pod 'Google-Mobile-Ads-SDK'
   # add pods for any other desired Firebase products
   # https://firebase.google.com/docs/ios/setup#available-pods
