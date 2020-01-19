@@ -88,11 +88,23 @@ class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
     func viewDidLoad() {
         view.setTimeSelectIndex(index: currentTaskModel.resetType)
         currentIconString = taskViewModel!.iconString!
-        view.setNavigationBar()
+        view.configureNavigationBar()
+        view.configureBind()
+        view.cunfigureDelegate()
+        view.initSetViewState()
     }
     
     // 保存ボタン
     func touchSaveButton(afterTaskName: String) {
+        
+        if afterTaskName.isEmpty {
+            guard let viewController = self.view as? EditTaskViewController else {
+                return
+            }
+            createErrorAlert(error: .titleEmptyError, massage: nil, view: viewController)
+            view.resetTitle(title: beforeName!)
+            return
+        }
         currentTaskModel.taskTitle = afterTaskName
         currentTaskModel.attri = ""
         

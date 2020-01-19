@@ -32,7 +32,6 @@
 		1148D4A52390D60A00AE8C81 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1148D4A42390D60A00AE8C81 /* SplashViewController.swift */; };
 		1148D4A72390D61A00AE8C81 /* SplashViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1148D4A62390D61A00AE8C81 /* SplashViewPresenter.swift */; };
 		1181EDC8234C4A02006D6CDD /* ErrorAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1181EDC7234C4A02006D6CDD /* ErrorAlert.swift */; };
-		11B4F99C233DF163008CD2F6 /* TaskEditDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B4F99B233DF162008CD2F6 /* TaskEditDelegate.swift */; };
 		11B5E4432345F6F300DBCB14 /* UIStoryboardExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B5E4422345F6F300DBCB14 /* UIStoryboardExtensions.swift */; };
 		11B5E4462345F90300DBCB14 /* Routable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B5E4452345F90300DBCB14 /* Routable.swift */; };
 		11B5E4482345FC5F00DBCB14 /* EditTaskViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B5E4472345FC5F00DBCB14 /* EditTaskViewPresenter.swift */; };
@@ -109,7 +108,6 @@
 		1148D4A42390D60A00AE8C81 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		1148D4A62390D61A00AE8C81 /* SplashViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewPresenter.swift; sourceTree = "<group>"; };
 		1181EDC7234C4A02006D6CDD /* ErrorAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAlert.swift; sourceTree = "<group>"; };
-		11B4F99B233DF162008CD2F6 /* TaskEditDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskEditDelegate.swift; sourceTree = "<group>"; };
 		11B5E4422345F6F300DBCB14 /* UIStoryboardExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStoryboardExtensions.swift; sourceTree = "<group>"; };
 		11B5E4452345F90300DBCB14 /* Routable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routable.swift; sourceTree = "<group>"; };
 		11B5E4472345FC5F00DBCB14 /* EditTaskViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTaskViewPresenter.swift; sourceTree = "<group>"; };
@@ -323,7 +321,6 @@
 			isa = PBXGroup;
 			children = (
 				2BF44282229CC63C00F32613 /* EditTaskViewController.storyboard */,
-				11B4F99B233DF162008CD2F6 /* TaskEditDelegate.swift */,
 				2BF44280229BEB8C00F32613 /* EditTaskViewController.swift */,
 				11B5E4472345FC5F00DBCB14 /* EditTaskViewPresenter.swift */,
 			);
@@ -676,7 +673,6 @@
 				8E8A0B12231605E400FFCE15 /* TaskIconImageView.swift in Sources */,
 				111F5EC12342ECE40034548A /* AddTaskViewPresenter.swift in Sources */,
 				113F891723AB7410003E34B1 /* RefineViewController.swift in Sources */,
-				11B4F99C233DF163008CD2F6 /* TaskEditDelegate.swift in Sources */,
 				8E8A0B1A2316B04B00FFCE15 /* ColorSelectViewController.swift in Sources */,
 				2BB2EE51228AB97200769AAA /* ActionType.swift in Sources */,
 				11EB777923A3947600ABD716 /* UIColorExtensions.swift in Sources */,
