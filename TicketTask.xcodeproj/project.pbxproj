@@ -31,6 +31,7 @@
 		1148D4A32390D5F500AE8C81 /* SplashViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1148D4A22390D5F500AE8C81 /* SplashViewController.storyboard */; };
 		1148D4A52390D60A00AE8C81 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1148D4A42390D60A00AE8C81 /* SplashViewController.swift */; };
 		1148D4A72390D61A00AE8C81 /* SplashViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1148D4A62390D61A00AE8C81 /* SplashViewPresenter.swift */; };
+		1172EB2923D5A2DB0073D945 /* dev_GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1172EB2823D5A2DA0073D945 /* dev_GoogleService-Info.plist */; };
 		1181EDC8234C4A02006D6CDD /* ErrorAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1181EDC7234C4A02006D6CDD /* ErrorAlert.swift */; };
 		11B5E4432345F6F300DBCB14 /* UIStoryboardExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B5E4422345F6F300DBCB14 /* UIStoryboardExtensions.swift */; };
 		11B5E4462345F90300DBCB14 /* Routable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B5E4452345F90300DBCB14 /* Routable.swift */; };
@@ -107,6 +108,7 @@
 		1148D4A22390D5F500AE8C81 /* SplashViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SplashViewController.storyboard; sourceTree = "<group>"; };
 		1148D4A42390D60A00AE8C81 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		1148D4A62390D61A00AE8C81 /* SplashViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewPresenter.swift; sourceTree = "<group>"; };
+		1172EB2823D5A2DA0073D945 /* dev_GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "dev_GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1181EDC7234C4A02006D6CDD /* ErrorAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAlert.swift; sourceTree = "<group>"; };
 		11B5E4422345F6F300DBCB14 /* UIStoryboardExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStoryboardExtensions.swift; sourceTree = "<group>"; };
 		11B5E4452345F90300DBCB14 /* Routable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routable.swift; sourceTree = "<group>"; };
@@ -439,6 +441,7 @@
 				2BF5B75322814521007D0266 /* Assets.xcassets */,
 				2BF5B75522814521007D0266 /* LaunchScreen.storyboard */,
 				11EA118B234D8839003223A7 /* GoogleService-Info.plist */,
+				1172EB2823D5A2DA0073D945 /* dev_GoogleService-Info.plist */,
 				2BF5B75822814521007D0266 /* Info.plist */,
 			);
 			path = TicketTask;
@@ -556,6 +559,7 @@
 				2BF5B75422814521007D0266 /* Assets.xcassets in Resources */,
 				1148D4A32390D5F500AE8C81 /* SplashViewController.storyboard in Resources */,
 				1123EEC12387D8D9005EEFAD /* HistoryViewController.storyboard in Resources */,
+				1172EB2923D5A2DB0073D945 /* dev_GoogleService-Info.plist in Resources */,
 				2BF5B75222814521007D0266 /* MainViewController.storyboard in Resources */,
 				8E8A0B182316A36F00FFCE15 /* ColorSelectViewController.storyboard in Resources */,
 				1123EEC32387DC18005EEFAD /* Main.storyboard in Resources */,

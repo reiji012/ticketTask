@@ -15,7 +15,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        FirebaseApp.configure()
+        // Firebase
+        #if DEBUG
+            let filePath = Bundle.main.path(forResource: "dev_GoogleService-Info", ofType:"plist")
+        #else
+            let filePath = Bundle.main.path(forResource: "GoogleService-Info", ofType:"plist")
+        #endif
+        let options = FirebaseOptions(contentsOfFile:filePath!)
+        FirebaseApp.configure(options: options!)
+        
         GADMobileAds.sharedInstance().start(completionHandler: nil)
         
         // [START set_messaging_delegate]
