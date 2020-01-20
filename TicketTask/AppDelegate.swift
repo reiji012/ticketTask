@@ -3,6 +3,7 @@ import UserNotifications
 
 import Firebase
 import GoogleMobileAds
+import FirebaseMessaging
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

@@ -346,8 +346,6 @@ class TaskLocalDataModel {
     }
     
     /// タスクの状態のリセット
-    ///
-    /// - Parameter resetType: リセットタイプ
     func resetTaskModel(callback: @escaping () -> Void) {
         let result = realm.objects(TaskItem.self)
         for task in result {

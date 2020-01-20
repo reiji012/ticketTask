@@ -14,6 +14,8 @@ protocol RefineViewDelegate {
 
 protocol RefineViewControllerProtocol {
     func setHeaderView(title: String, color: UIColor)
+    func configureTableView()
+    func closeView()
 }
 
 class RefineViewController: UIViewController, RefineViewControllerProtocol{
@@ -28,6 +30,9 @@ class RefineViewController: UIViewController, RefineViewControllerProtocol{
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.viewDidload()
+    }
+    
+    func configureTableView() {
         listTableView.delegate = self
         listTableView.dataSource = self
     }
@@ -36,16 +41,15 @@ class RefineViewController: UIViewController, RefineViewControllerProtocol{
         headerView.backgroundColor =  color
         titleLabel.text = title
     }
+    
+    func closeView() {
+        dismiss(animated: true, completion: nil)
+    }
 }
 
 extension RefineViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let delegate = delegate else {
-            return
-        }
-        let tag = presenter.content(indexPath: indexPath).tag!
-        delegate.didSelected(tag: tag)
-        dismiss(animated: true, completion: nil)
+        presenter.didSelectTask(indexPath: indexPath)
     }
 }
 

@@ -15,6 +15,7 @@ protocol RefineViewPresenterProtocol {
     var numberOfRow: Int { get }
     func content(indexPath: IndexPath) -> TaskViewContentValue
     func viewDidload()
+    func didSelectTask(indexPath: IndexPath)
 }
 
 class RefineViewPresenter: RefineViewPresenterProtocol {
@@ -39,7 +40,16 @@ class RefineViewPresenter: RefineViewPresenterProtocol {
     }
     
     func viewDidload() {
+        view.configureTableView()
         view.setHeaderView(title: uiContent.title, color: uiContent.color)
     }
     
+    func didSelectTask(indexPath: IndexPath) {
+        guard let view = view as? RefineViewController , let delegate = view.delegate else {
+            return
+        }
+        let tag = content(indexPath: indexPath).tag!
+        delegate.didSelected(tag: tag)
+        view.closeView()
+    }
 }

@@ -12,16 +12,16 @@ import SparrowKit
 import SPFakeBar
 
 protocol AddTaskViewControllerProtocol {
-    func didTaskCreated()
+    func didTaskDataCreated()
     func didAddOrEditTicket()
     func setIconImage()
     func setColorView()
     func setGradationColor()
-    func initSetState()
+    func configureColorAndIcon()
     func reloadNotificationTable()
     func configureAddTicketView()
     func configureDelegates()
-    func bindUIs()
+    func configureNavigationItem()
     func showAddTicketViewAsEdit(ticketModel: TicketsModel)
 }
 
@@ -99,6 +99,8 @@ class AddTaskViewController: UIViewController{
     }
     
     // MARK: - Public Function
+    
+    // チケットView
     func configureAddTicketView() {
         addTicketView = AddTicketView.initiate(taskModel: TaskModel(id: 0))
         addTicketView!.delegate = self
@@ -108,9 +110,8 @@ class AddTaskViewController: UIViewController{
         addTicketView!.isHidden = true
     }
     
-    func bindUIs() {
-        setGradationColor()
-        
+    // ナビゲーション
+    func configureNavigationItem() {
         self.navBar.titleLabel.text = "タスクを追加"
         self.navBar.leftButton.setTitle("キャンセル", for: .normal)
         self.navBar.leftButton.addTarget(self, action: #selector(self.touchCanselButton), for: .touchUpInside)
@@ -120,7 +121,8 @@ class AddTaskViewController: UIViewController{
         self.view.addSubview(self.navBar)
     }
     
-    func initSetState() {
+    // カラー、アイコン
+    func configureColorAndIcon() {
         self.setColorView()
         self.setIconImage()
         self.setGradationColor()
@@ -190,7 +192,7 @@ extension AddTaskViewController: AddTaskViewControllerProtocol {
         addTicketView?.showView(title: ticketModel.ticketName, memo: ticketModel.comment, identifier: ticketModel.identifier)
     }
     
-    func didTaskCreated() {
+    func didTaskDataCreated() {
         dismiss(animated: true, completion: {
             guard let vc = self.mainVC else {
                 return

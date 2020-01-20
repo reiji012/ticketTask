@@ -104,11 +104,11 @@ class AddTaskViewPresenter: AddTaskViewPresenterProtocol, ErrorAlert {
     func viewDidLoad() {
         currentTaskModel.color = currentColor.colorString
         currentTaskModel.resetType = 0
-        view.initSetState()
+        view.configureColorAndIcon()
         createTaskNotification(id: 0, dateString: "18:45")
         view.configureAddTicketView()
         view.configureDelegates()
-        view.bindUIs()
+        view.configureNavigationItem()
     }
     
     // MARK: - Public Function
@@ -161,7 +161,7 @@ class AddTaskViewPresenter: AddTaskViewPresenterProtocol, ErrorAlert {
             createErrorAlert(error: error, massage: "", view: viewController)
             return
         }
-        view.didTaskCreated()
+        view.didTaskDataCreated()
     }
     
     // 編集モードのチェックボタンをタッチ
