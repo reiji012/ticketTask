@@ -11,7 +11,6 @@ import RxSwift
 import RxCocoa
 import BubbleTransition
 import SPStorkController
-import SparrowKit
 import PKHUD
 import UICircularProgressRing
 import GoogleMobileAds
@@ -130,6 +129,8 @@ class MainViewController: UIViewController {
         
         bannerView.load(request)
         bannerView.delegate = self
+        
+        bannerView.isHidden = true
         
     }
     

@@ -8,7 +8,7 @@
 
 import UIKit
 import SPStorkController
-import SparrowKit
+//import SparrowKit
 import SPFakeBar
 
 protocol AddTaskViewControllerProtocol {

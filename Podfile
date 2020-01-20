@@ -9,7 +9,6 @@ target 'TicketTask' do
   pod 'NewPopMenu', '~> 2.0'
   pod 'RealmSwift'
   pod 'SPStorkController', '1.1.8'
-  pod 'SparrowKit'
   pod 'PKHUD', '~> 5.0'
   pod 'SPFakeBar'
   pod 'SwiftyJSON', '~> 4.0'
@@ -25,6 +24,13 @@ target 'TicketTask' do
   pod 'Firebase/Messaging'
   pod 'Firebase/Core'
   pod 'Firebase/Functions'
+  
+  # アップデート通知
+  pod 'Siren'
+  
+  # クラッシュアナリティクス
+  pod 'Fabric', '~> 1.10.2'
+  pod 'Crashlytics', '~> 3.14.0'
   
   pod 'Google-Mobile-Ads-SDK'
   # add pods for any other desired Firebase products

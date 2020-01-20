@@ -8,7 +8,6 @@
 
 import UIKit
 import SPStorkController
-import SparrowKit
 import PKHUD
 import RxSwift
 import SPFakeBar
@@ -18,8 +17,12 @@ protocol EditTaskViewControllerProtocol {
     func setIconImage(icon: UIImage)
     func didSaveTask()
     func setTimeSelectIndex(index: Int)
-    func setNavigationBar()
+    func configureBind()
+    func configureNavigationBar()
+    func cunfigureDelegate()
+    func initSetViewState()
     func reloadNotificationTable()
+    func resetTitle(title: String)
 }
 
 class EditTaskViewController: UIViewController, UIPopoverPresentationControllerDelegate, ColorSelectViewControllerDelegate, IconSelectViewControllerDelegate {
@@ -56,22 +59,14 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
         let trantisionDelegate = SPStorkTransitioningDelegate()
         viewController.transitioningDelegate = trantisionDelegate
         viewController.modalPresentationStyle = .custom
+        viewController.modalPresentationCapturesStatusBarAppearance = true
         return viewController
     }
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        bind()
         presenter.viewDidLoad()
-        self.modalPresentationCapturesStatusBarAppearance = true
-        self.view.backgroundColor = UIColor.white
-        self.titleTextField.text = presenter.taskViewModel?.taskName
-        self.initStateSet()
-        addReminderButton.delegate = self
-        
-        reminderTableView.dataSource = self
-        reminderTableView.delegate = self
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -80,7 +75,13 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
     }
     
     // MARK: - Public Function
-    func setNavigationBar() {
+    func cunfigureDelegate() {
+        addReminderButton.delegate = self
+        reminderTableView.dataSource = self
+        reminderTableView.delegate = self
+    }
+    
+    func configureNavigationBar() {
         self.navBar.titleLabel.text = "編集画面"
         self.navBar.leftButton.setTitle("キャンセル", for: .normal)
         self.navBar.leftButton.addTarget(self, action: #selector(self.touchCanselButton), for: .touchUpInside)
@@ -121,7 +122,7 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
         presenter.touchTimerSetButton(resetTypeIndex: timerBtn.selectedSegmentIndex)
     }
     
-    func bind() {
+    func configureBind() {
         titleTextField.rx.controlEvent(.editingChanged).asDriver()
             .drive(onNext: { _ in
                 self.isEdited = true
@@ -135,10 +136,12 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
             .disposed(by: disposeBag)
     }
     
-    func initStateSet() {
+    func initSetViewState() {
         setColorView(color: presenter!.currentColor.gradationColor1)
         setIconImage(icon: presenter!.currentIcon)
         setGradationColor()
+        self.view.backgroundColor = UIColor.white
+        self.titleTextField.text = presenter.taskViewModel?.taskName
     }
     
     func setGradationColor() {
@@ -186,6 +189,10 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
         alert.addAction(defaultAction)
         // ④ Alertを表示
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    func resetTitle(title: String) {
+        titleTextField.text = title
     }
     
     func changeColor() {
