@@ -43,10 +43,10 @@ class AddTaskViewPresenter: AddTaskViewPresenterProtocol, ErrorAlert {
     var currentIcon: UIImage?
     var content: TableCellModel?
     
-    var currentIconString: String? = "icon-0" {
+    var currentIconString: String = "icon-0" {
         didSet {
-            currentTaskModel.icon = currentIconString!
-            currentIcon = UIImage(named: currentIconString!)
+            currentTaskModel.icon = currentIconString
+            currentIcon = UIImage(named: currentIconString)
         }
     }
     
@@ -104,6 +104,7 @@ class AddTaskViewPresenter: AddTaskViewPresenterProtocol, ErrorAlert {
     func viewDidLoad() {
         currentTaskModel.color = currentColor.colorString
         currentTaskModel.resetType = 0
+        currentTaskModel.icon = currentIconString
         view.configureColorAndIcon()
         createTaskNotification(id: 0, dateString: "18:45")
         view.configureAddTicketView()
