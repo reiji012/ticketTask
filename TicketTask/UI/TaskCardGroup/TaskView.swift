@@ -83,7 +83,15 @@ class TaskView: UIView, TaskViewProtocol{
     // MARK: - Public Funciton
     func setViewModel(task:TaskModel, mainVC: MainViewController) {
         self.mainViewController = mainVC
-
+        configureGesture()
+        // UIImageView の場合
+        attriImageView.image = attriImageView.image?.withRenderingMode(.alwaysTemplate)
+        attriImageView.tintColor = self.presenter.taskViewModel.taskColor?.gradationColor1
+        ticketTableView.register(UINib(nibName: "TicketTableViewCell", bundle: nil), forCellReuseIdentifier: "TicketTableViewCell")
+        isCenter = false
+    }
+    
+    func configureGesture() {
         let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(
             target: self,
             action: #selector(self.touchView(_:)))
@@ -96,12 +104,6 @@ class TaskView: UIView, TaskViewProtocol{
         let downSwipe = UISwipeGestureRecognizer(target: self, action: #selector(self.handleSwipes(_:)))
         downSwipe.direction = .down
         headerView.addGestureRecognizer(downSwipe)
-        
-        // UIImageView の場合
-        attriImageView.image = attriImageView.image?.withRenderingMode(.alwaysTemplate)
-        attriImageView.tintColor = self.presenter.taskViewModel.taskColor?.gradationColor1
-        ticketTableView.register(UINib(nibName: "TicketTableViewCell", bundle: nil), forCellReuseIdentifier: "TicketTableViewCell")
-        isCenter = false
     }
 
     @IBAction func touchMenuButton(_ sender: Any) {
