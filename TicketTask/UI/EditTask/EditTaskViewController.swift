@@ -71,6 +71,7 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        self.view.gestureRecognizers![0].delegate = self
     }
     
     // MARK: - Public Function
@@ -78,7 +79,6 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
         addReminderButton.delegate = self
         reminderTableView.dataSource = self
         reminderTableView.delegate = self
-        self.view.gestureRecognizers![0].delegate = self
     }
     
     func configureNavigationBar() {
