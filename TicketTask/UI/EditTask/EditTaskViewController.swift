@@ -76,6 +76,7 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        self.view.gestureRecognizers![0].delegate = self
     }
     
     // MARK: - Public Function
