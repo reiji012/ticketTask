@@ -257,6 +257,8 @@ class TaskLocalDataModel {
                     ticket.ticketName = currentTicket.first!.ticketName
                     ticket.comment = currentTicket.first!.comment
                 }
+                let task = results[index]
+                task.setValue(Date(), forKey: TASK_LASTRESETDATE)
             }
         }
     }
