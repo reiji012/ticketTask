@@ -32,6 +32,7 @@ class ColorSelectViewController: UIViewController, UICollectionViewDelegate, UIC
     open var delegate: ColorSelectViewControllerDelegate?
     
     @IBOutlet private weak var cellectionView: UICollectionView!
+    @IBOutlet weak var closeButton: UIButton!
     
     // MARK: - Initilizer
     static func initiate(delegate: ColorSelectViewControllerDelegate) -> ColorSelectViewController {
@@ -51,6 +52,12 @@ class ColorSelectViewController: UIViewController, UICollectionViewDelegate, UIC
         cells = []
         cellectionView.delegate = self
         cellectionView.dataSource = self
+        
+        if #available(iOS 13.0, *) {
+            let backButtonImage = self.closeButton.imageView!.image!.withRenderingMode(.alwaysTemplate)
+            self.closeButton.setImage(backButtonImage, for: .normal)
+            self.closeButton.tintColor = .dynamicColor
+        }
     }
     
     

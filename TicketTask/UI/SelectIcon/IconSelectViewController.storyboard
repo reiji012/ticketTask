@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="q4O-cS-9jG">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="q4O-cS-9jG">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,7 +18,7 @@
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="tZM-97-Wwk">
                                 <rect key="frame" x="0.0" y="144" width="414" height="752"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="CRb-ow-WTT">
                                     <size key="itemSize" width="144" height="129"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -36,11 +34,11 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-6" translatesAutoresizingMaskIntoConstraints="NO" id="ft0-F7-Zjf">
-                                                    <rect key="frame" x="11" y="55" width="122" height="63"/>
+                                                    <rect key="frame" x="11" y="11" width="122" height="107"/>
                                                 </imageView>
                                             </subviews>
                                         </view>
-                                        <color key="backgroundColor" red="0.9435921308290155" green="0.9435921308290155" blue="0.9435921308290155" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" systemColor="secondarySystemFillColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.50196078430000002" alpha="0.16" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstItem="ft0-F7-Zjf" firstAttribute="top" secondItem="h2l-Zb-lHL" secondAttribute="topMargin" constant="3" id="DEy-Pa-k8t"/>
                                             <constraint firstAttribute="trailingMargin" secondItem="ft0-F7-Zjf" secondAttribute="trailing" constant="3" id="c3H-HA-YFF"/>
@@ -76,7 +74,6 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="0.46144584760000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="9zF-gi-yhc" firstAttribute="centerY" secondItem="wHR-Mq-Gmc" secondAttribute="centerY" id="2FM-8h-dUd"/>
                                     <constraint firstAttribute="trailing" secondItem="9zF-gi-yhc" secondAttribute="trailing" constant="30" id="761-5F-eL7"/>
@@ -86,7 +83,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="wHR-Mq-Gmc" secondAttribute="trailing" id="4Ke-Hh-jC4"/>
                             <constraint firstItem="tZM-97-Wwk" firstAttribute="leading" secondItem="XaA-JO-8LC" secondAttribute="leading" id="5Z5-HZ-48M"/>
@@ -100,6 +97,7 @@
                     </view>
                     <connections>
                         <outlet property="cellectionView" destination="tZM-97-Wwk" id="Muf-wb-zw7"/>
+                        <outlet property="closeButton" destination="9zF-gi-yhc" id="TIR-sU-08u"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4uW-L0-DND" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -108,7 +106,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="close" width="256" height="256"/>
+        <image name="close" width="50" height="50"/>
         <image name="icon-6" width="256" height="256"/>
     </resources>
 </document>
