@@ -236,6 +236,19 @@
 			path = Refine;
 			sourceTree = "<group>";
 		};
+		1140312523DAB70D0067946C /* Universal */ = {
+			isa = PBXGroup;
+			children = (
+				11B4F999233DF05E008CD2F6 /* Model */,
+				11EC7B91234B13600099D444 /* Enums */,
+				2BF5B76E22829FEF007D0266 /* Extention */,
+				11B5E4442345F8F200DBCB14 /* Protocols */,
+				11B4F98C233DECF8008CD2F6 /* Util */,
+				11B4F998233DF032008CD2F6 /* Service */,
+			);
+			path = Universal;
+			sourceTree = "<group>";
+		};
 		1148D4A12390D5CB00AE8C81 /* Splash */ = {
 			isa = PBXGroup;
 			children = (
@@ -266,6 +279,8 @@
 		11B4F991233DEDC4008CD2F6 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				2BF5B74C22814521007D0266 /* AppDelegate.swift */,
+				2BF5B75522814521007D0266 /* LaunchScreen.storyboard */,
 				1148D4A12390D5CB00AE8C81 /* Splash */,
 				1123EEC8238BA27E005EEFAD /* TicketDetail */,
 				1181EDC6234C49B3006D6CDD /* ErrorAlert */,
@@ -429,17 +444,10 @@
 		2BF5B74B22814521007D0266 /* TicketTask */ = {
 			isa = PBXGroup;
 			children = (
-				11EA118A234D80E3003223A7 /* TicketTask.entitlements */,
-				11B4F999233DF05E008CD2F6 /* Model */,
-				11EC7B91234B13600099D444 /* Enums */,
-				2BF5B76E22829FEF007D0266 /* Extention */,
-				11B5E4442345F8F200DBCB14 /* Protocols */,
-				11B4F98C233DECF8008CD2F6 /* Util */,
-				11B4F998233DF032008CD2F6 /* Service */,
+				1140312523DAB70D0067946C /* Universal */,
 				11B4F991233DEDC4008CD2F6 /* UI */,
-				2BF5B74C22814521007D0266 /* AppDelegate.swift */,
+				11EA118A234D80E3003223A7 /* TicketTask.entitlements */,
 				2BF5B75322814521007D0266 /* Assets.xcassets */,
-				2BF5B75522814521007D0266 /* LaunchScreen.storyboard */,
 				11EA118B234D8839003223A7 /* GoogleService-Info.plist */,
 				1172EB2823D5A2DA0073D945 /* dev_GoogleService-Info.plist */,
 				2BF5B75822814521007D0266 /* Info.plist */,
