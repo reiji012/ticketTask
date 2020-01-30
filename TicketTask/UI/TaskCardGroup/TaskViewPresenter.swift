@@ -23,7 +23,7 @@ protocol TaskViewPresenterProtocol {
 }
 
 class TaskViewPresenter: TaskViewPresenterProtocol {
-    
+
     // MARK: - Public Propaty
     var task: TaskModel?
     var taskViewModel: TaskViewModel
@@ -32,25 +32,25 @@ class TaskViewPresenter: TaskViewPresenterProtocol {
     var currentColor: TaskColor {
         return taskViewModel.taskColor!
     }
-    
+
     var mainViewController: MainViewControllerProtocol!
-    
+
     // MARK: - Private Property
     private var view: TaskViewProtocol!
-    
+
     // MARK: - InitiaLize
     init(view: TaskViewProtocol, mainViewController: MainViewControllerProtocol, task: TaskModel) {
         self.view = view
         self.mainViewController = mainViewController
         self.task = task
-        
+
         let taskName = task.taskTitle
         // taskViewModelの取得
         taskViewModel = TaskViewModel(taskName: taskName)
         taskViewModel.countProgress()
         taskViewModel.getTask(taskName: taskName)
         taskViewModel.delegate = mainViewController
-        
+
         // 端末サイズによってメニュー、プログレスバーの長さを調整
         switch screenType {
         case .iPhone3_5inch, .iPhone4_0inch:
@@ -67,19 +67,19 @@ class TaskViewPresenter: TaskViewPresenterProtocol {
             progressBarWidthConst = 170
         }
     }
-    
+
     // MARK: - Public Function
     /// タスク削除
     func deleteTask() {
         guard let view = self.view as? TaskView else {
             return
         }
-        
+
         taskViewModel.updateModel(actionType: .taskDelete, callback: {
             self.mainViewController.deleteTask(view: view)
         })
     }
-    
+
     /// チケットの追加
     ///
     /// - Parameter ticket: 追加するチケット
@@ -89,27 +89,27 @@ class TaskViewPresenter: TaskViewPresenterProtocol {
             self.view.didCreatedTicketd()
         })
     }
-    
+
     func didTouchCheckButtonAsEdit(title: String, memo: String, identifier: String) {
         taskViewModel.editTicket(ticketName: title, memo: memo, identifier: identifier, callback: {
             self.view.didCreatedTicketd()
         })
     }
-    
+
     func content(index: Int) -> (title: String, memo: String, identifier: String) {
         let title = taskViewModel.tickets![index].ticketName
         let memo = taskViewModel.tickets![index].comment
         let identifier = taskViewModel.tickets![index].identifier
         return (title: title, memo: memo, identifier: identifier)
     }
-    
+
     func touchView() {
         guard let view = view as? TaskView else {
             return
         }
         view.changeViewSize()
     }
-    
+
     func taskDidUpdate() {
         taskViewModel.getTaskData()
         taskViewModel.countProgress()

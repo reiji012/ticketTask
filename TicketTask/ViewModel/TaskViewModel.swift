@@ -10,19 +10,19 @@ import UIKit
 import RxSwift
 
 class TaskViewModel: NSObject {
-    
+
     private let progressSubject = BehaviorSubject(value: 0.0)
     private let ticketCountSubject = BehaviorSubject(value: 0)
     private let taskTitleSubject = BehaviorSubject(value: "")
     private let taskAttriSubject = BehaviorSubject(value: "")
     private let settingData = SettingData()
-    
+
     var progress: Observable<Double> { return progressSubject.asObservable() }
     var ticketCout: Observable<Int> { return ticketCountSubject.asObserver() }
     var taskTitle: Observable<String> { return taskTitleSubject.asObserver() }
     var taskAttri: Observable<String> { return taskAttriSubject.asObserver() }
-    
-    var delegate: MainViewControllerProtocol?
+
+    weak var delegate: MainViewControllerProtocol?
 
     var taskID: Int?
     var taskLocalDataModel: TaskLocalDataModel?
@@ -36,15 +36,15 @@ class TaskViewModel: NSObject {
         return taskLocalDataModel!.tasks.count
     }
     var attri: String?
-    
+
     var iconImage: UIImage?
     var iconString: String?
     var taskColor: TaskColor?
     var resetTypeIndex: Int?
     var notifications: [TaskNotificationsModel]?
-    
+
     var actionType: ActionType = .taskUpdate
-    
+
     var tickets: [TicketsModel]? = nil {
         didSet(value) {
             self.updateModel(actionType: self.actionType)
@@ -55,11 +55,11 @@ class TaskViewModel: NSObject {
     }
     var completedProgress: Double?
     var task: TaskModel?
-    
+
     override init() {
         taskLocalDataModel = TaskLocalDataModel.sharedManager
     }
-    
+
     // タスクのModelを取得する
     init(taskName: String) {
         taskLocalDataModel = TaskLocalDataModel.sharedManager
@@ -73,7 +73,7 @@ class TaskViewModel: NSObject {
         self.notifications = task?.notifications
         self.iconImage = UIImage(named: iconString!)!.withRenderingMode(.alwaysTemplate)
     }
-    
+
     func getTask(taskName: String) {
         task = taskLocalDataModel?.getTask(taskName: taskName)
         self.taskName = task?.taskTitle
@@ -86,7 +86,7 @@ class TaskViewModel: NSObject {
         setColor(colorString: task!.color)
         countProgress()
     }
-    
+
     func setColor(colorString: String) {
         switch colorString {
         case "blue":
@@ -105,21 +105,21 @@ class TaskViewModel: NSObject {
             taskColor = .blue
         }
     }
-    
+
     func addTicket(ticketName: String, memo: String, callback: @escaping () -> Void) {
-        
+
         // チケットが入力されていない場合はバリデーションエラー発生
         if ticketName.isEmpty {
             delegate?.showValidateAlert(error: .titleEmptyError)
             return
         }
-        
+
         // 同じ名前のチケットがある場合はバリデーションエラー発生
-        if !(tickets?.map{$0.ticketName})!.filter({$0 == ticketName}).isEmpty {
+        if !(tickets?.map {$0.ticketName})!.filter({$0 == ticketName}).isEmpty {
             delegate?.showValidateAlert(error: .ticketValidError)
             return
         }
-        
+
         let ticket = TicketsModel()
         ticket.identifier = NSUUID().uuidString
         ticket.ticketName = ticketName
@@ -128,31 +128,31 @@ class TaskViewModel: NSObject {
         tickets?.append(ticket)
         callback()
     }
-    
+
     func editTicket(ticketName: String, memo: String, identifier: String, callback: @escaping () -> Void) {
-    
+
         let ticket = tickets?.filter({ $0.identifier == identifier }).first
         let index = tickets?.index(of: ticket!)
         let afterTicketName = ticket?.ticketName
-        
+
         // チケットが入力されていない場合はバリデーションエラー発生
         if ticketName.isEmpty {
             delegate?.showValidateAlert(error: .titleEmptyError)
             return
         }
-        
+
         // 同じ名前のチケットがある場合はバリデーションエラー発生
-        if !(tickets?.map{$0.ticketName})!.filter({$0 == ticketName}).isEmpty, afterTicketName != ticketName {
+        if !(tickets?.map {$0.ticketName})!.filter({$0 == ticketName}).isEmpty, afterTicketName != ticketName {
             delegate?.showValidateAlert(error: .ticketValidError)
             return
         }
-        
+
         ticket?.ticketName = ticketName
         ticket?.comment = memo
         tickets?[index!] = ticket!
         callback()
     }
-    
+
     func changeTicketCompleted(ticketName: String, completed: Bool) {
         let ticket = tickets?.filter {
             $0.ticketName == ticketName
@@ -160,9 +160,9 @@ class TaskViewModel: NSObject {
         ticket?.first!.isCompleted = completed
         updateModel(actionType: self.actionType)
     }
-    
-    func updateModel(actionType :ActionType, callback: (() -> Void)? = nil) {
-        taskLocalDataModel!.taskUpdate(id: self.taskID!,tickets: self.tickets!, actionType: actionType, callback: {
+
+    func updateModel(actionType: ActionType, callback: (() -> Void)? = nil) {
+        taskLocalDataModel!.taskUpdate(id: self.taskID!, tickets: self.tickets!, actionType: actionType, callback: {
             if let callback = callback {
                 callback()
                 self.delegate?.didChangeTaskCount(taskCount: self.taskCount())
@@ -177,31 +177,31 @@ class TaskViewModel: NSObject {
         for value in self.tickets!.map({$0.isCompleted}) {
             compCount += value ? 1 : 0
         }
-        
+
         let num = round(Double(compCount)/Double(self.tickets!.count)*100)/100
         self.completedProgress = num
         changeProgress()
     }
-    
+
     func changeProgress() {
         let progress = self.completedProgress!
         progressSubject.onNext(progress)
     }
-    
+
     func getTaskData() {
         tasks = taskLocalDataModel!.tasks
     }
-    
+
     func setupIcon() {
         self.iconImage = UIImage(named: "")
     }
-    
+
     func checkIsTaskEmpty() {
         let isTaskEmpty = self.taskLocalDataModel!.tasks.isEmpty
         self.delegate?.setTaskEmptyViewState(isHidden: !(isTaskEmpty))
         if !(isTaskEmpty) {
             self.delegate?.createAllTaskViews()
         }
-        
+
     }
 }

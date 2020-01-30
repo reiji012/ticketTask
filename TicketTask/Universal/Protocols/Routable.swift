@@ -14,7 +14,7 @@ enum PresentDestination {
     case editTaskViewController(taskView: TaskViewProtocol)
     case selectColorViewController(delegate: ColorSelectViewControllerDelegate?)
     case selectIconViewController(delegate: IconSelectViewControllerDelegate?, color: TaskColor)
-    
+
     var viewController: UIViewController {
         switch self {
         case .mainViewController:
@@ -33,7 +33,7 @@ enum PresentDestination {
 
 enum PushDestination {
     case dummyController
-    
+
     var viewController: UIViewController {
         switch self {
         case .dummyController:
@@ -51,7 +51,7 @@ extension Routable {
     func present(_ destination: PresentDestination, from viewController: UIViewController, animated: Bool, completion: (() -> Void)? = nil) {
         viewController.present(destination.viewController, animated: animated, completion: completion)
     }
-    
+
     func navigationControllerPush(_ destination: PushDestination, from viewController: UIViewController, animated: Bool) {
         // viewControllerがUINavigationControllerだった時、そのままpushViewControllerを呼ぶ
         if let viewController = viewController as? UINavigationController {

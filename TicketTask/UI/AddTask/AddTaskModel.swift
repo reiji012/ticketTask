@@ -11,13 +11,13 @@ import Foundation
 enum RemindTtpe {
     case none
     case date
-    
+
 }
 
 enum TableCellModel {
     case reminder
     case ticket
-    
+
     var cellIdentifier: String {
         switch self {
         case .reminder:

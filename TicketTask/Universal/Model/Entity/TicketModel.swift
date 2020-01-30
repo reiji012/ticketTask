@@ -14,7 +14,7 @@ class TicketModel: Object {
     @objc dynamic var ticketName: String = ""
     @objc dynamic var comment: String = ""
     @objc dynamic var isCompleted: Bool = false
-    
+
     override static func primaryKey() -> String? {
         return "identifier"
     }

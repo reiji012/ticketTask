@@ -11,7 +11,7 @@ import RealmSwift
 
 class EntityItem: Object {
     @objc dynamic var id: Int = 0
-    
+
     override static func primaryKey() -> String? {
         return "id"
     }

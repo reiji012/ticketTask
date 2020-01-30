@@ -12,11 +12,11 @@ import UIKit
 protocol ColorSelectViewPresenterProtocol {
     var numberOfRow: Int { get }
     func content(indexPath: IndexPath) -> TaskColor
-    func selectContent(indexPath: IndexPath) -> TaskColor 
+    func selectContent(indexPath: IndexPath) -> TaskColor
 }
 
 class ColorSelectViewPresenter: ColorSelectViewPresenterProtocol {
-    
+
     private var view: ColorSelectViewControllerProtocol!
     private var contents: [TaskColor] {
         return [
@@ -25,22 +25,22 @@ class ColorSelectViewPresenter: ColorSelectViewPresenterProtocol {
             .yello,
             .blue,
             .purple,
-            .green,
+            .green
         ]
     }
-    
+
     init(view: ColorSelectViewControllerProtocol) {
         self.view = view
     }
-    
+
     var numberOfRow: Int {
         return contents.count
     }
-    
+
     func content(indexPath: IndexPath) -> TaskColor {
         return contents[indexPath.row]
     }
-    
+
     func selectContent(indexPath: IndexPath) -> TaskColor {
         switch indexPath.row {
         case 0:

@@ -13,10 +13,10 @@ class TicketsTableViewCell: UITableViewCell {
     @IBOutlet weak var content: UIView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var memoLabel: UILabel!
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        
+
     }
 }

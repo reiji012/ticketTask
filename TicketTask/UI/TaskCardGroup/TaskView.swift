@@ -24,24 +24,24 @@ protocol TaskViewProtocol {
     func reloadDate()
 }
 
-class TaskView: UIView, TaskViewProtocol{
-    
+class TaskView: UIView, TaskViewProtocol {
+
     // MARK: - Public Propaty
     var presenter: TaskViewPresenterProtocol!
-    var delegate: TaskViewDelegate?
-    
+    weak var delegate: TaskViewDelegate?
+
     var topSafeAreaHeight: CGFloat = 0
-    
+
     var layerChangeCount: UInt32 = 0
     var gradientLayer = CAGradientLayer()
-    var mainViewController: MainViewController? = nil
+    var mainViewController: MainViewController?
     var isShowDetail: Bool = false
     var isCenter: Bool = false {
         didSet {
             self.isUserInteractionEnabled = isCenter
         }
     }
-    
+
     // MARK: - Private Propaty
     @IBOutlet private weak var buttonTextLabel: UILabel!
     @IBOutlet private weak var ticketAddBtn: UIButton!
@@ -59,19 +59,19 @@ class TaskView: UIView, TaskViewProtocol{
     @IBOutlet private weak var progressBarWidthConst: NSLayoutConstraint!
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var headerViewConst: NSLayoutConstraint!
-    
+
     private var defoultWidth: CGFloat?
     var defoultHeight: CGFloat?
     private var defoultX: CGFloat?
     private var defoultY: CGFloat?
     private var ticketsCount: Int = 0
     private let disposeBag = DisposeBag()
-    
+
     // MARK: - Initilizer
-    static func initiate(mainViewController: MainViewControllerProtocol, task:TaskModel) -> TaskView {
+    static func initiate(mainViewController: MainViewControllerProtocol, task: TaskModel) -> TaskView {
         let view = UINib.instantiateInitialView(from: self)
         view.presenter = TaskViewPresenter(view: view, mainViewController: mainViewController, task: task)
-        
+
         guard let mainViewController = mainViewController as? MainViewController else {
             return view
         }
@@ -79,9 +79,9 @@ class TaskView: UIView, TaskViewProtocol{
         view.setTableView()
         return view
     }
-    
+
     // MARK: - Public Funciton
-    func setViewModel(task:TaskModel, mainVC: MainViewController) {
+    func setViewModel(task: TaskModel, mainVC: MainViewController) {
         self.mainViewController = mainVC
         configureGesture()
         // UIImageView の場合
@@ -90,13 +90,13 @@ class TaskView: UIView, TaskViewProtocol{
         ticketTableView.register(UINib(nibName: "TicketTableViewCell", bundle: nil), forCellReuseIdentifier: "TicketTableViewCell")
         isCenter = false
     }
-    
+
     func configureGesture() {
-        let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(
+        let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer(
             target: self,
             action: #selector(self.touchView(_:)))
         headerView.addGestureRecognizer(tapGesture)
-        
+
         let upSwipe = UISwipeGestureRecognizer(target: self, action: #selector(self.handleSwipes(_:)))
         upSwipe.direction = .up
         headerView.addGestureRecognizer(upSwipe)
@@ -110,10 +110,10 @@ class TaskView: UIView, TaskViewProtocol{
 
         var selectIndex = 0
         let actions = [
-            PopMenuDefaultAction(title: "タスクを削除", image: nil,color: .red,didSelect: { action in
+            PopMenuDefaultAction(title: "タスクを削除", image: nil, color: .red, didSelect: { _ in
                 selectIndex = 1
             }),
-            PopMenuDefaultAction(title: "タスクの編集", image: nil,color: nil, didSelect: { action in
+            PopMenuDefaultAction(title: "タスクの編集", image: nil, color: nil, didSelect: { _ in
                 selectIndex = 2
             })
         ]
@@ -136,26 +136,25 @@ class TaskView: UIView, TaskViewProtocol{
             }
         }
     }
-    
-    @objc func touchView(_ sender: UITapGestureRecognizer){
+
+    @objc func touchView(_ sender: UITapGestureRecognizer) {
         presenter.touchView()
     }
-    
-    @objc func handleSwipes(_ sender:UISwipeGestureRecognizer) {
+
+    @objc func handleSwipes(_ sender: UISwipeGestureRecognizer) {
         print(sender.direction)
-            
+
         if (sender.direction == .up), !self.isShowDetail {
             // 上にスワイプ
             presenter.touchView()
         }
-            
+
         if (sender.direction == .down), self.isShowDetail {
             // 下にスワイプ
             presenter.touchView()
         }
     }
-    
-    
+
     func touchEditButton() {
         let editViewController = EditTaskViewController.initiate(taskView: self)
         let trantisionDelegate = SPStorkTransitioningDelegate()
@@ -163,49 +162,49 @@ class TaskView: UIView, TaskViewProtocol{
         editViewController.modalPresentationStyle = .custom
         self.mainViewController?.showEditView(editTaskVC: editViewController, taskVM: self.presenter.taskViewModel)
     }
-    
+
     func touchDeleteButton() {
-        let alert: UIAlertController = UIAlertController(title: "タスクを削除しますか？", message: "", preferredStyle:  UIAlertController.Style.alert)
-        
+        let alert: UIAlertController = UIAlertController(title: "タスクを削除しますか？", message: "", preferredStyle: UIAlertController.Style.alert)
+
         // ② Actionの設定
         // Action初期化時にタイトル, スタイル, 押された時に実行されるハンドラを指定する
         // 第3引数のUIAlertActionStyleでボタンのスタイルを指定する
         // OKボタン
-        let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{
+        let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: {
             // ボタンが押された時の処理を書く（クロージャ実装）
-            (action: UIAlertAction!) -> Void in
+            (_: UIAlertAction!) -> Void in
             print("OK")
             self.presenter.deleteTask()
         })
         // キャンセルボタン
-        let cancelAction: UIAlertAction = UIAlertAction(title: "キャンセル", style: UIAlertAction.Style.cancel, handler:{
+        let cancelAction: UIAlertAction = UIAlertAction(title: "キャンセル", style: UIAlertAction.Style.cancel, handler: {
             // ボタンが押された時の処理を書く（クロージャ実装）
-            (action: UIAlertAction!) -> Void in
+            (_: UIAlertAction!) -> Void in
             print("Cancel")
         })
-        
+
         // ③ UIAlertControllerにActionを追加
         alert.addAction(cancelAction)
         alert.addAction(defaultAction)
         // ④ Alertを表示
         mainViewController!.present(alert, animated: true, completion: nil)
     }
-    
+
     func bind() {
         self.backButton.rx.tap
             .subscribe { [weak self] _ in
                 self?.changeViewSize()
-            }
-            .disposed(by: disposeBag)
-        
+        }
+        .disposed(by: disposeBag)
+
         self.ticketAddBtn.rx.tap
             .subscribe { [weak self] _ in
                 self?.touchAddTicketButton()
-            }
-            .disposed(by: disposeBag)
-        
+        }
+        .disposed(by: disposeBag)
+
         ticketProgressBar?.setProgress(Float(self.presenter.taskViewModel.completedProgress!), animated: true)
-        
+
         // 達成率が変わった時のUI処理
         self.presenter.taskViewModel.progress.subscribe(onNext: { [ticketProgressBar] in
             let convertProgress = Int(($0)*100)
@@ -216,37 +215,36 @@ class TaskView: UIView, TaskViewProtocol{
             }
             delegate.didChangeTicketCompletion()
         }).disposed(by: disposeBag)
-        
+
         self.presenter.taskViewModel.ticketCout.subscribe(onNext: { [weak ticketCountLabel] in
             self.ticketsCount = $0
             let ticketCount = "チケット：\($0)"
             ticketCountLabel!.text = ticketCount
         }).disposed(by: disposeBag)
-        
+
         self.presenter.taskViewModel.taskTitle.subscribe(onNext: { [weak titleLabel] in
             let taskTitle = $0
             titleLabel!.text = taskTitle
         }).disposed(by: disposeBag)
-        
+
         self.presenter.taskViewModel.taskAttri.subscribe(onNext: { [weak attriImageView] in
             _ = $0
             attriImageView!.image = self.presenter.taskViewModel.iconImage
         }).disposed(by: disposeBag)
-        
+
     }
 
-    
     func setImage() {
         self.attriImageView.image = self.presenter.taskViewModel.iconImage?.withRenderingMode(.alwaysTemplate)
     }
-    
+
     func touchAddTicketButton() {
         DispatchQueue.main.async {
             self.mainViewController?.addTicketView!.delegate = self
             self.mainViewController?.didTouchAddTicketButton(title: "", memo: "")
         }
     }
-    
+
     func setLayout() {
         self.ticketAddBtn.isHidden = true
         self.buttonTextLabel.isHidden = true
@@ -258,7 +256,7 @@ class TaskView: UIView, TaskViewProtocol{
         // リサイズ用に初期サイズを保存しておく
         self.defoultX = self.frame.origin.x
         self.defoultY = self.frame.origin.y
-        
+
         self.layer.cornerRadius = 30
         self.headerView.layer.cornerRadius = 30
         self.headerViewConst.constant = screenType.taskViewCardWidth
@@ -267,31 +265,30 @@ class TaskView: UIView, TaskViewProtocol{
         self.layer.shadowRadius = 12
         self.layer.shadowColor = UIColor.black.cgColor
         self.layer.shadowOffset = CGSize(width: 1, height: 5)
-        
+
         self.progressBarWidthConst.constant = presenter.progressBarWidthConst
         self.menuBtnLeftConst.constant = presenter.menuLeftConst
-        
+
         self.titleLabel.text = self.presenter.taskViewModel.taskName
         self.setButtonLayout()
         self.setGradationColor(color: presenter.currentColor)
         self.setImage()
-//        self.ticketTableView.allowsMultipleSelectionDuringEditing = true
-        
-        
+        //        self.ticketTableView.allowsMultipleSelectionDuringEditing = true
+
         if #available(iOS 13.0, *) {
             let menuImage = menuButton.imageView!.image!.withRenderingMode(.alwaysTemplate)
             menuButton.setImage(menuImage, for: .normal)
             menuButton.tintColor = .dynamicColor
-            
+
             let backButtonImage = backButton.imageView!.image!.withRenderingMode(.alwaysTemplate)
             backButton.setImage(backButtonImage, for: .normal)
             backButton.tintColor = .dynamicColor
         }
     }
-    
+
     func changeViewSize() {
         //拡大縮小の処理
-        if (self.mainViewController != nil) {
+        if self.mainViewController != nil {
             self.mainViewController?.isShowDetail = !self.isShowDetail
         }
         self.mainViewController?.willChangedTaskViewSize()
@@ -304,14 +301,14 @@ class TaskView: UIView, TaskViewProtocol{
             self.headerViewConst.constant = self.defoultWidth!
             self.menuBtnLeftConst.constant -= ((myBoundWidht - self.defoultWidth!))
             self.progressBarWidthConst.constant -= (myBoundWidht - self.defoultWidth!)
-            
+
         } else {
             let topSafeAreaHeight = mainViewController!.view.safeAreaInsets.top
             // 拡大するときの処理
             if 0 < self.mainViewController!.topSafeAreaHeight() {
                 self.menuTopConst.constant = (20 + self.mainViewController!.topSafeAreaHeight())
             } else {
-               self.menuTopConst.constant = 40
+                self.menuTopConst.constant = 40
             }
             self.headerViewConst.constant = (self.parent?.parent?.frame.size.width)!
             self.titleTopConst.constant = 220 + topSafeAreaHeight
@@ -319,11 +316,11 @@ class TaskView: UIView, TaskViewProtocol{
             self.progressBarWidthConst.constant += (myBoundWidht - self.bounds.size.width)
         }
         UIView.animate(withDuration: 0.6, delay: 0.0, animations: {
-            
+
             self.menuButton.layoutIfNeeded()
             self.layoutIfNeeded()
             self.ticketProgressBar.layoutIfNeeded()
-            
+
             self.ticketAddBtn.isHidden = self.isShowDetail
             self.buttonTextLabel.isHidden = self.isShowDetail
             self.layer.cornerRadius = self.isShowDetail ? 30 : 0
@@ -331,20 +328,20 @@ class TaskView: UIView, TaskViewProtocol{
             if self.isShowDetail {
                 // 縮小するときの処理
                 self.ticketTableView.isHidden = true
-                self.frame = CGRect(x:self.defoultX!,y:self.defoultY!,width:self.defoultWidth!,height:self.defoultHeight!)
-                
+                self.frame = CGRect(x: self.defoultX!, y: self.defoultY!, width: self.defoultWidth!, height: self.defoultHeight!)
+
                 self.backButton.isHidden = true
-                
+
             } else {
                 // 拡大するときの処理
                 self.defoultHeight = self.frame.size.height
                 self.defoultWidth = self.bounds.size.width
                 self.defoultX = self.frame.origin.x
                 self.ticketTableView.reloadData()
-                self.frame = CGRect(x:self.frame.origin.x + currentWidth,y:0,width:(self.parent?.parent?.frame.size.width)!,height:UIScreen.main.bounds.size.height - self.mainViewController!.tabbarHeight)
+                self.frame = CGRect(x: self.frame.origin.x + currentWidth, y: 0, width: (self.parent?.parent?.frame.size.width)!, height: UIScreen.main.bounds.size.height - self.mainViewController!.tabbarHeight)
 
             }
-        }, completion: { finished in
+        }, completion: { _ in
             self.isShowDetail = !self.isShowDetail
             self.ticketTableView.isHidden = !self.isShowDetail
             self.backButton.isHidden = !self.isShowDetail
@@ -352,7 +349,7 @@ class TaskView: UIView, TaskViewProtocol{
             self.mainViewController?.didChangedTaskViewSize()
         })
     }
-    
+
     func setTableView() {
         self.ticketTableView.delegate = self
         self.ticketTableView.dataSource = self
@@ -362,7 +359,7 @@ class TaskView: UIView, TaskViewProtocol{
     func deleteRow(indexPath: IndexPath) {
         ticketTableView.deleteRows(at: [indexPath], with: .fade)
     }
-    
+
     func setButtonLayout() {
         let view = UIView()
         view.bounds = ticketAddBtn.bounds
@@ -371,7 +368,7 @@ class TaskView: UIView, TaskViewProtocol{
         self.ticketAddBtn.layer.shadowColor = UIColor.black.cgColor
         self.ticketAddBtn.layer.shadowOffset = CGSize(width: 3, height: 4)
     }
-    
+
     func setGradationColor(color: TaskColor) {
         self.ticketProgressBar.tintColor = color.gradationColor1
         self.attriImageView.image = self.presenter.taskViewModel.iconImage
@@ -388,17 +385,17 @@ class TaskView: UIView, TaskViewProtocol{
     func getMainViewController() -> MainViewController? {
         if let rootViewController = UIApplication.shared.keyWindow?.rootViewController {
             var topViewControlelr: UIViewController = rootViewController
-            
+
             while let presentedViewController = topViewControlelr.presentedViewController {
                 topViewControlelr = presentedViewController
             }
-            
+
             return topViewControlelr as? MainViewController
         } else {
             return nil
         }
     }
-    
+
     // 親ビュー (parent) に対して上下左右マージンゼロの指定をする
     func applyAutoLayoutMatchParent(parent: UIView, margin: CGFloat = 0) {
         self.translatesAutoresizingMaskIntoConstraints = false
@@ -416,31 +413,31 @@ class TaskView: UIView, TaskViewProtocol{
         }
         parent.addConstraints(constraints)
     }
-    
+
     func didCreatedTicketd() {
         mainViewController?.addTicketView?.hideView()
         ticketTableView.reloadData()
     }
-    
+
     func taskDidUpdate() {
         presenter.taskDidUpdate()
     }
-    
+
     func reloadDate() {
         ticketTableView.reloadData()
-        
+
     }
 }
 
 // MARK: - Extention PopMenuViewControllerDelegate
 extension MainViewController: PopMenuViewControllerDelegate {
-    
+
     // This will be called when a menu action was selected
     func popMenuDidSelectItem(_ popMenuViewController: PopMenuViewController, at index: Int) {
         // Do stuff here...MainViewController
         print(index)
     }
-    
+
 }
 
 // MARK: - Extention UITableViewDelegate
@@ -450,7 +447,7 @@ extension TaskView: UITableViewDelegate {
         let content = presenter.content(index: indexPath.row)
         self.mainViewController?.didTouchAddTicketButton(title: content.title, memo: content.memo, identifier: content.identifier)
     }
-    
+
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let ticketName = Array(self.presenter.taskViewModel.tickets!.map({$0.ticketName}))[indexPath.row]
@@ -471,11 +468,11 @@ extension TaskView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return (self.presenter.taskViewModel.tickets?.count)!
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "TicketTableViewCell") as? TicketTableViewCell {
             cell.taskViewModel = self.presenter.taskViewModel
@@ -494,24 +491,24 @@ extension TaskView: UITableViewDataSource {
             cell.commentLabel.text = commentText
             return cell
         }
-        
+
         return UITableViewCell()
     }
-    
+
 }
 
 extension TaskView: AddTicketViewDelegate {
-    
+
     func didTouchCloseButton() {
-        
+
     }
-    
+
     func didTouchCheckButton(title: String, memo: String) {
         //追加ボタンを押した時の処理
         self.ticketTableView.reloadData()
         self.presenter.didTouchAddTicketButton(ticket: title, memo: memo)
     }
-    
+
     func didTouchCheckButtonAsEdit(title: String, memo: String, identifier: String) {
         self.presenter.didTouchCheckButtonAsEdit(title: title, memo: memo, identifier: identifier)
     }

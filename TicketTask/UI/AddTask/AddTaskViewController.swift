@@ -25,13 +25,13 @@ protocol AddTaskViewControllerProtocol {
     func showAddTicketViewAsEdit(ticketModel: TicketsModel)
 }
 
-class AddTaskViewController: UIViewController{
+class AddTaskViewController: UIViewController {
 
-    //MARK: - Public Propaty
+    // MARK: - Public Propaty
     var gradientLayer: CAGradientLayer = CAGradientLayer()
     var mainVC: MainViewController?
     let navBar = SPFakeBarView.init(style: .stork)
-    
+
     var presenter: AddTaskViewPresenterProtocol!
     var tableView: UITableView = UITableView()
     var addTicketView: AddTicketView?
@@ -40,7 +40,7 @@ class AddTaskViewController: UIViewController{
     private var currentIcon: UIImage!
     private var currentIconStr: String!
     private var resetType: Int = 0
-    
+
     @IBOutlet weak var addReminderButton: PickerViewKeyboard!
     @IBOutlet private weak var scrolView: UIScrollView!
     @IBOutlet private weak var timerBtm: UISegmentedControl!
@@ -53,7 +53,6 @@ class AddTaskViewController: UIViewController{
     @IBOutlet private weak var colorView: UIView!
     @IBOutlet private weak var reminderTableView: UITableView!
     @IBOutlet weak var ticketAbbButton: UIButton!
-    
 
     // MARK: - Initilizer
     static func initiate() -> AddTaskViewController {
@@ -61,34 +60,34 @@ class AddTaskViewController: UIViewController{
         viewController.presenter = AddTaskViewPresenter(vc: viewController)
         return viewController
     }
-    
+
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.viewDidLoad()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(_onKeyboardWillShow(_:)),
                                                name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(onKeyboardWillHide(_:)),
                                                name: UIResponder.keyboardWillHideNotification, object: nil)
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.view.gestureRecognizers![0].delegate = self
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-        
+
         super.viewWillDisappear(animated)
     }
-    
+
     func configureDelegates() {
         titleTextField.delegate = self
         ticketTableView.delegate = self
@@ -97,9 +96,9 @@ class AddTaskViewController: UIViewController{
         reminderTableView.dataSource = self
         addReminderButton.delegate = self
     }
-    
+
     // MARK: - Public Function
-    
+
     // チケットView
     func configureAddTicketView() {
         addTicketView = AddTicketView.initiate(taskModel: TaskModel(id: 0))
@@ -109,7 +108,7 @@ class AddTaskViewController: UIViewController{
         self.view.addSubview(addTicketView!)
         addTicketView!.isHidden = true
     }
-    
+
     // ナビゲーション
     func configureNavigationItem() {
         self.navBar.titleLabel.text = "タスクを追加"
@@ -120,37 +119,37 @@ class AddTaskViewController: UIViewController{
         self.navBar.backgroundColor = UIColor.lightGray
         self.view.addSubview(self.navBar)
     }
-    
+
     // カラー、アイコン
     func configureColorAndIcon() {
         self.setColorView()
         self.setIconImage()
         self.setGradationColor()
     }
-    
+
     @IBAction func tapIconView(_ sender: Any) {
         let iconSelectVC = IconSelectViewController.initiate(delegate: self, color: presenter.currentColor)
 
         //表示
         present(iconSelectVC, animated: true, completion: nil)
     }
-    
+
     @IBAction func tapColorView(_ sender: Any) {
         let colorCollectionVC = ColorSelectViewController.initiate(delegate: self)
         //表示
         present(colorCollectionVC, animated: true, completion: nil)
     }
-    
+
     @IBAction func touchAddTicketButton(_ sender: Any) {
         addTicketView?.showView(title: "", memo: "")
         self.navBar.leftButton.isEnabled = false
         self.navBar.rightButton.isEnabled = false
     }
-    
+
     @objc func touchCanselButton() {
         self.dismiss(animated: true, completion: nil)
     }
-    
+
     @IBAction func touchTimerSetButton(_ sender: Any) {
         presenter.selectedResetTypeIndex(index: timerBtm.selectedSegmentIndex)
     }
@@ -158,20 +157,20 @@ class AddTaskViewController: UIViewController{
     @objc func touchCreateButton() {
         presenter.touchCreateButton(taskName: titleTextField.text!)
     }
-    
+
     @objc func touchAddNotificeButton() {
-        
+
     }
-    
+
     func setColorView() {
         self.colorView.backgroundColor = presenter.currentColor.gradationColor1
         self.iconImageView.tintColor = presenter.currentColor.gradationColor1
     }
-    
+
     func setIconImage() {
         self.iconImageView.image = UIImage(named: presenter.currentTaskModel.icon)?.withRenderingMode(.alwaysTemplate)
     }
-    
+
     func setGradationColor() {
         UIView.animate(withDuration: 0.5, animations: { () -> Void in
             let color = self.presenter.currentColor
@@ -187,11 +186,11 @@ class AddTaskViewController: UIViewController{
 
 // MARK: - Extension AddTaskViewControllerProtocol
 extension AddTaskViewController: AddTaskViewControllerProtocol {
-    
+
     func showAddTicketViewAsEdit(ticketModel: TicketsModel) {
         addTicketView?.showView(title: ticketModel.ticketName, memo: ticketModel.comment, identifier: ticketModel.identifier)
     }
-    
+
     func didTaskDataCreated() {
         dismiss(animated: true, completion: {
             guard let vc = self.mainVC else {
@@ -200,12 +199,12 @@ extension AddTaskViewController: AddTaskViewControllerProtocol {
             vc.addNewTaskView()
         })
     }
-    
+
     func didAddOrEditTicket() {
         addTicketView?.hideView()
         ticketTableView.reloadData()
     }
-    
+
     func reloadNotificationTable() {
         reminderTableView.reloadData()
     }
@@ -216,8 +215,7 @@ extension AddTaskViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return presenter.numberOfRow(tableView: tableView)
     }
-    
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let identifier = presenter.cellIdentifier(tableView: tableView)
         let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
@@ -240,10 +238,10 @@ extension AddTaskViewController: UITableViewDataSource {
         case .none:
             break
         }
-        
+
         return cell
     }
-    
+
     internal func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             presenter.removeIndex(indexPath: indexPath, tableView: tableView)
@@ -257,7 +255,7 @@ extension AddTaskViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         presenter.selectedTicketCell(index: indexPath.row, tableView: tableView)
     }
-    
+
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 5 // セルの上部のスペース
     }
@@ -270,19 +268,17 @@ extension AddTaskViewController: UITableViewDelegate {
 }
 
 extension AddTaskViewController {
-    
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // キーボードを閉じる
         textField.resignFirstResponder()
         return true
     }
-    
+
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
-    
-    
-    
+
     @objc private func _onKeyboardWillShow(_ notification: Notification) {
         guard
             let userInfo = notification.userInfo,
@@ -290,7 +286,7 @@ extension AddTaskViewController {
             let inputView = view.findFirstResponder(),
             let scrollView = inputView.findSuperView(ofType: UIScrollView.self)
             else { return }
-        
+
         let inputRect = inputView.convert(inputView.bounds, to: scrollView)
         let keyboardRect = scrollView.convert(keyboardInfo.frame, from: nil)
         let offsetY = inputRect.maxY - keyboardRect.minY
@@ -303,7 +299,7 @@ extension AddTaskViewController {
         scrollView.contentInset = contentInset
         scrollView.scrollIndicatorInsets = contentInset
     }
-    
+
     @objc private func onKeyboardWillHide(_ notification: Notification) {
         guard
             let inputView = view.findFirstResponder(),
@@ -331,7 +327,7 @@ extension AddTaskViewController: PickerViewKeyboardDelegate {
         presenter.didDoneDatePicker(selectDate: selectedData)
         self.view.endEditing(true)
     }
-    
+
     func initSelectedRow(sender: PickerViewKeyboard) -> Int {
         return 3
     }
@@ -346,16 +342,15 @@ extension AddTaskViewController: AddTicketViewDelegate {
         self.navBar.leftButton.isEnabled = true
         self.navBar.rightButton.isEnabled = true
     }
-    
+
     func didTouchCheckButton(title: String, memo: String) {
         presenter.touchAddTicketButton(text: title, comment: memo)
     }
-    
+
     func didTouchCheckButtonAsEdit(title: String, memo: String, identifier: String) {
         presenter.touchCheckButtonAsEdit(title: title, memo: memo, identifier: identifier)
     }
-    
-    
+
 }
 
 extension AddTaskViewController: NotificationTableCellDelegate {
@@ -366,16 +361,16 @@ extension AddTaskViewController: NotificationTableCellDelegate {
 
 extension AddTaskViewController: UIGestureRecognizerDelegate {
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        
+
         return true
     }
-    
+
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        
+
         if otherGestureRecognizer.view is UITableView {
             return true
         }
-        
+
         return false
     }
 }

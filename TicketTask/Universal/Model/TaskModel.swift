@@ -16,10 +16,10 @@ class TaskModel: NSObject {
     var icon: String = ""
     var category: String = ""
     var resetType: Int = 0
-    var lastResetDate: Date? = nil
+    var lastResetDate: Date?
     var notifications: [TaskNotificationsModel] = []
     var tickets: [TicketsModel] = []
-    
+
     init(id: Int) {
         self.id = id
     }
@@ -30,10 +30,10 @@ class TicketsModel: NSObject {
     var ticketName: String = ""
     var isCompleted: Bool = false
     var comment: String = ""
-    
+
     override init() {
     }
-    
+
     func initiate(ticketName: String, comment: String) -> TicketsModel {
         let ticket = TicketsModel()
         ticket.ticketName = ticketName
@@ -46,6 +46,6 @@ class TicketsModel: NSObject {
 class TaskNotificationsModel: NSObject {
     var id: Int = 0
     var identifier: String = ""
-    var date: Date? = nil
+    var date: Date?
     var isActive: Bool? = false
 }

@@ -13,15 +13,15 @@ protocol IconSelectViewPresenterProtocol {
     var taskColor: TaskColor { get }
 }
 
-class IconSelectViewPresenter: IconSelectViewPresenterProtocol{
-    
+class IconSelectViewPresenter: IconSelectViewPresenterProtocol {
+
     var taskColor: TaskColor
-    
+
     var view: IconSelectViewControllerProtocol!
-    
+
     init(view: IconSelectViewControllerProtocol, taskColor: TaskColor) {
         self.view = view
         self.taskColor = taskColor
     }
-    
+
 }

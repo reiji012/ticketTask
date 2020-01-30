@@ -14,11 +14,11 @@ protocol SplashViewPresenterProtocol {
 
 class SplashViewPresente: SplashViewPresenterProtocol, Routable {
     private var view: SplashViewControllerProtocol
-    
+
     init(view: SplashViewControllerProtocol) {
         self.view = view
     }
-    
+
     func viewDidAppear() {
         guard let viewController = view as? SplashViewController else {
             return

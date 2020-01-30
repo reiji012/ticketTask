@@ -14,7 +14,7 @@ extension UIStoryboard {
     ///
     /// - Parameter className: UIViewControllerを継承しているClass名
     /// - Returns: 引数で渡したClass名のViewControllerのinstanceを返す
-    public static func instantiateInitialViewController<T>(from className: T.Type) -> T where T : UIViewController {
+    public static func instantiateInitialViewController<T>(from className: T.Type) -> T where T: UIViewController {
         let name = String(describing: className.self)
         guard let viewController = UIStoryboard(name: name, bundle: .main).instantiateInitialViewController() as? T else {
             fatalError("型が不一致")
@@ -29,7 +29,7 @@ extension UIStoryboard {
     ///   - className: UIViewControllerを継承しているClass名
     ///   - identifier: Storyboard identifier 省略した場合、class名と一致するものを探す
     /// - Returns: 引数で渡したClass名のViewControllerのinstanceを返す
-    public static func instantiateViewController<T>(from className: T.Type, identifier: String? = nil) -> T where T : UIViewController {
+    public static func instantiateViewController<T>(from className: T.Type, identifier: String? = nil) -> T where T: UIViewController {
         let name = String(describing: className.self)
         let identifier = identifier ?? name
         guard let viewController = UIStoryboard(name: name, bundle: .main).instantiateViewController(withIdentifier: identifier) as? T else {

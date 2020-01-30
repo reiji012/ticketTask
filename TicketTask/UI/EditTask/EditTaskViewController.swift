@@ -33,10 +33,10 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
     var mainVC: MainViewController?
     var isEdited: Bool = false
     var pickerView: UIPickerView = UIPickerView()
-    
+
     var currentIconStr: String?
     var currentIcon: UIImage?
-    
+
     // MARK: - Private Property
     @IBOutlet private weak var addReminderButton: PickerViewKeyboard!
     @IBOutlet private weak var iconImageView: UIImageView!
@@ -47,11 +47,11 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
     @IBOutlet private weak var contentsView: UIView!
     @IBOutlet private weak var scrollView: UIScrollView!
     @IBOutlet private weak var reminderTableView: UITableView!
-    
+
     private var presenter: EditTaskViewPresenterProtocol!
     private var resetType: Int = 0
     private let disposeBag = DisposeBag()
-    
+
     // MARK: - Initilizer
     static func initiate(taskView: TaskViewProtocol) -> EditTaskViewController {
         let viewController = UIStoryboard.instantiateInitialViewController(from: self)
@@ -62,29 +62,29 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
         viewController.modalPresentationCapturesStatusBarAppearance = true
         return viewController
     }
-    
+
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.viewDidLoad()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.view.gestureRecognizers![0].delegate = self
     }
-    
+
     // MARK: - Public Function
     func cunfigureDelegate() {
         addReminderButton.delegate = self
         reminderTableView.dataSource = self
         reminderTableView.delegate = self
     }
-    
+
     func configureNavigationBar() {
         self.navBar.titleLabel.text = "編集画面"
         self.navBar.leftButton.setTitle("キャンセル", for: .normal)
@@ -94,7 +94,7 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
         self.navBar.backgroundColor = UIColor.lightGray
         self.view.addSubview(self.navBar)
     }
-    
+
     @objc func touchCanselButton() {
         if isEdited {
             self.showAlert()
@@ -102,44 +102,44 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
             self.dismiss(animated: true, completion: nil)
         }
     }
-    
+
     @objc func touchSaveButton() {
-        if (self.titleTextField.text == nil) {
+        if self.titleTextField.text == nil {
             return
         }
         presenter.touchSaveButton(afterTaskName: self.titleTextField.text!)
     }
-    
+
     @IBAction func touchIconView(_ sender: Any) {
         let iconSelectVC = IconSelectViewController.initiate(delegate: self, color: presenter.currentColor)
         //表示
         present(iconSelectVC, animated: true, completion: nil)
     }
-    
+
     @IBAction func touchColorView(_ sender: Any) {
         let colorCollectionVC = ColorSelectViewController.initiate(delegate: self)
         //表示
         present(colorCollectionVC, animated: true, completion: nil)
     }
-    
+
     @IBAction func touchTimerSetButton(_ sender: Any) {
         presenter.touchTimerSetButton(resetTypeIndex: timerBtn.selectedSegmentIndex)
     }
-    
+
     func configureBind() {
         titleTextField.rx.controlEvent(.editingChanged).asDriver()
             .drive(onNext: { _ in
                 self.isEdited = true
             })
             .disposed(by: disposeBag)
-        
+
         titleTextField.rx.controlEvent(.editingDidEndOnExit).asDriver()
             .drive(onNext: { _ in
                 self.titleTextField.endEditing(true)
             })
             .disposed(by: disposeBag)
     }
-    
+
     func initSetViewState() {
         setColorView(color: presenter!.currentColor.gradationColor1)
         setIconImage(icon: presenter!.currentIcon)
@@ -147,7 +147,7 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
         self.view.backgroundColor = UIColor.white
         self.titleTextField.text = presenter.taskViewModel?.taskName
     }
-    
+
     func setGradationColor() {
         DispatchQueue.main.async {
             UIView.animate(withDuration: 0.5, animations: { () -> Void in
@@ -162,51 +162,51 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
             })
         }
     }
-    
+
     func selectedColor(color: TaskColor) {
         presenter.currentColor = color
     }
-    
+
     func selectedIcon(iconStr: String) {
         presenter.currentIconString = iconStr
     }
-    
+
     func showAlert() {
-        let alert: UIAlertController = UIAlertController(title: "変更を破棄しますか？", message: "", preferredStyle:  UIAlertController.Style.alert)
+        let alert: UIAlertController = UIAlertController(title: "変更を破棄しますか？", message: "", preferredStyle: UIAlertController.Style.alert)
 
         // OKボタン
-        let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{
+        let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: {
             // ボタンが押された時の処理を書く（クロージャ実装）
-            (action: UIAlertAction!) -> Void in
+            (_: UIAlertAction!) -> Void in
             print("OK")
             self.dismiss(animated: true, completion: nil)
         })
         // キャンセルボタン
-        let cancelAction: UIAlertAction = UIAlertAction(title: "キャンセル", style: UIAlertAction.Style.cancel, handler:{
+        let cancelAction: UIAlertAction = UIAlertAction(title: "キャンセル", style: UIAlertAction.Style.cancel, handler: {
             // ボタンが押された時の処理を書く（クロージャ実装）
-            (action: UIAlertAction!) -> Void in
+            (_: UIAlertAction!) -> Void in
             print("Cancel")
         })
-        
+
         // ③ UIAlertControllerにActionを追加
         alert.addAction(cancelAction)
         alert.addAction(defaultAction)
         // ④ Alertを表示
         self.present(alert, animated: true, completion: nil)
     }
-    
+
     func resetTitle(title: String) {
         titleTextField.text = title
     }
-    
+
     func changeColor() {
-        
+
     }
-    
+
     func setTimeSelectIndex(index: Int) {
         timerBtn.selectedSegmentIndex = index
     }
-    
+
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
@@ -223,30 +223,29 @@ extension EditTaskViewController: EditTaskViewControllerProtocol {
         }
         self.mainVC?.taskEdited(currentTaskView: taskView)
     }
-    
+
     func setIconImage(icon: UIImage) {
         DispatchQueue.main.async {
             self.iconImageView.image = self.presenter.currentIcon
         }
     }
-    
+
     func setColorView(color: UIColor) {
         self.colorView.backgroundColor = color
         self.iconImageView.tintColor = color
         setGradationColor()
     }
-    
+
     func reloadNotificationTable() {
         reminderTableView.reloadData()
     }
 }
 
 extension EditTaskViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool
-    {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
-    
+
     //スワイプしたセルを削除
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == UITableViewCell.EditingStyle.delete {
@@ -258,22 +257,21 @@ extension EditTaskViewController: UITableViewDelegate {
 
 // MARK: - Extension UITableViewDataSource
 extension EditTaskViewController: UITableViewDataSource {
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return presenter.numberOfRow()
     }
-    
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let identifier = "dataCell"
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! NotificationTableCell
-        
+
         let content = presenter.contents(index: indexPath.row)
         cell.dateLabel!.text = Util.stringFromDate(date: content.date, format: "HH:mm")
         cell.switchButton.isOn = content.isActive
         cell.identifier = content.identifier
         cell.delegate = self
-        
+
         return cell
     }
 }
@@ -283,7 +281,7 @@ extension EditTaskViewController: PickerViewKeyboardDelegate {
         presenter.didDoneDatePicker(selectDate: selectedData)
         self.view.endEditing(true)
     }
-    
+
     func initSelectedRow(sender: PickerViewKeyboard) -> Int {
         return 3
     }
@@ -301,16 +299,16 @@ extension EditTaskViewController: NotificationTableCellDelegate {
 
 extension EditTaskViewController: UIGestureRecognizerDelegate {
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        
+
         return true
     }
-    
+
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        
+
         if otherGestureRecognizer.view is UITableView {
             return true
         }
-        
+
         return false
     }
 }

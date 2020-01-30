@@ -27,7 +27,7 @@ protocol EditTaskViewPresenterProtocol {
 }
 
 class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
-    
+
     // MARK: - Public Propaty
     var taskView: TaskViewProtocol!
     var taskViewModel: TaskViewModel?
@@ -48,17 +48,17 @@ class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
             view.setColorView(color: currentColor.gradationColor1)
         }
     }
-    
+
     // MARK: - Private Property
     private var view: EditTaskViewControllerProtocol!
     private var taskLocalDataModel: TaskLocalDataModel = TaskLocalDataModel.sharedManager
     private var beforeName: String?
     private var resetTypeIndex: Int?
     private let currentTaskModel: TaskModel
-    
+
     // 削除した通知のidentifierを保持しておく
     private var deleteNotificationsIdentifier: [String] = []
-    
+
     // MARK: - initialize
     init(view: EditTaskViewControllerProtocol, taskView: TaskViewProtocol) {
         self.view = view
@@ -72,18 +72,18 @@ class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
         currentTaskModel.notifications = (taskViewModel?.notifications!)!
         currentTaskModel.color = taskViewModel!.taskColor!.colorString
     }
-    
+
     /// セルの数を返す
     func numberOfRow() -> Int {
         return currentTaskModel.notifications.isEmpty ? 0 : currentTaskModel.notifications.count
     }
-    
+
     /// セルの中身を返す
     func contents(index: Int) -> (date: Date, isActive: Bool, identifier: String) {
         let notice = currentTaskModel.notifications[index]
         return (notice.date!, notice.isActive!, notice.identifier)
     }
-    
+
     // MARK: - Public Function
     func viewDidLoad() {
         view.setTimeSelectIndex(index: currentTaskModel.resetType)
@@ -93,10 +93,10 @@ class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
         view.cunfigureDelegate()
         view.initSetViewState()
     }
-    
+
     // 保存ボタン
     func touchSaveButton(afterTaskName: String) {
-        
+
         if afterTaskName.isEmpty {
             guard let viewController = self.view as? EditTaskViewController else {
                 return
@@ -107,8 +107,8 @@ class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
         }
         currentTaskModel.taskTitle = afterTaskName
         currentTaskModel.attri = ""
-        
-        let error = taskLocalDataModel.editTask(currentTaskModel: currentTaskModel, beforeName: beforeName!, deleteNotifications: deleteNotificationsIdentifier,  completion: {
+
+        let error = taskLocalDataModel.editTask(currentTaskModel: currentTaskModel, beforeName: beforeName!, deleteNotifications: deleteNotificationsIdentifier, completion: {
             let vm = self.taskView.presenter.taskViewModel
             vm.taskName = afterTaskName
             vm.attri = ""
@@ -126,31 +126,31 @@ class EditTaskViewPresenter: EditTaskViewPresenterProtocol, ErrorAlert {
             createErrorAlert(error: error, massage: "", view: viewController)
         }
     }
-    
+
     func touchTimerSetButton(resetTypeIndex: Int) {
         currentTaskModel.resetType = resetTypeIndex
     }
-    
+
     // 通知削除
     func didDeleteNotification(index: Int) {
         let noticeIdentifier = currentTaskModel.notifications[index].identifier
         deleteNotificationsIdentifier.append(noticeIdentifier)
         currentTaskModel.notifications.remove(at: index)
     }
-    
+
     func didDoneDatePicker(selectDate: Date) {
         let dateString = Util.stringFromDateAsNotice(date: selectDate)
         createTaskNotification(id: currentTaskModel.notifications.count + 1, dateString: dateString)
         view.reloadNotificationTable()
     }
-    
+
     // 通知がオン・オフで切り替わった時
     func didChengeNotificationActive(isActive: Bool, identifier: String) {
         let notice = currentTaskModel.notifications.filter { $0.identifier == identifier }.first!
         let index = currentTaskModel.notifications.index(of: notice)
         currentTaskModel.notifications[index!].isActive = isActive
     }
-    
+
     private func createTaskNotification(id: Int, dateString: String) {
         let notice = TaskNotificationsModel()
         notice.date = Util.dateFromStringAsNotice(string: dateString)

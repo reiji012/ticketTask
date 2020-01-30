@@ -39,12 +39,12 @@ protocol MainViewControllerProtocol {
 }
 
 class MainViewController: UIViewController {
-    
+
     // MARK: - Public Propaty
     // ViewModelの取得
     var taskViewModel = TaskViewModel()
     var taskViewIndex: Int?
-    
+
     var isShowDetail: Bool = false {
         didSet(value) {
             self.scrollView.isScrollEnabled = value
@@ -58,26 +58,26 @@ class MainViewController: UIViewController {
     let taskViewWidth: CGFloat = screenType.taskViewCardWidth
     var scrollWidth: Int = Int(screenType.taskViewCardWidth + 15)
     var stopPoint: CGFloat = 0.0
-    var originX:CGFloat?
+    var originX: CGFloat?
     func topSafeAreaHeight() -> CGFloat {
         return self.view.safeAreaInsets.top
     }
     let transition = BubbleTransition()
     var tabbarHeight: CGFloat!
     var addTicketView: AddTicketView?
-    
+
     // MARK: - Private Property
     private var presenter: MainViewPresenterProtocol!
     //カウンターアニメーションの時間設定
     private var counterAnimationLabelDuration: TimeInterval = 3.0
-    
+
     private let initTaskViewHeight: CGFloat = 300
     private let initTaskViewWidth: CGFloat = 350
     private var dummyViewWidth: CGFloat!
     private var scrollViewHeight: CGFloat!
-    
+
     private var progressRing: UICircularProgressRing!
-    
+
     @IBOutlet private weak var scrollView: UIScrollView!
     @IBOutlet private weak var weatherView: UIView!
     @IBOutlet private weak var taskAddButton: UIButton!
@@ -86,16 +86,16 @@ class MainViewController: UIViewController {
     @IBOutlet weak var progressTitleTopHeightConst: NSLayoutConstraint!
     @IBOutlet weak var compCountLabel: UILabel!
     @IBOutlet weak var unCompCountLabel: UILabel!
-    
+
     var bannerView: GADBannerView!
-    
+
     // MARK: - Initilizer
     static func initiate() -> MainViewController {
         let viewController = UIStoryboard.instantiateInitialViewController(from: self)
         viewController.presenter = MainViewPresenter(vc: viewController)
         return viewController
     }
-    
+
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -103,59 +103,58 @@ class MainViewController: UIViewController {
         presenter.viewDidLoad()
         // 端末のサイズでタスクカードの大きさを設定
         let myBoundSize: CGSize = UIScreen.main.bounds.size
-    
+
         taskViewHeight = myBoundSize.height <= 600 ? 250 : 300
         dummyViewWidth = scrollView.frame.size.width/2 - taskViewWidth/2
         scrollViewHeight = scrollView.frame.size.height
-        
+
         scrollView.delegate = self
-        
+
         scrollView.showsVerticalScrollIndicator = false
         // Do any additional setup after loading the view.
         bindUI()
         presenter.checkIsTaskEmpty()
-        
+
         bannerView = GADBannerView(adSize: kGADAdSizeBanner)
 
         addBannerViewToView(bannerView)
-        
+
         bannerView.adUnitID = AdmobId.adsenceId
         bannerView.rootViewController = self
         let request = GADRequest()
-        
+
         #if DEBUG // MARK: - 検証環境
-            request.testDevices = ["d23b07b44930454621bf128502978077"]
+        request.testDevices = ["d23b07b44930454621bf128502978077"]
         #endif
-        
+
         bannerView.load(request)
         bannerView.delegate = self
-        
+
         bannerView.isHidden = true
-        
+
     }
-    
+
     func addBannerViewToView(_ bannerView: GADBannerView) {
-     bannerView.translatesAutoresizingMaskIntoConstraints = false
-     view.addSubview(bannerView)
-     view.addConstraints(
-       [NSLayoutConstraint(item: bannerView,
-                           attribute: .bottom,
-                           relatedBy: .equal,
-                           toItem: bottomLayoutGuide,
-                           attribute: .top,
-                           multiplier: 1,
-                           constant: 0),
-        NSLayoutConstraint(item: bannerView,
-                           attribute: .centerX,
-                           relatedBy: .equal,
-                           toItem: view,
-                           attribute: .centerX,
-                           multiplier: 1,
-                           constant: 0)
-       ])
+        bannerView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(bannerView)
+        view.addConstraints(
+            [NSLayoutConstraint(item: bannerView,
+                                attribute: .bottom,
+                                relatedBy: .equal,
+                                toItem: bottomLayoutGuide,
+                                attribute: .top,
+                                multiplier: 1,
+                                constant: 0),
+             NSLayoutConstraint(item: bannerView,
+                                attribute: .centerX,
+                                relatedBy: .equal,
+                                toItem: view,
+                                attribute: .centerX,
+                                multiplier: 1,
+                                constant: 0)
+        ])
     }
-    
-    
+
     override func viewWillLayoutSubviews() {
         if let currentTaskView = taskView {
             currentTaskView.setGradationColor(color: currentTaskView.presenter.currentColor)
@@ -164,7 +163,7 @@ class MainViewController: UIViewController {
             }
         }
     }
-    
+
     override func viewDidLayoutSubviews() {
         self.tabbarHeight = 0
         var contents = [TaskViewContentValue]()
@@ -180,27 +179,27 @@ class MainViewController: UIViewController {
             }
         }
         presenter.contents = contents
-        
+
         if let currentTaskView: TaskView = self.getCenterTaskView() {
             let myBoundSize: CGSize = UIScreen.main.bounds.size
             currentTaskView.frame.size.height = self.isShowDetail ? myBoundSize.height : self.taskViewHeight
             currentTaskView.isCenter = true
             self.scrollView.bringSubviewToFront(currentTaskView)
         }
-        
+
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         progressRing.frame = circleProgressSuperView.frame
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         progressRing.frame = circleProgressSuperView.frame
-        
+
     }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
+
         if let segue = segue as? SwiftMessagesSegue {
             // 絞り込みPopup表示
             segue.configure(layout: .centered)
@@ -219,15 +218,14 @@ class MainViewController: UIViewController {
                 viewController?.presenter = RefineViewPresenter(view: viewController!, contents: contents, uiContent: (title: "未完了のタスク", color: .gray))            }
             return
         }
-        
+
         let controller = segue.destination
         controller.transitioningDelegate = (self as UIViewControllerTransitioningDelegate)
         controller.modalPresentationStyle = .custom
         let nextVC = segue.destination as? AddTaskViewController
         nextVC?.mainVC = self
     }
-    
-    
+
     // MARK: - @IBAction Function
     @IBAction func touchAddButton(_ sender: Any) {
         let viewContreoller = AddTaskViewController.initiate()
@@ -237,15 +235,15 @@ class MainViewController: UIViewController {
         viewContreoller.modalPresentationStyle = .custom
         self.present(viewContreoller, animated: true, completion: nil)
     }
-    
+
     @IBAction func touchCompletedButton(_ sender: UIButton) {
         performSegue(withIdentifier: "refineSegue", sender: sender)
     }
-    
+
     @IBAction func touchUncompletedButton(_ sender: UIButton) {
         performSegue(withIdentifier: "refineSegue", sender: sender)
     }
-    
+
     // MARK: - Public Function
     func configureProgressRing() {
         // create the view
@@ -256,14 +254,14 @@ class MainViewController: UIViewController {
         progressRing.outerRingWidth = 7
         progressRing.outerRingColor = UIColor(red: 233/255, green: 233/255, blue: 233/255, alpha: 1)
         progressRing.fontColor = .white
-        
+
         weatherView.addSubview(progressRing)
-        
+
         if screenType == .iPhone4_0inch {
             progressTitleTopHeightConst.constant = 20
         }
     }
-    
+
     func configureAddTicketView() {
         addTicketView = AddTicketView.initiate(taskModel: TaskModel(id: 0))
         addTicketView!.delegate = self
@@ -272,10 +270,9 @@ class MainViewController: UIViewController {
         self.view.addSubview(addTicketView!)
         addTicketView!.isHidden = true
     }
-    
-    
+
     func bindUI() {
-        
+
         weatherView.isOpaque = false // 不透明を false
         weatherView.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0) // alpha 0 で色を設定
         // 影の設定
@@ -295,7 +292,7 @@ class MainViewController: UIViewController {
             self.view.layer.insertSublayer(self.gradientLayer, at: 0)
         })
     }
-    
+
     func setGradationColor(color: TaskColor) {
         UIView.animate(withDuration: 2, animations: { () -> Void in
             self.gradientLayer.colors = color.gradationColor
@@ -305,42 +302,42 @@ class MainViewController: UIViewController {
             self.view.layer.insertSublayer(self.gradientLayer, at: 0)
         })
     }
-    
+
     func addNewTaskView() {
         //scrollViewのDelegateを指定
         scrollView.delegate = self
-        
+
         createTaskView(task: taskViewModel.taskLocalDataModel!.lastCreateTask!, tag: taskViewModel.taskLocalDataModel!.tasks.count, isInitCreate: false)
-        
+
         print("self.originX!:\(self.originX!)")
         //scrollViewのcontentSizeを，View全体のサイズに合わせる
         //最終的なoriginX = タブ全体の横幅 になります
-        scrollView.contentSize = CGSize(width:self.originX! + taskViewWidth, height:scrollView.frame.height)
-        
+        scrollView.contentSize = CGSize(width: self.originX! + taskViewWidth, height: scrollView.frame.height)
+
         HUD.flash(.success, onView: view, delay: 1)
         let taskCount: Int = self.presenter.taskTotalCount
         //スクロール可能最大値
         let maxScrollPoint = (taskCount - 1) * scrollWidth
         UIView.animate(withDuration: 0.3, animations: {
-            self.scrollView.contentOffset = CGPoint(x:maxScrollPoint, y:0)
+            self.scrollView.contentOffset = CGPoint(x: maxScrollPoint, y: 0)
         })
         self.stopPoint = scrollView.contentOffset.x
         self.taskViewIndex = (Int(self.stopPoint) / self.scrollWidth) + 1
         presenter.didChangedTaskProgress()
     }
-    
+
     /// タスクビューを作成して表示させる
     /// - Parameter task: タスクデータ
     /// - Parameter tag: タスクViewタグ
     /// - Parameter isInitCreate: 初回表示時の作成フラグ
-    func createTaskView(task:TaskModel, tag: Int, isInitCreate: Bool){
+    func createTaskView(task: TaskModel, tag: Int, isInitCreate: Bool) {
         taskEmptyView.isHidden = true
         // VIewを設置する高さを計算する
         let mainScreenHeight: CGFloat = UIScreen.main.bounds.size.height
         let currentY = mainScreenHeight / 2 - 50
-        
+
         let viewWidth = isInitCreate ? initTaskViewWidth : screenType.taskViewCardWidth
-        
+
         taskView = TaskView.initiate(mainViewController: self, task: task)
         taskView.frame = CGRect.init(x: self.originX!, y: currentY, width: viewWidth, height: initTaskViewHeight)
         taskView.bind()
@@ -353,11 +350,11 @@ class MainViewController: UIViewController {
         self.originX! += CGFloat(scrollWidth)
         scrollView.bringSubviewToFront(taskView)
     }
-    
+
     func taskEdited(currentTaskView: TaskView) {
         taskView = currentTaskView
     }
-    
+
     /// 画面中央のViewを取得
     ///
     /// - Returns: View
@@ -375,7 +372,7 @@ class MainViewController: UIViewController {
             self.present(editTaskVC, animated: true, completion: nil)
         })
     }
-    
+
     // タスクViewのサイズが変わる直前に呼ばれる
     func willChangedTaskViewSize() {
         DispatchQueue.main.async {
@@ -404,20 +401,20 @@ class MainViewController: UIViewController {
                 }
             })
         }
-        
+
     }
-    
+
     // タスクViewのサイズが変わったあとに呼ばれる
     func didChangedTaskViewSize() {
-        
+
     }
-    
+
     func setCircleProgressValue(achievement: CGFloat, compCount: Int, unCompCount: Int) {
         progressRing.value = achievement
         compCountLabel.text = "\(compCount)"
         unCompCountLabel.text = "\(unCompCount)"
     }
-    
+
     // 起動時タスクが更新された時に呼ばれる
     func taskUpdated() {
         for i in 0..<presenter.taskTotalCount {
@@ -439,14 +436,14 @@ extension MainViewController: MainViewControllerProtocol {
             // Animationが完了したら親Viewから削除する
             let index = view.tag
             let scrollPoint = self.stopPoint - CGFloat(self.scrollWidth)
-            
+
             // 最後尾のViewかどうかで処理を分ける
-            if (self.presenter.isLastTaskView(view: view)) {
+            if self.presenter.isLastTaskView(view: view) {
                 // 最後尾のViewの削除
                 UIView.animate(withDuration: 0.5, animations: {
-                    self.scrollView.contentOffset = CGPoint(x:scrollPoint, y:0)
+                    self.scrollView.contentOffset = CGPoint(x: scrollPoint, y: 0)
                     self.stopPoint = scrollPoint
-                }) { (completed) in
+                }) { (_) in
                     self.deletedTaskViews()
                 }
             } else {
@@ -462,10 +459,10 @@ extension MainViewController: MainViewControllerProtocol {
                         taskView.frame = CGRect(x: frame.origin.x - CGFloat(self.scrollWidth), y: frame.origin.y, width: frame.size.width, height: height)
                         self.setGradationColor(color: taskView.presenter.taskViewModel.taskColor!)
                     }
-                }) { (completed) in
+                }) { (_) in
                     self.deletedTaskViews()
                 }
-                
+
             }
             // 次にViewを作成する時のためX座標の更新
             self.originX! -= CGFloat(self.scrollWidth)
@@ -475,7 +472,7 @@ extension MainViewController: MainViewControllerProtocol {
             view.removeFromSuperview()
         }
     }
-    
+
     func deletedTaskViews() {
         self.taskViewIndex = (Int(stopPoint) / self.scrollWidth) + 1
         for i in 0..<presenter.taskTotalCount {
@@ -497,28 +494,27 @@ extension MainViewController: MainViewControllerProtocol {
             self.view.bringSubviewToFront(self.bannerView)
         })
     }
-    
+
     func didChangeTaskCount(taskCount: Int) {
         taskEmptyView.isHidden = taskCount != 0
     }
-    
-    
+
     /*
      タスクを表示するViewを生成する
      */
     func createAllTaskViews() {
         //scrollViewのDelegateを指定
         scrollView.delegate = self
-        
+
         let tasks = presenter.tasks
         var firstTaskView = TaskView()
         //titlesで定義したタブを1つずつ用意していく
         for (index, task) in tasks.enumerated() {
             //タブになるUIVIewを作る
             createTaskView(task: task, tag: index + 1, isInitCreate: true)
-            
+
             print(taskView.frame.size.width)
-            if(index + 1 == 1) {
+            if index + 1 == 1 {
                 //グラデーションの作成
                 self.setGradationColor(color: taskView.presenter.taskViewModel.taskColor!)
                 // グラデーションカラーを先頭のViewのカラーにしたいので変数に保持しておく
@@ -528,28 +524,28 @@ extension MainViewController: MainViewControllerProtocol {
         self.taskView = firstTaskView
         //左端にダミーのUILabelを置く
         let tailLabel = UILabel()
-        tailLabel.frame = CGRect(x:self.originX!, y:0, width:dummyViewWidth, height:self.scrollView.frame.size.height)
+        tailLabel.frame = CGRect(x: self.originX!, y: 0, width: dummyViewWidth, height: self.scrollView.frame.size.height)
         scrollView.addSubview(tailLabel)
-        
+
         //scrollViewのcontentSizeを，View全体のサイズに合わせる
         //最終的なoriginX = タブ全体の横幅 になります
-        scrollView.contentSize = CGSize(width:self.originX! + taskViewWidth, height:scrollView.frame.height)
+        scrollView.contentSize = CGSize(width: self.originX! + taskViewWidth, height: scrollView.frame.height)
     }
-    
+
     func setTaskEmptyViewState(isHidden: Bool) {
         taskEmptyView.isHidden = isHidden
         //右端にダミーViewを置くことで
         //一番右のタブもセンターに持ってくることが出来ます
         let headDummyView = UIView()
-        headDummyView.frame = CGRect(x:0, y:0, width:dummyViewWidth, height:self.scrollView.frame.size.height)
+        headDummyView.frame = CGRect(x: 0, y: 0, width: dummyViewWidth, height: self.scrollView.frame.size.height)
         scrollView.addSubview(headDummyView)
-        
+
         //タブのx座標．
         //ダミーView分，はじめからずらしてあげましょう．
         self.originX = 32
     }
-    
-    func showValidateAlert(error: ValidateError){
+
+    func showValidateAlert(error: ValidateError) {
         presenter.catchError(error: error)
     }
 }
@@ -565,15 +561,15 @@ extension MainViewController: UIScrollViewDelegate {
         p.y = self.isShowDetail ? scrollView.contentOffset.y : 0
         scrollView.contentOffset = p
     }
-    
+
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         guard scrollView == self.scrollView else { return }
-        if isShowDetail  {
+        if isShowDetail {
             return
         }
         //微妙なスクロール位置でスクロールをやめた場合に
         //ちょうどいいタブをセンターに持ってくるためのアニメーション
-        
+
         //現在のスクロールの位置(scrollView.contentOffset.x)から
         //どこのタブを表示させたいか計算
         let taskCount: Int = presenter.taskTotalCount
@@ -611,11 +607,11 @@ extension MainViewController: UIScrollViewDelegate {
             self.scrollView.bringSubviewToFront(currentTaskView)
         }
         UIView.animate(withDuration: 0.3, animations: {
-            scrollView.contentOffset = CGPoint(x:scrollPoint, y:0)
+            scrollView.contentOffset = CGPoint(x: scrollPoint, y: 0)
         })
         self.stopPoint = scrollView.contentOffset.x
     }
-    
+
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         guard scrollView == self.scrollView else { return }
         if isShowDetail {
@@ -623,10 +619,9 @@ extension MainViewController: UIScrollViewDelegate {
         }
         //慣性を消す
         scrollView.setContentOffset(scrollView.contentOffset, animated: false)
-        
+
     }
-    
-    
+
     func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
         guard scrollView == self.scrollView else { return }
         if isShowDetail {
@@ -635,10 +630,10 @@ extension MainViewController: UIScrollViewDelegate {
         //慣性を消す
         scrollView.setContentOffset(scrollView.contentOffset, animated: false)
     }
-} 
+}
 
-extension MainViewController : UIViewControllerTransitioningDelegate{
-    
+extension MainViewController: UIViewControllerTransitioningDelegate {
+
 }
 
 extension MainViewController {
@@ -653,13 +648,13 @@ extension MainViewController {
 
 extension MainViewController: AddTicketViewDelegate {
     func didTouchCheckButtonAsEdit(title: String, memo: String, identifier: String) {
-        
+
     }
-    
+
     func didTouchCheckButton(title: String, memo: String) {
-        
+
     }
-    
+
     func didTouchCloseButton() {
     }
 }
@@ -673,35 +668,35 @@ extension MainViewController: TaskViewDelegate {
 extension MainViewController: GADBannerViewDelegate {
     /// Tells the delegate an ad request loaded an ad.
     func adViewDidReceiveAd(_ bannerView: GADBannerView) {
-      print("adViewDidReceiveAd")
+        print("adViewDidReceiveAd")
     }
 
     /// Tells the delegate an ad request failed.
     func adView(_ bannerView: GADBannerView,
-        didFailToReceiveAdWithError error: GADRequestError) {
-      print("adView:didFailToReceiveAdWithError: \(error.localizedDescription)")
+                didFailToReceiveAdWithError error: GADRequestError) {
+        print("adView:didFailToReceiveAdWithError: \(error.localizedDescription)")
     }
 
     /// Tells the delegate that a full-screen view will be presented in response
     /// to the user clicking on an ad.
     func adViewWillPresentScreen(_ bannerView: GADBannerView) {
-      print("adViewWillPresentScreen")
+        print("adViewWillPresentScreen")
     }
 
     /// Tells the delegate that the full-screen view will be dismissed.
     func adViewWillDismissScreen(_ bannerView: GADBannerView) {
-      print("adViewWillDismissScreen")
+        print("adViewWillDismissScreen")
     }
 
     /// Tells the delegate that the full-screen view has been dismissed.
     func adViewDidDismissScreen(_ bannerView: GADBannerView) {
-      print("adViewDidDismissScreen")
+        print("adViewDidDismissScreen")
     }
 
     /// Tells the delegate that a user click will open another app (such as
     /// the App Store), backgrounding the current app.
     func adViewWillLeaveApplication(_ bannerView: GADBannerView) {
-      print("adViewWillLeaveApplication")
+        print("adViewWillLeaveApplication")
     }
 }
 
@@ -709,7 +704,7 @@ extension MainViewController: RefineViewDelegate {
     func didSelected(tag: Int) {
         let scrollPoint = (tag - 1) * scrollWidth
         UIView.animate(withDuration: 0.3, animations: {
-            self.scrollView.contentOffset = CGPoint(x:scrollPoint, y:0)
+            self.scrollView.contentOffset = CGPoint(x: scrollPoint, y: 0)
         })
         self.stopPoint = scrollView.contentOffset.x
         self.taskViewIndex = tag

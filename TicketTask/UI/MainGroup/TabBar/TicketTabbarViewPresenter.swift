@@ -14,11 +14,11 @@ protocol TicketTabbarViewPresenterProtocol {
 
 class TicketTabbarViewPresenter: TicketTabbarViewPresenterProtocol {
     var view: TicketTabbarControllerProtocol
-    
+
     init(view: TicketTabbarControllerProtocol) {
         self.view = view
     }
-    
+
     func viewDidLoad() {
         view.configureViewControllers()
     }

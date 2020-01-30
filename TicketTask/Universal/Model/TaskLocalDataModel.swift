@@ -16,7 +16,7 @@ enum ResetType {
 }
 
 class TaskLocalDataModel {
-    
+
     let taskList = List<TaskItem>()
     let TASK_TITLE = "taskTitle"
     let TASK_ATTRI = "attri"
@@ -32,19 +32,19 @@ class TaskLocalDataModel {
 
     var tasks: [TaskModel] = []
     var lastCreateTask: TaskModel?
-    
+
     var realm: Realm!
-    
+
     static var sharedManager: TaskLocalDataModel = {
         return TaskLocalDataModel()
     }()
-    
+
     private init() {
         var config = Realm.Configuration()
         config.deleteRealmIfMigrationNeeded = true
         self.realm = try! Realm(configuration: config)
-        
-//        let config = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
+
+        //        let config = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
         Realm.Configuration.defaultConfiguration = config
         let results = realm.objects(TaskItem.self).sorted(byKeyPath: "id", ascending: true)
         if  results.count == 0 {
@@ -52,10 +52,9 @@ class TaskLocalDataModel {
             //                self.dataFirstInit()
         }
         print(results)
-        
-        
+
         //データを取り出してモデルに反映する
-        for task in results{
+        for task in results {
             let taskModel = TaskModel(id: task.id)
             taskModel.taskTitle = task.taskTitle
             taskModel.color = task.color
@@ -89,7 +88,7 @@ class TaskLocalDataModel {
             self.tasks.append(taskModel)
         }
     }
-    
+
     /*タスクを取得する*/
     func getTask(taskName: String) -> TaskModel? {
         var currentTask: TaskModel?
@@ -100,10 +99,10 @@ class TaskLocalDataModel {
         }
         return currentTask
     }
-    
+
     /*タスクを作成する*/
     func createTask(taskModel: TaskModel) -> ValidateError? {
-        
+
         if taskModel.taskTitle.isEmpty || taskModel.tickets.count == 0 {
             let error: ValidateError = .inputValidError
             return error
@@ -117,7 +116,7 @@ class TaskLocalDataModel {
             let error = ValidateError.taskValidError
             return error
         }
-        
+
         // Realm用チケットモデル作成
         let ticketsRealmArray = List<TicketModel>()
         for ticket in taskModel.tickets {
@@ -139,13 +138,13 @@ class TaskLocalDataModel {
             // push通知設定
             Notifications().pushNotificationSet(resetTimeType: taskModel.resetType, taskID: lastID, taskTitle: taskModel.taskTitle, notificationModel: notification)
         }
-        
+
         // テンプレートから時刻を表示
-//        let f = DateFormatter()
-//        f.setTemplate(.date)
-//        let currentDay = f.string(from: Date())
-//        let day = f.date(from: currentDay)
-        
+        //        let f = DateFormatter()
+        //        f.setTemplate(.date)
+        //        let currentDay = f.string(from: Date())
+        //        let day = f.date(from: currentDay)
+
         // Realm用タスクモデル作成
         let taskItem = TaskItem()
         taskItem.id = lastID
@@ -157,24 +156,24 @@ class TaskLocalDataModel {
         taskItem.lastResetDate = Date()
         taskItem.resetType = taskModel.resetType
         taskItem.taskNotifications = notificationsRealmArray
-        
+
         try! realm.write {
             realm.add(taskItem)
             print("データベース追加後", results.count)
             print(results)
         }
-        
+
         // タスク追加に成功した時にtasksパラメータにタスクを追加
         self.tasks.append(taskModel)
         self.lastCreateTask = taskModel
         return nil
-        
+
     }
-    
+
     /*タスクの更新*/
-    func taskUpdate(id: Int, tickets:[TicketsModel], actionType: ActionType, callback: (() -> Void)? = nil) {
+    func taskUpdate(id: Int, tickets: [TicketsModel], actionType: ActionType, callback: (() -> Void)? = nil) {
         var indexPath = 0
-        for (index, task) in self.tasks.enumerated(){
+        for (index, task) in self.tasks.enumerated() {
             if task.id == id {
                 task.tickets = tickets
                 indexPath = index
@@ -184,7 +183,7 @@ class TaskLocalDataModel {
         switch actionType {
         case .taskDelete:
             // タスク削除
-            self.deleteTask(index: indexPath, callback:  {
+            self.deleteTask(index: indexPath, callback: {
                 if let callback = callback {
                     callback()
                 }
@@ -206,9 +205,9 @@ class TaskLocalDataModel {
             return
         }
     }
-    
+
     /*チケットの追加*/
-    func addTicket(tickets:[TicketsModel], id: Int) {
+    func addTicket(tickets: [TicketsModel], id: Int) {
         let task = realm.objects(TaskItem.self).filter("id = \(id)").first
         let ticketArray: [String] = task!.tickets.map { $0.ticketName }
         let currentTicketArray: [String] = tickets.map { $0.ticketName }
@@ -225,7 +224,7 @@ class TaskLocalDataModel {
             }
         }
     }
-    
+
     /*チケットの削除*/
     func deleteTicket(index: Int, callback: (() -> Void)? = nil) {
         let task = tasks[index]
@@ -238,13 +237,13 @@ class TaskLocalDataModel {
                     realm.delete(ticket)
                 }
             }
-            
+
             if let callback = callback {
                 callback()
             }
         }
     }
-    
+
     /*チケットの更新*/
     func updateTicket(index: Int) {
         let task = tasks[index]
@@ -262,13 +261,12 @@ class TaskLocalDataModel {
             }
         }
     }
-    
+
     /*タスクの削除*/
     func deleteTask(index: Int, callback: (() -> Void)? = nil) {
         self.tasks.remove(at: index)
         do {
             let results = realm.objects(TaskItem.self)
-            let resultsOfNotifications = realm.objects(TaskNotifications.self)
             try! realm.write {
                 // 先にタスクデータの中の通知データも削除する
                 results[index].taskNotifications.forEach({
@@ -279,15 +277,15 @@ class TaskLocalDataModel {
                     callback()
                 }
             }
-            
+
         }
-        
+
     }
-    
-    func editTask(currentTaskModel: TaskModel ,beforeName: String, deleteNotifications: [String],completion: (() -> Void)) -> ValidateError? {
+
+    func editTask(currentTaskModel: TaskModel, beforeName: String, deleteNotifications: [String], completion: (() -> Void)) -> ValidateError? {
         do {
             let results = realm.objects(TaskItem.self).filter("id = \(currentTaskModel.id)").first
-            
+
             let result = realm.objects(TaskItem.self)
             print(result)
             let tasks = result.map {$0.taskTitle}
@@ -298,7 +296,7 @@ class TaskLocalDataModel {
                 let error = ValidateError.taskValidError
                 return error
             }
-            
+
             // Realm用通知設定モデル作成
             let notificationsRealmArray = List<TaskNotifications>()
             for notification in currentTaskModel.notifications {
@@ -315,7 +313,7 @@ class TaskLocalDataModel {
             let identifires = results?.taskNotifications.map { $0.identifier }
             // 既存identifierと一致しないnotificationモデルのみを抽出
             let notifications = notificationsRealmArray.filter { !(identifires?.contains($0.identifier))! }
-            
+
             try! realm.write {
                 results?.taskTitle = currentTaskModel.taskTitle
                 results?.attri = currentTaskModel.attri
@@ -325,7 +323,7 @@ class TaskLocalDataModel {
                 for notice in notifications {
                     results?.taskNotifications.append(notice)
                 }
-                
+
                 // 削除した通知をローカルデーからも削除する
                 deleteNotifications.forEach {deleteNotice in
                     for notice in results!.taskNotifications {
@@ -340,13 +338,13 @@ class TaskLocalDataModel {
             return nil
         }
     }
-    
+
     func checkResetModel(callback: @escaping () -> Void) {
         resetTaskModel(callback: {
             callback()
         })
     }
-    
+
     /// タスクの状態のリセット
     func resetTaskModel(callback: @escaping () -> Void) {
         let result = realm.objects(TaskItem.self)
@@ -380,7 +378,7 @@ class TaskLocalDataModel {
         }
         callback()
     }
-    
+
     func resetTask(task: TaskItem) {
         try! realm.write {
             for ticket in task.tickets {
@@ -391,7 +389,7 @@ class TaskLocalDataModel {
             task.setValue(Date(), forKey: TASK_LASTRESETDATE)
         }
     }
-    
+
     // インクリメント用ID取得
     func lastId() -> Int {
         var nextId = 0
@@ -405,4 +403,3 @@ class TaskLocalDataModel {
         return nextId
     }
 }
-

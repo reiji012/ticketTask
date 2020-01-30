@@ -13,15 +13,14 @@ protocol HistoryViewPresenterProtocol {
 }
 
 class HistoryViewPresenter: HistoryViewPresenterProtocol {
-    
+
     private var view: HistoryViewControllerProtocol
-    
+
     init(view: HistoryViewControllerProtocol) {
         self.view = view
     }
-    
-    
+
     func viewDidLoad() {
-        
+
     }
 }

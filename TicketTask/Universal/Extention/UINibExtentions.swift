@@ -15,7 +15,7 @@ extension UINib {
     ///
     /// - Parameter className: UIViewControllerを継承しているClass名
     /// - Returns: 引数で渡したClass名のViewControllerのinstanceを返す
-    public static func instantiateInitialView<T>(from className: T.Type) -> T where T : UIView {
+    public static func instantiateInitialView<T>(from className: T.Type) -> T where T: UIView {
         let name = String(describing: className.self)
         guard let view = UINib(nibName: name, bundle: .main).instantiate(withOwner: self, options: nil).first as? T else {
             fatalError("型が不一致")

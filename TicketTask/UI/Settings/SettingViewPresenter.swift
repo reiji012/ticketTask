@@ -13,15 +13,14 @@ protocol SettingViewPresenterProtocol {
 }
 
 class SettingViewPresenter: SettingViewPresenterProtocol {
-    
+
     private var view: SettingViewControllerProtocol
-    
+
     init(view: SettingViewControllerProtocol) {
         self.view = view
     }
-    
-    
+
     func viewDidLoad() {
-        
+
     }
 }

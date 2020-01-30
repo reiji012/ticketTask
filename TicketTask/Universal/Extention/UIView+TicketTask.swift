@@ -12,8 +12,8 @@ struct UIKeyboardInfo {
     let frame: CGRect
     let animationDuration: TimeInterval
     let animationCurve: UIView.AnimationOptions
-    
-    init?(info: [AnyHashable : Any]) {
+
+    init?(info: [AnyHashable: Any]) {
         guard
             let frame = (info[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue,
             let duration = info[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval,
@@ -25,7 +25,7 @@ struct UIKeyboardInfo {
     }
 }
 
-extension UIView{
+extension UIView {
 
     @IBInspectable var cornerRadius: CGFloat {
         get {
@@ -36,7 +36,7 @@ extension UIView{
             layer.masksToBounds = newValue > 0
         }
     }
-    
+
     @IBInspectable
     var borderWidth: CGFloat {
         get {
@@ -46,7 +46,7 @@ extension UIView{
             self.layer.borderWidth = newValue
         }
     }
-    
+
     @IBInspectable
     var borderColor: UIColor? {
         get {
@@ -56,7 +56,7 @@ extension UIView{
             self.layer.borderColor = newValue?.cgColor
         }
     }
-    
+
     func findFirstResponder() -> UIView? {
         if isFirstResponder {
             return self
@@ -68,7 +68,7 @@ extension UIView{
         }
         return nil
     }
-    
+
     func findSuperView<T>(ofType: T.Type) -> T? {
         if let superView = self.superview {
             switch superView {
@@ -80,7 +80,7 @@ extension UIView{
         }
         return nil
     }
-    
+
     public var parent: UIView? {
         get {
             return self.superview

@@ -10,15 +10,15 @@ import UIKit
 
 class TaskIconImageView: UIImageView {
 
-//    override var alignmentRectInsets: UIEdgeInsets {
-//        return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-//    } 
+    //    override var alignmentRectInsets: UIEdgeInsets {
+    //        return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+    //    }
     /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
+     // Only override draw() if you perform custom drawing.
+     // An empty implementation adversely affects performance during animation.
+     override func draw(_ rect: CGRect) {
+     // Drawing code
+     }
+     */
 
 }

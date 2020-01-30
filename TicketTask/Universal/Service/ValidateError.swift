@@ -15,7 +15,7 @@ enum ValidateError: String {
     case ticketDeleteValidError = "これ以上チケットを削除できません"
     case inputValidError = "入力エラーです"
     case titleEmptyError = "タイトルを入力してください"
-    
+
     var massage: String {
         switch self {
         case .inputValidError:
@@ -24,5 +24,5 @@ enum ValidateError: String {
             return ""
         }
     }
-    
+
 }

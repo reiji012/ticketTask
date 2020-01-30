@@ -10,11 +10,11 @@ import Foundation
 import UIKit
 
 class Util {
-    
+
     func convertTempRound(temp: Double) -> Double {
         return round(temp*10)/10
     }
-    
+
     class func dateFromString(string: String, format: String) -> Date {
         let formatter: DateFormatter = DateFormatter()
         formatter.calendar = Calendar(identifier: .gregorian)
@@ -28,7 +28,7 @@ class Util {
         formatter.dateFormat = format
         return formatter.string(from: date)
     }
-    
+
     class func dateFromStringAsNotice(string: String) -> Date {
         let formatter: DateFormatter = DateFormatter()
         formatter.calendar = Calendar(identifier: .gregorian)

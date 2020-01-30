@@ -19,26 +19,26 @@ enum Keys: String {
 }
 
 class SettingData {
-    
+
     let userDefaults = UserDefaults.standard
-    
+
     init() {
-        
+
         //ディクショナリ形式で初期値を指定できる
         userDefaults.register(defaults: [
-            Keys.month.rawValue : "1",
-            Keys.week.rawValue : "月曜日",
-            Keys.day.rawValue : "6",
-            Keys.lastResetDate.rawValue : Date(),
-            Keys.nextResetDatetoMonth.rawValue : Date(),
+            Keys.month.rawValue: "1",
+            Keys.week.rawValue: "月曜日",
+            Keys.day.rawValue: "6",
+            Keys.lastResetDate.rawValue: Date(),
+            Keys.nextResetDatetoMonth.rawValue: Date()
         ])
     }
-    
+
     func getNextWeekToMonday(date: Date) -> Date {
         var currentDate = date
         for _ in 0...8 {
             currentDate = getNextDate(date: currentDate)
-            
+
             let f = DateFormatter()
             f.setTemplate(.weekDay)
             let week = f.string(from: currentDate)
@@ -53,7 +53,7 @@ class SettingData {
         f.setTemplate(.weekDay)
         return currentDate
     }
-    
+
     func getMonthFormat(date: Date) -> Date {
         let calendar = NSCalendar(identifier: NSCalendar.Identifier.gregorian)!
 
@@ -77,26 +77,26 @@ class SettingData {
         // Dateを作成
         return calendar.date(from: comp)!
     }
-    
+
     func getDayFormat(date: Date) -> Date {
         let dateString = dateFormat(date: date)
         return dateFormatToDate(string: dateString)
     }
-    
+
     func dateFormat(date: Date) -> String {
         let f = DateFormatter()
         f.dateStyle = .long
         f.timeStyle = .none
         return f.string(from: date)
     }
-    
+
     func dateFormatToDate(string: String) -> Date {
         let f = DateFormatter()
         f.dateStyle = .long
         f.timeStyle = .none
         return f.date(from: string)!
     }
-    
+
     /// 次の日を取得
     ///
     /// - Parameter date: 日付
@@ -109,7 +109,7 @@ class SettingData {
         let day = f.date(from: days)
         return  Calendar.current.date(byAdding: .day, value: 1, to: day!)!
     }
-    
+
     func getToday() -> Date {
         // テンプレートから時刻を表示
         let f = DateFormatter()
@@ -117,15 +117,15 @@ class SettingData {
         let days = f.string(from: Date())
         return f.date(from: days)!
     }
-    
+
     func chengeNotificationMonth(dateStr: String) {
         userDefaults.set(dateStr, forKey: Keys.month.rawValue)
     }
-    
+
     func chengeNotificationWeek(weekStr: String) {
         userDefaults.set(weekStr, forKey: Keys.week.rawValue)
     }
-    
+
     func chengeNotificationHourTime(hourStr: String) {
         userDefaults.set(hourStr, forKey: Keys.day.rawValue)
     }

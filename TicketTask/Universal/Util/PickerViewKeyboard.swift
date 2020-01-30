@@ -16,7 +16,7 @@ protocol PickerViewKeyboardDelegate {
 }
 
 class PickerViewKeyboard: UIButton {
-    var delegate: PickerViewKeyboardDelegate!
+    weak var delegate: PickerViewKeyboardDelegate!
     var pickerView: UIDatePicker!
     var toolbar: UIToolbar!
 
@@ -35,7 +35,7 @@ class PickerViewKeyboard: UIButton {
 
     override var inputView: UIView? {
         pickerView = UIDatePicker()
-//        pickerView.setDate(Date(),animated: true)
+        //        pickerView.setDate(Date(),animated: true)
         pickerView.datePickerMode = UIDatePicker.Mode.time
         pickerView.locale = Locale(identifier: "ja_JP")
         pickerView.addTarget(self, action: #selector(fixNotificationTime(sender:)), for: .valueChanged)
@@ -62,13 +62,13 @@ class PickerViewKeyboard: UIButton {
 
     @objc func cancelPicker() {
         delegate.didCancel(sender: self)
-        
+
     }
 
     @objc func donePicker() {
         delegate.didDone(sender: self, selectedData: self.pickerView!.date)
     }
-    
+
     // 通知時間の確定
     @objc func fixNotificationTime(sender: UIDatePicker) {
         pickerView.date = sender.date

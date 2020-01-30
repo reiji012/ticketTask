@@ -9,9 +9,8 @@
 import Foundation
 import UserNotifications
 
-
 class Notifications {
-    
+
     func pushNotificationSet(resetTimeType: Int, taskID: Int, taskTitle: String, notificationModel: TaskNotificationsModel) {
         //プッシュ通知のインスタンス
         let notification = UNMutableNotificationContent()
@@ -23,9 +22,9 @@ class Notifications {
         notification.sound = UNNotificationSound.default
         let url = "https://google.com"
         notification.userInfo = ["schemeURL": url]
-        
+
         //通知タイミングを指定
-        
+
         let dateComponents = splitStringForDate(date: notificationModel.date!)
         var notificationTime = DateComponents()
         switch resetTimeType {
@@ -50,8 +49,7 @@ class Notifications {
         default:
             break
         }
-        
-        
+
         let trigger: UNNotificationTrigger
         trigger = UNCalendarNotificationTrigger(dateMatching: notificationTime, repeats: false)
         //通知のリクエスト
@@ -64,21 +62,21 @@ class Notifications {
             UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [notificationModel.identifier])
         }
     }
-    
+
     func deleteNotifications(notifications: [String]) {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: notifications)
     }
-    
+
     func splitStringForDate(date: Date) -> (hour: Int, minute: Int) {
         // 一度Stringに変換して、HHとmmで分割。その後それぞれをIntに変換
         var hour: Int = 0
         var minute: Int = 0
         let dateString = Util.stringFromDateAsNotice(date: date)
-        
+
         let pattern = "([^/]+):([^/]+)"
         hour = Int(dateString.capture(pattern: pattern, group: 1)!)!
         minute = Int(dateString.capture(pattern: pattern, group: 2)!)!
-        
+
         return (hour: hour, minute: minute)
     }
 }

@@ -19,7 +19,7 @@ enum ScreenType {
     case iPhone6_1inch
     case iPhone6_5inch
     case other
-    
+
     var taskViewCardWidth: CGFloat {
         switch self {
         case .iPhone3_5inch:
@@ -40,10 +40,10 @@ enum ScreenType {
             return 311
         }
     }
-    
+
     init() {
         let screenSize = UIScreen.main.bounds.size
-        
+
         switch screenSize {
         case CGSize(width: 320.0, height: 480.0):
             self = .iPhone3_5inch
