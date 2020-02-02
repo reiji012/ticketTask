@@ -28,7 +28,7 @@ class TaskView: UIView, TaskViewProtocol {
 
     // MARK: - Public Propaty
     var presenter: TaskViewPresenterProtocol!
-    weak var delegate: TaskViewDelegate?
+    var delegate: TaskViewDelegate?
 
     var topSafeAreaHeight: CGFloat = 0
 

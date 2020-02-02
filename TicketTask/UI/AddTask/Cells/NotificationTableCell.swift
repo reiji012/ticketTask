@@ -14,7 +14,7 @@ protocol NotificationTableCellDelegate {
 
 class NotificationTableCell: UITableViewCell {
 
-    weak var delegate: NotificationTableCellDelegate?
+    var delegate: NotificationTableCellDelegate?
 
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var switchButton: UISwitch!

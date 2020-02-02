@@ -29,7 +29,7 @@ class IconSelectViewController: UIViewController, UICollectionViewDelegate, UICo
 
     var editTaskVC: EditTaskViewController?
 
-    open weak var delegate: IconSelectViewControllerDelegate?
+    open var delegate: IconSelectViewControllerDelegate?
 
     @IBOutlet private weak var cellectionView: UICollectionView!
     @IBOutlet weak var closeButton: UIButton!

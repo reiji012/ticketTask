@@ -22,7 +22,7 @@ class TaskViewModel: NSObject {
     var taskTitle: Observable<String> { return taskTitleSubject.asObserver() }
     var taskAttri: Observable<String> { return taskAttriSubject.asObserver() }
 
-    weak var delegate: MainViewControllerProtocol?
+    var delegate: MainViewControllerProtocol?
 
     var taskID: Int?
     var taskLocalDataModel: TaskLocalDataModel?

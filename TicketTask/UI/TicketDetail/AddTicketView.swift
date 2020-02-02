@@ -16,7 +16,7 @@ protocol AddTicketViewDelegate {
 
 class AddTicketView: UIView {
 
-    weak var delegate: AddTicketViewDelegate?
+    var delegate: AddTicketViewDelegate?
     var defaultCenterY: CGFloat!
 
     @IBOutlet weak var memoTextField: UITextField!

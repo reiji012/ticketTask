@@ -24,7 +24,7 @@ class RefineViewController: UIViewController, RefineViewControllerProtocol {
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
 
-    weak var delegate: RefineViewDelegate?
+    var delegate: RefineViewDelegate?
     var presenter: RefineViewPresenterProtocol!
 
     override func viewDidLoad() {

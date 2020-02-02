@@ -29,7 +29,7 @@ class ColorSelectViewController: UIViewController, UICollectionViewDelegate, UIC
 
     var editTaskVC: EditTaskViewController?
 
-    open weak var delegate: ColorSelectViewControllerDelegate?
+    open var delegate: ColorSelectViewControllerDelegate?
 
     @IBOutlet private weak var cellectionView: UICollectionView!
     @IBOutlet weak var closeButton: UIButton!

@@ -16,7 +16,7 @@ protocol PickerViewKeyboardDelegate {
 }
 
 class PickerViewKeyboard: UIButton {
-    weak var delegate: PickerViewKeyboardDelegate!
+    var delegate: PickerViewKeyboardDelegate!
     var pickerView: UIDatePicker!
     var toolbar: UIToolbar!
 
