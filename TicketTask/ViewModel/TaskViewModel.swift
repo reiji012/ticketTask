@@ -25,7 +25,7 @@ class TaskViewModel: NSObject {
     var delegate: MainViewControllerProtocol?
 
     var taskID: Int?
-    var taskLocalDataModel: TaskLocalDataModel?
+    var taskLocalDataModel: TaskLocalDataModel
     var tasks: [TaskModel]?
     var taskName: String? {
         didSet {
@@ -33,7 +33,7 @@ class TaskViewModel: NSObject {
         }
     }
     func taskCount() -> Int {
-        return taskLocalDataModel!.tasks.count
+        return taskLocalDataModel.tasks.count
     }
     var attri: String?
 
@@ -63,7 +63,7 @@ class TaskViewModel: NSObject {
     // タスクのModelを取得する
     init(taskName: String) {
         taskLocalDataModel = TaskLocalDataModel.sharedManager
-        task = taskLocalDataModel?.getTask(taskName: taskName)
+        task = taskLocalDataModel.getTask(taskName: taskName)
         self.taskName = task?.taskTitle
         self.attri = task?.attri
         self.tickets = task?.tickets
@@ -75,7 +75,7 @@ class TaskViewModel: NSObject {
     }
 
     func getTask(taskName: String) {
-        task = taskLocalDataModel?.getTask(taskName: taskName)
+        task = taskLocalDataModel.getTask(taskName: taskName)
         self.taskName = task?.taskTitle
         self.attri = task?.attri
         self.tickets = task?.tickets
@@ -162,13 +162,13 @@ class TaskViewModel: NSObject {
     }
 
     func updateModel(actionType: ActionType, callback: (() -> Void)? = nil) {
-        taskLocalDataModel!.taskUpdate(id: self.taskID!, tickets: self.tickets!, actionType: actionType, callback: {
+        taskLocalDataModel.taskUpdate(id: self.taskID!, tickets: self.tickets!, actionType: actionType, callback: {
             if let callback = callback {
                 callback()
                 self.delegate?.didChangeTaskCount(taskCount: self.taskCount())
             }
         })
-        task = taskLocalDataModel?.getTask(taskName: self.taskName!)
+        task = taskLocalDataModel.getTask(taskName: self.taskName!)
         self.countProgress()
     }
 
@@ -189,7 +189,7 @@ class TaskViewModel: NSObject {
     }
 
     func getTaskData() {
-        tasks = taskLocalDataModel!.tasks
+        tasks = taskLocalDataModel.tasks
     }
 
     func setupIcon() {
@@ -197,7 +197,7 @@ class TaskViewModel: NSObject {
     }
 
     func checkIsTaskEmpty() {
-        let isTaskEmpty = self.taskLocalDataModel!.tasks.isEmpty
+        let isTaskEmpty = self.taskLocalDataModel.tasks.isEmpty
         self.delegate?.setTaskEmptyViewState(isHidden: !(isTaskEmpty))
         if !(isTaskEmpty) {
             self.delegate?.createAllTaskViews()

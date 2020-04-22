@@ -208,8 +208,10 @@ class TaskLocalDataModel {
 
     /*チケットの追加*/
     func addTicket(tickets: [TicketsModel], id: Int) {
-        let task = realm.objects(TaskItem.self).filter("id = \(id)").first
-        let ticketArray: [String] = task!.tickets.map { $0.ticketName }
+        guard let task = realm.objects(TaskItem.self).filter("id = \(id)").first else {
+            return
+        }
+        let ticketArray: [String] = task.tickets.map { $0.ticketName }
         let currentTicketArray: [String] = tickets.map { $0.ticketName }
         for (index, ticket) in currentTicketArray.enumerated() {
             if ticketArray.index(of: ticket) == nil {
@@ -219,7 +221,7 @@ class TaskLocalDataModel {
                     newTicket.ticketName = ticket
                     newTicket.isCompleted = false
                     newTicket.comment = tickets.filter({ $0.ticketName == ticket }).first!.comment
-                    task!.tickets.append(newTicket)
+                    task.tickets.append(newTicket)
                 }
             }
         }
