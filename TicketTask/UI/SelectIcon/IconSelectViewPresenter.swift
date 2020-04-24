@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import UIKit
 
 protocol IconSelectViewPresenterProtocol {
     var taskColor: TaskColor { get }

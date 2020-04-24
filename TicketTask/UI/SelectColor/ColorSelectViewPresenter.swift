@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import UIKit
 
 protocol ColorSelectViewPresenterProtocol {
     var numberOfRow: Int { get }

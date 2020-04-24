@@ -6,6 +6,10 @@
 //  Copyright © 2019 松村礼二. All rights reserved.
 //
 
+
+import Foundation
+import UIKit
+
 protocol AddTaskViewPresenterProtocol {
     var tickets: [TicketsModel]! { get }
     var currentColor: TaskColor { get set }
@@ -25,9 +29,6 @@ protocol AddTaskViewPresenterProtocol {
     func didDoneDatePicker(selectDate: Date)
     func didChengeNotificationActive(isActive: Bool, identifier: String)
 }
-
-import Foundation
-import UIKit
 
 class AddTaskViewPresenter: AddTaskViewPresenterProtocol, ErrorAlert {
 

@@ -307,7 +307,7 @@ class MainViewController: UIViewController {
         //scrollViewのDelegateを指定
         scrollView.delegate = self
 
-        createTaskView(task: taskViewModel.taskLocalDataModel!.lastCreateTask!, tag: taskViewModel.taskLocalDataModel!.tasks.count, isInitCreate: false)
+        createTaskView(task: taskViewModel.taskLocalDataModel.lastCreateTask!, tag: taskViewModel.taskLocalDataModel.tasks.count, isInitCreate: false)
 
         print("self.originX!:\(self.originX!)")
         //scrollViewのcontentSizeを，View全体のサイズに合わせる
