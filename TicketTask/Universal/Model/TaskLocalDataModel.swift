@@ -24,7 +24,7 @@ class TaskLocalDataModel {
     let TASK_ICON = "icon"
     let TASK_COLOR = "color"
     let TASK_CATEGORY = "category"
-    let TASK_LASTRESETDATE = "lastResetDate"
+    let TASK_LAST_RESETDATE = "lastResetDate"
     let TASK_RESET_TYPE = "resetType"
     let TICKET_NAME = "ticketName"
     let TICKET_IS_COMPLETED = "isCompleted"
@@ -252,14 +252,11 @@ class TaskLocalDataModel {
         do {
             let results = realm.objects(TaskItem.self)
             try! realm.write {
-                for ticket in results[index].tickets {
-                    let currentTicket = task.tickets.filter { $0.identifier == ticket.identifier }
-                    ticket.isCompleted = currentTicket.first!.isCompleted
-                    ticket.ticketName = currentTicket.first!.ticketName
-                    ticket.comment = currentTicket.first!.comment
-                }
+                results[index].tickets.removeAll()
+                let ticketArray = ticketModelToDictionary(tickets: task.tickets)
+                results[index].setValue(ticketArray, forKey: TASK_TICKETS)
                 let task = results[index]
-                task.setValue(Date(), forKey: TASK_LASTRESETDATE)
+                task.setValue(Date(), forKey: TASK_LAST_RESETDATE)
             }
         }
     }
@@ -299,6 +296,7 @@ class TaskLocalDataModel {
                 return error
             }
 
+            result.first?.taskTitle
             // Realm用通知設定モデル作成
             let notificationsRealmArray = List<TaskNotifications>()
             for notification in currentTaskModel.notifications {
@@ -388,7 +386,7 @@ class TaskLocalDataModel {
                 // tasksが既に取得されているので、そちらも一緒に反映させる
                 self.tasks.filter { $0.id == task.id }.first!.tickets.forEach { $0.isCompleted = false }
             }
-            task.setValue(Date(), forKey: TASK_LASTRESETDATE)
+            task.setValue(Date(), forKey: TASK_LAST_RESETDATE)
         }
     }
 
@@ -403,5 +401,48 @@ class TaskLocalDataModel {
             nextId = idArray.isEmpty ? 0 : idArray.max()! + 1
         }
         return nextId
+    }
+    
+    func ticketModelToDictionary(tickets: [TicketsModel]) -> [Dictionary<String, Any>] {
+        var ticketArray = [Dictionary<String, Any>]()
+        for ticket in tickets {
+            var dictionary = Dictionary<String, Any>()
+            dictionary["identifier"] = NSUUID().uuidString
+            dictionary["ticketName"] = ticket.ticketName
+            dictionary["isCompleted"] = ticket.isCompleted
+            dictionary["comment"] = ticket.comment
+            ticketArray.append(dictionary)
+        }
+        
+        return ticketArray
+    }
+    
+    func ticketModelToRealmModel(tickets: [TicketsModel]) -> List<TicketModel> {
+        let realmTicektsModel = List<TicketModel>()
+        for ticket in tickets {
+            let realmTicket = TicketModel()
+            realmTicket.identifier = NSUUID().uuidString
+            realmTicket.ticketName = ticket.ticketName
+            realmTicket.isCompleted = ticket.isCompleted
+            realmTicket.comment = ticket.comment
+            realmTicektsModel.append(realmTicket)
+        }
+        
+        return realmTicektsModel
+    }
+    
+    func ticketArrayToRealmModel(tickets: [Dictionary<String, Any>]) -> List<TicketModel> {
+        let realmTicektsModel = List<TicketModel>()
+            
+        for ticket in tickets {
+            let realmTicket = TicketModel()
+            realmTicket.identifier = NSUUID().uuidString
+            realmTicket.ticketName = ticket["ticketName"] as! String
+            realmTicket.isCompleted = (ticket["isCompleted"] != nil)
+            realmTicket.comment = ticket["comment"] as! String
+            realmTicektsModel.append(realmTicket)
+        }
+        
+        return realmTicektsModel
     }
 }
