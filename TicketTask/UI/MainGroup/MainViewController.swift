@@ -115,6 +115,11 @@ class MainViewController: UIViewController {
         bindUI()
         presenter.checkIsTaskEmpty()
 
+        
+        configuresionAddBaner()
+    }
+    
+    func configuresionAddBaner() {
         bannerView = GADBannerView(adSize: kGADAdSizeBanner)
 
         addBannerViewToView(bannerView)
@@ -131,7 +136,6 @@ class MainViewController: UIViewController {
         bannerView.delegate = self
 
         bannerView.isHidden = true
-
     }
 
     func addBannerViewToView(_ bannerView: GADBannerView) {
